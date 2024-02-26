@@ -7,6 +7,9 @@ import IconChevronLeft from "@/components/icons/IconChevronLeft.vue";
 import IconChevronRight from "@/components/icons/IconChevronRight.vue";
 
 const collapse = ref(true)
+
+// user me check token
+
 </script>
 
 <template>
