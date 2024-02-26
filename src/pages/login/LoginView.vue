@@ -10,7 +10,7 @@ const model = ref({
 <template>
   <div class="login-page">
     <a-row class="h-100" :gutter="16" align="middle">
-      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="14">
+      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="14" class="text-center">
         <img src="@/assets/images/login.svg" alt="">
       </a-col>
       <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="10">
@@ -18,9 +18,9 @@ const model = ref({
           <a-row justify="center">
             <a-col :xs="24" :sm="24" :md="20" :lg="16">
               <h1>
-                ADS-<span class="primary">PRO</span>
+                ADS-<span class="text-primary">PRO</span>
               </h1>
-              <p class="muted">
+              <p class="text-muted">
                 Biznes uchun reklamalarni joylashtirish, boshqarish uchun platforma. Tizimga kirish uchun raqamingizni kiriting
               </p>
               <a-form
@@ -56,7 +56,7 @@ const model = ref({
   .login-page{
     padding: 3rem;
     height: 100vh;
-    overflow: auto;
+    overflow: hidden;
   }
   .h-100{
     height: 100%;
@@ -64,5 +64,8 @@ const model = ref({
   .py-5{
     padding-top: 3rem;
     padding-bottom: 3rem;
+  }
+  img{
+    height: 90vh;
   }
 </style>

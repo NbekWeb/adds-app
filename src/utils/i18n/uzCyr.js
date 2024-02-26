@@ -1,5 +1,6 @@
 const uzCyr = {
-    LoginView: 'Tizimga kirish'
+    LoginView: 'Tizimga kirish',
+    DashboardView: 'Asosiy board'
 }
 
 export default uzCyr
