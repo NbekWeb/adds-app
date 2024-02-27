@@ -1,6 +1,8 @@
 const uzLat = {
-    LoginView: 'Tizimga kirish',
-    DashboardView: 'Asosiy board'
+  LoginView: 'Tizimga kirish',
+  DashboardView: 'Asosiy board',
+  DashboardNotFond: 'Sahifa topilmadi',
+  DashboardListView: "Ro'yxat"
 }
 
-export default uzLat;
+export default uzLat
