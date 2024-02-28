@@ -52,12 +52,12 @@ const useAuth = defineStore('auth', {
         .then(({ data }) => {
           localStorage.setItem('access_token', data?.accessToken)
           localStorage.setItem('refresh_token', data?.refreshToken)
+          this.clearOtp()
+          CorePinia.redirect('/dashboard')
           useCore().setToast({
             message: `Tizimga kirish muvaffaqiyatli bajarildi!`,
             type: 'success'
           })
-          this.clearOtp()
-          CorePinia.redirect('/dashboard')
         })
         .catch((err) => CorePinia.switchStatus(err))
         .finally(() => {
