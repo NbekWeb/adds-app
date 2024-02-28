@@ -84,7 +84,7 @@ const sendOpt = () => {
                     <a-form-item label="Sms kodni kiriting">
                       <otp-input-component
                         v-model="model.otp"
-                        placeholder="######"
+                        placeholder="#####"
                         :digit-count="6"
                       />
                     </a-form-item>
