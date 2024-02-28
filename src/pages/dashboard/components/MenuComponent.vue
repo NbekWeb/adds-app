@@ -12,6 +12,8 @@ import IconSettings from '@/components/icons/IconSettings.vue'
 import IconHelp from '@/components/icons/IconHelp.vue'
 import IconPowerOff from '@/components/icons/IconPowerOff.vue'
 import { useRouter } from 'vue-router'
+import useUser from '@/store/user.pinia.js'
+import useCore from '@/store/core.pinia.js'
 
 const { collapsed } = defineProps({
   collapsed: {
@@ -20,10 +22,18 @@ const { collapsed } = defineProps({
   }
 })
 const router = useRouter()
+const userPinia = useUser()
+const corePinia = useCore()
 const selected = ref(['main'])
 
 const setCollapse = ({ key }) => {
   router.push(`/dashboard/${key}`)
+}
+const cancel = () => {
+  corePinia.setToast({
+    message: 'Tizimda qolganingiz uchun tashakkur!',
+    type: 'info'
+  })
 }
 </script>
 
@@ -50,7 +60,7 @@ const setCollapse = ({ key }) => {
           </a-col>
         </template>
       </a-row>
-      <user-component avatar="true" class="mb-4" />
+      <user-component :avatar="true" class="mb-4" />
       <a-menu
         @click="setCollapse"
         v-model:selectedKeys="selected"
@@ -60,31 +70,31 @@ const setCollapse = ({ key }) => {
           <template #icon>
             <icon-grid />
           </template>
-          Asosiy sahifa
+          {{ $t('DashboardListView') }}
         </a-menu-item>
         <a-menu-item :key="`ads`">
           <template #icon>
             <icon-announcement />
           </template>
-          E'lonlar
+          {{ $t('AnnouncementsView') }}
         </a-menu-item>
         <a-menu-item :key="`report`">
           <template #icon>
             <icon-pie-chart />
           </template>
-          E'lon bo'yicha hisobot
+          {{ $t('ReportView') }}
         </a-menu-item>
         <a-menu-item :key="`audience`">
           <template #icon>
             <icon-users />
           </template>
-          Auditoriya
+          {{ $t('AudienceView') }}
         </a-menu-item>
         <a-menu-item :key="`billing`">
           <template #icon>
             <icon-coins-stacked />
           </template>
-          Billing va to'lovlar
+          {{ $t('BillingView') }}
         </a-menu-item>
       </a-menu>
     </div>
@@ -113,9 +123,17 @@ const setCollapse = ({ key }) => {
         </li>
         <li>
           <a-tooltip title="Tizimdan chiqish">
-            <router-link to="#">
-              <icon-power-off />
-            </router-link>
+            <a-popconfirm
+              title="Tizimdan chiqmoqchimisiz"
+              ok-text="Ha"
+              cancel-text="Yo'q"
+              @confirm="userPinia.logOut()"
+              @cancel="cancel"
+            >
+              <a-button type="link" size="small" link>
+                <icon-power-off />
+              </a-button>
+            </a-popconfirm>
           </a-tooltip>
         </li>
       </ul>
