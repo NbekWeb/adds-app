@@ -2,17 +2,17 @@ import { defineStore } from 'pinia'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
 
-const CorePinia = useCore()
-
 const useAuth = defineStore('auth', {
   state: () => ({
     user: null,
     loadingLogin: false,
     loading: false,
+    phoneNumber: null,
+    finishedTimeStatus: false,
     otp: {
       otpKey: null,
-      retryTimeMin: null,
-      expireOtpMin: null
+      retryTimeMin: 0,
+      expireOtpMin: 0
     }
   }),
   actions: {
@@ -21,16 +21,22 @@ const useAuth = defineStore('auth', {
       this.otp.retryTimeMin = null
       this.otp.otpKey = null
     },
-    getOtp(phoneNumber) {
+    changeRetryOptStatus() {
+      this.finishedTimeStatus = !this.finishedTimeStatus
+    },
+    getOtp(number) {
       this.loading = true
       api({
         url: 'otp',
         open: true,
         method: 'POST',
-        data: { phoneNumber: '+998' + phoneNumber }
+        data: { phoneNumber: '+998' + number }
       })
         .then(({ data }) => {
           this.otp = data
+          this.phoneNumber = number
+          this.finishedTimeStatus = false
+          console.log(this.phoneNumber)
         })
         .catch((err) => useCore().switchStatus(err))
         .finally(() => {
@@ -53,13 +59,13 @@ const useAuth = defineStore('auth', {
           localStorage.setItem('access_token', data?.accessToken)
           localStorage.setItem('refresh_token', data?.refreshToken)
           this.clearOtp()
-          CorePinia.redirect('/dashboard')
+          useCore().redirect('/dashboard')
           useCore().setToast({
             message: `Tizimga kirish muvaffaqiyatli bajarildi!`,
             type: 'success'
           })
         })
-        .catch((err) => CorePinia.switchStatus(err))
+        .catch((err) => useCore().switchStatus(err))
         .finally(() => {
           this.loading = false
         })
