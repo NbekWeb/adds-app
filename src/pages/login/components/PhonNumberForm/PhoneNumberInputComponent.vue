@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const props = defineProps({
+defineProps({
   disable: Boolean
 })
 const emits = defineEmits(['update:modelValue'])
