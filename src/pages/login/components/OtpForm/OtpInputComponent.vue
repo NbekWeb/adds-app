@@ -14,13 +14,8 @@ const handlePaste = (e) => {
   } else {
   }
 }
-const handleChange = (e, i) => {
-  if (e.data) {
-    digits.value[i] = e.data.replace(/[^0-9]/g, '')
-  }
-}
 
-const handleKeyup = (e) => {
+const handleKeydown = (e) => {
   if (new RegExp('^([0-9])$').test(e.key)) {
     digits.value[inputIndex.value] = e.key
     if (e.target.nextElementSibling) e.target.nextElementSibling.focus()
@@ -31,19 +26,6 @@ const handleKeyup = (e) => {
   }
   emits('update:modelValue', digits.value.join(''))
 }
-// const handleKeydown = (e) => {
-//   if (new RegExp('^([0-9])$').test(e.key)) {
-//     digits.value[inputIndex.value] = e.key
-//     emits('update:modelValue', digits.value.join(''))
-//     if (e.target.nextElementSibling) e.target.nextElementSibling.focus()
-//   }
-//   if (e.key === 'Backspace') {
-//     console.log(digits.value.join(''))
-//     emits('update:modelValue', digits.value.join(''))
-//     if (digits.value[inputIndex.value]) digits.value[inputIndex.value] = ''
-//     if (e.target.previousElementSibling) e.target.previousElementSibling.focus()
-//   }
-// }
 const handleFocus = (index) => {
   inputIndex.value = index
 }
@@ -51,11 +33,10 @@ const handleFocus = (index) => {
 
 <template>
   <a-input-group>
-    <a-row class="otp-container" @keyup="handleKeyup">
+    <a-row class="otp-container" @keydown="handleKeydown">
       <a-input
         v-for="(item, i) in digits"
         :key="i"
-        @input="handleChange($event, i)"
         @paste="handlePaste"
         @focus="handleFocus(i)"
         type="text"

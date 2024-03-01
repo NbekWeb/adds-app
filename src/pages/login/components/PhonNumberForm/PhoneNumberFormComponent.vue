@@ -33,7 +33,6 @@ const { validate, validateInfos } = useForm(model, phoneNumberRule)
 const getOtpGenerate = () => {
   validate()
     .then(() => {
-      console.log('aaa')
       authPinia.getOtp(model.value.phone_number)
     })
     .catch(() => {})
