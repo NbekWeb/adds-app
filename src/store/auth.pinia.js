@@ -36,7 +36,6 @@ const useAuth = defineStore('auth', {
           this.otp = data
           this.phoneNumber = number
           this.finishedTimeStatus = false
-          console.log(this.phoneNumber)
         })
         .catch((err) => useCore().switchStatus(err))
         .finally(() => {
