@@ -5,7 +5,9 @@ import { Form } from 'ant-design-vue'
 import OtpInputComponent from '@/pages/login/components/OtpForm/OtpInputComponent.vue'
 import RetryTimerComponent from '@/pages/login/components/OtpForm/RetryTimerComponent.vue'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const authPinia = useAuth()
 const useForm = Form.useForm
 
@@ -18,12 +20,7 @@ const otpRule = reactive({
   otp: [
     {
       required: true,
-      message: 'Majburiy maydon',
-      trigger: 'blur'
-    },
-    {
-      min: 6,
-      message: "Telefon raqam to'liq kiritilishi shart!",
+      message: t('REQUIRED_FIELD'),
       trigger: 'blur'
     }
   ]
@@ -46,7 +43,7 @@ const retryOtp = () => {
 
 <template>
   <a-form name="loginForm" :model="model" layout="vertical">
-    <a-form-item label="Sms kodni kiriting" v-bind="validateInfos.otp">
+    <a-form-item :label="$t('ENTER_SMS_CODE')" v-bind="validateInfos.otp">
       <otp-input-component v-model="model.otp" />
       <a-row class="otp-footer">
         <a-col>
@@ -56,7 +53,7 @@ const retryOtp = () => {
             @click="authPinia.clearOtp()"
             type="link"
           >
-            Raqamni o'zgartirish
+            {{ $t('CHANGE_PHONE_NUMBER') }}
           </a-button>
         </a-col>
         <a-col>
@@ -67,7 +64,7 @@ const retryOtp = () => {
               class="send-again-code"
               type="link"
             >
-              Kodni qayt yuborish
+              {{ $t('RESEND_THE_CODE') }}
             </a-button>
           </template>
           <template v-else>
@@ -78,13 +75,14 @@ const retryOtp = () => {
     </a-form-item>
     <a-button
       @click="sendOpt"
+      @keyup.enter="sendOpt"
       :disabled="model.otp?.length !== 6"
       block
       size="large"
       html-type="submit"
       type="primary"
     >
-      Kirish
+      {{ $t('ENTER') }}
     </a-button>
   </a-form>
 </template>

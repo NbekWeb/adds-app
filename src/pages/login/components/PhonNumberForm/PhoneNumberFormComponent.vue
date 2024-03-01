@@ -4,7 +4,9 @@ import { reactive, ref } from 'vue'
 import useAuth from '@/store/auth.pinia.js'
 import { storeToRefs } from 'pinia'
 import { Form } from 'ant-design-vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const authPinia = useAuth()
 const { otp } = storeToRefs(authPinia)
 
@@ -18,12 +20,12 @@ const phoneNumberRule = reactive({
   phone_number: [
     {
       required: true,
-      message: 'Majburiy maydon',
+      message: t('REQUIRED_FIELD'),
       trigger: 'blur'
     },
     {
       min: 9,
-      message: "Telefon raqam to'liq kiritilishi shart!",
+      message: t('REQUIRED_PHONE_NUMBER'),
       trigger: 'blur'
     }
   ]
@@ -41,7 +43,10 @@ const getOtpGenerate = () => {
 
 <template>
   <a-form name="loginForm" :model="model" layout="vertical">
-    <a-form-item v-bind="validateInfos.phone_number" label="Tel. raqam">
+    <a-form-item
+      v-bind="validateInfos.phone_number"
+      :label="$t('PHONE_NUMBER')"
+    >
       <phone-number-input-component
         :disable="Boolean(otp.otpKey)"
         v-model="model.phone_number"
@@ -57,7 +62,7 @@ const getOtpGenerate = () => {
           html-type="submit"
           type="primary"
         >
-          Raqamga sms yuborish
+          {{ $t('SEND_SMS_CODE') }}
         </a-button>
       </a-form-item>
     </template>

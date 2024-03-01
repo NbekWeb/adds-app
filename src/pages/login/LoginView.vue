@@ -29,8 +29,8 @@ const { loading, otp } = storeToRefs(authPinia)
               <a-col :xs="24" :sm="24" :md="20" :lg="16">
                 <h1>ADS-<span class="text-primary">PRO</span></h1>
                 <p class="text-muted">
-                  Biznes uchun reklamalarni joylashtirish, boshqarish uchun
-                  platforma. Tizimga kirish uchun raqamingizni kiriting
+                  {{ $t('LOGIN_PAGE_DESCRIPTION') }}
+                  {{ $t('ENTER_YOUR_NUMBER_TO_LOGIN') }}
                 </p>
               </a-col>
               <a-col :xs="24" :sm="24" :md="20" :lg="16">
