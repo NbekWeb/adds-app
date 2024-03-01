@@ -28,24 +28,12 @@ const phoneNumberRule = reactive({
     }
   ]
 })
-const otpRule = reactive({
-  otp: [
-    {
-      required: true,
-      message: 'Majburiy maydon',
-      trigger: 'blur'
-    },
-    {
-      min: 9,
-      message: "Telefon raqam to'liq kiritilishi shart!",
-      trigger: 'blur'
-    }
-  ]
-})
-const { validate, validateInfos } = useForm(model, otpRule)
+
+const { validate, validateInfos } = useForm(model, phoneNumberRule)
 const getOtpGenerate = () => {
   validate()
     .then(() => {
+      console.log('aaa')
       authPinia.getOtp(model.value.phone_number)
     })
     .catch(() => {})
