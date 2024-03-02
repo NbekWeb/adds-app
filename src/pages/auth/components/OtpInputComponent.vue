@@ -42,7 +42,7 @@ const handleFocus = (index) => {
         type="text"
         class="digit-box ant-col"
         size="large"
-        :value="digits[i]"
+        :value="item"
         :autofocus="i === 0"
         placeholder="#"
         :maxlength="1"

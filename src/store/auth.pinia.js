@@ -9,6 +9,7 @@ const useAuth = defineStore('auth', {
     loading: false,
     phoneNumber: null,
     finishedTimeStatus: false,
+    isRegistered: true,
     otp: {
       otpKey: null,
       retryTimeMin: 0,
@@ -20,11 +21,12 @@ const useAuth = defineStore('auth', {
       this.otp.expireOtpMin = null
       this.otp.retryTimeMin = null
       this.otp.otpKey = null
+      this.isRegistered = true
     },
     changeRetryOptStatus() {
       this.finishedTimeStatus = !this.finishedTimeStatus
     },
-    getOtp(number) {
+    getGenerateOtp(number) {
       this.loading = true
       api({
         url: 'otp',
@@ -33,7 +35,8 @@ const useAuth = defineStore('auth', {
         data: { phoneNumber: '+998' + number }
       })
         .then(({ data }) => {
-          this.otp = data
+          this.otp = data.otp
+          this.isRegistered = data.isRegistered
           this.phoneNumber = number
           this.finishedTimeStatus = false
         })
@@ -52,6 +55,35 @@ const useAuth = defineStore('auth', {
           grantType: 'otp',
           otpKey: this.otp.otpKey,
           otpValue: otp
+        }
+      })
+        .then(({ data }) => {
+          localStorage.setItem('access_token', data?.accessToken)
+          localStorage.setItem('refresh_token', data?.refreshToken)
+          this.clearOtp()
+          useCore().redirect('/dashboard')
+          useCore().setToast({
+            message: `Tizimga kirish muvaffaqiyatli bajarildi!`,
+            type: 'success'
+          })
+        })
+        .catch((err) => useCore().switchStatus(err))
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    register(form) {
+      this.loading = true
+      api({
+        url: 'register',
+        open: true,
+        method: 'POST',
+        data: {
+          firstName: form.firstName,
+          lastName: form.lastName,
+          phoneNumber: form.phone_number,
+          otpKey: this.otp.otpKey,
+          otpValue: form.otp
         }
       })
         .then(({ data }) => {

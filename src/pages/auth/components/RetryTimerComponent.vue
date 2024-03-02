@@ -29,7 +29,7 @@ const retryTimeOtp = () => {
       currentSecond.value = 60
       minute.value = Math.floor(second.value / 60) - 1
     }
-    if (second.value === 0) {
+    if (second.value <= 0) {
       authPinia.changeRetryOptStatus()
       emit('finished')
     }
@@ -40,7 +40,7 @@ onMounted(() => {
   retryTimeOtp()
 })
 onBeforeUnmount(() => {
-  timeInterval.value = null
+  clearInterval(timeInterval.value)
 })
 </script>
 

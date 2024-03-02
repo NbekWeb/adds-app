@@ -5,8 +5,11 @@ import CRUDBoardView from '@/pages/dashboard/board/[id]/CRUDBoardView.vue'
 import DashboardBoardListView from '@/pages/dashboard/board/DashboardBoardListView.vue'
 import DashboardListView from '@/pages/dashboard/DashboardListView.vue'
 import NotFound from '@/pages/_404.vue'
+import DashboardUserListView from '@/pages/dashboard/user/DashboardUserListView.vue'
+import DashboardUserView from '@/pages/dashboard/user/DashboardUserView.vue'
+import DashboardUserEditView from '@/pages/dashboard/user/[id]/DashboardUserEditView.vue'
 
-const LoginView = () => import('@/pages/login/LoginView.vue')
+const LoginView = () => import('@/pages/auth/AuthView.vue')
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +50,23 @@ export const router = createRouter({
               name: 'AddBoardView',
               path: 'add',
               component: CRUDBoardView
+            }
+          ]
+        },
+        {
+          path: 'user',
+          name: 'DashboardUserView',
+          component: DashboardUserView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardUserListView',
+              component: DashboardUserListView
+            },
+            {
+              path: 'edit/:id',
+              name: 'DashboardUserEditView',
+              component: DashboardUserEditView
             }
           ]
         },

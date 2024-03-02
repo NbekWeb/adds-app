@@ -1,8 +1,7 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import useAuth from '@/store/auth.pinia.js'
-import OtpFormComponent from '@/pages/login/components/OtpForm/OtpFormComponent.vue'
-import PhoneNumberFormComponent from '@/pages/login/components/PhonNumberForm/PhoneNumberFormComponent.vue'
+import AuthFormComponent from '@/pages/auth/components/AuthFormComponent.vue'
 
 const authPinia = useAuth()
 const { loading, otp } = storeToRefs(authPinia)
@@ -34,10 +33,7 @@ const { loading, otp } = storeToRefs(authPinia)
                 </p>
               </a-col>
               <a-col :xs="24" :sm="24" :md="20" :lg="16">
-                <phone-number-form-component />
-                <template v-if="otp.otpKey">
-                  <otp-form-component />
-                </template>
+                <auth-form-component />
               </a-col>
             </a-row>
           </a-card>
