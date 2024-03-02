@@ -11,7 +11,7 @@ import IconNotificationText from '@/components/icons/IconNotificationText.vue'
 import IconSettings from '@/components/icons/IconSettings.vue'
 import IconHelp from '@/components/icons/IconHelp.vue'
 import IconPowerOff from '@/components/icons/IconPowerOff.vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import useUser from '@/store/user.pinia.js'
 import useCore from '@/store/core.pinia.js'
 
@@ -22,10 +22,10 @@ const { collapsed } = defineProps({
   }
 })
 const router = useRouter()
+const route = useRoute()
 const userPinia = useUser()
 const corePinia = useCore()
-const selected = ref(['main'])
-
+const selected = ref([route.fullPath.split('/')[2]])
 const setCollapse = ({ key }) => {
   router.push(`/dashboard/${key}`)
 }
@@ -72,11 +72,11 @@ const cancel = () => {
           </template>
           {{ $t('DashboardListView') }}
         </a-menu-item>
-        <a-menu-item :key="`ads`">
+        <a-menu-item :key="`board`">
           <template #icon>
             <icon-announcement />
           </template>
-          {{ $t('AnnouncementsView') }}
+          {{ $t('DashboardBoardListView') }}
         </a-menu-item>
         <a-menu-item :key="`report`">
           <template #icon>
@@ -84,11 +84,11 @@ const cancel = () => {
           </template>
           {{ $t('ReportView') }}
         </a-menu-item>
-        <a-menu-item :key="`audience`">
+        <a-menu-item :key="`user`">
           <template #icon>
             <icon-users />
           </template>
-          {{ $t('AudienceView') }}
+          {{ $t('DashboardUserListView') }}
         </a-menu-item>
         <a-menu-item :key="`billing`">
           <template #icon>

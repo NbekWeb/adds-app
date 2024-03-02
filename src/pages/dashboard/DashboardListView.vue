@@ -1,12 +1,7 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <a-card>
-    <h1>List</h1>
-  </a-card>
+  <h1>List</h1>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

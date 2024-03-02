@@ -5,6 +5,7 @@ import useCore from '@/store/core.pinia.js'
 const useUser = defineStore('user', {
   state: () => ({
     user: null,
+    userList: [],
     loadingUser: false,
     loading: false
   }),
@@ -27,6 +28,21 @@ const useUser = defineStore('user', {
         })
         .finally(() => {
           this.loadingUser = false
+        })
+    },
+    getAllUsers() {
+      this.loading = true
+      api({
+        url: 'user'
+      })
+        .then((data) => {
+          console.log(data)
+        })
+        .catch((error) => {
+          useCore().switchStatus(error)
+        })
+        .finally(() => {
+          this.loading = false
         })
     }
   }

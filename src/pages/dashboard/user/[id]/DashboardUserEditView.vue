@@ -1,7 +1,5 @@
 <script setup></script>
 
-<template>
-  <h1>Board</h1>
-</template>
+<template>Edit</template>
 
 <style scoped lang="scss"></style>

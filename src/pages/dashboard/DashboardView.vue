@@ -7,8 +7,9 @@ import IconChevronLeft from '@/components/icons/IconChevronLeft.vue'
 import IconChevronRight from '@/components/icons/IconChevronRight.vue'
 
 import useUser from '@/store/user.pinia.js'
+import { useRoute } from 'vue-router'
 const userPinia = useUser()
-
+const route = useRoute()
 const { loadingUser } = storeToRefs(userPinia)
 
 const collapse = ref(false)
@@ -44,7 +45,9 @@ onMounted(() => {
           <header-component />
         </a-layout-header>
         <a-layout-content class="content">
-          <router-view />
+          <a-card>
+            <router-view />
+          </a-card>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -116,5 +119,8 @@ onMounted(() => {
   &:hover {
     color: $primary;
   }
+}
+:deep(.ant-card-body) {
+  min-height: calc(100vh - 114px);
 }
 </style>
