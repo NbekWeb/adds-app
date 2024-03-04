@@ -1,9 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 const emits = defineEmits(['update:modelValue'])
-
+const props = defineProps({
+  disabled: Boolean,
+  count: {
+    type: Number,
+    required: true
+  }
+})
 const inputIndex = ref(null)
-const digits = ref(['', '', '', '', '', ''])
+const digits = ref([])
+
+const counterInput = () => {
+  for (let i = 0; i < props.count; i++) {
+    digits.value.push('')
+  }
+}
+
 const handlePaste = (e) => {
   const pasteData = e.clipboardData.getData('text')
   const onlyNumbers = pasteData.match(/^\d+$/)
@@ -29,6 +42,9 @@ const handleKeydown = (e) => {
 const handleFocus = (index) => {
   inputIndex.value = index
 }
+onMounted(() => {
+  counterInput()
+})
 </script>
 
 <template>
@@ -37,6 +53,7 @@ const handleFocus = (index) => {
       <a-input
         v-for="(item, i) in digits"
         :key="i"
+        :disabled="disabled"
         @paste="handlePaste"
         @focus="handleFocus(i)"
         type="text"

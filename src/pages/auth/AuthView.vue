@@ -4,7 +4,7 @@ import useAuth from '@/store/auth.pinia.js'
 import AuthFormComponent from '@/pages/auth/components/AuthFormComponent.vue'
 
 const authPinia = useAuth()
-const { loading, otp } = storeToRefs(authPinia)
+const { otp, isRegistered } = storeToRefs(authPinia)
 </script>
 
 <template>
@@ -17,46 +17,73 @@ const { loading, otp } = storeToRefs(authPinia)
         :lg="12"
         :xl="12"
         :xxl="14"
-        class="text-center"
+        class="text-center login-page-banner"
       >
-        <img src="@/assets/images/login.svg" alt="" />
+        <img class="login-image" src="@/assets/images/login.svg" alt="" />
       </a-col>
-      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="10">
-        <a-spin :spinning="loading">
-          <a-card class="py-5">
-            <a-row justify="center">
-              <a-col :xs="24" :sm="24" :md="20" :lg="16">
-                <h1>ADS-<span class="text-primary">PRO</span></h1>
-                <p class="text-muted">
-                  {{ $t('LOGIN_PAGE_DESCRIPTION') }}
-                  {{ $t('ENTER_YOUR_NUMBER_TO_LOGIN') }}
-                </p>
-              </a-col>
-              <a-col :xs="24" :sm="24" :md="20" :lg="16">
-                <auth-form-component />
-              </a-col>
-            </a-row>
-          </a-card>
-        </a-spin>
+      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
+        <a-card>
+          <div class="auth-form px-5" :class="{ 'py-5': isRegistered }">
+            <div>
+              <h1>ADS-<span class="text-primary">PRO</span></h1>
+              <p class="text-muted">
+                {{ $t('LOGIN_PAGE_DESCRIPTION') }}
+                {{ $t('ENTER_YOUR_NUMBER_TO_LOGIN') }}
+              </p>
+            </div>
+            <auth-form-component />
+          </div>
+        </a-card>
       </a-col>
     </a-row>
   </div>
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/variable';
+
 .login-page {
+  display: flex;
+  align-items: center;
   padding: 3rem;
   height: 100vh;
-  //overflow: hidden;
+  .login-page-banner {
+    .login-image {
+      width: 100%;
+    }
+  }
+  .auth-form {
+    display: block;
+    width: 95%;
+    max-height: calc(100vh - 110px);
+    margin: 0 auto;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      width: 10px;
+      background: $white;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: rgb($info, 1);
+      border-radius: 4px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: $primary;
+    }
+  }
 }
-.h-100 {
-  height: 100%;
-}
-.py-5 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
+
 img {
   height: 90vh;
+}
+.content {
 }
 </style>

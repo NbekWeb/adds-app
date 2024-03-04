@@ -1,8 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
-defineProps({
-  disable: Boolean
+const props = defineProps({
+  disable: Boolean,
+  value: {
+    type: String || null
+  }
 })
 const emits = defineEmits(['update:modelValue'])
 const phone_number = ref()
@@ -27,6 +30,22 @@ function formatPhoneNumber() {
   emits('update:modelValue', v)
   return (phone_number.value = lastValue)
 }
+
+const handleChangeProps = () => {
+  const reg = new RegExp(`^([0-9]{2})([0-9]{3})([0-9]{2})([0-9]{${2}})`)
+  if (props.value && props.value.length === 9) {
+    phone_number.value = props.value.replace(reg, '$1 $2-$3-$4')
+  } else if (props.value === null) {
+    phone_number.value = ''
+  }
+}
+
+watch(props, () => {
+  handleChangeProps()
+})
+onMounted(() => {
+  handleChangeProps()
+})
 </script>
 
 <template>

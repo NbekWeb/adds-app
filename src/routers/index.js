@@ -8,6 +8,7 @@ import NotFound from '@/pages/_404.vue'
 import DashboardUserListView from '@/pages/dashboard/user/DashboardUserListView.vue'
 import DashboardUserView from '@/pages/dashboard/user/DashboardUserView.vue'
 import DashboardUserEditView from '@/pages/dashboard/user/[id]/DashboardUserEditView.vue'
+import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsView.vue'
 
 const LoginView = () => import('@/pages/auth/AuthView.vue')
 
@@ -26,6 +27,11 @@ export const router = createRouter({
       component: DashboardView,
       redirect: '/dashboard/main',
       children: [
+        {
+          path: 'settings',
+          name: 'DashboardSettingsView',
+          component: DashboardSettingsView
+        },
         {
           path: 'main',
           name: 'DashboardListView',

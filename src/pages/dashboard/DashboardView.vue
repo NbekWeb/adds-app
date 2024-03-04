@@ -8,8 +8,9 @@ import IconChevronRight from '@/components/icons/IconChevronRight.vue'
 
 import useUser from '@/store/user.pinia.js'
 import { useRoute } from 'vue-router'
+import IconLoader from '@/components/icons/IconLoader.vue'
+import useCore from '@/store/core.pinia.js'
 const userPinia = useUser()
-const route = useRoute()
 const { loadingUser } = storeToRefs(userPinia)
 
 const collapse = ref(false)
@@ -21,7 +22,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <a-spin v-if="loadingUser" class="spin" size="large"> </a-spin>
+  <a-spin v-if="loadingUser" class="spin" size="large">
+    <template #indicator> <icon-loader style="font-size: 50px" /> </template>
+  </a-spin>
+
   <template v-else>
     <a-layout>
       <a-layout-sider

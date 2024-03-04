@@ -6,8 +6,6 @@ const useAuth = defineStore('auth', {
   state: () => ({
     user: null,
     loadingLogin: false,
-    loading: false,
-    phoneNumber: null,
     finishedTimeStatus: false,
     isRegistered: true,
     otp: {
@@ -23,11 +21,13 @@ const useAuth = defineStore('auth', {
       this.otp.otpKey = null
       this.isRegistered = true
     },
+
     changeRetryOptStatus() {
       this.finishedTimeStatus = !this.finishedTimeStatus
     },
     getGenerateOtp(number) {
-      this.loading = true
+      const core = useCore()
+      core.loading()
       api({
         url: 'otp',
         open: true,
@@ -37,16 +37,16 @@ const useAuth = defineStore('auth', {
         .then(({ data }) => {
           this.otp = data.otp
           this.isRegistered = data.isRegistered
-          this.phoneNumber = number
           this.finishedTimeStatus = false
         })
-        .catch((err) => useCore().switchStatus(err))
+        .catch((err) => core.switchStatus(err))
         .finally(() => {
-          this.loading = false
+          core.loading()
         })
     },
     sendOtp(otp) {
-      this.loading = true
+      const core = useCore()
+      core.loading()
       api({
         url: 'auth',
         open: true,
@@ -61,19 +61,20 @@ const useAuth = defineStore('auth', {
           localStorage.setItem('access_token', data?.accessToken)
           localStorage.setItem('refresh_token', data?.refreshToken)
           this.clearOtp()
-          useCore().redirect('/dashboard')
-          useCore().setToast({
+          core.redirect('/dashboard')
+          core.setToast({
             message: `Tizimga kirish muvaffaqiyatli bajarildi!`,
             type: 'success'
           })
         })
-        .catch((err) => useCore().switchStatus(err))
+        .catch((err) => core.switchStatus(err))
         .finally(() => {
-          this.loading = false
+          core.loading()
         })
     },
     register(form) {
-      this.loading = true
+      const core = useCore()
+      core.loading()
       api({
         url: 'register',
         open: true,
@@ -90,15 +91,15 @@ const useAuth = defineStore('auth', {
           localStorage.setItem('access_token', data?.accessToken)
           localStorage.setItem('refresh_token', data?.refreshToken)
           this.clearOtp()
-          useCore().redirect('/dashboard')
-          useCore().setToast({
+          core.redirect('/dashboard')
+          core.setToast({
             message: `Tizimga kirish muvaffaqiyatli bajarildi!`,
             type: 'success'
           })
         })
-        .catch((err) => useCore().switchStatus(err))
+        .catch((err) => core.switchStatus(err))
         .finally(() => {
-          this.loading = false
+          core.loading()
         })
     }
   }

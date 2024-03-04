@@ -2,22 +2,29 @@
 import { storeToRefs } from 'pinia'
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import useCore from '@/store/core.pinia.js'
 import useAuth from '@/store/auth.pinia.js'
 import { Form } from 'ant-design-vue'
-import OtpInputComponent from '@/pages/auth/components/OtpInputComponent.vue'
-import RetryTimerComponent from '@/pages/auth/components/RetryTimerComponent.vue'
-import PhoneNumberInputComponent from '@/pages/auth/components/PhoneNumberInputComponent.vue'
+import OtpInputComponent from '@/components/OtpInputComponent.vue'
+import RetryTimerComponent from '@/components/RetryTimerComponent.vue'
+import PhoneNumberInputComponent from '@/components/PhoneNumberInputComponent.vue'
 
 const { t } = useI18n()
+const corePinia = useCore()
 const authPinia = useAuth()
 const useForm = Form.useForm
+
+const { loadingMain } = storeToRefs(corePinia)
 const { otp, isRegistered, finishedTimeStatus } = storeToRefs(authPinia)
+
 const model = ref({
   phone_number: null,
   firstName: null,
   lastName: null,
-  otp: null
+  otp: null,
+  checked: null
 })
+
 const modelRules = reactive({
   phone_number: [
     {
@@ -56,19 +63,22 @@ const modelRules = reactive({
       message: t('ENTER_THE_COMPLETE_CODE'),
       trigger: 'blur'
     }
+  ],
+  checked: [
+    {
+      required: true,
+      message: t('REQUIRED_FIELD')
+    }
   ]
 })
-
-const { validate, validateInfos } = useForm(model, modelRules)
+const { resetFields, validate, validateInfos } = useForm(model, modelRules)
 
 const getOtpGenerate = () => {
   validate(['phone_number'])
     .then(() => {
       authPinia.getGenerateOtp(model.value.phone_number)
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(() => {})
 }
 const sendOpt = () => {
   validate(['otp', 'phone_number'])
@@ -82,16 +92,30 @@ const register = () => {
     .then(() => {
       authPinia.register(model.value)
     })
-    .catch(() => {})
+    .catch((error) => {
+      if (!error.values.checked) {
+        corePinia.setToast({
+          message: t('YOU_MUST_AGREE_TO_THE_OFFER_TO_REGISTER'),
+          type: 'warning'
+        })
+      }
+    })
 }
 const retryOtp = () => {
-  authPinia.getGenerateOtp(authPinia.phoneNumber)
+  authPinia.getGenerateOtp(model.value.phone_number)
 }
 const changePhoneNumber = () => {
   authPinia.clearOtp()
   model.value.firstName = null
   model.value.lastName = null
   model.value.otp = null
+  model.value.checked = null
+  model.value.phone_number = null
+  resetFields()
+}
+
+const handleCheck = (e) => {
+  model.value.checked = e.target.checked ? true : null
 }
 </script>
 
@@ -102,29 +126,53 @@ const changePhoneNumber = () => {
       :label="$t('PHONE_NUMBER')"
     >
       <phone-number-input-component
-        :disable="Boolean(otp.otpKey)"
+        :disable="Boolean(otp.otpKey) || loadingMain"
         v-model="model.phone_number"
+        :value="model.phone_number"
       />
     </a-form-item>
     <template v-if="!isRegistered">
       <a-form-item v-bind="validateInfos.firstName" :label="$t('FIRST_NAME')">
         <a-input
           v-model:value="model.firstName"
+          :disabled="loadingMain"
           size="large"
           :placeholder="$t('ENTER_YOUR_FIRST_NAME')"
         />
       </a-form-item>
-      <a-form-item v-bind="validateInfos.lastName" :label="$t('LAST_NAME')">
+      <a-form-item
+        class="last-name"
+        v-bind="validateInfos.lastName"
+        :label="$t('LAST_NAME')"
+      >
         <a-input
           v-model:value="model.lastName"
+          :disabled="loadingMain"
           size="large"
           :placeholder="$t('ENTER_YOUR_LAST_NAME')"
         />
       </a-form-item>
     </template>
+    <template v-if="!isRegistered">
+      <a-form-item v-bind="validateInfos.checked">
+        <a-checkbox
+          @change="(e) => handleCheck(e)"
+          v-model:checked="model.checked"
+          :disabled="loadingMain"
+        >
+          Ro'yxatdan o'tish orqali siz
+          <a href="#" class="offer-link">oferta shartlari</a>ga roziligingizni
+          bildirasiz.
+        </a-checkbox>
+      </a-form-item>
+    </template>
     <template v-if="otp.otpKey">
       <a-form-item :label="$t('ENTER_SMS_CODE')" v-bind="validateInfos.otp">
-        <otp-input-component v-model="model.otp" />
+        <otp-input-component
+          v-model="model.otp"
+          :count="6"
+          :disabled="loadingMain"
+        />
         <template #extra>
           <a-row class="otp-footer">
             <a-col>
@@ -162,6 +210,7 @@ const changePhoneNumber = () => {
         <a-button
           @click="sendOpt"
           @keyup.enter="sendOpt"
+          :loading="loadingMain"
           block
           size="large"
           html-type="submit"
@@ -173,6 +222,7 @@ const changePhoneNumber = () => {
       <template v-else-if="!isRegistered">
         <a-button
           @click="register"
+          :loading="loadingMain"
           block
           size="large"
           html-type="submit"
@@ -184,6 +234,7 @@ const changePhoneNumber = () => {
       <template v-else>
         <a-button
           @click="getOtpGenerate"
+          :loading="loadingMain"
           block
           size="large"
           html-type="submit"
@@ -197,8 +248,15 @@ const changePhoneNumber = () => {
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/variable';
 .otp-footer {
   justify-content: space-between;
   margin-top: 5px;
+}
+.last-name {
+  margin-bottom: 10px !important;
+}
+.offer-link {
+  color: $primary;
 }
 </style>

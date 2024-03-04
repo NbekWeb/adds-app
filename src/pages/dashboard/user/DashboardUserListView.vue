@@ -50,10 +50,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="scss">
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-</style>
+<style scoped lang="scss"></style>

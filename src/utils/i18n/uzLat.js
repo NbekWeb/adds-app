@@ -9,14 +9,18 @@ const uzLat = {
   DashboardUserListView: 'Auditoriya',
   DashboardUserEditView: 'Foydalanuvchini tahrirlash',
   BillingView: "Billing va to'lovlar",
+  DashboardSettingsView: 'Sozlamalar',
   //   validations
   REQUIRED_FIELD: 'Majburiy maydon',
   REQUIRED_PHONE_NUMBER: "Telefon raqam to'liq kiritilishi shart!",
   REQUIRED_CODE: 'Kodni kiriting',
   ENTER_THE_COMPLETE_CODE: "Kodni to'liq kiriting",
+
   //   buttons
   YES: 'Ha',
   NO: "Yo'q",
+  SAVE: 'Saqlash',
+  BACK: 'Orqaga',
   CHANGE_PHONE_NUMBER: "Raqamni o'zgartirish",
   RESEND_THE_CODE: 'Kodni qayta yuborish',
   ENTER: 'Kirish',
@@ -34,7 +38,9 @@ const uzLat = {
     'Biznes uchun reklamalarni joylashtirish, boshqarish uchun platforma.',
   ENTER_YOUR_NUMBER_TO_LOGIN: 'Tizimga kirish uchun raqamingizni kiriting',
   //   notificitions
-  DO_YOU_WANT_TO_DELETE_THE_USER: "Foydalanuvchini o'chirishni xoxlaysizmi?"
+  DO_YOU_WANT_TO_DELETE_THE_USER: "Foydalanuvchini o'chirishni xoxlaysizmi?",
+  YOU_MUST_AGREE_TO_THE_OFFER_TO_REGISTER:
+    "Ro'yxatdan o'tish uchun oferta ga rozilik bildirishingiz shart"
 }
 
 export default uzLat

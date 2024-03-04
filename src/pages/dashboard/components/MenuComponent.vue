@@ -1,7 +1,7 @@
 <script setup>
 import Logo from '@/components/Logo.vue'
 import UserComponent from '@/pages/dashboard/components/UserComponent.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import IconGrid from '@/components/icons/IconGrid.vue'
 import IconPieChart from '@/components/icons/IconPieChart.vue'
 import IconAnnouncement from '@/components/icons/IconAnnouncement.vue'
@@ -24,16 +24,10 @@ const { collapsed } = defineProps({
 const router = useRouter()
 const route = useRoute()
 const userPinia = useUser()
-const corePinia = useCore()
-const selected = ref([route.fullPath.split('/')[2]])
+const selected = ref([])
+const activeLink = computed(() => route.fullPath.split('/')[2])
 const setCollapse = ({ key }) => {
   router.push(`/dashboard/${key}`)
-}
-const cancel = () => {
-  corePinia.setToast({
-    message: 'Tizimda qolganingiz uchun tashakkur!',
-    type: 'info'
-  })
 }
 </script>
 
@@ -63,7 +57,8 @@ const cancel = () => {
       <user-component :avatar="true" class="mb-4" />
       <a-menu
         @click="setCollapse"
-        v-model:selectedKeys="selected"
+        v-model="selected"
+        :selectedKeys="[activeLink]"
         mode="inline"
       >
         <a-menu-item :key="`main`">
@@ -99,25 +94,31 @@ const cancel = () => {
       </a-menu>
     </div>
     <div class="aside-footer m-3">
-      <ul class="aside-footer-list" :class="collapsed && 'collapse'">
+      <ul class="aside-footer-list px-2" :class="collapsed && 'collapse'">
         <li>
           <a-tooltip title="Yordam">
-            <router-link class="text-success" to="#">
-              <icon-help />
+            <router-link class="text-success" to="/dashboard/help">
+              <a-button type="link" size="small" link>
+                <icon-help />
+              </a-button>
             </router-link>
           </a-tooltip>
         </li>
         <li>
           <a-tooltip title=" Xabar va yangilik">
-            <router-link to="#">
-              <icon-notification-text />
+            <router-link to="/dashboard/news">
+              <a-button type="link" size="small" link>
+                <icon-notification-text />
+              </a-button>
             </router-link>
           </a-tooltip>
         </li>
         <li>
           <a-tooltip title="Sozlamalar">
-            <router-link to="#">
-              <icon-settings />
+            <router-link to="/dashboard/settings">
+              <a-button type="link" size="small" link>
+                <icon-settings />
+              </a-button>
             </router-link>
           </a-tooltip>
         </li>
@@ -128,9 +129,8 @@ const cancel = () => {
               ok-text="Ha"
               cancel-text="Yo'q"
               @confirm="userPinia.logOut()"
-              @cancel="cancel"
             >
-              <a-button type="link" size="small" link>
+              <a-button class="log-out" type="link" size="small" link danger>
                 <icon-power-off />
               </a-button>
             </a-popconfirm>
@@ -174,11 +174,24 @@ const cancel = () => {
       padding: 0;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       li {
         display: flex;
         align-items: center;
-        padding: 0.5rem 1rem 0.5rem 24px;
+        justify-content: center;
+
+        button {
+          color: $body !important;
+        }
+        .log-out {
+          color: $danger !important;
+        }
+        .router-link-exact-active {
+          button {
+            background-color: rgb($info, 0.2);
+            color: $primary !important;
+          }
+        }
         svg {
           vertical-align: -2px;
         }
@@ -186,7 +199,7 @@ const cancel = () => {
       &.collapse {
         flex-direction: column;
         li {
-          padding-left: 1rem;
+          padding: 0.5rem 0.6rem 0.5rem 0.6rem;
         }
       }
     }

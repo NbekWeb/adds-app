@@ -4,18 +4,31 @@ import useCore from '@/store/core.pinia.js'
 
 const useUser = defineStore('user', {
   state: () => ({
-    user: null,
+    user: {
+      id: null,
+      username: null,
+      firstName: null,
+      lastName: null,
+      balance: 0,
+      role: null
+    },
+    loading: false,
     userList: [],
-    loadingUser: false,
-    loading: false
+    loadingUser: true
   }),
   actions: {
     logOut() {
-      this.user = null
+      this.user.id = null
+      this.user.username = null
+      this.user.firstName = null
+      this.user.lastName = null
+      this.user.role = null
+      this.user.balance = 0
       localStorage.clear()
       useCore().redirect('/')
     },
     getUserMe() {
+      const core = useCore()
       this.loadingUser = true
       api({
         url: 'user/me'
@@ -24,13 +37,14 @@ const useUser = defineStore('user', {
           this.user = data
         })
         .catch((error) => {
-          useCore().switchStatus(error)
+          core.switchStatus(error)
         })
         .finally(() => {
           this.loadingUser = false
         })
     },
     getAllUsers() {
+      const core = useCore()
       this.loading = true
       api({
         url: 'user'
@@ -39,7 +53,31 @@ const useUser = defineStore('user', {
           console.log(data)
         })
         .catch((error) => {
-          useCore().switchStatus(error)
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    updateUser(form) {
+      const core = useCore()
+      this.loading = true
+      api({
+        url: 'user',
+        method: 'PUT',
+        data: {
+          firstName: form.firstName,
+          lastName: form.lastName,
+          phoneNumber: `998${form.username}`
+        }
+      })
+        .then(({ data }) => {
+          this.user.firstName = data.firstName
+          this.user.lastName = data.lastName
+          this.user.username = data.phoneNumber
+        })
+        .catch((error) => {
+          core.switchStatus(error)
         })
         .finally(() => {
           this.loading = false
