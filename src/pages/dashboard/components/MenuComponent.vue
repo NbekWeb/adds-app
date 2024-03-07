@@ -1,30 +1,31 @@
 <script setup>
-
-import Logo from "@/components/Logo.vue";
-import UserComponent from "@/pages/dashboard/components/UserComponent.vue";
-import {ref} from "vue";
-import IconGrid from "@/components/icons/IconGrid.vue";
-import IconPieChart from "@/components/icons/IconPieChart.vue";
-import IconAnnouncement from "@/components/icons/IconAnnouncement.vue";
-import IconCoinsStacked from "@/components/icons/IconCoinsStacked.vue";
-import IconUsers from "@/components/icons/IconUsers.vue";
-import IconNotificationText from "@/components/icons/IconNotificationText.vue";
-import IconSettings from "@/components/icons/IconSettings.vue";
-import IconHelp from "@/components/icons/IconHelp.vue";
-import IconPowerOff from "@/components/icons/IconPowerOff.vue";
-import {useRouter} from "vue-router";
-
-const {collapsed} = defineProps({
-  collapsed:{
+import Logo from '@/components/Logo.vue'
+import UserComponent from '@/pages/dashboard/components/UserComponent.vue'
+import { computed, ref } from 'vue'
+import IconGrid from '@/components/icons/IconGrid.vue'
+import IconPieChart from '@/components/icons/IconPieChart.vue'
+import IconAnnouncement from '@/components/icons/IconAnnouncement.vue'
+import IconCoinsStacked from '@/components/icons/IconCoinsStacked.vue'
+import IconUsers from '@/components/icons/IconUsers.vue'
+import IconNotificationText from '@/components/icons/IconNotificationText.vue'
+import IconSettings from '@/components/icons/IconSettings.vue'
+import IconHelp from '@/components/icons/IconHelp.vue'
+import IconPowerOff from '@/components/icons/IconPowerOff.vue'
+import { useRoute, useRouter } from 'vue-router'
+import useUser from '@/store/user.pinia.js'
+const { collapsed } = defineProps({
+  collapsed: {
     type: Boolean,
     default: false
   }
-});
-const router = useRouter();
-const selected = ref(['main']);
-
-const setCollapse = ({key})=>{
-  router.push(`/dashboard/${key}`);
+})
+const router = useRouter()
+const route = useRoute()
+const userPinia = useUser()
+const selected = ref([])
+const activeLink = computed(() => route.fullPath.split('/')[2])
+const setCollapse = ({ key }) => {
+  router.push(`/dashboard/${key}`)
 }
 </script>
 
@@ -32,8 +33,15 @@ const setCollapse = ({key})=>{
   <div class="aside" :class="collapsed && 'collapsed'">
     <div class="px-3">
       <a-row class="py-3" align="middle" justify="center">
-        <a-col :xs="24" :sm="24" :md="collapsed ? 24 : 12" :lg="collapsed ? 24 : 8" :xxl="collapsed ? 24 : 6" class="text-center">
-          <logo/>
+        <a-col
+          :xs="24"
+          :sm="24"
+          :md="collapsed ? 24 : 12"
+          :lg="collapsed ? 24 : 8"
+          :xxl="collapsed ? 24 : 6"
+          class="text-center"
+        >
+          <logo />
         </a-col>
         <template v-if="!collapsed">
           <a-col :xs="24" :sm="24" :md="12" :lg="16" :xxl="16">
@@ -44,72 +52,86 @@ const setCollapse = ({key})=>{
           </a-col>
         </template>
       </a-row>
-      <user-component :avatar="true" class="mb-4"/>
+      <user-component :avatar="true" class="mb-4" />
       <a-menu
-          @click="setCollapse"
-          v-model:selectedKeys="selected"
-          mode="inline"
+        @click="setCollapse"
+        v-model="selected"
+        :selectedKeys="[activeLink]"
+        mode="inline"
       >
         <a-menu-item :key="`main`">
           <template #icon>
-            <icon-grid/>
+            <icon-grid />
           </template>
-          Asosiy sahifa
+          {{ $t('DashboardListView') }}
         </a-menu-item>
-        <a-menu-item :key="`ads`">
+        <a-menu-item :key="`board`">
           <template #icon>
-            <icon-announcement/>
+            <icon-announcement />
           </template>
-          E'lonlar
+          {{ $t('DashboardBoardListView') }}
         </a-menu-item>
         <a-menu-item :key="`report`">
           <template #icon>
-            <icon-pie-chart/>
+            <icon-pie-chart />
           </template>
-          E'lon bo'yicha hisobot
+          {{ $t('ReportView') }}
         </a-menu-item>
-        <a-menu-item :key="`audience`">
+        <a-menu-item :key="`user`">
           <template #icon>
-            <icon-users/>
+            <icon-users />
           </template>
-          Auditoriya
+          {{ $t('DashboardUserListView') }}
         </a-menu-item>
         <a-menu-item :key="`billing`">
           <template #icon>
-            <icon-coins-stacked/>
+            <icon-coins-stacked />
           </template>
-          Billing va to'lovlar
+          {{ $t('BillingView') }}
         </a-menu-item>
       </a-menu>
     </div>
     <div class="aside-footer m-3">
-      <ul class="aside-footer-list" :class="collapsed && 'collapse'">
+      <ul class="aside-footer-list px-2" :class="collapsed && 'collapse'">
         <li>
           <a-tooltip title="Yordam">
-            <router-link class="text-success" to="#">
-              <icon-help/>
+            <router-link class="text-success" to="/dashboard/help">
+              <a-button type="link" size="small" link>
+                <icon-help />
+              </a-button>
             </router-link>
           </a-tooltip>
         </li>
         <li>
           <a-tooltip title=" Xabar va yangilik">
-            <router-link to="#">
-              <icon-notification-text/>
+            <router-link to="/dashboard/news">
+              <a-button type="link" size="small" link>
+                <icon-notification-text />
+              </a-button>
             </router-link>
           </a-tooltip>
         </li>
         <li>
           <a-tooltip title="Sozlamalar">
-            <router-link to="#">
-              <icon-settings/>
+            <router-link to="/dashboard/settings">
+              <a-button type="link" size="small" link>
+                <icon-settings />
+              </a-button>
             </router-link>
           </a-tooltip>
         </li>
         <li>
           <a-tooltip title="Tizimdan chiqish">
-            <router-link to="#">
-              <icon-power-off/>
-            </router-link>
+            <a-popconfirm
+              title="Tizimdan chiqmoqchimisiz"
+              ok-text="Ha"
+              cancel-text="Yo'q"
+              @confirm="userPinia.logOut()"
+            >
+              <a-button class="log-out" type="link" size="small" link danger>
+                <icon-power-off />
+              </a-button>
+            </a-popconfirm>
           </a-tooltip>
         </li>
       </ul>
@@ -118,51 +140,64 @@ const setCollapse = ({key})=>{
 </template>
 
 <style scoped lang="scss">
-@import "@/assets/styles/variable";
-:deep(.logo){
+@import '@/assets/styles/variable';
+:deep(.logo) {
   font-size: 36px;
   color: $primary;
 }
-:deep(.ant-menu){
-  border: none!important;
+:deep(.ant-menu) {
+  border: none !important;
 }
-.logo-name{
+.logo-name {
   font-weight: 700;
-  *{
+  * {
     font-weight: 700;
   }
 }
-.aside{
+.aside {
   height: 100%;
   overflow: auto;
   position: relative;
-  .aside-footer{
+  .aside-footer {
     font-size: 16px;
-    border-top: 1px solid rgba($muted,.3);
+    border-top: 1px solid rgba($muted, 0.3);
     padding-top: 1rem;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    &-list{
+    &-list {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
       align-items: center;
-      justify-content: center;
-      li{
+      justify-content: space-between;
+      li {
         display: flex;
         align-items: center;
-        padding: .5rem 1rem .5rem 24px;
-        svg{
+        justify-content: center;
+
+        button {
+          color: $body !important;
+        }
+        .log-out {
+          color: $danger !important;
+        }
+        .router-link-exact-active {
+          button {
+            background-color: rgb($info, 0.2);
+            color: $primary !important;
+          }
+        }
+        svg {
           vertical-align: -2px;
         }
       }
-      &.collapse{
+      &.collapse {
         flex-direction: column;
-        li{
-          padding-left: 1rem;
+        li {
+          padding: 0.5rem 0.6rem 0.5rem 0.6rem;
         }
       }
     }

@@ -1,49 +1,49 @@
 <script setup>
-import theme from "@/utils/ant/theme.js";
-import useCore from "@/store/core.pinia.js";
-import {watch} from "vue";
-import {useRouter} from "vue-router";
-import {storeToRefs} from "pinia";
-import {message} from "ant-design-vue";
+import theme from '@/utils/ant/theme.js'
+import useCore from '@/store/core.pinia.js'
+import { watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { message } from 'ant-design-vue'
+import { useI18n } from 'vue-i18n'
 
-const corePinia = useCore();
-const {redirectUrl,toastContent} = storeToRefs(corePinia);
-const router = useRouter();
-watch(redirectUrl, ()=>{
-  if(redirectUrl.value && redirectUrl.value !== ''){
-    router.push(`${redirectUrl.value}`);
-    corePinia.redirect(null);
+const { t } = useI18n()
+const corePinia = useCore()
+const { redirectUrl, toastContent } = storeToRefs(corePinia)
+const router = useRouter()
+watch(redirectUrl, () => {
+  if (redirectUrl.value && redirectUrl.value !== '') {
+    router.push(`${redirectUrl.value}`)
+    corePinia.redirect(null)
   }
-});
+})
 
-watch(toastContent,()=>{
+watch(toastContent, () => {
   if (toastContent.value) {
-    const toastMessage = toastContent.value || null;
-    const type = toastContent.value.type || 'success'
-    if (type === "error") {
-      return message.error(toastMessage.message);
+    const toastMessage = toastContent.value?.message
+    const type = toastContent.value?.type || 'success'
+    const locale = toastContent.value?.locale
+
+    if (type === 'error') {
+      return message.error(toastMessage ? toastMessage : t(`${locale}`))
     }
-    if (type === "success") {
-      message.success(toastMessage.message);
+    if (type === 'success') {
+      message.success(toastMessage ? toastMessage : t(`${locale}`))
     }
-    if (type === "info") {
-      message.info(toastMessage.message);
+    if (type === 'info') {
+      message.info(toastMessage ? toastMessage : t(`${locale}`))
     }
-    if (type === "warning") {
-      message.warning(toastMessage.message);
+    if (type === 'warning') {
+      message.warning(toastMessage ? toastMessage : t(`${locale}`))
     }
   }
-});
+})
 </script>
 
 <template>
-  <a-config-provider
-      :theme="theme"
-  >
-    <router-view/>
+  <a-config-provider :theme="theme">
+    <router-view />
   </a-config-provider>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
