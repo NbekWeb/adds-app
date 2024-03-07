@@ -13,8 +13,6 @@ import IconHelp from '@/components/icons/IconHelp.vue'
 import IconPowerOff from '@/components/icons/IconPowerOff.vue'
 import { useRoute, useRouter } from 'vue-router'
 import useUser from '@/store/user.pinia.js'
-import useCore from '@/store/core.pinia.js'
-
 const { collapsed } = defineProps({
   collapsed: {
     type: Boolean,

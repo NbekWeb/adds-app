@@ -1,7 +1,19 @@
-<script setup></script>
+<script setup>
+import { onBeforeUnmount, onMounted } from 'vue'
+import useBoard from '@/store/boadr.pinia.js'
+import BoardListComponent from '@/pages/dashboard/board/components/BoardListComponent.vue'
+import BoardHeaderComponent from '@/pages/dashboard/board/components/BoardHeaderComponent.vue'
+
+const boardPinia = useBoard()
+
+onBeforeUnmount(() => {
+  boardPinia.$reset()
+})
+</script>
 
 <template>
-  <h1>Board</h1>
+  <board-header-component />
+  <board-list-component />
 </template>
 
 <style scoped lang="scss"></style>

@@ -9,6 +9,7 @@ import DashboardUserListView from '@/pages/dashboard/user/DashboardUserListView.
 import DashboardUserView from '@/pages/dashboard/user/DashboardUserView.vue'
 import DashboardUserEditView from '@/pages/dashboard/user/[id]/DashboardUserEditView.vue'
 import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsView.vue'
+import DashboardBoardFormView from '@/pages/dashboard/board/DashboardBoardFormView.vue'
 
 const LoginView = () => import('@/pages/auth/AuthView.vue')
 
@@ -55,7 +56,7 @@ export const router = createRouter({
             {
               name: 'AddBoardView',
               path: 'add',
-              component: CRUDBoardView
+              component: DashboardBoardFormView
             }
           ]
         },

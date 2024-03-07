@@ -1,17 +1,44 @@
-<script setup></script>
+<script setup>
+defineProps({
+  size: {
+    type: String,
+    default: 'default'
+  }
+})
+</script>
 
 <template>
-  <div class="loader"></div>
+  <div
+    class="loader"
+    :class="[
+      { large: size === 'large' },
+      { default: size === 'default' },
+      { small: size === 'small' }
+    ]"
+  ></div>
 </template>
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+.large {
+  width: 64px;
+  height: 64px;
+  border-width: 4px !important;
+}
+.default {
+  width: 36px;
+  height: 36px;
+  border-width: 2px !important;
+}
+.small {
+  width: 16px;
+  height: 16px;
+  border-width: 1px !important;
+}
 .loader {
-  width: 1em;
-  height: 1em;
   aspect-ratio: 1;
   border-radius: 50%;
-  border: 0.07em solid $primary;
+  border: 0.07em solid currentColor;
   animation:
     l20-1 1s infinite linear alternate,
     l20-2 2s infinite linear;

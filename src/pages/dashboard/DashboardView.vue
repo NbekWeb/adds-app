@@ -11,9 +11,9 @@ import { useRoute } from 'vue-router'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import useCore from '@/store/core.pinia.js'
 const userPinia = useUser()
+const corePinia = useCore()
+const { collapsed } = storeToRefs(corePinia)
 const { loadingUser } = storeToRefs(userPinia)
-
-const collapse = ref(false)
 
 // user me check token
 onMounted(() => {
@@ -23,20 +23,20 @@ onMounted(() => {
 
 <template>
   <a-spin v-if="loadingUser" class="spin" size="large">
-    <template #indicator> <icon-loader style="font-size: 50px" /> </template>
+    <template #indicator> <icon-loader size="large" /> </template>
   </a-spin>
 
   <template v-else>
     <a-layout>
       <a-layout-sider
         :width="250"
-        :collapsed="collapse"
+        :collapsed="collapsed"
         theme="light"
         class="menu"
       >
-        <menu-component :collapsed="collapse" />
-        <button @click="collapse = !collapse" type="button" class="btn-toggle">
-          <template v-if="collapse">
+        <menu-component :collapsed="collapsed" />
+        <button @click="corePinia.collapse()" type="button" class="btn-toggle">
+          <template v-if="collapsed">
             <icon-chevron-right />
           </template>
           <template v-else>
@@ -50,7 +50,9 @@ onMounted(() => {
         </a-layout-header>
         <a-layout-content class="content">
           <a-card>
-            <router-view />
+            <div class="view">
+              <router-view />
+            </div>
           </a-card>
         </a-layout-content>
       </a-layout>
@@ -84,26 +86,6 @@ onMounted(() => {
   overflow: auto;
 }
 .content {
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  /* Track */
-  &::-webkit-scrollbar-track {
-    width: 10px;
-    background: $white;
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background: rgb($info, 1);
-    border-radius: 4px;
-  }
-
-  /* Handle on hover */
-  &::-webkit-scrollbar-thumb:hover {
-    background: $primary;
-  }
 }
 .btn-toggle {
   width: 24px;
@@ -124,7 +106,8 @@ onMounted(() => {
     color: $primary;
   }
 }
-:deep(.ant-card-body) {
-  min-height: calc(100vh - 114px);
+.view {
+  width: 100%;
+  height: calc(100vh - 162px);
 }
 </style>
