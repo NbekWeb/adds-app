@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 const useCore = defineStore('core', {
   state: () => ({
     locale: 'uzLat',
+    collapsed: false,
     loadingUrl: new Set([]),
     loadingMain: false,
     toastContent: null,
@@ -10,6 +11,9 @@ const useCore = defineStore('core', {
   actions: {
     loading() {
       this.loadingMain = !this.loadingMain
+    },
+    collapse() {
+      this.collapsed = !this.collapsed
     },
     redirect(url = null) {
       this.redirectUrl = url

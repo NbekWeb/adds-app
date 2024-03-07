@@ -56,4 +56,40 @@ a {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  .title{
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+.empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.scrollbar-content {
+  height: calc(100% - 40px);
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    width: 10px;
+    background: $white;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgb($info, 1);
+    border-radius: 4px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: $primary;
+  }
 }

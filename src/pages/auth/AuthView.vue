@@ -23,7 +23,7 @@ const { otp, isRegistered } = storeToRefs(authPinia)
       </a-col>
       <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
         <a-card>
-          <div class="auth-form px-5" :class="{ 'py-5': isRegistered }">
+          <div class="auth-form" :class="{ 'py-5': isRegistered }">
             <div>
               <h1>ADS-<span class="text-primary">PRO</span></h1>
               <p class="text-muted">
@@ -56,6 +56,7 @@ const { otp, isRegistered } = storeToRefs(authPinia)
     display: block;
     width: 95%;
     max-height: calc(100vh - 110px);
+    padding: 0 46px 0 46px;
     margin: 0 auto;
     overflow: auto;
     &::-webkit-scrollbar {
