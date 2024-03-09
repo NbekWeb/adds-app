@@ -85,6 +85,4 @@ const { otp, isRegistered } = storeToRefs(authPinia)
 img {
   height: 90vh;
 }
-.content {
-}
 </style>
