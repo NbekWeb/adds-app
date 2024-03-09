@@ -11,8 +11,13 @@ const corePinia = useCore()
 const { collapsed } = storeToRefs(corePinia)
 const { boardList, loading, page, totalElements } = storeToRefs(boardPinia)
 
-const mainLoading = computed(() => loading.value)
-
+const loadingElementCount = computed(() =>
+  totalElements.value
+    ? totalElements.value - boardList.length >= 9
+      ? 9
+      : totalElements.value - boardList.length
+    : 9
+)
 const getBoardList = (page) => {
   boardPinia.getAllBoard(9, page)
 }
@@ -30,14 +35,14 @@ onMounted(() => {
     @get-date="getBoardList"
   >
     <template #content>
-      <template v-if="!boardList.length && !loading">
+      <template v-if="!boardList?.length && !loading">
         <a-empty class="empty">
           <template #description>
             {{ $t('NO_DATA') }}
           </template>
         </a-empty>
       </template>
-      <template v-if="boardList.length">
+      <template v-if="boardList?.length">
         <a-row :gutter="[10, 10]" class="mx-0">
           <a-col
             :xs="24"
@@ -61,10 +66,11 @@ onMounted(() => {
             :lg="collapsed ? 8 : 12"
             :xl="collapsed ? 6 : 8"
             :xxl="collapsed ? 4 : 6"
-            v-for="item in collapsed ? 8 : 6"
+            v-for="item in loadingElementCount"
+            :key="item"
           >
-            <a-card :loading="mainLoading">
-              <div style="height: 250px"></div>
+            <a-card>
+              <a-skeleton active avatar :paragraph="{ rows: 4 }" />
             </a-card>
           </a-col>
         </a-row>

@@ -7,9 +7,8 @@ import IconUser from '@/components/icons/IconUser.vue'
 import useBoard from '@/store/boadr.pinia.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { storeToRefs } from 'pinia'
-import IconSearch from '@/components/icons/IconSearch.vue'
 
-const props = defineProps({
+defineProps({
   item: {
     type: Object,
     required: true
@@ -25,75 +24,79 @@ const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
 </script>
 
 <template>
-  <a-card hoverable class="board-item" :loading="loading">
-    <a-dropdown
-      placement="bottomRight"
-      class="actions-dropdown"
-      trigger="click"
-    >
-      <a-button
-        class="btn-card-actions"
-        size="small"
-        type="primary"
-        shape="circle"
+  <a-spin :spinning="loadingDelete === item.id">
+    <template #indicator>
+      <icon-loader />
+    </template>
+    <a-card hoverable class="board-item" :loading="loading">
+      <a-dropdown
+        placement="bottomRight"
+        class="actions-dropdown"
+        trigger="click"
       >
-        <template v-if="loadingDelete === item.id">
-          <icon-loader size="small" />
-        </template>
-        <template v-else>
+        <a-button
+          class="btn-card-actions"
+          size="small"
+          type="primary"
+          shape="circle"
+        >
           <icon-dots-vertical />
+        </a-button>
+        <template #overlay>
+          <a-space direction="vertical" class="py-2">
+            <a-button
+              type="primary"
+              class="btn-card-actions-edit mx-1"
+              size="small"
+              shape="circle"
+            >
+              <icon-edit />
+            </a-button>
+            <a-button
+              @click="boardPinia.deleteBoard(item?.id)"
+              type="primary"
+              class="btn-card-actions-delete mx-1"
+              size="small"
+              shape="circle"
+            >
+              <icon-trash />
+            </a-button>
+          </a-space>
         </template>
-      </a-button>
-      <template #overlay>
-        <a-space direction="vertical" class="py-2">
-          <a-button
-            type="primary"
-            class="btn-card-actions-edit mx-1"
-            size="small"
-            shape="circle"
-          >
-            <icon-edit />
-          </a-button>
-          <a-button
-            @click="boardPinia.deleteBoard(item?.id)"
-            type="primary"
-            class="btn-card-actions-delete mx-1"
-            size="small"
-            shape="circle"
-          >
-            <icon-trash />
-          </a-button>
-        </a-space>
-      </template>
-    </a-dropdown>
-    <div class="board-main-info">
-      <div class="logo">
-        <img :src="`${baseUrl}file/${item?.logoHashId}`" alt="" />
+      </a-dropdown>
+      <div class="board-main-info">
+        <div class="logo">
+          <img :src="`${baseUrl}file/${item?.logoHashId}`" alt="" />
+        </div>
+        <div>
+          <h1 class="board-name">{{ item?.name }}</h1>
+          <span class="subscriptions">
+            <icon-user />
+            <span>12k</span>
+          </span>
+        </div>
       </div>
-      <div>
-        <h1 class="board-name">{{ item?.name }}</h1>
-        <span class="subscriptions">
-          <icon-user />
-          <span>12k</span>
-        </span>
+
+      <div class="description mb-3">
+        <p class="description-text">
+          {{ item?.description }}
+        </p>
       </div>
-    </div>
-    <div class="description mb-3">
-      <p class="description-text">
-        {{ item?.description }}
-      </p>
-    </div>
-    <a-row justify="space-between">
-      <a-col>
-        <span class="category-name">{{ item?.category?.name }}</span>
-      </a-col>
-      <a-col>
-        <a-tag class="status" :bordered="false" color="warning">
-          {{ item?.status?.localName }}
-        </a-tag>
-      </a-col>
-    </a-row>
-  </a-card>
+      <!--    <div class="board-type">-->
+      <!--      <icon-telegram />-->
+      <!--    </div>-->
+      <a-row justify="space-between">
+        <a-col>
+          <span class="category-name">{{ item?.category?.name }}</span>
+        </a-col>
+        <a-col>
+          <a-tag class="status" :bordered="false" color="warning">
+            {{ item?.status?.localName }}
+          </a-tag>
+        </a-col>
+      </a-row>
+    </a-card>
+  </a-spin>
 </template>
 
 <style scoped lang="scss">
@@ -185,6 +188,9 @@ const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
       -webkit-line-clamp: 4;
     }
   }
+  //.board-type {
+  //  font-size: 18px;
+  //}
   .category-name {
     font-weight: bold;
     color: rgb($body, 0.5);

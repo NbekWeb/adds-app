@@ -176,6 +176,7 @@ onBeforeUnmount(() => {
             >
               <a-input-search
                 v-model:value="form.link"
+                allow-clear
                 :placeholder="$t('ENTER_CHANNEL_LINK')"
                 size="large"
                 @search="checkChannelByLink"

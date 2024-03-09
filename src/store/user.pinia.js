@@ -17,16 +17,6 @@ const useUser = defineStore('user', {
     loadingUser: true
   }),
   actions: {
-    logOut() {
-      this.user.id = null
-      this.user.username = null
-      this.user.firstName = null
-      this.user.lastName = null
-      this.user.role = null
-      this.user.balance = 0
-      localStorage.clear()
-      useCore().redirect('/')
-    },
     getUserMe() {
       const core = useCore()
       this.loadingUser = true

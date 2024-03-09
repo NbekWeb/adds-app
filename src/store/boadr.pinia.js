@@ -12,6 +12,8 @@ const useBoard = defineStore('board', {
     boardList: [],
     page: 0,
     size: 9,
+    totalElements: 0,
+    totalPages: 0,
     channel: {
       link: null,
       channelInfo: {
@@ -24,9 +26,7 @@ const useBoard = defineStore('board', {
         hashId: null
       },
       createdAt: null
-    },
-    totalElements: 0,
-    totalPages: 0
+    }
   }),
   actions: {
     getAllBoard(size = this.size, page = this.page) {
@@ -42,6 +42,7 @@ const useBoard = defineStore('board', {
       })
         .then(({ data }) => {
           this.boardList.push(...data.content)
+          this.totalElements = data.totalElements
           this.boardList = [
             ...new Map(
               this.boardList.map((item) => [item['id'], item])

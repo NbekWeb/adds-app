@@ -27,6 +27,10 @@ const activeLink = computed(() => route.fullPath.split('/')[2])
 const setCollapse = ({ key }) => {
   router.push(`/dashboard/${key}`)
 }
+const logOut = () => {
+  localStorage.clear()
+  userPinia.$reset()
+}
 </script>
 
 <template>
@@ -126,7 +130,7 @@ const setCollapse = ({ key }) => {
               title="Tizimdan chiqmoqchimisiz"
               ok-text="Ha"
               cancel-text="Yo'q"
-              @confirm="userPinia.logOut()"
+              @confirm="logOut"
             >
               <a-button class="log-out" type="link" size="small" link danger>
                 <icon-power-off />
