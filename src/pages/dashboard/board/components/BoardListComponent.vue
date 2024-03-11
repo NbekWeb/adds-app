@@ -9,33 +9,33 @@ import { computed, onMounted } from 'vue'
 const boardPinia = useBoard()
 const corePinia = useCore()
 const { collapsed } = storeToRefs(corePinia)
-const { boardList, loading, page, totalElements } = storeToRefs(boardPinia)
+const { boardList, totalPages, page, totalElements } = storeToRefs(boardPinia)
 
-const loadingElementCount = computed(() =>
-  totalElements.value
-    ? totalElements.value - boardList.length >= 9
-      ? 9
-      : totalElements.value - boardList.length
-    : 9
-)
+// const loadingElementCount = computed(() =>
+//   totalElements.value
+//     ? totalElements.value - boardList.value.length >= 9
+//       ? 9
+//       : totalElements.value - boardList.value.length
+//     : 9
+// )
 const getBoardList = (page) => {
-  boardPinia.getAllBoard(9, page)
+  boardPinia.getAllBoard(page)
 }
-onMounted(() => {
-  boardPinia.getAllBoard(9, 0)
-})
 </script>
 
 <template>
   <scrollbar-component
-    :loading="loading"
+    :loading="corePinia.loadingUrl.has('board/all')"
     :count="9"
     :page="page"
+    :total-pages="totalPages"
     :total-count-all="totalElements"
     @get-date="getBoardList"
   >
     <template #content>
-      <template v-if="!boardList?.length && !loading">
+      <template
+        v-if="!boardList?.length && !corePinia.loadingUrl.has('board/all')"
+      >
         <a-empty class="empty">
           <template #description>
             {{ $t('NO_DATA') }}
@@ -57,7 +57,7 @@ onMounted(() => {
           </a-col>
         </a-row>
       </template>
-      <template v-if="loading">
+      <template v-if="corePinia.loadingUrl.has('board/all')">
         <a-row :gutter="[10, 10]" class="mx-0 mt-2">
           <a-col
             :xs="24"
@@ -66,7 +66,7 @@ onMounted(() => {
             :lg="collapsed ? 8 : 12"
             :xl="collapsed ? 6 : 8"
             :xxl="collapsed ? 4 : 6"
-            v-for="item in loadingElementCount"
+            v-for="item in 9"
             :key="item"
           >
             <a-card>

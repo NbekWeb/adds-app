@@ -3,7 +3,7 @@ const useCore = defineStore('core', {
   state: () => ({
     locale: 'uzLat',
     collapsed: false,
-    loadingUrl: new Set([]),
+    loadingUrl: new Set(['user/me']),
     loadingMain: false,
     toastContent: null,
     redirectUrl: null

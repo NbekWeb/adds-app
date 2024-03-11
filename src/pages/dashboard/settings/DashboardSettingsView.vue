@@ -6,10 +6,13 @@ import { onMounted, reactive } from 'vue'
 import PhoneNumberInputComponent from '@/components/PhoneNumberInputComponent.vue'
 import { useRouter } from 'vue-router'
 import IconLoader from '@/components/icons/IconLoader.vue'
+import useCore from '@/store/core.pinia.js'
 
 const router = useRouter()
 const userPinia = useUser()
-const { user, loading } = storeToRefs(userPinia)
+const corePinia = useCore()
+const { loadingUrl } = storeToRefs(corePinia)
+const { user } = storeToRefs(userPinia)
 
 const reg = new RegExp(`^([0-9]{2})([0-9]{3})([0-9]{2})([0-9]{${2}})`)
 const form = reactive({
@@ -44,7 +47,10 @@ onMounted(() => {
               {{ user.firstName }} {{ user.lastName }}
             </h1>
             <p class="user-phone-number">
-              +998 {{ user.username?.replace(reg, '$1 $2-$3-$4') }}
+              +998
+              {{
+                user.username ? user.username.replace(reg, '$1 $2-$3-$4') : ''
+              }}
             </p>
           </div>
         </div>
@@ -77,11 +83,17 @@ onMounted(() => {
         </a-button>
         <a-button
           @click="updateUser"
+          class="btn-save"
           size="large"
           type="primary"
-          :loading="loading"
+          :disabled="loadingUrl.has('user/update')"
         >
-          {{ $t('SAVE') }}
+          <template v-if="loadingUrl.has('user/update')">
+            <icon-loader size="small" class="loader" />
+          </template>
+          <template v-else>
+            {{ $t('SAVE') }}
+          </template>
         </a-button>
       </a-space>
     </div>
@@ -118,6 +130,23 @@ onMounted(() => {
   .button-group {
     display: flex;
     justify-content: flex-end;
+    .loader {
+      border-color: $primary !important;
+    }
+    .btn-save {
+      min-width: 90px;
+    }
+    .btn-check-channel {
+      min-width: 155px;
+    }
+    .btn-save {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      div {
+        border-color: white;
+      }
+    }
   }
 }
 </style>

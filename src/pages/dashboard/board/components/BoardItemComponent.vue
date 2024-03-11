@@ -1,14 +1,18 @@
 <script setup>
 import IconTrash from '@/components/icons/IconTrash.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDotsVertical from '@/components/icons/IconDotsVertical.vue'
 import IconUser from '@/components/icons/IconUser.vue'
 import useBoard from '@/store/boadr.pinia.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { storeToRefs } from 'pinia'
+import IconPlus from '@/components/icons/IconPlus.vue'
+import useCore from '@/store/core.pinia.js'
+// import IconTelegram from '@/components/icons/IconTelegram.vue'
+// import IconInstagram from '@/components/icons/IconInstagram.vue'
 
-defineProps({
+const props = defineProps({
   item: {
     type: Object,
     required: true
@@ -18,13 +22,59 @@ defineProps({
     default: false
   }
 })
+const corePinia = useCore()
 const boardPinia = useBoard()
-const { loadingDelete } = storeToRefs(boardPinia)
+const { loadingUrl } = storeToRefs(corePinia)
 const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
+const config = ref([
+  'Junior',
+  'Middle',
+  'Senior',
+  'Team lead',
+  'Junior',
+  'Middle',
+  'Senior',
+  'Team lead'
+])
+const timeConfig = ref([
+  '8:00',
+  '9:00',
+  '10:00',
+  '8:00',
+  '9:00',
+  '10:00',
+  '8:00',
+  '9:00',
+  '10:00'
+])
+const configLength = ref(0)
+const timeConfigLength = ref(0)
+const parentConfig = ref(null)
+const childConfig = ref(null)
+const parentTimeConfig = ref(null)
+const childTimeConfig = ref(null)
+const modalVisible = ref(false)
+
+onMounted(() => {
+  if (childConfig.value?.offsetWidth > parentConfig.value?.offsetWidth) {
+    configLength.value = Math.floor(
+      parentConfig.value.offsetWidth /
+        (childConfig.value.offsetWidth / config.value.length)
+    )
+  }
+  if (
+    childTimeConfig.value?.offsetWidth > parentTimeConfig.value?.offsetWidth
+  ) {
+    timeConfigLength.value = Math.floor(
+      parentTimeConfig.value.offsetWidth /
+        (childTimeConfig.value.offsetWidth / timeConfig.value.length)
+    )
+  }
+})
 </script>
 
 <template>
-  <a-spin :spinning="loadingDelete === item.id">
+  <a-spin :spinning="loadingUrl.has(`board/delete/${item.id}`)">
     <template #indicator>
       <icon-loader />
     </template>
@@ -77,24 +127,109 @@ const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
         </div>
       </div>
 
-      <div class="description mb-3">
+      <div class="description mb-2">
         <p class="description-text">
           {{ item?.description }}
         </p>
       </div>
-      <!--    <div class="board-type">-->
-      <!--      <icon-telegram />-->
-      <!--    </div>-->
-      <a-row justify="space-between">
-        <a-col>
-          <span class="category-name">{{ item?.category?.name }}</span>
-        </a-col>
-        <a-col>
-          <a-tag class="status" :bordered="false" color="warning">
-            {{ item?.status?.localName }}
-          </a-tag>
-        </a-col>
-      </a-row>
+      <!--      <div class="board-type pl-2">-->
+      <!--        <icon-telegram />-->
+      <!--        <icon-instagram />-->
+      <!--      </div>-->
+      <div class="board-configurations">
+        <h5>Board configuration</h5>
+        <div class="configurations mb-1">
+          <div ref="parentConfig" class="board-configuration-parent">
+            <div ref="childConfig" class="board-configuration">
+              <a-tag color="blue" v-for="tag in config">
+                {{ tag }}
+              </a-tag>
+            </div>
+          </div>
+
+          <a-space class="buttons">
+            <template v-if="configLength">
+              <a-tag @click="modalVisible = true" size="small" color="blue"
+                ><span class="more">...</span></a-tag
+              >
+            </template>
+            <a-button
+              @click="
+                boardPinia.visibleDrover(
+                  true,
+                  item.id,
+                  item.name,
+                  'configuration'
+                )
+              "
+              size="small"
+              type="primary"
+              class="configuration-add-btn"
+            >
+              <icon-plus />
+            </a-button>
+          </a-space>
+        </div>
+        <h5>Board time configuration</h5>
+        <div class="configurations">
+          <div ref="parentTimeConfig" class="board-configuration-parent">
+            <div ref="childTimeConfig" class="board-time-configuration">
+              <a-tag color="blue" v-for="tag in timeConfig"> {{ tag }} </a-tag>
+            </div>
+          </div>
+
+          <a-space class="buttons">
+            <template v-if="timeConfigLength">
+              <a-tag @click="modalVisible = true" size="small" color="blue">
+                ...
+              </a-tag>
+            </template>
+            <a-button
+              @click="
+                boardPinia.visibleDrover(
+                  true,
+                  item.id,
+                  item.name,
+                  'time-configuration'
+                )
+              "
+              size="small"
+              type="primary"
+              class="configuration-add-btn"
+            >
+              <icon-plus />
+            </a-button>
+          </a-space>
+        </div>
+        <a-modal
+          v-model:open="modalVisible"
+          title="Basic Modal"
+          centered
+          @ok="modalVisible = false"
+        >
+          <p>
+            <a-tag class="my-1" color="blue" v-for="tag in config">
+              {{ tag }}
+            </a-tag>
+          </p>
+          <p>
+            <a-tag color="blue" v-for="tag in timeConfig"> {{ tag }} </a-tag>
+          </p>
+        </a-modal>
+      </div>
+
+      <template #actions>
+        <a-row justify="space-between" class="mx-3">
+          <a-col class="pl-2">
+            <span class="category-name">{{ item?.category?.name }}</span>
+          </a-col>
+          <a-col>
+            <a-tag class="status" :bordered="false" color="warning">
+              {{ item?.status?.localName }}
+            </a-tag>
+          </a-col>
+        </a-row>
+      </template>
     </a-card>
   </a-spin>
 </template>
@@ -180,17 +315,52 @@ const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
     }
   }
   .description {
-    min-height: 90px;
+    min-height: 60px;
+
     .description-text {
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 4;
+      -webkit-line-clamp: 2;
     }
   }
-  //.board-type {
-  //  font-size: 18px;
-  //}
+  .board-type {
+    font-size: 18px;
+  }
+  .configurations {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    .buttons {
+      &:deep(.ant-space-item) {
+        .ant-tag {
+          margin-right: 0;
+        }
+        width: max-content;
+      }
+      .configuration-add-btn {
+        display: flex;
+        align-items: center;
+      }
+    }
+    .board-configuration-parent {
+      overflow: hidden;
+      width: 80%;
+    }
+    .board-configuration,
+    .board-time-configuration {
+      display: flex;
+      justify-content: flex-start;
+      width: max-content;
+      .more {
+        padding: 1px 0 1px 0;
+      }
+    }
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid $muted;
+  }
   .category-name {
     font-weight: bold;
     color: rgb($body, 0.5);

@@ -14,7 +14,7 @@ const corePinia = useCore()
 const authPinia = useAuth()
 const useForm = Form.useForm
 
-const { loadingMain } = storeToRefs(corePinia)
+const { loadingUrl } = storeToRefs(corePinia)
 const { otp, isRegistered, finishedTimeStatus } = storeToRefs(authPinia)
 
 const model = ref({
@@ -126,7 +126,7 @@ const handleCheck = (e) => {
       :label="$t('PHONE_NUMBER')"
     >
       <phone-number-input-component
-        :disable="Boolean(otp.otpKey) || loadingMain"
+        :disable="Boolean(otp.otpKey) || loadingUrl.has('auth/generate/otp')"
         v-model="model.phone_number"
         :value="model.phone_number"
       />
@@ -135,7 +135,7 @@ const handleCheck = (e) => {
       <a-form-item v-bind="validateInfos.firstName" :label="$t('FIRST_NAME')">
         <a-input
           v-model:value="model.firstName"
-          :disabled="loadingMain"
+          :disabled="loadingUrl.has('auth/register')"
           size="large"
           :placeholder="$t('ENTER_YOUR_FIRST_NAME')"
         />
@@ -147,7 +147,7 @@ const handleCheck = (e) => {
       >
         <a-input
           v-model:value="model.lastName"
-          :disabled="loadingMain"
+          :disabled="loadingUrl.has('auth/register')"
           size="large"
           :placeholder="$t('ENTER_YOUR_LAST_NAME')"
         />
@@ -158,7 +158,7 @@ const handleCheck = (e) => {
         <a-checkbox
           @change="(e) => handleCheck(e)"
           v-model:checked="model.checked"
-          :disabled="loadingMain"
+          :disabled="loadingUrl.has('auth/register')"
         >
           Ro'yxatdan o'tish orqali siz
           <a href="#" class="offer-link">oferta shartlari</a>ga roziligingizni
@@ -171,7 +171,9 @@ const handleCheck = (e) => {
         <otp-input-component
           v-model="model.otp"
           :count="6"
-          :disabled="loadingMain"
+          :disabled="
+            loadingUrl.has('auth/send/otp') || loadingUrl.has('auth/register')
+          "
         />
         <template #extra>
           <a-row class="otp-footer">
@@ -210,7 +212,7 @@ const handleCheck = (e) => {
         <a-button
           @click="sendOpt"
           @keyup.enter="sendOpt"
-          :loading="loadingMain"
+          :loading="loadingUrl.has('auth/send/otp')"
           block
           size="large"
           html-type="submit"
@@ -222,7 +224,7 @@ const handleCheck = (e) => {
       <template v-else-if="!isRegistered">
         <a-button
           @click="register"
-          :loading="loadingMain"
+          :loading="loadingUrl.has('auth/register')"
           block
           size="large"
           html-type="submit"
@@ -234,7 +236,7 @@ const handleCheck = (e) => {
       <template v-else>
         <a-button
           @click="getOtpGenerate"
-          :loading="loadingMain"
+          :loading="loadingUrl.has('auth/generate/otp')"
           block
           size="large"
           html-type="submit"

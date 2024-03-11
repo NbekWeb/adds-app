@@ -9,9 +9,7 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 import { useRouter } from 'vue-router'
 import IconUseEmptyLogo from '@/components/icons/IconUseEmptyLogo.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
-import IconSettings from '@/components/icons/IconSettings.vue'
 import IconSearch from '@/components/icons/IconSearch.vue'
-import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import useCore from '@/store/core.pinia.js'
 import IconEdit from '@/components/icons/IconEdit.vue'
 
@@ -21,9 +19,8 @@ const boardPinia = useBoard()
 const uploadPinia = useUpload()
 const corePinia = useCore()
 const useForm = Form.useForm
-const { collapsed } = storeToRefs(corePinia)
-const { categories, loadingCategory, loading, channel, loadingChannel } =
-  storeToRefs(boardPinia)
+const { collapsed, loadingUrl } = storeToRefs(corePinia)
+const { categories, channel } = storeToRefs(boardPinia)
 const { fileHashId, loadingFile } = storeToRefs(uploadPinia)
 const imageUrl = ref(null)
 const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
@@ -110,7 +107,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   uploadPinia.$reset()
-  boardPinia.$reset()
+  boardPinia.clearBoardList()
 })
 </script>
 
@@ -183,7 +180,7 @@ onBeforeUnmount(() => {
               >
                 <template #enterButton>
                   <a-button type="primary">
-                    <template v-if="loadingChannel">
+                    <template v-if="loadingUrl.has('channel/check')">
                       <icon-loader size="small" />
                     </template>
                     <template v-else>
@@ -215,7 +212,7 @@ onBeforeUnmount(() => {
               <a-tree-select
                 v-model:value="form.categoryId"
                 show-search
-                :loading="loadingCategory"
+                :loading="loadingUrl.has('board/category/all')"
                 :disabled="!channelInfo.channelInfo.id"
                 style="width: 100%"
                 :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
@@ -256,33 +253,19 @@ onBeforeUnmount(() => {
         <a-button
           class="btn-save"
           @click="addNewBoard"
-          :disabled="!channelInfo.channelInfo.id || loading"
+          :disabled="
+            !channelInfo.channelInfo.id || loadingUrl.has('board/create')
+          "
           type="primary"
           size="large"
         >
-          <template v-if="loading">
+          <template v-if="loadingUrl.has('board/create')">
             <icon-loader size="small" class="loader" />
           </template>
           <template v-else>
             {{ $t('SAVE') }}
           </template>
         </a-button>
-        <!--        <template v-else>-->
-        <!--          <a-button-->
-        <!--            class="btn-check-channel"-->
-        <!--            :disabled="loading"-->
-        <!--            @click="checkChannelByLink"-->
-        <!--            type="primary"-->
-        <!--            size="large"-->
-        <!--          >-->
-        <!--            <template v-if="loading">-->
-        <!--              <icon-loader size="small" />-->
-        <!--            </template>-->
-        <!--            <template v-else>-->
-        <!--              {{ $t('CHECK_CHANNEL') }}-->
-        <!--            </template>-->
-        <!--          </a-button>-->
-        <!--        </template>-->
       </a-space>
     </div>
   </a-form>

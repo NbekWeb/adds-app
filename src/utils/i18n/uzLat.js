@@ -16,6 +16,7 @@ const uzLat = {
   REQUIRED_PHONE_NUMBER: "Telefon raqam to'liq kiritilishi shart!",
   REQUIRED_CODE: 'Kodni kiriting',
   ENTER_THE_COMPLETE_CODE: "Kodni to'liq kiriting",
+  VALUE_MUST_BE_GREATER_THEN_ZERO: "Qiymat noldan katta bo'lishi kerak",
 
   //   buttons
   YES: 'Ha',
@@ -29,12 +30,19 @@ const uzLat = {
   SEND_SMS_CODE: 'Sms kodni olish',
   REGISTER: "Ro'yxatdan o'tish",
   //   labels
+  HOUR: 'Soat',
   ENTER_SMS_CODE: 'Sms kodni kiriting',
   PHONE_NUMBER: 'Telefon raqam',
   FIRST_NAME: 'Ism',
   LAST_NAME: 'Familiya',
   CHANNEL_LINK: 'Kanal havolasi',
   CHANNEL_NAME: 'Kanal nomi',
+  RATE_NAME: "Ta'rif nomi",
+  ENTER_RATE_NAME: "Ta'rif nomini kiriting",
+  LIVE_TIME: 'Postni kanalda turish vaqti',
+  TOP_TIME: 'Postni topda turish vaqti',
+  PIN_TIME: 'Postni pinda turish vaqti',
+  AMOUNT: 'Narxi',
   CATEGORY: 'Kategoriya',
   SELECT_CATEGORY: 'Kategoriyani tanlang',
   DESCRIPTION: 'Tavsif',
@@ -53,7 +61,8 @@ const uzLat = {
   YOU_MUST_AGREE_TO_THE_OFFER_TO_REGISTER:
     "Ro'yxatdan o'tish uchun oferta ga rozilik bildirishingiz shart",
   CHANNEL_ADDED_SUCCESSFULLY: "Kanal muvafaqiyatli qo'shildi",
-  CHANNEL_DELETED_SUCCESSFULLY: "Kanal muvafaqiyatli o'chirildi"
+  CHANNEL_DELETED_SUCCESSFULLY: "Kanal muvafaqiyatli o'chirildi",
+  BOARD_CONFIGURATION_ADDED_SUCCESSFULLY: "Ta'rif muvafaqiyatli qo'shildi"
 }
 
 export default uzLat
