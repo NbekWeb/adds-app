@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '@/pages/dashboard/DashboardView.vue'
 import DashboardBoardView from '@/pages/dashboard/board/DashboardBoardView.vue'
-import CRUDBoardView from '@/pages/dashboard/board/[id]/CRUDBoardView.vue'
+import CRUDBoardView from '@/pages/dashboard/board/[id]/BoardConfigurationsViev.vue'
 import DashboardBoardListView from '@/pages/dashboard/board/DashboardBoardListView.vue'
 import DashboardListView from '@/pages/dashboard/DashboardListView.vue'
 import NotFound from '@/pages/_404.vue'
@@ -10,6 +10,7 @@ import DashboardUserView from '@/pages/dashboard/user/DashboardUserView.vue'
 import DashboardUserEditView from '@/pages/dashboard/user/[id]/DashboardUserEditView.vue'
 import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsView.vue'
 import DashboardBoardFormView from '@/pages/dashboard/board/DashboardBoardFormView.vue'
+import BoardConfigurationsViev from '@/pages/dashboard/board/[id]/BoardConfigurationsViev.vue'
 
 const LoginView = () => import('@/pages/auth/AuthView.vue')
 
@@ -46,7 +47,14 @@ export const router = createRouter({
             {
               path: '',
               name: 'DashboardBoardListView',
-              component: DashboardBoardListView
+              component: DashboardBoardListView,
+              children: [
+                {
+                  path: 'configurations/:id',
+                  name: 'BoardConfigurationsView',
+                  component: BoardConfigurationsViev
+                }
+              ]
             },
             {
               name: 'UpdateBoardView',
