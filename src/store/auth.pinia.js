@@ -27,7 +27,7 @@ const useAuth = defineStore('auth', {
     },
     getGenerateOtp(number) {
       const core = useCore()
-      core.loading()
+      core.loadingUrl.add('auth/generate/otp')
       api({
         url: 'otp',
         open: true,
@@ -41,12 +41,13 @@ const useAuth = defineStore('auth', {
         })
         .catch((err) => core.switchStatus(err))
         .finally(() => {
-          core.loading()
+          core.loadingUrl.delete('auth/generate/otp')
         })
     },
     sendOtp(otp) {
       const core = useCore()
       core.loading()
+      core.loadingUrl.add('auth/send/otp')
       api({
         url: 'auth',
         open: true,
@@ -69,12 +70,12 @@ const useAuth = defineStore('auth', {
         })
         .catch((err) => core.switchStatus(err))
         .finally(() => {
-          core.loading()
+          core.loadingUrl.delete('auth/send/otp')
         })
     },
     register(form) {
       const core = useCore()
-      core.loading()
+      core.loadingUrl.add('auth/register')
       api({
         url: 'register',
         open: true,
@@ -99,7 +100,7 @@ const useAuth = defineStore('auth', {
         })
         .catch((err) => core.switchStatus(err))
         .finally(() => {
-          core.loading()
+          core.loadingUrl.delete('auth/register')
         })
     }
   }

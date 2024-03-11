@@ -12,8 +12,7 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 import useCore from '@/store/core.pinia.js'
 const userPinia = useUser()
 const corePinia = useCore()
-const { collapsed } = storeToRefs(corePinia)
-const { loadingUser } = storeToRefs(userPinia)
+const { collapsed, loadingUrl } = storeToRefs(corePinia)
 
 // user me check token
 onMounted(() => {
@@ -22,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <a-spin v-if="loadingUser" class="spin" size="large">
+  <a-spin v-if="loadingUrl.has('user/me')" class="spin" size="large">
     <template #indicator> <icon-loader size="large" /> </template>
   </a-spin>
 

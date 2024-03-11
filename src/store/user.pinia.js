@@ -12,14 +12,12 @@ const useUser = defineStore('user', {
       balance: 0,
       role: null
     },
-    loading: false,
-    userList: [],
-    loadingUser: true
+    userList: []
   }),
   actions: {
     getUserMe() {
       const core = useCore()
-      this.loadingUser = true
+      core.loadingUrl.add('user/me')
       api({
         url: 'user/me'
       })
@@ -30,12 +28,11 @@ const useUser = defineStore('user', {
           core.switchStatus(error)
         })
         .finally(() => {
-          this.loadingUser = false
+          core.loadingUrl.delete('user/me')
         })
     },
     getAllUsers() {
       const core = useCore()
-      this.loading = true
       api({
         url: 'user'
       })
@@ -45,13 +42,11 @@ const useUser = defineStore('user', {
         .catch((error) => {
           core.switchStatus(error)
         })
-        .finally(() => {
-          this.loading = false
-        })
+        .finally(() => {})
     },
     updateUser(form) {
       const core = useCore()
-      this.loading = true
+      core.loadingUrl.add('user/update')
       api({
         url: 'user',
         method: 'PUT',
@@ -62,15 +57,16 @@ const useUser = defineStore('user', {
         }
       })
         .then(({ data }) => {
+          console.log(data)
           this.user.firstName = data.firstName
           this.user.lastName = data.lastName
-          this.user.username = data.phoneNumber
+          this.user.username = data.username
         })
         .catch((error) => {
           core.switchStatus(error)
         })
         .finally(() => {
-          this.loading = false
+          core.loadingUrl.delete('user/update')
         })
     }
   }

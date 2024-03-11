@@ -51,7 +51,6 @@ function refreshAccessToken(error) {
       }
     })
       .then(({ data }) => {
-        console.log(data)
         localStorage.setItem('access_token', data?.accessToken)
         localStorage.setItem('refresh_token', data?.refreshToken)
         return axios({

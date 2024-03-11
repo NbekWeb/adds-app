@@ -4,6 +4,10 @@ const props = defineProps({
     type: Number,
     required: true
   },
+  totalPages: {
+    type: Number,
+    required: true
+  },
   page: {
     type: Number,
     required: true
@@ -22,13 +26,14 @@ const scroll = (e) => {
   const clientH = e.target.clientHeight
   const scrollTop = e.target.scrollTop
   const scrollH = e.target.scrollHeight
-
+  const page = props.page + 1
   if (
     Math.ceil(clientH + scrollTop) >= scrollH &&
     props.totalCountAll >= props.page * props.count &&
+    page < props.totalPages &&
     !props.loading
   ) {
-    emits('getDate', props.page + 1)
+    emits('getDate', page)
   }
 }
 </script>
