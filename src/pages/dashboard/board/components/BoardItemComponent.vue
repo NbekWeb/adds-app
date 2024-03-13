@@ -9,6 +9,7 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 import { storeToRefs } from 'pinia'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import useCore from '@/store/core.pinia.js'
+import { useRouter } from 'vue-router'
 // import IconTelegram from '@/components/icons/IconTelegram.vue'
 // import IconInstagram from '@/components/icons/IconInstagram.vue'
 
@@ -22,6 +23,9 @@ const props = defineProps({
     default: false
   }
 })
+const emits = defineEmits(['addNewConfig'])
+
+const router = useRouter()
 const corePinia = useCore()
 const boardPinia = useBoard()
 const { loadingUrl } = storeToRefs(corePinia)
@@ -53,9 +57,8 @@ const parentConfig = ref(null)
 const childConfig = ref(null)
 const parentTimeConfig = ref(null)
 const childTimeConfig = ref(null)
-const modalVisible = ref(false)
 
-onMounted(() => {
+const handleOffsetWith = () => {
   if (childConfig.value?.offsetWidth > parentConfig.value?.offsetWidth) {
     configLength.value = Math.floor(
       parentConfig.value.offsetWidth /
@@ -70,6 +73,19 @@ onMounted(() => {
         (childTimeConfig.value.offsetWidth / timeConfig.value.length)
     )
   }
+}
+
+const handleVisibleDrover = () => {
+  emits('addNewConfig', props.item.id, 'configuration')
+}
+const handleVisibleTimeDrover = () => {
+  emits('addNewConfig', props.item.id, 'time-configuration')
+}
+const handleNavigate = () => {
+  router.push(`/dashboard/board/item/${props.item.id}/configurations`)
+}
+onMounted(() => {
+  handleOffsetWith()
 })
 </script>
 
@@ -149,19 +165,12 @@ onMounted(() => {
 
           <a-space class="buttons">
             <template v-if="configLength">
-              <a-tag @click="modalVisible = true" size="small" color="blue"
+              <a-tag @click="handleNavigate" size="small" color="blue"
                 ><span class="more">...</span></a-tag
               >
             </template>
             <a-button
-              @click="
-                boardPinia.visibleDrover(
-                  true,
-                  item.id,
-                  item.name,
-                  'configuration'
-                )
-              "
+              @click="handleVisibleDrover"
               size="small"
               type="primary"
               class="configuration-add-btn"
@@ -180,19 +189,12 @@ onMounted(() => {
 
           <a-space class="buttons">
             <template v-if="timeConfigLength">
-              <a-tag @click="modalVisible = true" size="small" color="blue">
+              <a-tag @click="handleNavigate" size="small" color="blue">
                 ...
               </a-tag>
             </template>
             <a-button
-              @click="
-                boardPinia.visibleDrover(
-                  true,
-                  item.id,
-                  item.name,
-                  'time-configuration'
-                )
-              "
+              @click="handleVisibleTimeDrover"
               size="small"
               type="primary"
               class="configuration-add-btn"
@@ -201,21 +203,6 @@ onMounted(() => {
             </a-button>
           </a-space>
         </div>
-        <a-modal
-          v-model:open="modalVisible"
-          title="Basic Modal"
-          centered
-          @ok="modalVisible = false"
-        >
-          <p>
-            <a-tag class="my-1" color="blue" v-for="tag in config">
-              {{ tag }}
-            </a-tag>
-          </p>
-          <p>
-            <a-tag color="blue" v-for="tag in timeConfig"> {{ tag }} </a-tag>
-          </p>
-        </a-modal>
       </div>
 
       <template #actions>
