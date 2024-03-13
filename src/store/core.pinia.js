@@ -4,6 +4,7 @@ const useCore = defineStore('core', {
     locale: 'uzLat',
     collapsed: false,
     loadingUrl: new Set(['user/me']),
+    visibleDrower: new Set(),
     loadingMain: false,
     toastContent: null,
     redirectUrl: null
@@ -45,6 +46,7 @@ const useCore = defineStore('core', {
           }
           if (typeof data === 'string') {
             toastMessage.message = data
+            toastMessage.locale = 'ERROR'
           }
         }
         if (status >= 500) {
@@ -61,7 +63,7 @@ const useCore = defineStore('core', {
       } catch (err) {
         this.setToast({
           type: 'error',
-          message: 'ERROR!'
+          locale: 'ERROR'
         })
       }
     }
