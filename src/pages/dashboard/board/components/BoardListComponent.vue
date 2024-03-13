@@ -4,30 +4,40 @@ import { storeToRefs } from 'pinia'
 import BoardItemComponent from '@/pages/dashboard/board/components/BoardItemComponent.vue'
 import useCore from '@/store/core.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
+import BoardConfigurationsForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationsDrower.vue'
 
 const boardPinia = useBoard()
 const corePinia = useCore()
-const { collapsed } = storeToRefs(corePinia)
+const { collapsed, visibleDrower } = storeToRefs(corePinia)
 const { boardList, totalPages, page, totalElements } = storeToRefs(boardPinia)
-
-// const loadingElementCount = computed(() =>
-//   totalElements.value
-//     ? totalElements.value - boardList.value.length >= 9
-//       ? 9
-//       : totalElements.value - boardList.value.length
-//     : 9
-// )
+const boardId = ref(null)
+const isOpen = ref(false)
+const configType = ref('')
+const handleOpenDrower = (id, type) => {
+  visibleDrower.value.add('configuration/drower')
+  boardId.value = id
+  configType.value = type
+}
+watch(boardList, () => {
+  isOpen.value = false
+})
 const getBoardList = (page) => {
   boardPinia.getAllBoard(page)
 }
 </script>
 
 <template>
+  <board-configurations-form
+    :id="boardId"
+    :type="configType"
+    :location="'board-list'"
+  />
   <scrollbar-component
     :loading="corePinia.loadingUrl.has('board/all')"
     :count="9"
     :page="page"
+    height="calc(100vh - 196px)"
     :total-pages="totalPages"
     :total-count-all="totalElements"
     @get-date="getBoardList"
@@ -53,7 +63,10 @@ const getBoardList = (page) => {
             :xxl="collapsed ? 4 : 6"
             v-for="item in boardList"
           >
-            <board-item-component :item="item" />
+            <board-item-component
+              :item="item"
+              @addNewConfig="handleOpenDrower"
+            />
           </a-col>
         </a-row>
       </template>

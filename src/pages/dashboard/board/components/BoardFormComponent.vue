@@ -105,10 +105,6 @@ const addNewBoard = () => {
 onMounted(() => {
   boardPinia.getBoardCategories()
 })
-onBeforeUnmount(() => {
-  uploadPinia.$reset()
-  boardPinia.clearBoardList()
-})
 </script>
 
 <template>
@@ -127,12 +123,6 @@ onBeforeUnmount(() => {
               <template v-else>
                 <div class="logo-empty">
                   <icon-use-empty-logo />
-                  <div
-                    class="logo-empty-plus"
-                    v-if="channelInfo.channelInfo.id"
-                  >
-                    <icon-plus />
-                  </div>
                 </div>
               </template>
               <a-upload
@@ -246,7 +236,7 @@ onBeforeUnmount(() => {
     </a-row>
     <div class="btn-group">
       <a-space>
-        <a-button @click="router.back()" size="large">
+        <a-button @click="router.back()" size="middle">
           {{ $t('BACK') }}
         </a-button>
 
@@ -257,7 +247,7 @@ onBeforeUnmount(() => {
             !channelInfo.channelInfo.id || loadingUrl.has('board/create')
           "
           type="primary"
-          size="large"
+          size="middle"
         >
           <template v-if="loadingUrl.has('board/create')">
             <icon-loader size="small" class="loader" />

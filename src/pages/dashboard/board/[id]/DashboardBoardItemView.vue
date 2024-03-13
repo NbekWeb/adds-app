@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <h1>Board configuratons view</h1>
+  <router-view />
 </template>
 
 <style scoped lang="scss"></style>
