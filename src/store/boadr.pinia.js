@@ -4,18 +4,14 @@ import useCore from '@/store/core.pinia.js'
 
 const useBoard = defineStore('board', {
   state: () => ({
-    channelName: null,
-    configurationType: null,
-    openDrover: false,
     categories: [],
-    boardId: null,
     boardType: null,
     boardStatus: null,
     boardCategory: null,
     boardList: [],
     boardStatusAll: [],
+    boardConfigurationList: [],
     page: 0,
-    size: 9,
     totalElements: 0,
     totalPages: 0,
     channel: {
@@ -33,21 +29,11 @@ const useBoard = defineStore('board', {
     }
   }),
   actions: {
-    visibleDrover(isOpen, id = null, channelName = null, type) {
-      if (isOpen) {
-        this.openDrover = true
-        this.boardId = id
-        this.channelName = channelName
-        this.configurationType = type
-      } else {
-        this.openDrover = false
-        this.channelName = null
-        this.boardId = null
-        this.configurationType = null
-      }
-    },
     clearBoardList() {
       this.boardList = []
+      this.page = 0
+      this.totalElements = 0
+      this.totalPages = 0
     },
     getAllBoard(page = this.page) {
       const core = useCore()
@@ -56,7 +42,7 @@ const useBoard = defineStore('board', {
       api({
         url: 'board',
         params: {
-          size: this.size,
+          size: 9,
           page: page,
           type: this.boardType,
           categoryId: this.boardCategory,
@@ -130,6 +116,7 @@ const useBoard = defineStore('board', {
           core.loadingUrl.delete('board/status/all')
         })
     },
+
     checkChannel(link) {
       const core = useCore()
       core.loadingUrl.add('channel/check')
@@ -178,43 +165,7 @@ const useBoard = defineStore('board', {
           core.loadingUrl.add('board/create')
         })
     },
-    addNewBoardConfiguration(form) {
-      const core = useCore()
-      core.loadingUrl.add('board/configuration/create')
-      api({
-        url: `board-configuration?boardId=${this.boardId}`,
-        method: 'POST',
-        data: {
-          // name: form.name,
-          liveTime:
-            (form.liveTime.toString().slice(0, 2) * 60 * 60 +
-              form.liveTime.toString().slice(3, 5) * 60) *
-            1000,
-          topTime:
-            (form.topTime.toString().slice(0, 2) * 60 * 60 +
-              form.topTime.toString().slice(3, 5) * 60) *
-            1000,
-          pinTime:
-            (form.pinTime.toString().slice(0, 2) * 60 * 60 +
-              form.pinTime.toString().slice(3, 5) * 60) *
-            1000,
-          amount: Number(form.amount.toString().replace(/[^0-9]/g, ''))
-        }
-      })
-        .then(() => {
-          core.setToast({
-            type: 'success',
-            locale: 'CHANNEL_ADDED_SUCCESSFULLY'
-          })
-          core.redirect('/dashboard/board')
-        })
-        .catch((error) => {
-          core.switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('board/configuration/create')
-        })
-    },
+
     deleteBoard(id) {
       const core = useCore()
       core.loadingUrl.add(`board/delete/${id}`)
