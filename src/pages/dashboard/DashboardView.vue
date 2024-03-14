@@ -61,6 +61,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+:global(.grecaptcha-badge) {
+  visibility: hidden;
+  pointer-events: none;
+}
 .spin {
   width: 100vw;
   height: 100vh;

@@ -54,9 +54,6 @@ useRecaptchaProvider()
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
-//:global(.grecaptcha-badge) {
-//  visibility: hidden;
-//}
 
 .login-page {
   display: flex;
