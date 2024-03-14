@@ -51,16 +51,12 @@ const useUser = defineStore('user', {
         url: 'user',
         method: 'PUT',
         data: {
-          firstName: form.firstName,
-          lastName: form.lastName,
+          fullName: form.fullName,
           phoneNumber: `998${form.username}`
         }
       })
-        .then(({ data }) => {
-          console.log(data)
-          this.user.firstName = data.firstName
-          this.user.lastName = data.lastName
-          this.user.username = data.username
+        .then(() => {
+          this.getUserMe()
         })
         .catch((error) => {
           core.switchStatus(error)

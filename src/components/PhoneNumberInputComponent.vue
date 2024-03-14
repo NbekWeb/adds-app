@@ -5,6 +5,10 @@ const props = defineProps({
   disable: Boolean,
   value: {
     type: String || null
+  },
+  size: {
+    type: String,
+    default: 'middle'
   }
 })
 const emits = defineEmits(['update:modelValue'])
@@ -51,7 +55,7 @@ onMounted(() => {
 <template>
   <a-input
     type="text"
-    size="large"
+    :size="size"
     @change="formatPhoneNumber"
     :maxlength="12"
     :disabled="disable"

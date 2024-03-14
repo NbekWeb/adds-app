@@ -23,7 +23,6 @@ const useUpload = defineStore('upload', {
       })
         .then(({ data }) => {
           this.fileHashId = data
-          console.log(data)
         })
         .catch((error) => {
           core.switchStatus(error)

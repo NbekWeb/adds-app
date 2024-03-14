@@ -23,7 +23,7 @@ watch(boardList, () => {
   isOpen.value = false
 })
 const getBoardList = (page) => {
-  boardPinia.getAllBoard(page)
+  boardPinia.getAllBoard({ page })
 }
 </script>
 

@@ -5,8 +5,6 @@ import { useRouter } from 'vue-router'
 import useCore from '@/store/core.pinia.js'
 import useBoardConfiguration from '@/store/board-configuration.pinia.js'
 import { storeToRefs } from 'pinia'
-import IconPlus from '@/components/icons/IconPlus.vue'
-import { ref } from 'vue'
 
 const router = useRouter()
 const corePinia = useCore()
@@ -18,12 +16,11 @@ const props = defineProps({
     required: true
   }
 })
-const emits = defineEmits(['add-config'])
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { configPage, totalPages, totalElements, boardConfigurationList } =
-  storeToRefs(boardConfigurationPinia)
-const configType = ref('')
+const { page, totalPages, totalElements, boardConfigurationList } = storeToRefs(
+  boardConfigurationPinia
+)
 
 const getConfigurations = (page) => {
   boardConfigurationPinia.getConfigurationsByBoardId(props.boardId, page)
@@ -36,7 +33,7 @@ const getConfigurations = (page) => {
     :loading="corePinia.loadingUrl.has('board/all')"
     :count="9"
     height="calc(100vh - 288px )"
-    :page="configPage"
+    :page="page"
     :total-pages="totalPages"
     :total-count-all="totalElements"
     @get-date="getConfigurations"

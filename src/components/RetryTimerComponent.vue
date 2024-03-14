@@ -1,15 +1,12 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import useAuth from '@/store/auth.pinia.js'
-
 const props = defineProps({
   minute: {
     type: Number,
     required: true
   }
 })
-const emit = defineEmits(['finished'])
-const authPinia = useAuth()
+const emits = defineEmits(['finished'])
 const minute = ref(0)
 const second = ref(0)
 const currentSecond = ref(60)
@@ -25,13 +22,14 @@ const retryTimeOtp = () => {
   timeInterval.value = setInterval(() => {
     currentSecond.value = currentSecond.value - 1
     second.value = second.value - 1
+
     if (currentSecond.value === 0) {
       currentSecond.value = 60
       minute.value = Math.floor(second.value / 60) - 1
     }
+
     if (second.value <= 0) {
-      authPinia.changeRetryOptStatus()
-      emit('finished')
+      emits('finished')
     }
   }, 1000)
 }
