@@ -1,11 +1,12 @@
 <script setup>
-import theme from '@/utils/ant/theme.js'
-import useCore from '@/store/core.pinia.js'
 import { watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { message } from 'ant-design-vue'
 import { useI18n } from 'vue-i18n'
+import { storeToRefs } from 'pinia'
+
+import { message } from 'ant-design-vue'
+import theme from '@/utils/ant/theme.js'
+import useCore from '@/store/core.pinia.js'
 
 const { t } = useI18n()
 const corePinia = useCore()

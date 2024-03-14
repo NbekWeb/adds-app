@@ -1,6 +1,6 @@
 const uzLat = {
   // menus
-  LoginView: 'Tizimga kirish',
+  AuthView: 'Tizimga kirish',
   DashboardView: 'Asosiy board',
   DashboardNotFond: 'Sahifa topilmadi',
   DashboardListView: 'Asosiy sahifa',
@@ -39,6 +39,7 @@ const uzLat = {
   MINUTE: 'Daqiqa',
   ENTER_SMS_CODE: 'Sms kodni kiriting',
   PHONE_NUMBER: 'Telefon raqam',
+  F_I_O: 'F.I.O',
   FIRST_NAME: 'Ism',
   LAST_NAME: 'Familiya',
   CHANNEL_LINK: 'Kanal havolasi',
@@ -57,14 +58,17 @@ const uzLat = {
   WRITE_DESCRIPTION: 'Tavsif yozing...',
   ENTER_CHANNEL_NAME: 'Kanal nomini kiriting',
   ENTER_CHANNEL_LINK: 'Kanal havolasini kiriting',
-  ENTER_YOUR_FIRST_NAME: 'Ismingizni kiriting',
+  ENTER_YOUR_FULL_NAME: 'F.I.Oni kiriting',
   ENTER_YOUR_LAST_NAME: 'Familiyangizni kiriting',
   // descriptions
   LOGIN_PAGE_DESCRIPTION:
     'Biznes uchun reklamalarni joylashtirish, boshqarish uchun platforma.',
   ENTER_YOUR_NUMBER_TO_LOGIN: 'Tizimga kirish uchun raqamingizni kiriting',
-  NO_DATA: "Ma'lumot mavjud emas!",
+  REGISTER_TO_USE_THE_SYSTEM: "Tizimdan foydalanish uchun ro'yxatdan o'ting",
+  AN_SMS_CODE_WAS_SENT_TO_NUMBER: 'raqamga sms kod yuborildi',
+  // An SMS code was sent to number 3
   //   notificitions
+  NO_DATA: "Ma'lumot mavjud emas!",
   DO_YOU_WANT_TO_DELETE_THE_USER: "Foydalanuvchini o'chirishni xoxlaysizmi?",
   YOU_MUST_AGREE_TO_THE_OFFER_TO_REGISTER:
     "Ro'yxatdan o'tish uchun oferta ga rozilik bildirishingiz shart",

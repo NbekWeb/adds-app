@@ -6,8 +6,8 @@ const useAuth = defineStore('auth', {
   state: () => ({
     user: null,
     loadingLogin: false,
-    finishedTimeStatus: false,
     isRegistered: true,
+    phoneNumber: null,
     otp: {
       otpKey: null,
       retryTimeMin: 0,
@@ -22,26 +22,54 @@ const useAuth = defineStore('auth', {
       this.isRegistered = true
     },
 
-    changeRetryOptStatus() {
-      this.finishedTimeStatus = !this.finishedTimeStatus
-    },
-    getGenerateOtp(number) {
+    getGenerateOtp(form) {
       const core = useCore()
       core.loadingUrl.add('auth/generate/otp')
       api({
         url: 'otp',
         open: true,
         method: 'POST',
-        data: { phoneNumber: '+998' + number }
+        data: {
+          phoneNumber: '+998' + form.phone_number,
+          token: form.token
+        }
       })
         .then(({ data }) => {
-          this.otp = data.otp
-          this.isRegistered = data.isRegistered
-          this.finishedTimeStatus = false
+          this.otp = data
+          this.phoneNumber = form.phone_number
         })
-        .catch((err) => core.switchStatus(err))
+        .catch((error) => {
+          if (error.response.data.code === 109) {
+            this.isRegistered = false
+            this.phoneNumber = form.phone_number
+          } else {
+            core.switchStatus(error)
+          }
+        })
         .finally(() => {
           core.loadingUrl.delete('auth/generate/otp')
+        })
+    },
+    retryOtp(token) {
+      const core = useCore()
+      core.loadingUrl.add('auth/retry/otp')
+      api({
+        url: 'otp',
+        open: true,
+        method: 'POST',
+        data: {
+          phoneNumber: '+998' + this.phoneNumber,
+          token: token
+        }
+      })
+        .then(({ data }) => {
+          this.otp = data
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('auth/retry/otp')
         })
     },
     sendOtp(otp) {
@@ -81,22 +109,13 @@ const useAuth = defineStore('auth', {
         open: true,
         method: 'POST',
         data: {
-          firstName: form.firstName,
-          lastName: form.lastName,
-          phoneNumber: form.phone_number,
-          otpKey: this.otp.otpKey,
-          otpValue: form.otp
+          fullName: form.fullName,
+          phoneNumber: '998' + this.phoneNumber,
+          token: form.token
         }
       })
         .then(({ data }) => {
-          localStorage.setItem('access_token', data?.accessToken)
-          localStorage.setItem('refresh_token', data?.refreshToken)
-          this.clearOtp()
-          core.redirect('/dashboard')
-          core.setToast({
-            message: `Tizimga kirish muvaffaqiyatli bajarildi!`,
-            type: 'success'
-          })
+          this.otp = data
         })
         .catch((err) => core.switchStatus(err))
         .finally(() => {

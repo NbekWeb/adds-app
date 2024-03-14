@@ -1,10 +1,13 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import useAuth from '@/store/auth.pinia.js'
+
+import { useRecaptchaProvider } from 'vue-recaptcha/head'
 import AuthFormComponent from '@/pages/auth/components/AuthFormComponent.vue'
 
 const authPinia = useAuth()
-const { otp, isRegistered } = storeToRefs(authPinia)
+const { otp, isRegistered, phoneNumber } = storeToRefs(authPinia)
+useRecaptchaProvider()
 </script>
 
 <template>
@@ -23,12 +26,22 @@ const { otp, isRegistered } = storeToRefs(authPinia)
       </a-col>
       <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
         <a-card>
-          <div class="auth-form" :class="{ 'py-5': isRegistered }">
+          <div class="auth-form">
             <div>
               <h1>ADS-<span class="text-primary">PRO</span></h1>
               <p class="text-muted">
                 {{ $t('LOGIN_PAGE_DESCRIPTION') }}
-                {{ $t('ENTER_YOUR_NUMBER_TO_LOGIN') }}
+                <template v-if="otp.otpKey">
+                  <strong> +998{{ phoneNumber }} </strong>
+                  {{ $t('AN_SMS_CODE_WAS_SENT_TO_NUMBER') }}
+                </template>
+                <template v-else>
+                  {{
+                    isRegistered
+                      ? $t('ENTER_YOUR_NUMBER_TO_LOGIN')
+                      : $t('REGISTER_TO_USE_THE_SYSTEM')
+                  }}
+                </template>
               </p>
             </div>
             <auth-form-component />
@@ -41,6 +54,9 @@ const { otp, isRegistered } = storeToRefs(authPinia)
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+//:global(.grecaptcha-badge) {
+//  visibility: hidden;
+//}
 
 .login-page {
   display: flex;
