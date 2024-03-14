@@ -1,8 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-const emits = defineEmits(['update:modelValue'])
+const model = defineModel()
 const props = defineProps({
   disabled: Boolean,
+  value: String,
   count: {
     type: Number,
     required: true
@@ -23,7 +24,7 @@ const handlePaste = (e) => {
 
   if (onlyNumbers) {
     digits.value = pasteData.split('')
-    emits('update:modelValue', pasteData)
+    model.value = pasteData
   } else {
   }
 }
@@ -37,7 +38,7 @@ const handleKeydown = (e) => {
     if (digits.value[inputIndex.value]) digits.value[inputIndex.value] = ''
     if (e.target.previousElementSibling) e.target.previousElementSibling.focus()
   }
-  emits('update:modelValue', digits.value.join(''))
+  model.value = digits.value.join('')
 }
 const handleFocus = (index) => {
   inputIndex.value = index

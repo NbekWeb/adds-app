@@ -19,8 +19,6 @@ const corePinia = useCore()
 const boardConfigurationPinia = useBoardConfiguration()
 const boardTimeConfigurationPinia = useBoardTimeConfiguration()
 const { loadingUrl, visibleDrower } = storeToRefs(corePinia)
-const { configPage } = storeToRefs(boardConfigurationPinia)
-const { timeConfigPage } = storeToRefs(boardTimeConfigurationPinia)
 
 const boardId = ref(null)
 const configType = ref('')
@@ -33,8 +31,8 @@ const handleVisibleDrover = () => {
 onMounted(() => {
   if (route.params.id) {
     boardId.value = route.params.id
-    configPage.value = 0
-    timeConfigPage.value = 0
+    boardConfigurationPinia.clearConfigurations()
+    boardTimeConfigurationPinia.clearTimeConfigurations()
     boardConfigurationPinia.getConfigurationsByBoardId(boardId.value, 0)
     boardTimeConfigurationPinia.getTimeConfigurationsByBoardId(boardId.value, 0)
   }

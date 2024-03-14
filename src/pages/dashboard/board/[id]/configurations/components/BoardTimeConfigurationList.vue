@@ -7,7 +7,6 @@ import useBoardTimeConfiguration from '@/store/board-time-configuration.pinia.js
 
 import BoardConfigurationItem from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationItem.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-import IconPlus from '@/components/icons/IconPlus.vue'
 
 const router = useRouter()
 const corePinia = useCore()
@@ -19,11 +18,11 @@ const props = defineProps({
     required: true
   }
 })
-const emits = defineEmits(['add-config'])
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { timeConfigPage, totalPages, totalElements, timeConfigurationList } =
-  storeToRefs(boardTimeConfigurationPinia)
+const { page, totalPages, totalElements, timeConfigurationList } = storeToRefs(
+  boardTimeConfigurationPinia
+)
 
 const getTimeConfigurations = (page) => {
   boardTimeConfigurationPinia.getTimeConfigurationsByBoardId(
@@ -38,7 +37,7 @@ const getTimeConfigurations = (page) => {
     :loading="corePinia.loadingUrl.has('board/all')"
     :count="9"
     height="calc(100vh - 288px)"
-    :page="timeConfigPage"
+    :page="page"
     :total-pages="totalPages"
     :total-count-all="totalElements"
     @get-date="getTimeConfigurations"

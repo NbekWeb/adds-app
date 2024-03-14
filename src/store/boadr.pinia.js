@@ -5,9 +5,6 @@ import useCore from '@/store/core.pinia.js'
 const useBoard = defineStore('board', {
   state: () => ({
     categories: [],
-    boardType: null,
-    boardStatus: null,
-    boardCategory: null,
     boardList: [],
     boardStatusAll: [],
     boardConfigurationList: [],
@@ -35,7 +32,7 @@ const useBoard = defineStore('board', {
       this.totalElements = 0
       this.totalPages = 0
     },
-    getAllBoard(page = this.page) {
+    getAllBoard({ page = this.page, ...props }) {
       const core = useCore()
       core.loadingUrl.add('board/all')
       this.page = page
@@ -44,9 +41,9 @@ const useBoard = defineStore('board', {
         params: {
           size: 9,
           page: page,
-          type: this.boardType,
-          categoryId: this.boardCategory,
-          status: this.boardStatus
+          type: props.type,
+          categoryId: props.categoryId,
+          status: props.status
         }
       })
         .then(({ data }) => {
@@ -181,7 +178,6 @@ const useBoard = defineStore('board', {
           })
         })
         .catch((error) => {
-          console.log(error)
           core.switchStatus(error)
         })
         .finally(() => {

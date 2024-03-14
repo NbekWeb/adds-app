@@ -30,6 +30,7 @@ const setCollapse = ({ key }) => {
 const logOut = () => {
   localStorage.clear()
   userPinia.$reset()
+  router.push('/')
 }
 </script>
 

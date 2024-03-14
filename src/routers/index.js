@@ -11,6 +11,7 @@ import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsV
 import DashboardBoardFormView from '@/pages/dashboard/board/DashboardBoardFormView.vue'
 import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 import DashboardBoardItemView from '@/pages/dashboard/board/[id]/DashboardBoardItemView.vue'
+import AuthView from '@/pages/auth/AuthView.vue'
 
 const LoginView = () => import('@/pages/auth/AuthView.vue')
 
@@ -19,8 +20,8 @@ export const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'LoginView',
-      component: LoginView,
+      name: 'AuthView',
+      component: AuthView,
       children: []
     },
     {
@@ -105,15 +106,17 @@ const routerFactory = (i18n) => {
     document.title = i18n.t(to.name)
     const accessToken = localStorage.getItem('access_token')
     if (accessToken) {
-      if (to.name === 'LoginView') {
+      if (to.path.includes('dashboard')) {
+        return next()
+      } else {
         return next({ name: 'DashboardView' })
       }
-      return next()
     } else {
-      if (to.name !== 'LoginView') {
-        return next({ name: 'LoginView' })
+      if (!to.path.includes('dashboard')) {
+        return next()
+      } else {
+        return next({ name: 'AuthView' })
       }
-      next()
     }
   })
   return router

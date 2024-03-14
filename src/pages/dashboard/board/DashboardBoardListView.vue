@@ -13,8 +13,10 @@ const corePinia = useCore()
 const boardPinia = useBoard()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { boardStatusAll, boardType, boardStatus, boardCategory, categories } =
-  storeToRefs(boardPinia)
+const { boardStatusAll, categories } = storeToRefs(boardPinia)
+const type = ref(null)
+const status = ref(null)
+const category = ref(null)
 const boardTypeList = ref([
   {
     value: 'TELEGRAM',
@@ -27,11 +29,21 @@ const boardTypeList = ref([
 ])
 const handleChangeFilter = () => {
   boardPinia.clearBoardList()
-  boardPinia.getAllBoard(0)
+  boardPinia.getAllBoard({
+    page: 0,
+    categoryId: category.value,
+    type: type.value,
+    status: status.value
+  })
 }
 onMounted(() => {
   boardPinia.clearBoardList()
-  boardPinia.getAllBoard(0)
+  boardPinia.getAllBoard({
+    page: 0,
+    categoryId: category.value,
+    type: type.value,
+    status: status.value
+  })
   boardPinia.getAllBoardStatus()
   boardPinia.getBoardCategories()
 })
@@ -43,7 +55,7 @@ onMounted(() => {
       <a-row :gutter="10" justify="end">
         <a-col>
           <a-tree-select
-            v-model:value="boardCategory"
+            v-model:value="category"
             show-search
             class="board-category-filter"
             :loading="loadingUrl.has('board/category/all')"
@@ -62,7 +74,7 @@ onMounted(() => {
         </a-col>
         <a-col>
           <a-select
-            v-model:value="boardType"
+            v-model:value="type"
             :options="boardTypeList"
             @change="handleChangeFilter"
             allow-clear
@@ -74,7 +86,7 @@ onMounted(() => {
         </a-col>
         <a-col>
           <a-select
-            v-model:value="boardStatus"
+            v-model:value="status"
             :options="boardStatusAll"
             :loading="loadingUrl.has('board/status/all')"
             @change="handleChangeFilter"

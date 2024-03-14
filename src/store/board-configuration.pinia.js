@@ -6,18 +6,18 @@ import useBoard from '@/store/boadr.pinia.js'
 const useBoardConfiguration = defineStore('boardConfiguration', {
   state: () => ({
     boardConfigurationList: [],
-    configPage: 0,
+    page: 0,
     totalElements: 0,
     totalPages: 0
   }),
   actions: {
     clearConfigurations() {
       this.boardConfigurationList = []
-      this.configPage = 0
+      this.page = 0
       this.totalElements = 0
       this.totalPages = 0
     },
-    getConfigurationsByBoardId(id, page = this.configPage) {
+    getConfigurationsByBoardId(id, page = this.page) {
       const core = useCore()
       core.loadingUrl.add('board/id/configurations')
       this.page = page
@@ -84,7 +84,7 @@ const useBoardConfiguration = defineStore('boardConfiguration', {
           }
           if (location === 'board-list') {
             board.clearBoardList()
-            board.getAllBoard()
+            board.getAllBoard({ page: 0 })
           }
         })
         .catch((error) => {
