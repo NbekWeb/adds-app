@@ -12,25 +12,37 @@ useRecaptchaProvider()
 
 <template>
   <div class="login-page">
-    <a-row class="h-100" :gutter="16" align="middle">
+    <a-row class="h-100" :gutter="16" align="middle" justify="center">
       <a-col
         :xs="24"
         :sm="24"
         :md="24"
         :lg="12"
         :xl="12"
-        :xxl="14"
+        :xxl="10"
         class="text-center login-page-banner"
       >
         <img class="login-image" src="@/assets/images/login.svg" alt="" />
       </a-col>
-      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
-        <a-card>
+      <a-col
+        :xs="24"
+        :sm="24"
+        :md="24"
+        :lg="12"
+        :xl="12"
+        :xxl="10"
+        class="login-form"
+      >
+        <a-card shadow>
           <div class="auth-form">
             <div>
-              <h1>ADS-<span class="text-primary">PRO</span></h1>
-              <p class="text-muted">
+              <h1 class="text-center text-bold">
+                ADS-<span class="text-primary text-bold">PRO</span>
+              </h1>
+              <p class="text-muted text-center mb-0">
                 {{ $t('LOGIN_PAGE_DESCRIPTION') }}
+              </p>
+              <p class="text-muted text-center">
                 <template v-if="otp.otpKey">
                   <strong> +998{{ phoneNumber }} </strong>
                   {{ $t('AN_SMS_CODE_WAS_SENT_TO_NUMBER') }}
@@ -54,48 +66,79 @@ useRecaptchaProvider()
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
 
 .login-page {
-  display: flex;
-  align-items: center;
-  padding: 3rem;
   height: 100vh;
-  .login-page-banner {
-    .login-image {
-      width: 100%;
+
+  @include responsive-xs {
+    padding: 0;
+  }
+  @include responsive-sm {
+    display: block;
+  }
+  @include responsive-md {
+    padding: 3rem;
+  }
+  @include responsive-lg {
+    display: block;
+  }
+  .ant-row {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 2px 0 2px;
+    .login-page-banner {
+      display: none;
+      @include responsive-xs {
+        display: none;
+      }
+      @include responsive-sm {
+        display: none;
+      }
+      @include responsive-md {
+        display: none;
+      }
+      @include responsive-lg {
+        display: block;
+      }
+
+      .login-image {
+        width: 89%;
+      }
+    }
+    .login-form {
+      .ant-card {
+        @include responsive-xs {
+          max-width: 100%;
+        }
+        @include responsive-sm {
+          max-width: 460px;
+          margin: 0 auto;
+        }
+        @include responsive-md {
+          max-width: 460px;
+        }
+        @include responsive-lg {
+          max-width: 100%;
+        }
+        &:deep(.ant-card-body) {
+          padding: 12px !important;
+        }
+      }
     }
   }
+
   .auth-form {
     display: block;
-    width: 95%;
+    width: 100%;
     max-height: calc(100vh - 110px);
-    padding: 0 46px 0 46px;
     margin: 0 auto;
     overflow: auto;
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    /* Track */
-    &::-webkit-scrollbar-track {
-      width: 10px;
-      background: $white;
-    }
-
-    /* Handle */
-    &::-webkit-scrollbar-thumb {
-      background: rgb($info, 1);
-      border-radius: 4px;
-    }
-
-    /* Handle on hover */
-    &::-webkit-scrollbar-thumb:hover {
-      background: $primary;
+    padding: 4px;
+    @include responsive-lg {
+      display: block;
+      padding: 0 46px 0 46px;
     }
   }
-}
-
-img {
-  height: 90vh;
 }
 </style>

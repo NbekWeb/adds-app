@@ -23,41 +23,15 @@ const model = reactive({
   checked: null,
   token: null
 })
-const modelRules = reactive({
-  fullName: [
-    {
-      required: true,
-      message: t('REQUIRED_FIELD'),
-      trigger: 'blur'
-    }
-  ],
-  checked: [
-    {
-      required: true,
-      message: t('REQUIRED_FIELD')
-    }
-  ]
-})
+
 const handleCheck = (e) => {
   model.checked = e.target.checked ? true : null
 }
-const { resetFields, validate, validateInfos } = useForm(model, modelRules)
 const { execute } = useChallengeV3('submit')
-const register = () => {
-  validate()
-    .then(async () => {
-      loadingUrl.value.add('auth/register')
-      model.token = await execute()
-      authPinia.register(model)
-    })
-    .catch((error) => {
-      if (!error.values.checked) {
-        corePinia.setToast({
-          message: t('YOU_MUST_AGREE_TO_THE_OFFER_TO_REGISTER'),
-          type: 'warning'
-        })
-      }
-    })
+const register = async () => {
+  loadingUrl.value.add('auth/register')
+  model.token = await execute()
+  authPinia.register(model)
 }
 
 onBeforeMount(() => {
@@ -69,13 +43,10 @@ onBeforeMount(() => {
 
 <template>
   <a-form name="authForm" :model="model" layout="vertical">
-    <a-form-item
-      v-bind="validateInfos.phone_number"
-      :label="$t('PHONE_NUMBER')"
-    >
+    <a-form-item :label="$t('PHONE_NUMBER')">
       <phone-number-input-component disable :value="phoneNumber" size="large" />
     </a-form-item>
-    <a-form-item v-bind="validateInfos.fullName" :label="$t('F_I_O')">
+    <a-form-item :label="$t('F_I_O')">
       <a-input
         v-model:value="model.fullName"
         :disabled="loadingUrl.has('auth/register')"
@@ -83,22 +54,24 @@ onBeforeMount(() => {
         :placeholder="$t('ENTER_YOUR_FULL_NAME')"
       />
     </a-form-item>
-    <a-form-item v-bind="validateInfos.checked">
+    <a-form-item>
       <a-checkbox
         @change="(e) => handleCheck(e)"
         v-model:checked="model.checked"
         :disabled="loadingUrl.has('auth/register')"
       >
-        Ro'yxatdan o'tish orqali siz
-        <a href="#" class="offer-link">oferta shartlari</a>ga roziligingizni
-        bildirasiz.
       </a-checkbox>
+      <p class="mb-0">
+        Ro'yxatdan o'tish orqali siz
+        <a href="#" class="offer-link">oferta shartlariga</a> roziligingizni
+        bildirasiz.
+      </p>
     </a-form-item>
     <a-form-item>
       <a-button
         @click="register"
         :loading="loadingUrl.has('auth/register')"
-        :disabled="!model.checked && !model.fullName"
+        :disabled="!model.checked || !model.fullName"
         block
         size="large"
         html-type="submit"

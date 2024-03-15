@@ -29,13 +29,17 @@ const handlePaste = (e) => {
   }
 }
 
-const handleKeydown = (e) => {
-  if (new RegExp('^([0-9])$').test(e.key)) {
-    digits.value[inputIndex.value] = e.key
+const handleInput = (e) => {
+  if (new RegExp('^([0-9])$').test(e.data)) {
+    digits.value[inputIndex.value] = e.data
     if (e.target.nextElementSibling) e.target.nextElementSibling.focus()
+  } else {
+    digits.value[inputIndex.value] = ''
   }
-  if (e.key === 'Backspace') {
-    if (digits.value[inputIndex.value]) digits.value[inputIndex.value] = ''
+  model.value = digits.value.join('')
+}
+const handleKeydown = (e) => {
+  if (e.key === 'Backspace' && !e.target.value) {
     if (e.target.previousElementSibling) e.target.previousElementSibling.focus()
   }
   model.value = digits.value.join('')
@@ -50,7 +54,7 @@ onMounted(() => {
 
 <template>
   <a-input-group>
-    <a-row class="otp-container" @keydown="handleKeydown">
+    <a-row class="otp-container" @keydown="handleKeydown" @input="handleInput">
       <a-input
         v-for="(item, i) in digits"
         :key="i"
@@ -60,7 +64,7 @@ onMounted(() => {
         type="text"
         class="digit-box ant-col"
         size="large"
-        :value="item"
+        v-model:value="digits[i]"
         :autofocus="i === 0"
         placeholder="#"
         :maxlength="1"
@@ -71,12 +75,19 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
 .otp-container {
   justify-content: space-between;
 }
 .digit-box {
-  width: 3rem;
-  padding-left: 17px;
-  padding-right: 17px;
+  width: 2.5rem;
+  padding-left: 13px;
+  padding-right: 13px;
+
+  @include responsive-sm {
+    width: 3rem;
+    padding-left: 17px;
+    padding-right: 17px;
+  }
 }
 </style>
