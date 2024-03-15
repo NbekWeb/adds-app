@@ -70,10 +70,8 @@ useRecaptchaProvider()
 
 .login-page {
   height: 100vh;
-  //overflow: hidden;
 
   @include responsive-xs {
-    //display: none;
     padding: 0;
   }
   @include responsive-sm {
@@ -109,19 +107,6 @@ useRecaptchaProvider()
       }
     }
     .login-form {
-      @include responsive-xs {
-        //width: 100% !important;
-        //margin: auto 0;
-        //padding: 0 !important;
-        ////height: 100%;
-      }
-      @include responsive-sm {
-      }
-
-      @include responsive-md {
-      }
-      @include responsive-lg {
-      }
       .ant-card {
         @include responsive-xs {
           max-width: 100%;
@@ -130,7 +115,6 @@ useRecaptchaProvider()
           max-width: 460px;
           margin: 0 auto;
         }
-
         @include responsive-md {
           max-width: 460px;
         }
@@ -139,15 +123,6 @@ useRecaptchaProvider()
         }
         &:deep(.ant-card-body) {
           padding: 12px !important;
-          @include responsive-xs {
-          }
-          @include responsive-sm {
-          }
-
-          @include responsive-md {
-          }
-          @include responsive-lg {
-          }
         }
       }
     }
