@@ -20,8 +20,7 @@ const uploadPinia = useUpload()
 const corePinia = useCore()
 const useForm = Form.useForm
 const { collapsed, loadingUrl } = storeToRefs(corePinia)
-const { categories, channel } = storeToRefs(boardPinia)
-const { fileHashId, loadingFile } = storeToRefs(uploadPinia)
+const { categories } = storeToRefs(boardPinia)
 const imageUrl = ref(null)
 const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
 
@@ -30,7 +29,8 @@ const form = reactive({
   categoryId: null,
   name: null,
   description: null,
-  logoHashId: null
+  logoHashId: null,
+  channelId: null
 })
 const rules = reactive({
   link: [
@@ -62,26 +62,13 @@ const rules = reactive({
     }
   ]
 })
-const channelInfo = computed(() => channel.value)
-const logoHashId = computed(() => fileHashId.value)
 
-watch(channelInfo, () => {
-  imageUrl.value = null
-  form.link = channelInfo.value.link
-  form.name = channelInfo.value.channelInfo.title
-  form.description = channelInfo.value.channelInfo.description
-  form.logoHashId = channelInfo.value.channelInfo.hashId
-  imageUrl.value = `${baseUrl.value}file/${channelInfo.value.channelInfo.hashId}`
-})
-watch(logoHashId, () => {
-  form.logoHashId = logoHashId.value
-  imageUrl.value = `${baseUrl.value}file/${logoHashId.value}`
-})
 const uploadLogo = (file) => {
   if (file.type === 'image/jpeg' || file.type === 'image/png') {
-    imageUrl.value = null
-    uploadPinia.$reset()
-    uploadPinia.uploadFile(file)
+    uploadPinia.uploadFile(file, (hashId) => {
+      form.logoHashId = hashId
+      imageUrl.value = `${baseUrl.value}file/${hashId}`
+    })
   }
   return false
 }
@@ -91,7 +78,13 @@ const { validate, validateInfos } = useForm(form, rules)
 const checkChannelByLink = () => {
   validate(['link'])
     .then(() => {
-      boardPinia.checkChannel(form.link)
+      boardPinia.checkChannel(form.link, (data) => {
+        form.name = data.title
+        form.description = data.description
+        form.logoHashId = data.hashId
+        form.channelId = data.id
+        imageUrl.value = `${baseUrl.value}file/${data.hashId}`
+      })
     })
     .catch(() => {})
 }
@@ -102,9 +95,6 @@ const addNewBoard = () => {
     })
     .catch(() => {})
 }
-onMounted(() => {
-  boardPinia.getBoardCategories()
-})
 </script>
 
 <template>
@@ -112,7 +102,7 @@ onMounted(() => {
     <a-row :gutter="20" class="mx-0" justify="space-between">
       <a-col>
         <a-form-item>
-          <a-spin :spinning="loadingFile">
+          <a-spin :spinning="loadingUrl.has('file/upload')">
             <template #indicator>
               <icon-loader size="small" />
             </template>
@@ -126,14 +116,14 @@ onMounted(() => {
                 </div>
               </template>
               <a-upload
+                :disabled="!form.channelId"
                 class="btn-logo-change"
-                :disabled="!channelInfo.channelInfo.id"
                 name="file"
                 :show-upload-list="false"
                 :before-upload="uploadLogo"
               >
                 <a-button
-                  :disabled="!channelInfo.channelInfo.id"
+                  :disabled="!form.channelId"
                   type="primary"
                   shape="circle"
                   size="large"
@@ -188,7 +178,7 @@ onMounted(() => {
             >
               <a-input
                 v-model:value="form.name"
-                :disabled="!channelInfo.channelInfo.id"
+                :disabled="!form.channelId"
                 size="large"
                 :placeholder="$t('ENTER_CHANNEL_NAME')"
               />
@@ -203,14 +193,14 @@ onMounted(() => {
                 v-model:value="form.categoryId"
                 show-search
                 :loading="loadingUrl.has('board/category/all')"
-                :disabled="!channelInfo.channelInfo.id"
                 style="width: 100%"
+                :disabled="!form.channelId"
                 :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
                 :placeholder="$t('SELECT_CATEGORY')"
                 size="large"
                 allow-clear
                 tree-default-expand-all
-                :tree-data-simple-mode="{ pId: 'parentId' }"
+                :tree-data-simple-mode="[categories]"
                 :tree-data="categories"
                 tree-node-filter-prop="label"
               >
@@ -229,7 +219,7 @@ onMounted(() => {
             :placeholder="$t('WRITE_DESCRIPTION')"
             class="description"
             :auto-size="true"
-            :disabled="!channelInfo.channelInfo.id"
+            :disabled="!form.channelId"
           />
         </a-form-item>
       </a-col>
@@ -243,9 +233,7 @@ onMounted(() => {
         <a-button
           class="btn-save"
           @click="addNewBoard"
-          :disabled="
-            !channelInfo.channelInfo.id || loadingUrl.has('board/create')
-          "
+          :disabled="!form.channelId || loadingUrl.has('board/create')"
           type="primary"
           size="middle"
         >

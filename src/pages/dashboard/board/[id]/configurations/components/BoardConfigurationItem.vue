@@ -41,7 +41,6 @@ function formatInput(amount) {
   <a-card class="item-card" :body-style="{ padding: '12px' }">
     <a-row justify="space-between">
       <a-col class="item-info">
-        <!--        {{ item.name }}-->
         <span class="item-label">Nomi</span>
         <p class="item-value m-0">Name</p>
       </a-col>
@@ -125,9 +124,6 @@ function formatInput(amount) {
     .loader {
       border-color: $primary !important;
     }
-    //div {
-    //  border-color: white;
-    //}
   }
 }
 </style>

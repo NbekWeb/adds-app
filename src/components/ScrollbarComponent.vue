@@ -1,25 +1,11 @@
 <script setup>
 const props = defineProps({
-  totalCountAll: {
-    type: Number,
-    required: true
-  },
-  totalPages: {
-    type: Number,
-    required: true
-  },
-  page: {
-    type: Number,
-    required: true
-  },
-  count: {
-    type: Number,
-    required: true
-  },
-  loading: {
-    type: Boolean,
-    required: true
-  },
+  totalCountAll: Number,
+  totalPages: Number,
+  page: Number,
+  count: Number,
+  loading: Boolean,
+
   height: String
 })
 const emits = defineEmits(['getDate'])
@@ -41,7 +27,7 @@ const scroll = (e) => {
 
 <template>
   <div
-    class="scrollbar-content py-2"
+    class="scrollbar-content"
     :style="{ height: height }"
     id="scrollbar-content"
     @scroll="scroll"
