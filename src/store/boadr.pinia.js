@@ -10,20 +10,7 @@ const useBoard = defineStore('board', {
     boardConfigurationList: [],
     page: 0,
     totalElements: 0,
-    totalPages: 0,
-    channel: {
-      link: null,
-      channelInfo: {
-        id: null,
-        chatId: null,
-        title: null,
-        username: null,
-        description: null,
-        membersCount: null,
-        hashId: null
-      },
-      createdAt: null
-    }
+    totalPages: 0
   }),
   actions: {
     clearBoardList() {
@@ -75,9 +62,10 @@ const useBoard = defineStore('board', {
         .then(({ data }) => {
           this.categories.push(
             ...data.map((item) => ({
+              id: item.id,
               value: item.id,
-              label: item.name,
-              parentId: item.parentId
+              title: item.name,
+              pId: item.parentId
             }))
           )
 
@@ -114,7 +102,7 @@ const useBoard = defineStore('board', {
         })
     },
 
-    checkChannel(link) {
+    checkChannel(link, callback) {
       const core = useCore()
       core.loadingUrl.add('channel/check')
       api({
@@ -125,7 +113,7 @@ const useBoard = defineStore('board', {
         }
       })
         .then(({ data }) => {
-          this.channel = data
+          callback(data?.channelInfo)
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -140,13 +128,7 @@ const useBoard = defineStore('board', {
       api({
         url: 'board',
         method: 'POST',
-        data: {
-          categoryId: form.categoryId,
-          name: form.name,
-          description: form.description,
-          logoHashId: form.logoHashId,
-          channelId: this.channel.channelInfo.id
-        }
+        data: form
       })
         .then(() => {
           core.setToast({

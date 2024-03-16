@@ -3,16 +3,12 @@ import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
 
 const useUpload = defineStore('upload', {
-  state: () => ({
-    fileHashId: null,
-    loadingFile: false
-  }),
   actions: {
-    uploadFile(file) {
+    uploadFile(file, callback) {
       const core = useCore()
       const form_data = new FormData()
       form_data.append('file', file)
-      this.loadingFile = true
+      core.loadingUrl.add('file/upload')
       api({
         url: 'file',
         method: 'POST',
@@ -22,13 +18,13 @@ const useUpload = defineStore('upload', {
         data: form_data
       })
         .then(({ data }) => {
-          this.fileHashId = data
+          callback(data)
         })
         .catch((error) => {
           core.switchStatus(error)
         })
         .finally(() => {
-          this.loadingFile = false
+          core.loadingUrl.delete('file/upload')
         })
     }
   }

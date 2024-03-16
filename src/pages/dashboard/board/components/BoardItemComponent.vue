@@ -10,6 +10,7 @@ import { storeToRefs } from 'pinia'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import useCore from '@/store/core.pinia.js'
 import { useRouter } from 'vue-router'
+import useUser from '@/store/user.pinia.js'
 // import IconTelegram from '@/components/icons/IconTelegram.vue'
 // import IconInstagram from '@/components/icons/IconInstagram.vue'
 
@@ -27,8 +28,12 @@ const emits = defineEmits(['addNewConfig'])
 
 const router = useRouter()
 const corePinia = useCore()
+const userPinia = useUser()
 const boardPinia = useBoard()
+
 const { loadingUrl } = storeToRefs(corePinia)
+const { user } = storeToRefs(userPinia)
+
 const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
 const config = ref([
   'Junior',
@@ -84,6 +89,7 @@ const handleVisibleTimeDrover = () => {
 const handleNavigate = () => {
   router.push(`/dashboard/board/item/${props.item.id}/configurations`)
 }
+
 onMounted(() => {
   handleOffsetWith()
 })
@@ -95,45 +101,51 @@ onMounted(() => {
       <icon-loader />
     </template>
     <a-card hoverable class="board-item" :loading="loading">
-      <a-dropdown
-        placement="bottomRight"
-        class="actions-dropdown"
-        trigger="click"
-      >
-        <a-button
-          class="btn-card-actions"
-          size="small"
-          type="primary"
-          shape="circle"
+      <template v-if="user.id === item.owner.id">
+        <a-dropdown
+          placement="bottomRight"
+          class="actions-dropdown"
+          trigger="click"
         >
-          <icon-dots-vertical />
-        </a-button>
-        <template #overlay>
-          <a-space direction="vertical" class="py-2">
-            <a-button
-              type="primary"
-              class="btn-card-actions-edit mx-1"
-              size="small"
-              shape="circle"
-            >
-              <icon-edit />
-            </a-button>
-            <a-button
-              @click="boardPinia.deleteBoard(item?.id)"
-              type="primary"
-              class="btn-card-actions-delete mx-1"
-              size="small"
-              shape="circle"
-            >
-              <icon-trash />
-            </a-button>
-          </a-space>
-        </template>
-      </a-dropdown>
+          <a-button
+            class="btn-card-actions"
+            size="small"
+            type="primary"
+            shape="circle"
+          >
+            <icon-dots-vertical />
+          </a-button>
+          <template #overlay>
+            <a-space direction="vertical" class="py-2">
+              <a-button
+                type="primary"
+                class="btn-card-actions-edit mx-1"
+                size="small"
+                shape="circle"
+              >
+                <icon-edit />
+              </a-button>
+              <a-button
+                @click="boardPinia.deleteBoard(item?.id)"
+                type="primary"
+                class="btn-card-actions-delete mx-1"
+                size="small"
+                shape="circle"
+              >
+                <icon-trash />
+              </a-button>
+            </a-space>
+          </template>
+        </a-dropdown>
+      </template>
+
       <div class="board-main-info">
-        <div class="logo">
-          <img :src="`${baseUrl}file/${item?.logoHashId}`" alt="" />
+        <div>
+          <div class="logo">
+            <img :src="`${baseUrl}file/${item?.logoHashId}`" alt="" />
+          </div>
         </div>
+
         <div>
           <h1 class="board-name">{{ item?.name }}</h1>
           <span class="subscriptions">
@@ -357,6 +369,7 @@ onMounted(() => {
   }
 }
 .logo {
+  display: block;
   width: 50px;
   height: 50px;
   overflow: hidden;
