@@ -77,6 +77,12 @@ const logOut = () => {
           </template>
           {{ $t('DashboardBoardListView') }}
         </a-menu-item>
+        <a-menu-item :key="`kiosk-board`">
+          <template #icon>
+            <icon-announcement />
+          </template>
+          {{ $t('DashboardKioskBoardListView') }}
+        </a-menu-item>
         <a-menu-item :key="`post`">
           <template #icon>
             <icon-message-text-square />

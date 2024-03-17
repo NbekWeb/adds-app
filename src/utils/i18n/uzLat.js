@@ -5,6 +5,7 @@ const uzLat = {
   AuthView: 'Tizimga kirish',
   DashboardListView: 'Asosiy sahifa',
   DashboardBoardListView: 'Kanallar',
+  DashboardKioskBoardListView: 'Kiosk boards',
   DashboardPostListView: 'Postlar',
   ReportView: "E'lon bo'yicha hisobot",
   DashboardNotFond: 'Sahifa topilmadi',

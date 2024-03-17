@@ -15,6 +15,8 @@ import AuthView from '@/pages/auth/AuthView.vue'
 import DashboardPostListView from '@/pages/dashboard/post/DashboardPostListView.vue'
 import DashboardPostView from '@/pages/dashboard/post/DashboardPostView.vue'
 import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
+import DashboardKioskBoardView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardView.vue'
+import DashboardKioskBoardListView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardListView.vue'
 
 const LoginView = () => import('@/pages/auth/AuthView.vue')
 
@@ -64,6 +66,40 @@ export const router = createRouter({
               path: 'add',
               component: DashboardBoardFormView
             }
+          ]
+        },
+        {
+          path: 'kiosk-board',
+          name: 'DashboardKioskBoardView',
+          component: DashboardKioskBoardView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardKioskBoardListView',
+              component: DashboardKioskBoardListView
+            },
+            {
+              path: 'create',
+              name: 'DashboardPostFormView',
+              component: DashboardPostFormView
+            }
+            // {
+            //   path: 'item/:id',
+            //   name: 'DashboardBoardItemView',
+            //   component: DashboardBoardItemView,
+            //   children: [
+            //     {
+            //       path: 'configurations',
+            //       name: 'BoardConfigurationsView',
+            //       component: BoardConfigurationsView
+            //     }
+            //   ]
+            // },
+            // {
+            //   name: 'AddBoardView',
+            //   path: 'add',
+            //   component: DashboardBoardFormView
+            // }
           ]
         },
         {
