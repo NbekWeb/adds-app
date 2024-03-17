@@ -1,17 +1,20 @@
+import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
+
 const uzLat = {
   // menus
   AuthView: 'Tizimga kirish',
-  DashboardView: 'Asosiy board',
-  DashboardNotFond: 'Sahifa topilmadi',
   DashboardListView: 'Asosiy sahifa',
   DashboardBoardListView: 'Kanallar',
-  AddBoardView: "Kanal qo'shish",
+  DashboardPostListView: 'Postlar',
   ReportView: "E'lon bo'yicha hisobot",
+  DashboardNotFond: 'Sahifa topilmadi',
   DashboardUserListView: 'Auditoriya',
-  DashboardUserEditView: 'Foydalanuvchini tahrirlash',
   BillingView: "Billing va to'lovlar",
   DashboardSettingsView: 'Sozlamalar',
   BoardConfigurationsView: "Ta'riflar",
+  AddBoardView: "Kanal qo'shish",
+  DashboardUserEditView: 'Foydalanuvchini tahrirlash',
+  DashboardPostFormView: "Post qo'shish",
   //   validations
   REQUIRED_FIELD: 'Majburiy maydon',
   REQUIRED_PHONE_NUMBER: "Telefon raqam to'liq kiritilishi shart!",
@@ -79,6 +82,8 @@ const uzLat = {
   BOARD_CONFIGURATION_DELETED_SUCCESSFULLY: "Ta'rif muvafaqiyatli o'chirildi",
   BOARD_TIME_CONFIGURATION_DELETED_SUCCESSFULLY:
     "Ta'rif muvafaqiyatli o'chirildi",
+  POST_ADDED_SUCCESSFULLY: "Post muvafaqiyatli qo'shildi",
+  POST_DELETED_SUCCESSFULLY: "Post muvafaqiyatli o'chirildi",
   ERROR: 'Xatolik!'
 }
 

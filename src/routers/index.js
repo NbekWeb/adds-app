@@ -12,6 +12,9 @@ import DashboardBoardFormView from '@/pages/dashboard/board/DashboardBoardFormVi
 import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 import DashboardBoardItemView from '@/pages/dashboard/board/[id]/DashboardBoardItemView.vue'
 import AuthView from '@/pages/auth/AuthView.vue'
+import DashboardPostListView from '@/pages/dashboard/post/DashboardPostListView.vue'
+import DashboardPostView from '@/pages/dashboard/post/DashboardPostView.vue'
+import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
 
 const LoginView = () => import('@/pages/auth/AuthView.vue')
 
@@ -21,8 +24,7 @@ export const router = createRouter({
     {
       path: '/',
       name: 'AuthView',
-      component: AuthView,
-      children: []
+      component: AuthView
     },
     {
       path: '/dashboard',
@@ -30,11 +32,6 @@ export const router = createRouter({
       component: DashboardView,
       redirect: '/dashboard/main',
       children: [
-        {
-          path: 'settings',
-          name: 'DashboardSettingsView',
-          component: DashboardSettingsView
-        },
         {
           path: 'main',
           name: 'DashboardListView',
@@ -68,6 +65,45 @@ export const router = createRouter({
               component: DashboardBoardFormView
             }
           ]
+        },
+        {
+          path: 'post',
+          name: 'DashboardPostView',
+          component: DashboardPostView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardPostListView',
+              component: DashboardPostListView
+            },
+            {
+              path: 'create',
+              name: 'DashboardPostFormView',
+              component: DashboardPostFormView
+            }
+            // {
+            //   path: 'item/:id',
+            //   name: 'DashboardBoardItemView',
+            //   component: DashboardBoardItemView,
+            //   children: [
+            //     {
+            //       path: 'configurations',
+            //       name: 'BoardConfigurationsView',
+            //       component: BoardConfigurationsView
+            //     }
+            //   ]
+            // },
+            // {
+            //   name: 'AddBoardView',
+            //   path: 'add',
+            //   component: DashboardBoardFormView
+            // }
+          ]
+        },
+        {
+          path: 'settings',
+          name: 'DashboardSettingsView',
+          component: DashboardSettingsView
         },
         {
           path: 'user',
