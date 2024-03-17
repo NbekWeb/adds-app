@@ -1,6 +1,6 @@
 import axios from 'axios'
 const instance = axios.create({
-  baseURL: `${import.meta.env.VITE_APP_BASE_URL}/api/v1`
+  baseURL: `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}`
 })
 
 export const api = ({ url, open = false, ...props }) => {
