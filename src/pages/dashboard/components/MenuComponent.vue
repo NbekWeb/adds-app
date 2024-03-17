@@ -13,6 +13,7 @@ import IconHelp from '@/components/icons/IconHelp.vue'
 import IconPowerOff from '@/components/icons/IconPowerOff.vue'
 import { useRoute, useRouter } from 'vue-router'
 import useUser from '@/store/user.pinia.js'
+import IconMessageTextSquare from '@/components/icons/IconMessageTextSquare.vue'
 const { collapsed } = defineProps({
   collapsed: {
     type: Boolean,
@@ -75,6 +76,12 @@ const logOut = () => {
             <icon-announcement />
           </template>
           {{ $t('DashboardBoardListView') }}
+        </a-menu-item>
+        <a-menu-item :key="`post`">
+          <template #icon>
+            <icon-message-text-square />
+          </template>
+          {{ $t('DashboardPostListView') }}
         </a-menu-item>
         <a-menu-item :key="`report`">
           <template #icon>
