@@ -8,19 +8,18 @@ const props = defineProps({
 
   height: String
 })
-const emits = defineEmits(['getDate'])
+const emits = defineEmits(['getData'])
 const scroll = (e) => {
   const clientH = e.target.clientHeight
   const scrollTop = e.target.scrollTop
   const scrollH = e.target.scrollHeight
   const page = props.page + 1
   if (
-    Math.ceil(clientH + scrollTop) >= scrollH &&
-    props.totalCountAll >= props.page * props.count &&
+    Math.ceil(clientH + scrollTop + 1) >= scrollH &&
     page < props.totalPages &&
     !props.loading
   ) {
-    emits('getDate', page)
+    emits('getData', page)
   }
 }
 </script>

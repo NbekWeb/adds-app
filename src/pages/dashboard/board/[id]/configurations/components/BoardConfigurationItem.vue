@@ -1,8 +1,10 @@
 <script setup>
-import IconTrash from '@/components/icons/IconTrash.vue'
-import useBoardConfiguration from '@/store/board-configuration.pinia.js'
-import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
+import formatAmount from '@/composables/amount.js'
+import formatTime from '@/composables/date.js'
+import useCore from '@/store/core.pinia.js'
+import useBoardConfiguration from '@/store/board-configuration.pinia.js'
+import IconTrash from '@/components/icons/IconTrash.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 
 const corePinia = useCore()
@@ -14,27 +16,6 @@ defineProps({
   }
 })
 const { loadingUrl } = storeToRefs(corePinia)
-const formatDate = (long) => {
-  const fullMin = long / 1000 / 60
-  const h = Math.floor(fullMin / 60)
-  let m
-  let hh
-  let mm
-  if (h > 0) {
-    m = fullMin - h * 60
-  } else {
-    m = fullMin
-  }
-  hh = h < 10 ? `0${h}` : `${h}`
-  mm = m < 10 ? `0${m}` : `${m}`
-  return `${hh}:${mm}`
-}
-function formatInput(amount) {
-  return amount
-    .toString()
-    .replace(/\D/g, '')
-    .replace(/(\d)(?=(\d{3})+$)/g, '$1 ')
-}
 </script>
 
 <template>
@@ -47,25 +28,25 @@ function formatInput(amount) {
       <a-col class="item-info">
         <span class="item-label">Muddati</span>
         <p class="item-value m-0">
-          {{ formatDate(item.liveTime) }}
+          {{ formatTime(item.liveTime) }}
         </p>
       </a-col>
       <a-col class="item-info">
         <span class="item-label">Topda turish muddati</span>
         <p class="item-value m-0">
-          {{ formatDate(item.topTime) }}
+          {{ formatTime(item.topTime) }}
         </p>
       </a-col>
       <a-col class="item-info">
         <span class="item-label">Pinda turish muddati</span>
         <p class="item-value m-0">
-          {{ formatDate(item.pinTime) }}
+          {{ formatTime(item.pinTime) }}
         </p>
       </a-col>
       <a-col class="item-info">
         <span class="item-label">Narxi</span>
         <p class="item-value m-0">
-          {{ formatInput(item.amount) }}
+          {{ formatAmount(item.amount) }}
         </p>
       </a-col>
       <a-col class="actions">

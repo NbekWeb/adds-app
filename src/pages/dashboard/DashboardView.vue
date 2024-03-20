@@ -1,15 +1,17 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import useUser from '@/store/user.pinia.js'
+import useCore from '@/store/core.pinia.js'
 import MenuComponent from '@/pages/dashboard/components/MenuComponent.vue'
 import HeaderComponent from '@/pages/dashboard/components/HeaderComponent.vue'
 import IconChevronLeft from '@/components/icons/IconChevronLeft.vue'
 import IconChevronRight from '@/components/icons/IconChevronRight.vue'
-
-import useUser from '@/store/user.pinia.js'
-import { useRoute } from 'vue-router'
 import IconLoader from '@/components/icons/IconLoader.vue'
-import useCore from '@/store/core.pinia.js'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 const userPinia = useUser()
 const corePinia = useCore()
 const { collapsed, loadingUrl } = storeToRefs(corePinia)
@@ -17,6 +19,13 @@ const { collapsed, loadingUrl } = storeToRefs(corePinia)
 // user me check token
 onMounted(() => {
   userPinia.getUserMe()
+})
+onBeforeMount(() => {
+  router.push({
+    params: {
+      role: 'ads'
+    }
+  })
 })
 </script>
 

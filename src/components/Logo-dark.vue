@@ -7,7 +7,7 @@
       height="1em"
       viewBox="0 0 888 1002"
       fill="none"
-      stroke="#0020C2"
+      stroke="#FFFFFFA5"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g filter="url(#filter0_dddd_203_51)">

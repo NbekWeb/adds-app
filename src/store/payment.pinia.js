@@ -4,17 +4,27 @@ import useCore from '@/store/core.pinia.js'
 
 const usePayment = defineStore('payment', {
   state: () => ({
-    orders: [],
-    orderStatuses: []
+    payments: [],
+    totalPages: 0,
+    totalElements: 0,
+    page: 0
   }),
   actions: {
-    getAllPayments() {
+    getAllPayments({ page, ...props }) {
       const core = useCore()
       core.loadingUrl.add('get/payment/all')
       api({
-        url: 'payment'
+        url: 'payment',
+        params: {
+          size: 10,
+          page: page
+        }
       })
-        .then(() => {})
+        .then(({ data }) => {
+          this.payments = data.content
+          this.totalPages = data.totalPages
+          this.totalElements = data.totalElements
+        })
         .catch((error) => {
           core.switchStatus(error)
         })

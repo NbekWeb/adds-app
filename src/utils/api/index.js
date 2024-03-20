@@ -62,14 +62,14 @@ function refreshAccessToken(error) {
         })
       })
       .catch((error2) => {
-        if (error.response.status !== 401) {
+        if (error2.response.status !== 401) {
+          Clear()
           return Promise.reject(error)
         }
-        Clear()
       })
       .finally(createAxiosResponseInterceptor)
   }
-  // Clear()
+  Clear()
   return Promise.reject('Error')
 }
 

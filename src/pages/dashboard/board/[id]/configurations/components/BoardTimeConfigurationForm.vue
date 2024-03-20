@@ -1,12 +1,12 @@
 <script setup>
 import { reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Form } from 'ant-design-vue'
-import IconLoader from '@/components/icons/IconLoader.vue'
-import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
+import { Form } from 'ant-design-vue'
+import useCore from '@/store/core.pinia.js'
 import useBoardTimeConfiguration from '@/store/board-time-configuration.pinia.js'
 import MoneyInputComponent from '@/components/MoneyInputComponent.vue'
+import IconLoader from '@/components/icons/IconLoader.vue'
 
 const { t } = useI18n()
 const useForm = Form.useForm

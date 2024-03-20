@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
+import date from '@/composables/date.js'
 
 const useBoard = defineStore('board', {
   state: () => ({
@@ -19,16 +20,16 @@ const useBoard = defineStore('board', {
       this.totalElements = 0
       this.totalPages = 0
     },
-    getAllBoard({ page = this.page, ...props }) {
+
+    getAllBoard({ page = this.page, role = 'ads', ...props }) {
       const core = useCore()
       core.loadingUrl.add('board/all')
       this.page = page
       api({
-        url: 'board',
+        url: role === 'owner' ? 'board/owner' : 'board',
         params: {
           size: 9,
           page: page,
-          type: props.type,
           categoryId: props.categoryId,
           status: props.status
         }
@@ -48,6 +49,22 @@ const useBoard = defineStore('board', {
         })
         .finally(() => {
           core.loadingUrl.delete('board/all')
+        })
+    },
+    getOneById(id, callback) {
+      const core = useCore()
+      core.loadingUrl.add(`get/board/one`)
+      api({
+        url: `board/${id}`
+      })
+        .then(({ data }) => {
+          callback(data)
+        })
+        .catch((error) => {
+          useCore().switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('get/board/one')
         })
     },
     getBoardCategories(id = null) {
@@ -141,10 +158,35 @@ const useBoard = defineStore('board', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.add('board/create')
+          core.loadingUrl.delete('board/create')
         })
     },
-
+    updateBoard(id, form) {
+      const core = useCore()
+      core.loadingUrl.add(`get/board/one`)
+      api({
+        url: `board/${id}`,
+        method: 'PUT',
+        data: {
+          categoryId: form.categoryId,
+          name: form.name,
+          description: form.description,
+          logo: form.logoHashId
+        }
+      })
+        .then(() => {
+          core.setToast({
+            type: 'success',
+            locale: ''
+          })
+        })
+        .catch((error) => {
+          useCore().switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('get/board/one')
+        })
+    },
     deleteBoard(id) {
       const core = useCore()
       core.loadingUrl.add(`board/delete/${id}`)

@@ -1,12 +1,20 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
+import {
+  computed,
+  onBeforeMount,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref,
+  watch
+} from 'vue'
 import useBoard from '@/store/boadr.pinia.js'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { Form } from 'ant-design-vue'
 import useUpload from '@/store/upload.pinia.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import IconUseEmptyLogo from '@/components/icons/IconUseEmptyLogo.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import IconSearch from '@/components/icons/IconSearch.vue'
@@ -24,6 +32,9 @@ const { categories } = storeToRefs(boardPinia)
 const imageUrl = ref(null)
 const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
 
+const route = useRoute()
+
+const id = ref(null)
 const form = reactive({
   link: null,
   categoryId: null,
@@ -89,12 +100,34 @@ const checkChannelByLink = () => {
     .catch(() => {})
 }
 const addNewBoard = () => {
-  validate()
-    .then(() => {
-      boardPinia.addNewBoard(form)
-    })
-    .catch(() => {})
+  if (id.value) {
+    validate(['name', 'description', 'logoHashId', 'categoryId'])
+      .then(() => {
+        boardPinia.updateBoard(id.value, form)
+      })
+      .catch(() => {})
+  } else {
+    validate(['name', 'description', 'logoHashId', 'categoryId', 'channelId'])
+      .then(() => {
+        boardPinia.addNewBoard(form)
+      })
+      .catch(() => {})
+  }
 }
+
+onMounted(() => {
+  if (route.params.id) {
+    id.value = route.params.id
+    boardPinia.getOneById(route.params.id, (data) => {
+      form.name = data.name
+      form.description = data.description
+      form.logoHashId = data.logoHashId
+      form.channelId = data.id
+      form.categoryId = data.category.id
+      imageUrl.value = `${baseUrl.value}file/${data.logoHashId}`
+    })
+  }
+})
 </script>
 
 <template>
@@ -102,7 +135,11 @@ const addNewBoard = () => {
     <a-row :gutter="20" class="mx-0" justify="space-between">
       <a-col>
         <a-form-item>
-          <a-spin :spinning="loadingUrl.has('file/upload')">
+          <a-spin
+            :spinning="
+              loadingUrl.has('file/upload') || loadingUrl.has('get/board/one')
+            "
+          >
             <template #indicator>
               <icon-loader size="small" />
             </template>
@@ -123,10 +160,15 @@ const addNewBoard = () => {
                 :before-upload="uploadLogo"
               >
                 <a-button
-                  :disabled="!form.channelId"
+                  :disabled="
+                    !form.channelId ||
+                    loadingUrl.has('file/upload') ||
+                    loadingUrl.has('get/board/one')
+                  "
                   type="primary"
                   shape="circle"
                   size="large"
+                  class="avatar-upload-btn"
                 >
                   <template #icon>
                     <icon-edit />
@@ -146,65 +188,78 @@ const addNewBoard = () => {
         :xxl="21"
       >
         <a-row :gutter="10">
-          <a-col :span="24">
-            <a-form-item
-              :label="$t('CHANNEL_LINK')"
-              v-bind="validateInfos.link"
-            >
-              <a-input-search
-                v-model:value="form.link"
-                allow-clear
-                :placeholder="$t('ENTER_CHANNEL_LINK')"
-                size="large"
-                @search="checkChannelByLink"
+          <template v-if="!id">
+            <a-col :span="24">
+              <a-form-item
+                :label="$t('CHANNEL_LINK')"
+                v-bind="validateInfos.link"
               >
-                <template #enterButton>
-                  <a-button type="primary">
-                    <template v-if="loadingUrl.has('channel/check')">
-                      <icon-loader size="small" />
-                    </template>
-                    <template v-else>
-                      <icon-search />
-                    </template>
-                  </a-button>
-                </template>
-              </a-input-search>
-            </a-form-item>
-          </a-col>
-          <a-col :xs="24" :sm="24" :md="24" :lg="12">
+                <a-input-search
+                  v-model:value="form.link"
+                  allow-clear
+                  :placeholder="$t('ENTER_CHANNEL_LINK')"
+                  size="large"
+                  @search="checkChannelByLink"
+                >
+                  <template #enterButton>
+                    <a-button type="primary">
+                      <template v-if="loadingUrl.has('channel/check')">
+                        <icon-loader size="small" />
+                      </template>
+                      <template v-else>
+                        <icon-search />
+                      </template>
+                    </a-button>
+                  </template>
+                </a-input-search>
+              </a-form-item>
+            </a-col>
+          </template>
+
+          <a-col :xs="24" :sm="24" :md="24" :lg="id ? 24 : 12">
             <a-form-item
               :label="$t('CHANNEL_NAME')"
               v-bind="validateInfos.name"
             >
-              <a-input
-                v-model:value="form.name"
-                :disabled="!form.channelId"
-                size="large"
-                :placeholder="$t('ENTER_CHANNEL_NAME')"
-              />
+              <template v-if="loadingUrl.has('get/board/one')">
+                <a-skeleton-input style="width: 100%" block active />
+              </template>
+              <template v-else>
+                <a-input
+                  v-model:value="form.name"
+                  :disabled="!form.channelId"
+                  size="large"
+                  :placeholder="$t('ENTER_CHANNEL_NAME')"
+                />
+              </template>
             </a-form-item>
           </a-col>
-          <a-col :xs="24" :sm="24" :md="24" :lg="12">
+          <a-col :xs="24" :sm="24" :md="24" :lg="id ? 24 : 12">
             <a-form-item
               :label="$t('CATEGORY')"
               v-bind="validateInfos.categoryId"
             >
-              <a-tree-select
-                v-model:value="form.categoryId"
-                show-search
-                :loading="loadingUrl.has('board/category/all')"
-                style="width: 100%"
-                :disabled="!form.channelId"
-                :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-                :placeholder="$t('SELECT_CATEGORY')"
-                size="large"
-                allow-clear
-                tree-default-expand-all
-                :tree-data-simple-mode="[categories]"
-                :tree-data="categories"
-                tree-node-filter-prop="label"
-              >
-              </a-tree-select>
+              <template v-if="loadingUrl.has('get/board/one')">
+                <a-skeleton-input style="width: 100%" block active />
+              </template>
+              <template v-else>
+                <a-tree-select
+                  v-model:value="form.categoryId"
+                  show-search
+                  :loading="loadingUrl.has('board/category/all')"
+                  style="width: 100%"
+                  :disabled="!form.channelId"
+                  :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                  :placeholder="$t('SELECT_CATEGORY')"
+                  size="large"
+                  allow-clear
+                  tree-default-expand-all
+                  :tree-data-simple-mode="[categories]"
+                  :tree-data="categories"
+                  tree-node-filter-prop="label"
+                >
+                </a-tree-select>
+              </template>
             </a-form-item>
           </a-col>
         </a-row>
@@ -214,13 +269,18 @@ const addNewBoard = () => {
           :label="$t('DESCRIPTION')"
           v-bind="validateInfos.description"
         >
-          <a-textarea
-            v-model:value="form.description"
-            :placeholder="$t('WRITE_DESCRIPTION')"
-            class="description"
-            :auto-size="true"
-            :disabled="!form.channelId"
-          />
+          <template v-if="loadingUrl.has('get/board/one')">
+            <a-skeleton active :paragraph="{ rows: 5 }" />
+          </template>
+          <template v-else>
+            <a-textarea
+              v-model:value="form.description"
+              :placeholder="$t('WRITE_DESCRIPTION')"
+              class="description"
+              :auto-size="true"
+              :disabled="!form.channelId"
+            />
+          </template>
         </a-form-item>
       </a-col>
     </a-row>
@@ -296,6 +356,7 @@ const addNewBoard = () => {
     bottom: -12px;
     right: -12px;
     color: $body;
+    z-index: 11;
     button {
       display: flex;
       justify-content: center;

@@ -7,11 +7,11 @@ const useKioskBoard = defineStore('kiosk-board', {
     kioskBoards: []
   }),
   actions: {
-    getAllBoardForOwner({ page, props }) {
+    getAllKioskBoard({ page, role = 'ads', props }) {
       const core = useCore()
       core.loadingUrl.add('get/kiosk-board/owner/all')
       api({
-        url: 'kiosk-board/owner',
+        url: role === 'owner' ? 'board/kiosk-owner' : 'kiosk-board',
         params: {
           page: page,
           size: 10,

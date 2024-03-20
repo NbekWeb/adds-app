@@ -15,6 +15,9 @@ const useUser = defineStore('user', {
     userList: []
   }),
   actions: {
+    changeRole(role) {
+      this.role = role
+    },
     getUserMe() {
       const core = useCore()
       core.loadingUrl.add('user/me')

@@ -2,10 +2,23 @@
 import { ref } from 'vue'
 import useUser from '@/store/user.pinia.js'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import useCore from '@/store/core.pinia.js'
 
+const router = useRouter()
 const userPinia = useUser()
+const corePinia = useCore()
 const { user } = storeToRefs(userPinia)
 const account = ref('ads')
+const changeAccountRole = (role) => {
+  account.value = role
+  userPinia.changeRole(role)
+  router.push({
+    params: {
+      role: role
+    }
+  })
+}
 </script>
 
 <template>
@@ -21,14 +34,14 @@ const account = ref('ads')
     <a-col class="ml-auto">
       <div class="header-switch">
         <div
-          @click="account = 'ads'"
+          @click="changeAccountRole('ads')"
           class="switch-item"
           :class="account === 'ads' && 'active'"
         >
           <a-tooltip title="E'lon beruvchi rejimiga o'tish"> 🎉 </a-tooltip>
         </div>
         <div
-          @click="account = 'owner'"
+          @click="changeAccountRole('owner')"
           class="switch-item"
           :class="account === 'owner' && 'active'"
         >

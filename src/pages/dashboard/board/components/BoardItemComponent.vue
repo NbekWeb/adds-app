@@ -1,6 +1,6 @@
 <script setup>
 import IconTrash from '@/components/icons/IconTrash.vue'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDotsVertical from '@/components/icons/IconDotsVertical.vue'
 import IconUser from '@/components/icons/IconUser.vue'
@@ -9,7 +9,7 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 import { storeToRefs } from 'pinia'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import useCore from '@/store/core.pinia.js'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import useUser from '@/store/user.pinia.js'
 // import IconTelegram from '@/components/icons/IconTelegram.vue'
 // import IconInstagram from '@/components/icons/IconInstagram.vue'
@@ -27,6 +27,8 @@ const props = defineProps({
 const emits = defineEmits(['addNewConfig'])
 
 const router = useRouter()
+const route = useRoute()
+
 const corePinia = useCore()
 const userPinia = useUser()
 const boardPinia = useBoard()
@@ -35,16 +37,7 @@ const { loadingUrl } = storeToRefs(corePinia)
 const { user } = storeToRefs(userPinia)
 
 const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
-const config = ref([
-  'Junior',
-  'Middle',
-  'Senior',
-  'Team lead',
-  'Junior',
-  'Middle',
-  'Senior',
-  'Team lead'
-])
+const config = ref(['Junior', 'Middle', 'Senior', 'Team lead', 'Junior'])
 const timeConfig = ref([
   '8:00',
   '9:00',
@@ -63,12 +56,15 @@ const childConfig = ref(null)
 const parentTimeConfig = ref(null)
 const childTimeConfig = ref(null)
 
+const role = computed(() => route.params.role)
 const handleOffsetWith = () => {
   if (childConfig.value?.offsetWidth > parentConfig.value?.offsetWidth) {
     configLength.value = Math.floor(
       parentConfig.value.offsetWidth /
         (childConfig.value.offsetWidth / config.value.length)
     )
+  } else {
+    configLength.value = 0
   }
   if (
     childTimeConfig.value?.offsetWidth > parentTimeConfig.value?.offsetWidth
@@ -77,8 +73,12 @@ const handleOffsetWith = () => {
       parentTimeConfig.value.offsetWidth /
         (childTimeConfig.value.offsetWidth / timeConfig.value.length)
     )
+  } else {
+    timeConfigLength.value = 0
   }
 }
+
+window.addEventListener('resize', handleOffsetWith)
 
 const handleVisibleDrover = () => {
   emits('addNewConfig', props.item.id, 'configuration')
@@ -87,7 +87,9 @@ const handleVisibleTimeDrover = () => {
   emits('addNewConfig', props.item.id, 'time-configuration')
 }
 const handleNavigate = () => {
-  router.push(`/dashboard/board/item/${props.item.id}/configurations`)
+  router.push(
+    `/dashboard/${role.value}/board/item/${props.item.id}/configurations`
+  )
 }
 
 onMounted(() => {
@@ -96,141 +98,152 @@ onMounted(() => {
 </script>
 
 <template>
-  <a-spin :spinning="loadingUrl.has(`board/delete/${item.id}`)">
-    <template #indicator>
-      <icon-loader />
-    </template>
-    <a-card hoverable class="board-item" :loading="loading">
-      <template v-if="user.id === item.owner.id">
-        <a-dropdown
-          placement="bottomRight"
-          class="actions-dropdown"
-          trigger="click"
-        >
-          <a-button
-            class="btn-card-actions"
-            size="small"
-            type="primary"
-            shape="circle"
+  <div class="board-item-container">
+    <a-spin :spinning="loadingUrl.has(`board/delete/${item.id}`)">
+      <template #indicator>
+        <icon-loader />
+      </template>
+      <a-card hoverable class="board-item" :loading="loading">
+        <template v-if="role === 'owner'">
+          <a-dropdown
+            placement="bottomRight"
+            class="actions-dropdown"
+            trigger="click"
           >
-            <icon-dots-vertical />
-          </a-button>
-          <template #overlay>
-            <a-space direction="vertical" class="py-2">
+            <a-button
+              class="btn-card-actions"
+              size="small"
+              type="primary"
+              shape="circle"
+            >
+              <icon-dots-vertical />
+            </a-button>
+            <template #overlay>
+              <a-space direction="vertical" class="py-2">
+                <a-button
+                  @click="
+                    router.push(`/dashboard/${role}/board/edit/${item?.id}`)
+                  "
+                  type="primary"
+                  class="btn-card-actions-edit mx-1"
+                  size="small"
+                  shape="circle"
+                >
+                  <icon-edit />
+                </a-button>
+                <a-button
+                  @click="boardPinia.deleteBoard(item?.id)"
+                  type="primary"
+                  class="btn-card-actions-delete mx-1"
+                  size="small"
+                  shape="circle"
+                >
+                  <icon-trash />
+                </a-button>
+              </a-space>
+            </template>
+          </a-dropdown>
+        </template>
+
+        <div class="board-main-info">
+          <div>
+            <div class="logo">
+              <img :src="`${baseUrl}file/${item?.logoHashId}`" alt="" />
+            </div>
+          </div>
+
+          <div>
+            <h1 class="board-name">{{ item?.name }}</h1>
+            <span class="subscriptions">
+              <icon-user />
+              <span>{{
+                item?.channelMembersCount > 1000
+                  ? `${Math.floor(item?.channelMembersCount / 1000)}k`
+                  : item?.channelMembersCount
+              }}</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="description mb-2">
+          <p class="description-text">
+            {{ item?.description }}
+          </p>
+        </div>
+        <!--      <div class="board-type pl-2">-->
+        <!--        <icon-telegram />-->
+        <!--        <icon-instagram />-->
+        <!--      </div>-->
+        <div class="board-configurations">
+          <h5>Board configuration</h5>
+          <div class="configurations mb-1">
+            <div ref="parentConfig" class="board-configuration-parent">
+              <div ref="childConfig" class="board-configuration">
+                <a-tag color="blue" v-for="tag in config">
+                  {{ tag }}
+                </a-tag>
+              </div>
+            </div>
+
+            <a-space class="buttons">
+              <template v-if="configLength">
+                <a-tag @click="handleNavigate" size="small" color="blue"
+                  ><span class="more">...</span></a-tag
+                >
+              </template>
               <a-button
-                type="primary"
-                class="btn-card-actions-edit mx-1"
+                @click="handleVisibleDrover"
                 size="small"
-                shape="circle"
-              >
-                <icon-edit />
-              </a-button>
-              <a-button
-                @click="boardPinia.deleteBoard(item?.id)"
                 type="primary"
-                class="btn-card-actions-delete mx-1"
-                size="small"
-                shape="circle"
+                class="configuration-add-btn"
               >
-                <icon-trash />
+                <icon-plus />
               </a-button>
             </a-space>
-          </template>
-        </a-dropdown>
-      </template>
-
-      <div class="board-main-info">
-        <div>
-          <div class="logo">
-            <img :src="`${baseUrl}file/${item?.logoHashId}`" alt="" />
           </div>
-        </div>
-
-        <div>
-          <h1 class="board-name">{{ item?.name }}</h1>
-          <span class="subscriptions">
-            <icon-user />
-            <span>12k</span>
-          </span>
-        </div>
-      </div>
-
-      <div class="description mb-2">
-        <p class="description-text">
-          {{ item?.description }}
-        </p>
-      </div>
-      <!--      <div class="board-type pl-2">-->
-      <!--        <icon-telegram />-->
-      <!--        <icon-instagram />-->
-      <!--      </div>-->
-      <div class="board-configurations">
-        <h5>Board configuration</h5>
-        <div class="configurations mb-1">
-          <div ref="parentConfig" class="board-configuration-parent">
-            <div ref="childConfig" class="board-configuration">
-              <a-tag color="blue" v-for="tag in config">
-                {{ tag }}
-              </a-tag>
+          <h5>Board time configuration</h5>
+          <div class="configurations">
+            <div ref="parentTimeConfig" class="board-configuration-parent">
+              <div ref="childTimeConfig" class="board-time-configuration">
+                <a-tag color="blue" v-for="tag in timeConfig">
+                  {{ tag }}
+                </a-tag>
+              </div>
             </div>
-          </div>
 
-          <a-space class="buttons">
-            <template v-if="configLength">
-              <a-tag @click="handleNavigate" size="small" color="blue"
-                ><span class="more">...</span></a-tag
+            <a-space class="buttons">
+              <template v-if="timeConfigLength">
+                <a-tag @click="handleNavigate" size="small" color="blue">
+                  ...
+                </a-tag>
+              </template>
+              <a-button
+                @click="handleVisibleTimeDrover"
+                size="small"
+                type="primary"
+                class="configuration-add-btn"
               >
-            </template>
-            <a-button
-              @click="handleVisibleDrover"
-              size="small"
-              type="primary"
-              class="configuration-add-btn"
-            >
-              <icon-plus />
-            </a-button>
-          </a-space>
-        </div>
-        <h5>Board time configuration</h5>
-        <div class="configurations">
-          <div ref="parentTimeConfig" class="board-configuration-parent">
-            <div ref="childTimeConfig" class="board-time-configuration">
-              <a-tag color="blue" v-for="tag in timeConfig"> {{ tag }} </a-tag>
-            </div>
+                <icon-plus />
+              </a-button>
+            </a-space>
           </div>
-
-          <a-space class="buttons">
-            <template v-if="timeConfigLength">
-              <a-tag @click="handleNavigate" size="small" color="blue">
-                ...
-              </a-tag>
-            </template>
-            <a-button
-              @click="handleVisibleTimeDrover"
-              size="small"
-              type="primary"
-              class="configuration-add-btn"
-            >
-              <icon-plus />
-            </a-button>
-          </a-space>
         </div>
-      </div>
 
-      <template #actions>
-        <a-row justify="space-between" class="mx-3">
-          <a-col class="pl-2">
-            <span class="category-name">{{ item?.category?.name }}</span>
-          </a-col>
-          <a-col>
-            <a-tag class="status" :bordered="false" color="warning">
-              {{ item?.status?.localName }}
-            </a-tag>
-          </a-col>
-        </a-row>
-      </template>
-    </a-card>
-  </a-spin>
+        <template #actions>
+          <a-row justify="space-between" class="mx-3">
+            <a-col class="pl-2">
+              <span class="category-name">{{ item?.category?.name }}</span>
+            </a-col>
+            <a-col>
+              <a-tag class="status" :bordered="false" color="warning">
+                {{ item?.status?.localName }}
+              </a-tag>
+            </a-col>
+          </a-row>
+        </template>
+      </a-card>
+    </a-spin>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -270,10 +283,19 @@ onMounted(() => {
   color: $danger !important;
   background-color: rgb($danger, 0.4) !important;
 }
+.board-item-container {
+  height: 100%;
+  :deep(.ant-spin-nested-loading),
+  :deep(.ant-spin-container) {
+    height: 100%;
+  }
+}
+
 .board-item {
+  height: 100%;
   position: relative;
   &:deep(.ant-card-body) {
-    min-height: auto;
+    height: calc(100% - 50px);
   }
 
   .btn-card-actions {

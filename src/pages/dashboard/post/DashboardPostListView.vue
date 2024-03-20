@@ -1,11 +1,14 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import usePost from '@/store/post.pinia.js'
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 
 const router = useRouter()
+const route = useRoute()
+
 const postPinia = usePost()
+const role = computed(() => route.params.role)
 
 onMounted(() => {
   postPinia.getAllPosts(0)
@@ -18,7 +21,7 @@ onMounted(() => {
       <a-button
         type="primary"
         size="middle"
-        @click="router.push('/dashboard/post/create')"
+        @click="router.push(`/dashboard/${role}/post/create`)"
       >
         {{ $t('ADD') }}
       </a-button>
