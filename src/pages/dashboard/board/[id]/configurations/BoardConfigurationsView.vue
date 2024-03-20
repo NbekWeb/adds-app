@@ -1,27 +1,29 @@
 <script setup>
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-
-import IconPlus from '@/components/icons/IconPlus.vue'
-import BoardConfigurationsForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationsDrower.vue'
-import BoardConfigurationList from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationList.vue'
-import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-
 import useCore from '@/store/core.pinia.js'
 import useBoardConfiguration from '@/store/board-configuration.pinia.js'
-import BoardTimeConfigurationList from '@/pages/dashboard/board/[id]/configurations/components/BoardTimeConfigurationList.vue'
 import useBoardTimeConfiguration from '@/store/board-time-configuration.pinia.js'
+
+import IconPlus from '@/components/icons/IconPlus.vue'
+import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
+import BoardConfigurationsForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationsDrower.vue'
+import BoardConfigurationList from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationList.vue'
+import BoardTimeConfigurationList from '@/pages/dashboard/board/[id]/configurations/components/BoardTimeConfigurationList.vue'
 
 const route = useRoute()
 const router = useRouter()
+
 const corePinia = useCore()
 const boardConfigurationPinia = useBoardConfiguration()
 const boardTimeConfigurationPinia = useBoardTimeConfiguration()
+
 const { loadingUrl, visibleDrower } = storeToRefs(corePinia)
 
+const role = computed(() => route.params.role)
+
 const boardId = ref(null)
-const configType = ref('')
 const activeKey = ref('configuration')
 
 const handleVisibleDrover = () => {
@@ -45,14 +47,16 @@ onBeforeUnmount(() => {
 <template>
   <page-header-component :title="$t('BoardConfigurationsView')">
     <template #actions>
-      <a-button
-        @click="handleVisibleDrover"
-        class="configuration-add-btn"
-        type="primary"
-        size="middle"
-      >
-        <icon-plus /> {{ $t('ADD') }}
-      </a-button>
+      <template v-if="role === 'owner'">
+        <a-button
+          @click="handleVisibleDrover"
+          class="configuration-add-btn"
+          type="primary"
+          size="middle"
+        >
+          <icon-plus /> {{ $t('ADD') }}
+        </a-button>
+      </template>
     </template>
   </page-header-component>
 

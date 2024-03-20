@@ -1,7 +1,7 @@
 <script setup>
 import Logo from '@/components/Logo.vue'
 import UserComponent from '@/pages/dashboard/components/UserComponent.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import IconGrid from '@/components/icons/IconGrid.vue'
 import IconPieChart from '@/components/icons/IconPieChart.vue'
 import IconAnnouncement from '@/components/icons/IconAnnouncement.vue'
@@ -13,6 +13,10 @@ import IconHelp from '@/components/icons/IconHelp.vue'
 import IconPowerOff from '@/components/icons/IconPowerOff.vue'
 import { useRoute, useRouter } from 'vue-router'
 import useUser from '@/store/user.pinia.js'
+import IconMessageTextSquare from '@/components/icons/IconMessageTextSquare.vue'
+import useCore from '@/store/core.pinia.js'
+import { storeToRefs } from 'pinia'
+import LogoDark from '@/components/Logo-dark.vue'
 const { collapsed } = defineProps({
   collapsed: {
     type: Boolean,
@@ -21,11 +25,15 @@ const { collapsed } = defineProps({
 })
 const router = useRouter()
 const route = useRoute()
+
+const corePinia = useCore()
 const userPinia = useUser()
+
 const selected = ref([])
-const activeLink = computed(() => route.fullPath.split('/')[2])
+const activeLink = computed(() => route.fullPath.split('/')[3])
+const role = computed(() => route.params.role)
 const setCollapse = ({ key }) => {
-  router.push(`/dashboard/${key}`)
+  router.push(`/dashboard/${role.value}/${key}`)
 }
 const logOut = () => {
   localStorage.clear()
@@ -35,7 +43,10 @@ const logOut = () => {
 </script>
 
 <template>
-  <div class="aside" :class="collapsed && 'collapsed'">
+  <div
+    class="aside"
+    :class="[{ collapsed: collapsed }, { dark: role === 'owner' }]"
+  >
     <div class="px-3">
       <a-row class="py-3" align="middle" justify="center">
         <a-col
@@ -46,14 +57,21 @@ const logOut = () => {
           :xxl="collapsed ? 24 : 6"
           class="text-center"
         >
-          <logo />
+          <template v-if="role === 'ads'">
+            <logo />
+          </template>
+          <template v-else>
+            <logo-dark />
+          </template>
         </a-col>
         <template v-if="!collapsed">
           <a-col :xs="24" :sm="24" :md="12" :lg="16" :xxl="16">
             <h2 class="m-0 logo-name">
               ADS-<span class="text-primary">PRO</span>
             </h2>
-            <p class="m-0 text-muted small">Administrator</p>
+            <template v-if="role === 'owner'">
+              <p class="m-0 text-muted small">{{ $t('ADMINISTRATOR') }}</p>
+            </template>
           </a-col>
         </template>
       </a-row>
@@ -63,6 +81,7 @@ const logOut = () => {
         v-model="selected"
         :selectedKeys="[activeLink]"
         mode="inline"
+        :theme="role === 'ads' ? 'light' : 'dark'"
       >
         <a-menu-item :key="`main`">
           <template #icon>
@@ -74,33 +93,60 @@ const logOut = () => {
           <template #icon>
             <icon-announcement />
           </template>
-          {{ $t('DashboardBoardListView') }}
+          {{
+            $t(
+              role === 'owner'
+                ? 'DashboardMyBoardListView'
+                : 'DashboardBoardListView'
+            )
+          }}
         </a-menu-item>
-        <a-menu-item :key="`report`">
+        <a-menu-item :key="`kiosk-board`">
           <template #icon>
-            <icon-pie-chart />
+            <icon-announcement />
           </template>
-          {{ $t('ReportView') }}
+          {{
+            $t(
+              role === 'owner'
+                ? 'DashboardMyKioskBoardListView'
+                : 'DashboardKioskBoardListView'
+            )
+          }}
         </a-menu-item>
+        <a-menu-item :key="`post`">
+          <template #icon>
+            <icon-message-text-square />
+          </template>
+          {{ $t('DashboardPostListView') }}
+        </a-menu-item>
+        <!--        <a-menu-item :key="`report`">-->
+        <!--          <template #icon>-->
+        <!--            <icon-pie-chart />-->
+        <!--          </template>-->
+        <!--          {{ $t('ReportView') }}-->
+        <!--        </a-menu-item>-->
         <a-menu-item :key="`user`">
           <template #icon>
             <icon-users />
           </template>
           {{ $t('DashboardUserListView') }}
         </a-menu-item>
-        <a-menu-item :key="`billing`">
+        <a-menu-item :key="`payment`">
           <template #icon>
             <icon-coins-stacked />
           </template>
-          {{ $t('BillingView') }}
+          {{ $t('DashboardPaymentListView') }}
         </a-menu-item>
       </a-menu>
     </div>
     <div class="aside-footer m-3">
-      <ul class="aside-footer-list px-2" :class="collapsed && 'collapse'">
+      <ul
+        class="aside-footer-list px-2"
+        :class="[{ collapse: collapsed }, { 'btn-dark': role === 'owner' }]"
+      >
         <li>
-          <a-tooltip title="Yordam">
-            <router-link class="text-success" to="/dashboard/help">
+          <a-tooltip :title="$t('Help')">
+            <router-link class="text-success" :to="`/dashboard/${role}/help`">
               <a-button type="link" size="small" link>
                 <icon-help />
               </a-button>
@@ -108,8 +154,8 @@ const logOut = () => {
           </a-tooltip>
         </li>
         <li>
-          <a-tooltip title=" Xabar va yangilik">
-            <router-link to="/dashboard/news">
+          <a-tooltip :title="$t('News')">
+            <router-link :to="`/dashboard/${role}/news`">
               <a-button type="link" size="small" link>
                 <icon-notification-text />
               </a-button>
@@ -117,8 +163,8 @@ const logOut = () => {
           </a-tooltip>
         </li>
         <li>
-          <a-tooltip title="Sozlamalar">
-            <router-link to="/dashboard/settings">
+          <a-tooltip :title="$t('Settings')">
+            <router-link :to="`/dashboard/${role}/settings`">
               <a-button type="link" size="small" link>
                 <icon-settings />
               </a-button>
@@ -126,11 +172,11 @@ const logOut = () => {
           </a-tooltip>
         </li>
         <li>
-          <a-tooltip title="Tizimdan chiqish">
+          <a-tooltip :title="$t('LogOut')">
             <a-popconfirm
-              title="Tizimdan chiqmoqchimisiz"
-              ok-text="Ha"
-              cancel-text="Yo'q"
+              :title="$t('DOU_YOU_WANT_TO_LOG_OUT')"
+              :ok-text="$t('YES')"
+              :cancel-text="$t('NO')"
               @confirm="logOut"
             >
               <a-button class="log-out" type="link" size="small" link danger>
@@ -195,6 +241,7 @@ const logOut = () => {
             color: $primary !important;
           }
         }
+
         svg {
           vertical-align: -2px;
         }
@@ -206,6 +253,26 @@ const logOut = () => {
         }
       }
     }
+    .btn-dark {
+      li {
+        button {
+          color: rgba(255, 255, 255, 0.65) !important;
+        }
+        .log-out {
+          color: $danger !important;
+        }
+        .router-link-exact-active {
+          button {
+            background: $primary;
+            color: $white !important;
+          }
+        }
+      }
+    }
   }
+}
+.dark {
+  background: #001529;
+  color: rgba(255, 255, 255, 0.65);
 }
 </style>

@@ -11,9 +11,15 @@ import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsV
 import DashboardBoardFormView from '@/pages/dashboard/board/DashboardBoardFormView.vue'
 import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 import DashboardBoardItemView from '@/pages/dashboard/board/[id]/DashboardBoardItemView.vue'
-import AuthView from '@/pages/auth/AuthView.vue'
+import DashboardPostListView from '@/pages/dashboard/post/DashboardPostListView.vue'
+import DashboardPostView from '@/pages/dashboard/post/DashboardPostView.vue'
+import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
+import DashboardKioskBoardView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardView.vue'
+import DashboardKioskBoardListView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardListView.vue'
+import DashboardPaymentListView from '@/pages/dashboard/payment/DashboardPaymentListView.vue'
+import DashboardPaymentView from '@/pages/dashboard/payment/DashboardPaymentView.vue'
 
-const LoginView = () => import('@/pages/auth/AuthView.vue')
+const AuthView = () => import('@/pages/auth/AuthView.vue')
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,20 +27,14 @@ export const router = createRouter({
     {
       path: '/',
       name: 'AuthView',
-      component: AuthView,
-      children: []
+      component: AuthView
     },
     {
-      path: '/dashboard',
+      path: '/dashboard/:role',
       name: 'DashboardView',
       component: DashboardView,
-      redirect: '/dashboard/main',
+      redirect: `/dashboard/ads/board`,
       children: [
-        {
-          path: 'settings',
-          name: 'DashboardSettingsView',
-          component: DashboardSettingsView
-        },
         {
           path: 'main',
           name: 'DashboardListView',
@@ -50,6 +50,7 @@ export const router = createRouter({
               name: 'DashboardBoardListView',
               component: DashboardBoardListView
             },
+
             {
               path: 'item/:id',
               name: 'DashboardBoardItemView',
@@ -66,8 +67,64 @@ export const router = createRouter({
               name: 'AddBoardView',
               path: 'add',
               component: DashboardBoardFormView
+            },
+            {
+              path: 'edit/:id',
+              name: 'DashboardBoardFormView',
+              component: DashboardBoardFormView
             }
           ]
+        },
+        {
+          path: 'kiosk-board',
+          name: 'DashboardKioskBoardView',
+          component: DashboardKioskBoardView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardKioskBoardListView',
+              component: DashboardKioskBoardListView
+            },
+            {
+              path: 'create',
+              name: 'DashboardPostFormView',
+              component: DashboardPostFormView
+            }
+          ]
+        },
+        {
+          path: 'post',
+          name: 'DashboardPostView',
+          component: DashboardPostView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardPostListView',
+              component: DashboardPostListView
+            },
+            {
+              path: 'create',
+              name: 'DashboardPostFormView',
+              component: DashboardPostFormView
+            }
+          ]
+        },
+        {
+          path: 'payment',
+          name: 'DashboardPaymentView',
+          component: DashboardPaymentView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardPaymentListView',
+              component: DashboardPaymentListView
+            }
+          ]
+        },
+        {
+          path: 'settings',
+          name: 'DashboardSettingsView',
+          component: DashboardSettingsView
         },
         {
           path: 'user',
@@ -87,7 +144,7 @@ export const router = createRouter({
           ]
         },
         {
-          path: '/:pathMatch(.*)*',
+          path: '/:role/:pathMatch(.*)*',
           component: NotFound,
           name: 'DashboardNotFond'
         }
@@ -109,7 +166,7 @@ const routerFactory = (i18n) => {
       if (to.path.includes('dashboard')) {
         return next()
       } else {
-        return next({ name: 'DashboardView' })
+        return next({ name: 'DashboardView', params: { role: 'ads' } })
       }
     } else {
       if (!to.path.includes('dashboard')) {

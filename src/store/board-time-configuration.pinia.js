@@ -11,7 +11,7 @@ const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
     totalPages: 0
   }),
   actions: {
-    clearTimeConfigurations(state) {
+    clearTimeConfigurations() {
       this.timeConfigurationList = []
       this.page = 0
       this.totalElements = 0

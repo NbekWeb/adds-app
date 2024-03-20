@@ -1,30 +1,35 @@
 <script setup>
-import useBoard from '@/store/boadr.pinia.js'
+import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import BoardItemComponent from '@/pages/dashboard/board/components/BoardItemComponent.vue'
 import useCore from '@/store/core.pinia.js'
+import useBoard from '@/store/boadr.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-import { computed, onMounted, ref, watch } from 'vue'
 import BoardConfigurationsForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationsDrower.vue'
+import BoardItemComponent from '@/pages/dashboard/board/components/BoardItemComponent.vue'
 
 const boardPinia = useBoard()
 const corePinia = useCore()
+
 const { collapsed, visibleDrower } = storeToRefs(corePinia)
 const { boardList, totalPages, page, totalElements } = storeToRefs(boardPinia)
+
 const boardId = ref(null)
 const isOpen = ref(false)
 const configType = ref('')
+
 const handleOpenDrower = (id, type) => {
   visibleDrower.value.add('configuration/drower')
   boardId.value = id
   configType.value = type
 }
-watch(boardList, () => {
-  isOpen.value = false
-})
+
 const getBoardList = (page) => {
   boardPinia.getAllBoard({ page })
 }
+
+watch(boardList, () => {
+  isOpen.value = false
+})
 </script>
 
 <template>
@@ -40,7 +45,7 @@ const getBoardList = (page) => {
     height="calc(100vh - 196px)"
     :total-pages="totalPages"
     :total-count-all="totalElements"
-    @get-date="getBoardList"
+    @get-data="getBoardList"
   >
     <template #content>
       <template

@@ -1,17 +1,27 @@
 const uzLat = {
   // menus
   AuthView: 'Tizimga kirish',
-  DashboardView: 'Asosiy board',
-  DashboardNotFond: 'Sahifa topilmadi',
   DashboardListView: 'Asosiy sahifa',
   DashboardBoardListView: 'Kanallar',
-  AddBoardView: "Kanal qo'shish",
+  DashboardMyBoardListView: 'Mening kanallarim',
+  DashboardKioskBoardListView: 'Kiosk boards',
+  DashboardMyKioskBoardListView: 'My kiosk boards',
+  DashboardPostListView: 'Postlar',
   ReportView: "E'lon bo'yicha hisobot",
+  DashboardNotFond: 'Sahifa topilmadi',
   DashboardUserListView: 'Auditoriya',
-  DashboardUserEditView: 'Foydalanuvchini tahrirlash',
+  DashboardPaymentListView: "To'lovlar",
   BillingView: "Billing va to'lovlar",
   DashboardSettingsView: 'Sozlamalar',
   BoardConfigurationsView: "Ta'riflar",
+  Help: 'Yordam',
+  News: 'Xabar va yangilik',
+  Settings: 'Sozlamalar',
+  LogOut: 'Tizimdan chiqish',
+  AddBoardView: "Kanal qo'shish",
+  DashboardUserEditView: 'Foydalanuvchini tahrirlash',
+  DashboardPostFormView: "Post qo'shish",
+
   //   validations
   REQUIRED_FIELD: 'Majburiy maydon',
   REQUIRED_PHONE_NUMBER: "Telefon raqam to'liq kiritilishi shart!",
@@ -23,6 +33,8 @@ const uzLat = {
   ADD_NEW_TIME_CONFIGURATION: "Yangi vaqt qo'shish",
   BOARD_CONFIGURATIONS: 'Configurations',
   BOARD_TIME_CONFIGURATIONS: 'Time configurations',
+  ADMINISTRATOR: 'Administrator',
+
   //   buttons
   YES: 'Ha',
   NO: "Yo'q",
@@ -35,6 +47,8 @@ const uzLat = {
   SEND_SMS_CODE: 'Sms kodni olish',
   REGISTER: "Ro'yxatdan o'tish",
   //   labels
+  SELECT_STATUS: 'Holatini tanlang',
+  STATUS: 'Holati',
   HOUR: 'Soat',
   MINUTE: 'Daqiqa',
   ENTER_SMS_CODE: 'Sms kodni kiriting',
@@ -60,6 +74,11 @@ const uzLat = {
   ENTER_CHANNEL_LINK: 'Kanal havolasini kiriting',
   ENTER_YOUR_FULL_NAME: 'F.I.Oni kiriting',
   ENTER_YOUR_LAST_NAME: 'Familiyangizni kiriting',
+  // statuses
+
+  PENDING: 'Kutilmoqda',
+  SUCCESS: 'Muvoffaqiyatli',
+  CANCELED: 'Bekor qilingan',
   // descriptions
   LOGIN_PAGE_DESCRIPTION:
     'Biznes uchun reklamalarni joylashtirish, boshqarish uchun platforma.',
@@ -79,6 +98,10 @@ const uzLat = {
   BOARD_CONFIGURATION_DELETED_SUCCESSFULLY: "Ta'rif muvafaqiyatli o'chirildi",
   BOARD_TIME_CONFIGURATION_DELETED_SUCCESSFULLY:
     "Ta'rif muvafaqiyatli o'chirildi",
+  POST_ADDED_SUCCESSFULLY: "Post muvafaqiyatli qo'shildi",
+  POST_DELETED_SUCCESSFULLY: "Post muvafaqiyatli o'chirildi",
+  DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
+  // Do you want to log out?
   ERROR: 'Xatolik!'
 }
 

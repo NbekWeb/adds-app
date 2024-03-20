@@ -26,4 +26,5 @@ install_dependencies:
     - npm install --progress=false
     - NODE_ENV=production GENERATE_SOURCEMAP=false npm run build
     - scp -r -B dist/* $DEV_USER@$DEV_HOST:/var/www/adspro/app/
-
+  only:
+    - master
