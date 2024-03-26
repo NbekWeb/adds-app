@@ -4,10 +4,8 @@ import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import usePost from '@/store/post.pinia.js'
 import { computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import PostItemComponent from '@/pages/dashboard/post/components/PostItemComponent.vue'
 import useCore from '@/store/core.pinia.js'
-import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-import PostListComponent from '@/pages/dashboard/board/components/PostListComponent.vue'
+import PostListComponent from '@/pages/dashboard/post/components/PostListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 
 const router = useRouter()
