@@ -96,7 +96,7 @@ const checkChannelByLink = () => {
         form.description = data.description
         form.logoHashId = data.hashId
         form.channelId = data.id
-        imageUrl.value = `${baseUrl.value}file/${data.hashId}`
+        imageUrl.value = `${baseUrl.value}/file/${data.hashId}`
       })
     })
     .catch(() => {})
@@ -130,7 +130,7 @@ onMounted(() => {
       form.logoHashId = data.logoHashId
       form.channelId = data.channelInfo.id
       form.categoryId = data.category.id
-      imageUrl.value = `${baseUrl.value}file/${data.logoHashId}`
+      imageUrl.value = `${baseUrl.value}/file/${data.logoHashId}`
     })
   }
 })
