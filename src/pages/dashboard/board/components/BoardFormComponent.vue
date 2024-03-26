@@ -30,7 +30,9 @@ const useForm = Form.useForm
 const { collapsed, loadingUrl } = storeToRefs(corePinia)
 const { categories } = storeToRefs(boardPinia)
 const imageUrl = ref(null)
-const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
+const baseUrl = ref(
+  `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}`
+)
 
 const route = useRoute()
 
@@ -78,7 +80,7 @@ const uploadLogo = (file) => {
   if (file.type === 'image/jpeg' || file.type === 'image/png') {
     uploadPinia.uploadFile(file, (hashId) => {
       form.logoHashId = hashId
-      imageUrl.value = `${baseUrl.value}file/${hashId}`
+      imageUrl.value = `${baseUrl.value}/file/${hashId}`
     })
   }
   return false
@@ -103,13 +105,17 @@ const addNewBoard = () => {
   if (id.value) {
     validate(['name', 'description', 'logoHashId', 'categoryId'])
       .then(() => {
-        boardPinia.updateBoard(id.value, form)
+        boardPinia.updateBoard(id.value, form, () => {
+          router.back()
+        })
       })
       .catch(() => {})
   } else {
     validate(['name', 'description', 'logoHashId', 'categoryId', 'channelId'])
       .then(() => {
-        boardPinia.addNewBoard(form)
+        boardPinia.addNewBoard(form, () => {
+          router.back()
+        })
       })
       .catch(() => {})
   }
@@ -122,7 +128,7 @@ onMounted(() => {
       form.name = data.name
       form.description = data.description
       form.logoHashId = data.logoHashId
-      form.channelId = data.id
+      form.channelId = data.channelInfo.id
       form.categoryId = data.category.id
       imageUrl.value = `${baseUrl.value}file/${data.logoHashId}`
     })
@@ -293,11 +299,19 @@ onMounted(() => {
         <a-button
           class="btn-save"
           @click="addNewBoard"
-          :disabled="!form.channelId || loadingUrl.has('board/create')"
+          :disabled="
+            !form.channelId ||
+            loadingUrl.has('board/create') ||
+            loadingUrl.has('update/board')
+          "
           type="primary"
           size="middle"
         >
-          <template v-if="loadingUrl.has('board/create')">
+          <template
+            v-if="
+              loadingUrl.has('board/create') || loadingUrl.has('update/board')
+            "
+          >
             <icon-loader size="small" class="loader" />
           </template>
           <template v-else>

@@ -81,7 +81,7 @@ const logOut = () => {
         v-model="selected"
         :selectedKeys="[activeLink]"
         mode="inline"
-        :theme="role === 'ads' ? 'light' : 'dark'"
+        :theme="role === 'ads' ? 'light' : role === 'owner' ? 'dark' : ''"
       >
         <a-menu-item :key="`main`">
           <template #icon>

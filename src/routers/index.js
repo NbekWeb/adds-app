@@ -4,6 +4,7 @@ import DashboardBoardView from '@/pages/dashboard/board/DashboardBoardView.vue'
 import DashboardBoardListView from '@/pages/dashboard/board/DashboardBoardListView.vue'
 import DashboardListView from '@/pages/dashboard/DashboardListView.vue'
 import NotFound from '@/pages/_404.vue'
+import ServerError from '@/pages/_500.vue'
 import DashboardUserListView from '@/pages/dashboard/user/DashboardUserListView.vue'
 import DashboardUserView from '@/pages/dashboard/user/DashboardUserView.vue'
 import DashboardUserEditView from '@/pages/dashboard/user/[id]/DashboardUserEditView.vue'
@@ -33,7 +34,7 @@ export const router = createRouter({
       path: '/dashboard/:role',
       name: 'DashboardView',
       component: DashboardView,
-      redirect: `/dashboard/ads/board`,
+      redirect: `/dashboard/ads/main`,
       children: [
         {
           path: 'main',
@@ -70,7 +71,7 @@ export const router = createRouter({
             },
             {
               path: 'edit/:id',
-              name: 'DashboardBoardFormView',
+              name: 'EditBoardView',
               component: DashboardBoardFormView
             }
           ]
@@ -151,9 +152,9 @@ export const router = createRouter({
       ]
     },
     {
-      path: '/:pathMatch(.*)*',
-      component: NotFound,
-      name: 'MainNotFound'
+      path: '/500',
+      component: ServerError,
+      name: 'ServerError'
     }
   ]
 })
@@ -164,6 +165,8 @@ const routerFactory = (i18n) => {
     const accessToken = localStorage.getItem('access_token')
     if (accessToken) {
       if (to.path.includes('dashboard')) {
+        return next()
+      } else if (to.name === 'ServerError') {
         return next()
       } else {
         return next({ name: 'DashboardView', params: { role: 'ads' } })

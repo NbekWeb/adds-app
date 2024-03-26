@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="mt-3 text-center">
+  <div class="pt-4 text-center">
     <svg
       width="23%"
       viewBox="0 0 446 608"

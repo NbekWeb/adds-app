@@ -59,11 +59,13 @@ onMounted(() => {
         <a-col>
           <a-tree-select
             v-model:value="category"
-            show-search
             class="board-category-filter"
             :loading="loadingUrl.has('board/category/all')"
             style="width: 100%"
-            :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+            :dropdown-style="{
+              maxHeight: '500px',
+              overflow: 'auto'
+            }"
             :placeholder="$t('SELECT_CATEGORY')"
             size="middle"
             allow-clear
@@ -112,10 +114,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .board-category-filter {
-  min-width: 170px;
+  min-width: 200px;
 }
 .board-type-filter {
-  width: 150px;
+  width: 200px;
 }
 .btn-add {
   display: flex;
