@@ -43,7 +43,7 @@ function refreshAccessToken(error) {
   const refresh_token = localStorage.getItem('refresh_token')
   if (refresh_token) {
     return axios({
-      url: `${import.meta.env.VITE_APP_BASE_URL}/api/v1/auth`,
+      url: `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}/auth`,
       method: 'POST',
       data: {
         grantType: 'refreshToken',
@@ -62,10 +62,8 @@ function refreshAccessToken(error) {
         })
       })
       .catch((error2) => {
-        if (error2.response.status !== 401) {
-          Clear()
-          return Promise.reject(error)
-        }
+        Clear()
+        return Promise.reject(error2)
       })
       .finally(createAxiosResponseInterceptor)
   }
@@ -76,7 +74,7 @@ function refreshAccessToken(error) {
 function Clear() {
   localStorage.removeItem('access_token')
   localStorage.removeItem('refresh_token')
-  // window.location.href = '/'
+  window.location.href = '/'
   return null
 }
 

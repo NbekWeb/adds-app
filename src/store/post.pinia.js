@@ -9,6 +9,11 @@ const usePost = defineStore('post', {
     totalPages: 0
   }),
   actions: {
+    clearPost() {
+      this.posts = []
+      this.totalElements = 0
+      this.totalPages = 0
+    },
     getAllPosts(page) {
       const core = useCore()
       core.loadingUrl.add('get/post/all')
@@ -53,13 +58,22 @@ const usePost = defineStore('post', {
       api({
         url: 'post',
         method: 'POST',
-        data: form
+        data: {
+          text: form.text,
+          fileHashId: form.fileHashId,
+          buttons: form.buttons.map((item) => ({
+            orderNumber: item.orderNumber,
+            text: item.text,
+            url: item.url
+          }))
+        }
       })
         .then(({ data }) => {
           core.setToast({
             type: 'success',
             locale: 'POST_ADDED_SUCCESSFULLY'
           })
+          core.redirect('/dashboard/ads/post')
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -72,17 +86,16 @@ const usePost = defineStore('post', {
       const core = useCore()
       core.loadingUrl.add(`delete/post/${id}`)
       api({
-        url: 'post',
-        method: 'DELETE',
-        params: {
-          id: id
-        }
+        url: `post/${id}`,
+        method: 'DELETE'
       })
         .then(() => {
           core.setToast({
             type: 'success',
             locale: 'POST_DELETED_SUCCESSFULLY'
           })
+          this.clearPost()
+          this.getAllPosts(0)
         })
         .catch((error) => {
           core.switchStatus(error)

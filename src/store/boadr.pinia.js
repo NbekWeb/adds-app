@@ -139,7 +139,7 @@ const useBoard = defineStore('board', {
           core.loadingUrl.delete('channel/check')
         })
     },
-    addNewBoard(form) {
+    addNewBoard(form, callback) {
       const core = useCore()
       core.loadingUrl.add('board/create')
       api({
@@ -152,7 +152,7 @@ const useBoard = defineStore('board', {
             type: 'success',
             locale: 'CHANNEL_ADDED_SUCCESSFULLY'
           })
-          core.redirect('/dashboard/board')
+          callback()
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -161,9 +161,9 @@ const useBoard = defineStore('board', {
           core.loadingUrl.delete('board/create')
         })
     },
-    updateBoard(id, form) {
+    updateBoard(id, form, callback) {
       const core = useCore()
-      core.loadingUrl.add(`get/board/one`)
+      core.loadingUrl.add(`update/board`)
       api({
         url: `board/${id}`,
         method: 'PUT',
@@ -177,14 +177,15 @@ const useBoard = defineStore('board', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: ''
+            locale: 'CHANNEL_UPDATED_SUCCESSFULLY'
           })
+          callback()
         })
         .catch((error) => {
           useCore().switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/board/one')
+          core.loadingUrl.delete('update/board')
         })
     },
     deleteBoard(id) {

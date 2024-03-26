@@ -32,6 +32,21 @@ body{
 .small {
   font-size: 0.75rem;
 }
+.flex{
+  display: flex!important;
+}
+.justify-center{
+  justify-content: center!important;
+}
+.align-center{
+  align-items: center!important;
+}
+.justify-end{
+  justify-content: flex-end!important;
+}
+.w-full{
+  width: 100%;
+}
 //Image
 .img-fluid {
   max-width: 100%;

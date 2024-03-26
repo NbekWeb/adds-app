@@ -51,16 +51,15 @@ const useCore = defineStore('core', {
         }
         if (status >= 500) {
           toastMessage = {
-            message: `Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!`,
+            locale: 'INTERNAL_SERVER_ERROR',
             type: 'error'
           }
-          if (window.location.pathname.includes('/dashboard')) {
-            return this.redirect(`/dashboard/500`)
-          }
-          return this.redirect(`/500`)
+
+          this.redirect(`/500`)
         }
         this.setToast(toastMessage)
       } catch (err) {
+        console.log(err)
         this.setToast({
           type: 'error',
           locale: 'ERROR'

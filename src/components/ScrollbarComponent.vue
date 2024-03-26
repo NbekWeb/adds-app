@@ -40,7 +40,8 @@ const scroll = (e) => {
 
 .scrollbar-content {
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: all 0.5s;
   &::-webkit-scrollbar {
     width: 5px;

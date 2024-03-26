@@ -19,6 +19,7 @@ const uzLat = {
   Settings: 'Sozlamalar',
   LogOut: 'Tizimdan chiqish',
   AddBoardView: "Kanal qo'shish",
+  EditBoardView: 'Kanalni tahrirlash',
   DashboardUserEditView: 'Foydalanuvchini tahrirlash',
   DashboardPostFormView: "Post qo'shish",
 
@@ -41,12 +42,17 @@ const uzLat = {
   SAVE: 'Saqlash',
   BACK: 'Orqaga',
   ADD: "Qo'shish",
+  CANCEL: 'Bekor qilish',
   CHANGE_PHONE_NUMBER: "Raqamni o'zgartirish",
   RESEND_THE_CODE: 'Kodni qayta yuborish',
   ENTER: 'Kirish',
   SEND_SMS_CODE: 'Sms kodni olish',
   REGISTER: "Ro'yxatdan o'tish",
+  ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   //   labels
+  ENTER_TEXT_LINKED_BUTTON: 'Tugma matnini kiriting',
+  ENTER_URL: 'Havola kiriting',
+  ATTACH_URL: 'Havola biriktirish',
   SELECT_STATUS: 'Holatini tanlang',
   STATUS: 'Holati',
   HOUR: 'Soat',
@@ -74,6 +80,8 @@ const uzLat = {
   ENTER_CHANNEL_LINK: 'Kanal havolasini kiriting',
   ENTER_YOUR_FULL_NAME: 'F.I.Oni kiriting',
   ENTER_YOUR_LAST_NAME: 'Familiyangizni kiriting',
+  CLICK_TO_UPLOAD_FILE: 'Fayl yuklash uchun bosing',
+
   // statuses
 
   PENDING: 'Kutilmoqda',
@@ -91,6 +99,7 @@ const uzLat = {
   DO_YOU_WANT_TO_DELETE_THE_USER: "Foydalanuvchini o'chirishni xoxlaysizmi?",
   YOU_MUST_AGREE_TO_THE_OFFER_TO_REGISTER:
     "Ro'yxatdan o'tish uchun oferta ga rozilik bildirishingiz shart",
+  CHANNEL_UPDATED_SUCCESSFULLY: 'Kanal muvafaqiyatli yangilandi',
   CHANNEL_ADDED_SUCCESSFULLY: "Kanal muvafaqiyatli qo'shildi",
   CHANNEL_DELETED_SUCCESSFULLY: "Kanal muvafaqiyatli o'chirildi",
   BOARD_CONFIGURATION_ADDED_SUCCESSFULLY: "Ta'rif muvafaqiyatli qo'shildi",
@@ -101,7 +110,8 @@ const uzLat = {
   POST_ADDED_SUCCESSFULLY: "Post muvafaqiyatli qo'shildi",
   POST_DELETED_SUCCESSFULLY: "Post muvafaqiyatli o'chirildi",
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
-  // Do you want to log out?
+  INTERNAL_SERVER_ERROR:
+    "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
   ERROR: 'Xatolik!'
 }
 

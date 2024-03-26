@@ -1,13 +1,12 @@
 <script setup>
 import IconTrash from '@/components/icons/IconTrash.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDotsVertical from '@/components/icons/IconDotsVertical.vue'
 import IconUser from '@/components/icons/IconUser.vue'
 import useBoard from '@/store/boadr.pinia.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { storeToRefs } from 'pinia'
-import IconPlus from '@/components/icons/IconPlus.vue'
 import useCore from '@/store/core.pinia.js'
 import { useRoute, useRouter } from 'vue-router'
 import useUser from '@/store/user.pinia.js'
@@ -24,7 +23,7 @@ const props = defineProps({
     default: false
   }
 })
-const emits = defineEmits(['addNewConfig'])
+defineEmits(['addNewConfig'])
 
 const router = useRouter()
 const route = useRoute()
@@ -36,65 +35,68 @@ const boardPinia = useBoard()
 const { loadingUrl } = storeToRefs(corePinia)
 const { user } = storeToRefs(userPinia)
 
-const baseUrl = ref(`${import.meta.env.VITE_APP_BASE_URL}/api/v1/`)
-const config = ref(['Junior', 'Middle', 'Senior', 'Team lead', 'Junior'])
-const timeConfig = ref([
-  '8:00',
-  '9:00',
-  '10:00',
-  '8:00',
-  '9:00',
-  '10:00',
-  '8:00',
-  '9:00',
-  '10:00'
-])
-const configLength = ref(0)
-const timeConfigLength = ref(0)
-const parentConfig = ref(null)
-const childConfig = ref(null)
-const parentTimeConfig = ref(null)
-const childTimeConfig = ref(null)
-
+const baseUrl = ref(
+  `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}`
+)
 const role = computed(() => route.params.role)
-const handleOffsetWith = () => {
-  if (childConfig.value?.offsetWidth > parentConfig.value?.offsetWidth) {
-    configLength.value = Math.floor(
-      parentConfig.value.offsetWidth /
-        (childConfig.value.offsetWidth / config.value.length)
-    )
-  } else {
-    configLength.value = 0
-  }
-  if (
-    childTimeConfig.value?.offsetWidth > parentTimeConfig.value?.offsetWidth
-  ) {
-    timeConfigLength.value = Math.floor(
-      parentTimeConfig.value.offsetWidth /
-        (childTimeConfig.value.offsetWidth / timeConfig.value.length)
-    )
-  } else {
-    timeConfigLength.value = 0
-  }
-}
 
-window.addEventListener('resize', handleOffsetWith)
+// const config = ref(['Junior', 'Middle', 'Senior', 'Team lead', 'Junior'])
+// const timeConfig = ref([
+//   '8:00',
+//   '9:00',
+//   '10:00',
+//   '8:00',
+//   '9:00',
+//   '10:00',
+//   '8:00',
+//   '9:00',
+//   '10:00'
+// ])
+// const configLength = ref(0)
+// const timeConfigLength = ref(0)
+// const parentConfig = ref(null)
+// const childConfig = ref(null)
+// const parentTimeConfig = ref(null)
+// const childTimeConfig = ref(null)
 
-const handleVisibleDrover = () => {
-  emits('addNewConfig', props.item.id, 'configuration')
-}
-const handleVisibleTimeDrover = () => {
-  emits('addNewConfig', props.item.id, 'time-configuration')
-}
-const handleNavigate = () => {
-  router.push(
-    `/dashboard/${role.value}/board/item/${props.item.id}/configurations`
-  )
-}
+// const handleOffsetWith = () => {
+//   if (childConfig.value?.offsetWidth > parentConfig.value?.offsetWidth) {
+//     configLength.value = Math.floor(
+//       parentConfig.value.offsetWidth /
+//         (childConfig.value.offsetWidth / config.value.length)
+//     )
+//   } else {
+//     configLength.value = 0
+//   }
+//   if (
+//     childTimeConfig.value?.offsetWidth > parentTimeConfig.value?.offsetWidth
+//   ) {
+//     timeConfigLength.value = Math.floor(
+//       parentTimeConfig.value.offsetWidth /
+//         (childTimeConfig.value.offsetWidth / timeConfig.value.length)
+//     )
+//   } else {
+//     timeConfigLength.value = 0
+//   }
+// }
 
-onMounted(() => {
-  handleOffsetWith()
-})
+// window.addEventListener('resize', handleOffsetWith)
+
+// const handleVisibleDrover = () => {
+//   emits('addNewConfig', props.item.id, 'configuration')
+// }
+// const handleVisibleTimeDrover = () => {
+//   emits('addNewConfig', props.item.id, 'time-configuration')
+// }
+// const handleNavigate = () => {
+//   router.push(
+//     `/dashboard/${role.value}/board/item/${props.item.id}/configurations`
+//   )
+// }
+
+// onMounted(() => {
+//   handleOffsetWith()
+// })
 </script>
 
 <template>
@@ -169,64 +171,6 @@ onMounted(() => {
           <p class="description-text">
             {{ item?.description }}
           </p>
-        </div>
-        <!--      <div class="board-type pl-2">-->
-        <!--        <icon-telegram />-->
-        <!--        <icon-instagram />-->
-        <!--      </div>-->
-        <div class="board-configurations">
-          <h5>Board configuration</h5>
-          <div class="configurations mb-1">
-            <div ref="parentConfig" class="board-configuration-parent">
-              <div ref="childConfig" class="board-configuration">
-                <a-tag color="blue" v-for="tag in config">
-                  {{ tag }}
-                </a-tag>
-              </div>
-            </div>
-
-            <a-space class="buttons">
-              <template v-if="configLength">
-                <a-tag @click="handleNavigate" size="small" color="blue"
-                  ><span class="more">...</span></a-tag
-                >
-              </template>
-              <a-button
-                @click="handleVisibleDrover"
-                size="small"
-                type="primary"
-                class="configuration-add-btn"
-              >
-                <icon-plus />
-              </a-button>
-            </a-space>
-          </div>
-          <h5>Board time configuration</h5>
-          <div class="configurations">
-            <div ref="parentTimeConfig" class="board-configuration-parent">
-              <div ref="childTimeConfig" class="board-time-configuration">
-                <a-tag color="blue" v-for="tag in timeConfig">
-                  {{ tag }}
-                </a-tag>
-              </div>
-            </div>
-
-            <a-space class="buttons">
-              <template v-if="timeConfigLength">
-                <a-tag @click="handleNavigate" size="small" color="blue">
-                  ...
-                </a-tag>
-              </template>
-              <a-button
-                @click="handleVisibleTimeDrover"
-                size="small"
-                type="primary"
-                class="configuration-add-btn"
-              >
-                <icon-plus />
-              </a-button>
-            </a-space>
-          </div>
         </div>
 
         <template #actions>
