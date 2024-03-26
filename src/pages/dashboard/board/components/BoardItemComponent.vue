@@ -150,7 +150,7 @@ const role = computed(() => route.params.role)
         <div class="board-main-info">
           <div>
             <div class="logo">
-              <img :src="`${baseUrl}file/${item?.logoHashId}`" alt="" />
+              <img :src="`${baseUrl}/file/${item?.logoHashId}`" alt="" />
             </div>
           </div>
 
