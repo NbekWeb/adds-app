@@ -17,14 +17,18 @@ const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
       this.totalElements = 0
       this.totalPages = 0
     },
-    getTimeConfigurationsByBoardId(id, page = this.page) {
+    getTimeConfigurationsByBoardId(id, orderDate, page = this.page, role) {
       const core = useCore()
       core.loadingUrl.add('board/id/time-configurations')
       this.page = page
       api({
-        url: `board-time-configuration`,
+        url:
+          role === 'owner'
+            ? `board-time-configuration/owner?boardId=${id}`
+            : `board-time-configuration`,
         params: {
           boardId: id,
+          orderDate: orderDate,
           page: page,
           size: 10
         }
@@ -71,7 +75,7 @@ const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
           core.visibleDrower.delete('configuration/drower')
           if (location === 'configuration-list') {
             this.clearTimeConfigurations()
-            this.getTimeConfigurationsByBoardId(id, 0)
+            this.getTimeConfigurationsByBoardId(id, 0, 'owner')
           }
           if (location === 'board-list') {
             board.clearBoardList()
@@ -79,6 +83,7 @@ const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
           }
         })
         .catch((error) => {
+          console.log(error)
           core.switchStatus(error)
         })
         .finally(() => {

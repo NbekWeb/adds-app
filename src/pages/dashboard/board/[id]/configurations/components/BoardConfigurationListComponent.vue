@@ -1,16 +1,14 @@
 <script setup>
-import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
-
-import useCore from '@/store/core.pinia.js'
-import useBoardTimeConfiguration from '@/store/board-time-configuration.pinia.js'
-
-import BoardConfigurationItem from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationItem.vue'
+import BoardConfigurationItem from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
+import { useRouter } from 'vue-router'
+import useCore from '@/store/core.pinia.js'
+import useBoardConfiguration from '@/store/board-configuration.pinia.js'
+import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 const corePinia = useCore()
-const boardTimeConfigurationPinia = useBoardTimeConfiguration()
+const boardConfigurationPinia = useBoardConfiguration()
 
 const props = defineProps({
   boardId: {
@@ -20,33 +18,31 @@ const props = defineProps({
 })
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { page, totalPages, totalElements, timeConfigurationList } = storeToRefs(
-  boardTimeConfigurationPinia
+const { page, totalPages, totalElements, boardConfigurationList } = storeToRefs(
+  boardConfigurationPinia
 )
 
-const getTimeConfigurations = (page) => {
-  boardTimeConfigurationPinia.getTimeConfigurationsByBoardId(
-    props.boardId,
-    page
-  )
+const getConfigurations = (page) => {
+  boardConfigurationPinia.getConfigurationsByBoardId(props.boardId, page)
 }
 </script>
 
 <template>
   <scrollbar-component
+    class="scrollbar"
     :loading="corePinia.loadingUrl.has('board/all')"
     :count="9"
-    height="calc(100vh - 288px)"
+    height="calc(100vh - 288px )"
     :page="page"
     :total-pages="totalPages"
     :total-count-all="totalElements"
-    @get-date="getTimeConfigurations"
+    @get-date="getConfigurations"
   >
     <template #content>
       <template
         v-if="
-          !timeConfigurationList?.length &&
-          !corePinia.loadingUrl.has('board/id/time-configurations')
+          !boardConfigurationList?.length &&
+          !corePinia.loadingUrl.has('board/id/configurations')
         "
       >
         <a-empty class="empty">
@@ -57,8 +53,8 @@ const getTimeConfigurations = (page) => {
       </template>
       <template
         v-if="
-          !timeConfigurationList.length &&
-          loadingUrl.has('board/id/time-configurations')
+          !boardConfigurationList.length &&
+          loadingUrl.has('board/id/configurations')
         "
       >
         <a-card
@@ -73,7 +69,7 @@ const getTimeConfigurations = (page) => {
       </template>
       <board-configuration-item
         class="my-2"
-        v-for="item in timeConfigurationList"
+        v-for="item in boardConfigurationList"
         :item="item"
         :key="item.id"
       />
@@ -84,5 +80,15 @@ const getTimeConfigurations = (page) => {
 <style scoped lang="scss">
 .empty {
   height: 80%;
+}
+.add-configuration {
+  display: flex;
+  justify-content: center;
+  .configuration-add-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+  }
 }
 </style>

@@ -19,6 +19,8 @@ import DashboardKioskBoardView from '@/pages/dashboard/kiosk-board/DashboardKios
 import DashboardKioskBoardListView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardListView.vue'
 import DashboardPaymentListView from '@/pages/dashboard/payment/DashboardPaymentListView.vue'
 import DashboardPaymentView from '@/pages/dashboard/payment/DashboardPaymentView.vue'
+import DashboardOrderView from '@/pages/dashboard/order/DashboardOrderView.vue'
+import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListView.vue'
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -111,6 +113,18 @@ export const router = createRouter({
           ]
         },
         {
+          path: 'order',
+          name: 'DashboardOrderView',
+          component: DashboardOrderView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardOrderListView',
+              component: DashboardOrderListView
+            }
+          ]
+        },
+        {
           path: 'payment',
           name: 'DashboardPaymentView',
           component: DashboardPaymentView,
@@ -122,6 +136,7 @@ export const router = createRouter({
             }
           ]
         },
+
         {
           path: 'settings',
           name: 'DashboardSettingsView',

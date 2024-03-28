@@ -1,14 +1,13 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import formatAmount from '@/composables/amount.js'
-import formatTime from '@/composables/date.js'
 import useCore from '@/store/core.pinia.js'
-import useBoardConfiguration from '@/store/board-configuration.pinia.js'
+import useBoardTimeConfiguration from '@/store/board-time-configuration.pinia.js'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 
 const corePinia = useCore()
-const boardConfigurationPinia = useBoardConfiguration()
+const boardTimeConfigurationPinia = useBoardTimeConfiguration()
 defineProps({
   item: {
     type: Object,
@@ -26,50 +25,44 @@ const { loadingUrl } = storeToRefs(corePinia)
         <p class="item-value m-0">Name</p>
       </a-col>
       <a-col class="item-info">
-        <span class="item-label">Muddati</span>
+        <span class="item-label">E'lon berish vaqti</span>
         <p class="item-value m-0">
-          {{ formatTime(item.liveTime) }}
+          {{ item.startTime }}
         </p>
       </a-col>
-      <a-col class="item-info">
-        <span class="item-label">Topda turish muddati</span>
-        <p class="item-value m-0">
-          {{ formatTime(item.topTime) }}
-        </p>
-      </a-col>
-      <a-col class="item-info">
-        <span class="item-label">Pinda turish muddati</span>
-        <p class="item-value m-0">
-          {{ formatTime(item.pinTime) }}
-        </p>
-      </a-col>
+
       <a-col class="item-info">
         <span class="item-label">Narxi</span>
         <p class="item-value m-0">
           {{ formatAmount(item.amount) }}
         </p>
       </a-col>
-      <a-col class="actions">
-        <a-button
-          type="primary"
-          size="middle"
-          class="btn-delete"
-          :disabled="loadingUrl.has(`board/configuration/delete/${item.id}`)"
-          danger
-          @click="
-            boardConfigurationPinia.deleteConfiguration(item.id, item.boardId)
-          "
-        >
-          <template
-            v-if="loadingUrl.has(`board/configuration/delete/${item.id}`)"
+      <template v-if="$route.params.role === 'owner'">
+        <a-col class="actions">
+          <a-button
+            type="primary"
+            size="middle"
+            class="btn-delete"
+            :disabled="loadingUrl.has(`board/configuration/delete/${item.id}`)"
+            danger
+            @click="
+              boardTimeConfigurationPinia.deleteTimeConfiguration(
+                item.id,
+                item.boardId
+              )
+            "
           >
-            <icon-loader size="small" class="loader" />
-          </template>
-          <template v-else>
-            <icon-trash />
-          </template>
-        </a-button>
-      </a-col>
+            <template
+              v-if="loadingUrl.has(`board/configuration/delete/${item.id}`)"
+            >
+              <icon-loader size="small" class="loader" />
+            </template>
+            <template v-else>
+              <icon-trash />
+            </template>
+          </a-button>
+        </a-col>
+      </template>
     </a-row>
   </a-card>
 </template>

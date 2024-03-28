@@ -17,6 +17,7 @@ import IconMessageTextSquare from '@/components/icons/IconMessageTextSquare.vue'
 import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
 import LogoDark from '@/components/Logo-dark.vue'
+import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 const { collapsed } = defineProps({
   collapsed: {
     type: Boolean,
@@ -119,12 +120,12 @@ const logOut = () => {
           </template>
           {{ $t('DashboardPostListView') }}
         </a-menu-item>
-        <!--        <a-menu-item :key="`report`">-->
-        <!--          <template #icon>-->
-        <!--            <icon-pie-chart />-->
-        <!--          </template>-->
-        <!--          {{ $t('ReportView') }}-->
-        <!--        </a-menu-item>-->
+        <a-menu-item :key="`order`">
+          <template #icon>
+            <icon-shopping-card />
+          </template>
+          {{ $t('DashboardOrderListView') }}
+        </a-menu-item>
         <a-menu-item :key="`user`">
           <template #icon>
             <icon-users />

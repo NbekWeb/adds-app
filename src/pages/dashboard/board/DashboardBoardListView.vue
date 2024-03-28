@@ -77,20 +77,21 @@ onMounted(() => {
           >
           </a-tree-select>
         </a-col>
-
-        <a-col>
-          <a-select
-            v-model:value="status"
-            :options="boardStatusAll"
-            :loading="loadingUrl.has('board/status/all')"
-            @change="handleChangeFilter"
-            allow-clear
-            :placeholder="$t('SELECT_STATUS')"
-            size="middle"
-            class="board-type-filter"
-          >
-          </a-select>
-        </a-col>
+        <template v-if="role === 'owner'">
+          <a-col>
+            <a-select
+              v-model:value="status"
+              :options="boardStatusAll"
+              :loading="loadingUrl.has('board/status/all')"
+              @change="handleChangeFilter"
+              allow-clear
+              :placeholder="$t('SELECT_STATUS')"
+              size="middle"
+              class="board-type-filter"
+            >
+            </a-select>
+          </a-col>
+        </template>
         <!--        <template v-if="role === 'owner'">-->
         <a-col>
           <a-button

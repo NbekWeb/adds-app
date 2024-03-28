@@ -1,3 +1,5 @@
+import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListView.vue'
+
 const uzLat = {
   // menus
   AuthView: 'Tizimga kirish',
@@ -6,9 +8,9 @@ const uzLat = {
   DashboardMyBoardListView: 'Mening kanallarim',
   DashboardKioskBoardListView: 'Kiosk boards',
   DashboardMyKioskBoardListView: 'My kiosk boards',
-  DashboardPostListView: 'Postlar',
+  DashboardPostListView: "E'lonlar",
+  DashboardOrderListView: 'Xaridlar',
   ReportView: "E'lon bo'yicha hisobot",
-  DashboardNotFond: 'Sahifa topilmadi',
   DashboardUserListView: 'Auditoriya',
   DashboardPaymentListView: "To'lovlar",
   BillingView: "Billing va to'lovlar",
@@ -22,6 +24,7 @@ const uzLat = {
   EditBoardView: 'Kanalni tahrirlash',
   DashboardUserEditView: 'Foydalanuvchini tahrirlash',
   DashboardPostFormView: "Post qo'shish",
+  DashboardNotFond: 'Sahifa topilmadi',
 
   //   validations
   REQUIRED_FIELD: 'Majburiy maydon',
