@@ -10,6 +10,8 @@ import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import { useRoute, useRouter } from 'vue-router'
 import useUser from '@/store/user.pinia.js'
+import IconEye from '@/components/icons/IconEye.vue'
+import IconClockStopwatch from '@/components/icons/IconClockStopwatch.vue'
 // import IconTelegram from '@/components/icons/IconTelegram.vue'
 // import IconInstagram from '@/components/icons/IconInstagram.vue'
 
@@ -40,63 +42,14 @@ const baseUrl = ref(
 )
 const role = computed(() => route.params.role)
 
-// const config = ref(['Junior', 'Middle', 'Senior', 'Team lead', 'Junior'])
-// const timeConfig = ref([
-//   '8:00',
-//   '9:00',
-//   '10:00',
-//   '8:00',
-//   '9:00',
-//   '10:00',
-//   '8:00',
-//   '9:00',
-//   '10:00'
-// ])
-// const configLength = ref(0)
-// const timeConfigLength = ref(0)
-// const parentConfig = ref(null)
-// const childConfig = ref(null)
-// const parentTimeConfig = ref(null)
-// const childTimeConfig = ref(null)
-
-// const handleOffsetWith = () => {
-//   if (childConfig.value?.offsetWidth > parentConfig.value?.offsetWidth) {
-//     configLength.value = Math.floor(
-//       parentConfig.value.offsetWidth /
-//         (childConfig.value.offsetWidth / config.value.length)
-//     )
-//   } else {
-//     configLength.value = 0
-//   }
-//   if (
-//     childTimeConfig.value?.offsetWidth > parentTimeConfig.value?.offsetWidth
-//   ) {
-//     timeConfigLength.value = Math.floor(
-//       parentTimeConfig.value.offsetWidth /
-//         (childTimeConfig.value.offsetWidth / timeConfig.value.length)
-//     )
-//   } else {
-//     timeConfigLength.value = 0
-//   }
-// }
-
-// window.addEventListener('resize', handleOffsetWith)
-
-// const handleVisibleDrover = () => {
-//   emits('addNewConfig', props.item.id, 'configuration')
-// }
-// const handleVisibleTimeDrover = () => {
-//   emits('addNewConfig', props.item.id, 'time-configuration')
-// }
-// const handleNavigate = () => {
-//   router.push(
-//     `/dashboard/${role.value}/board/item/${props.item.id}/configurations`
-//   )
-// }
-
-// onMounted(() => {
-//   handleOffsetWith()
-// })
+const boardStatus = ref(
+  props.item.boardStatus === 'ACTIVE'
+    ? 'success'
+    : props.item.boardStatus === 'INACTIVE'
+      ? 'error'
+      : 'warning'
+)
+console.log(boardStatus.value)
 </script>
 
 <template>
@@ -105,86 +58,102 @@ const role = computed(() => route.params.role)
       <template #indicator>
         <icon-loader />
       </template>
-      <a-card hoverable class="board-item" :loading="loading">
-        <template v-if="role === 'owner'">
-          <a-dropdown
-            placement="bottomRight"
-            class="actions-dropdown"
-            trigger="click"
-          >
-            <a-button
-              class="btn-card-actions"
-              size="small"
-              type="primary"
-              shape="circle"
-            >
-              <icon-dots-vertical />
-            </a-button>
-            <template #overlay>
-              <a-space direction="vertical" class="py-2">
-                <a-button
-                  @click="
-                    router.push(`/dashboard/${role}/board/edit/${item?.id}`)
-                  "
-                  type="primary"
-                  class="btn-card-actions-edit mx-1"
-                  size="small"
-                  shape="circle"
-                >
-                  <icon-edit />
-                </a-button>
-                <a-button
-                  @click="boardPinia.deleteBoard(item?.id)"
-                  type="primary"
-                  class="btn-card-actions-delete mx-1"
-                  size="small"
-                  shape="circle"
-                >
-                  <icon-trash />
-                </a-button>
-              </a-space>
-            </template>
-          </a-dropdown>
-        </template>
-
-        <div class="board-main-info">
-          <div>
+      <a-card class="board-item" :loading="loading">
+        <a-row class="board-main-info">
+          <a-col class="logo-col flex align-center">
             <div class="logo">
               <img :src="`${baseUrl}/file/${item?.logoHashId}`" alt="" />
             </div>
-          </div>
+            <div>
+              <h1 class="board-name">{{ item?.name }}</h1>
+              <span class="subscriptions">
+                <icon-user />
+                <span>{{
+                  item?.channelMembersCount > 1000
+                    ? `${Math.floor(item?.channelMembersCount / 1000)}k`
+                    : item?.channelMembersCount
+                }}</span>
+              </span>
+            </div>
+          </a-col>
 
-          <div>
-            <h1 class="board-name">{{ item?.name }}</h1>
-            <span class="subscriptions">
-              <icon-user />
-              <span>{{
-                item?.channelMembersCount > 1000
-                  ? `${Math.floor(item?.channelMembersCount / 1000)}k`
-                  : item?.channelMembersCount
-              }}</span>
-            </span>
-          </div>
-        </div>
-
-        <div class="description mb-2">
-          <p class="description-text">
-            {{ item?.description }}
-          </p>
-        </div>
-
-        <template #actions>
-          <a-row justify="space-between" class="mx-3">
-            <a-col class="pl-2">
-              <span class="category-name">{{ item?.category?.name }}</span>
-            </a-col>
-            <a-col>
-              <a-tag class="status" :bordered="false" color="warning">
+          <a-col class="category">
+            <span class="category-label"> Kategoriyasi </span>
+            <h3 class="category-name m-0">{{ item?.category?.name }}</h3>
+          </a-col>
+          <a-col class="status">
+            <span class="status-label block"> Holati </span>
+            <a-tag
+              :bordered="false"
+              :color="
+                item.status.boardStatus === 'ACTIVE'
+                  ? 'success'
+                  : item.status.boardStatus === 'INACTIVE'
+                    ? 'error'
+                    : 'warning'
+              "
+            >
+              <span class="status-name">
                 {{ item?.status?.localName }}
-              </a-tag>
-            </a-col>
-          </a-row>
-        </template>
+              </span>
+            </a-tag>
+          </a-col>
+          <a-col class="actions">
+            <a-button
+              @click="
+                router.push(
+                  `/dashboard/${route.params.role}/board/item/${item.id}/configurations`
+                )
+              "
+              size="middle"
+              type="primary"
+              shape="round"
+              class="flex align-center"
+            >
+              Ta'riflar
+            </a-button>
+            <template v-if="role === 'owner'">
+              <a-dropdown
+                placement="bottomRight"
+                class="actions-dropdown"
+                trigger="click"
+              >
+                <a-button
+                  class="btn-card-actions"
+                  size="small"
+                  type="primary"
+                  shape="circle"
+                >
+                  <icon-dots-vertical />
+                </a-button>
+                <template #overlay>
+                  <a-space direction="vertical" class="py-2">
+                    <a-button
+                      @click="
+                        router.push(`/dashboard/${role}/board/edit/${item?.id}`)
+                      "
+                      type="primary"
+                      class="btn-card-actions-edit mx-1"
+                      size="small"
+                      shape="circle"
+                    >
+                      <icon-edit />
+                    </a-button>
+                    <a-button
+                      @click="boardPinia.deleteBoard(item?.id)"
+                      type="primary"
+                      class="btn-card-actions-delete mx-1"
+                      size="small"
+                      shape="circle"
+                    >
+                      <icon-trash />
+                    </a-button>
+                  </a-space>
+                </template>
+              </a-dropdown>
+            </template>
+          </a-col>
+        </a-row>
       </a-card>
     </a-spin>
   </div>
@@ -239,16 +208,21 @@ const role = computed(() => route.params.role)
   height: 100%;
   position: relative;
   &:deep(.ant-card-body) {
-    height: calc(100% - 50px);
+    //height: calc(100% - 50px);
+    padding: 12px;
+    cursor: pointer;
+    &:hover {
+      background-color: $light;
+    }
   }
 
   .btn-card-actions {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    right: 8px;
-    top: 8px;
+    //position: absolute;
+    //right: 8px;
+    //top: 8px;
     color: $body;
     background-color: transparent;
     transition: background-color 0.5s;
@@ -264,9 +238,9 @@ const role = computed(() => route.params.role)
   .board-main-info {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 5px;
+    //margin-bottom: 5px;
     .board-name {
+      font-weight: bolder;
       margin-bottom: 0;
     }
     .subscriptions {
@@ -279,71 +253,52 @@ const role = computed(() => route.params.role)
       }
     }
   }
-  .description {
-    min-height: 60px;
 
-    .description-text {
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
+  //.border-bottom {
+  //  border-bottom: 1px solid $muted;
+  //}
+  .category {
+    width: 30%;
+  }
+  .status {
+    width: 20%;
+    .status-name {
+      font-weight: bolder;
     }
   }
-  .board-type {
-    font-size: 18px;
-  }
-  .configurations {
+  .actions {
+    width: 10%;
     display: flex;
-    justify-content: space-between;
-    gap: 5px;
-    .buttons {
-      &:deep(.ant-space-item) {
-        .ant-tag {
-          margin-right: 0;
-        }
-        width: max-content;
-      }
-      .configuration-add-btn {
-        display: flex;
-        align-items: center;
-      }
-    }
-    .board-configuration-parent {
-      overflow: hidden;
-      width: 80%;
-    }
-    .board-configuration,
-    .board-time-configuration {
-      display: flex;
-      justify-content: flex-start;
-      width: max-content;
-      .more {
-        padding: 1px 0 1px 0;
-      }
-    }
+    justify-content: flex-end;
+    align-items: center;
   }
-
-  .border-bottom {
-    border-bottom: 1px solid $muted;
+  .category-label,
+  .status-label {
+    color: $muted;
+    font-size: 14px;
   }
   .category-name {
     font-weight: bold;
-    color: rgb($body, 0.5);
+    color: rgb($body, 0.8);
   }
   .status {
     font-weight: bolder;
   }
 }
-.logo {
-  display: block;
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
-  border-radius: 50%;
-  img {
+.logo-col {
+  width: 40%;
+  gap: 8px;
+  .logo {
     display: block;
     width: 50px;
     height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    img {
+      display: block;
+      width: 50px;
+      height: 50px;
+    }
   }
 }
 </style>

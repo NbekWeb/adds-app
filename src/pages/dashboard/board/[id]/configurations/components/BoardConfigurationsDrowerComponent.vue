@@ -1,6 +1,6 @@
 <script setup>
-import BoardConfigurationForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationForm.vue'
-import BoardTimeConfigurationForm from '@/pages/dashboard/board/[id]/configurations/components/BoardTimeConfigurationForm.vue'
+import BoardConfigurationForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationFormComponent.vue'
+import BoardTimeConfigurationForm from '@/pages/dashboard/board/[id]/configurations/components/BoardTimeConfigurationFormComponent.vue'
 import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
 

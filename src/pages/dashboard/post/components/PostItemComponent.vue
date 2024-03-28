@@ -78,7 +78,7 @@ const deletePost = () => {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 300px;
+  height: 200px;
   .post-image {
     width: 100%;
     height: 100%;

@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import useBoard from '@/store/boadr.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-import BoardConfigurationsForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationsDrower.vue'
+import BoardConfigurationsForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationsDrowerComponent.vue'
 import BoardItemComponent from '@/pages/dashboard/board/components/BoardItemComponent.vue'
 
 const boardPinia = useBoard()
@@ -58,16 +58,15 @@ watch(boardList, () => {
         </a-empty>
       </template>
       <template v-if="boardList?.length">
-        <a-row :gutter="[10, 10]" class="mx-0">
-          <a-col
-            :xs="24"
-            :sm="24"
-            :md="collapsed ? 12 : 24"
-            :lg="collapsed ? 8 : 12"
-            :xl="collapsed ? 6 : 8"
-            :xxl="collapsed ? 4 : 6"
-            v-for="item in boardList"
-          >
+        <a-row :gutter="[10, 5]" class="mx-0">
+          <a-col :span="24" v-for="item in boardList">
+            <!--            :xs="24"-->
+            <!--            :sm="24"-->
+            <!--            :md="collapsed ? 12 : 24"-->
+            <!--            :lg="collapsed ? 8 : 12"-->
+            <!--            :xl="collapsed ? 6 : 8"-->
+            <!--            :xxl="collapsed ? 4 : 6"-->
+
             <board-item-component
               :item="item"
               @addNewConfig="handleOpenDrower"
@@ -77,18 +76,21 @@ watch(boardList, () => {
       </template>
       <template v-if="corePinia.loadingUrl.has('board/all')">
         <a-row :gutter="[10, 10]" class="mx-0 mt-2">
-          <a-col
-            :xs="24"
-            :sm="24"
-            :md="collapsed ? 12 : 24"
-            :lg="collapsed ? 8 : 12"
-            :xl="collapsed ? 6 : 8"
-            :xxl="collapsed ? 4 : 6"
-            v-for="item in 9"
-            :key="item"
-          >
-            <a-card>
-              <a-skeleton active avatar :paragraph="{ rows: 4 }" />
+          <a-col :span="24" v-for="item in 3" :key="item">
+            <a-card class="loading-card" size="small">
+              <a-row class="flex align-center w-full" align="center">
+                <a-col :span="1">
+                  <a-skeleton-avatar active size="large" shape="circle" />
+                </a-col>
+                <a-col :span="23">
+                  <a-skeleton-input
+                    style="width: 100%"
+                    active
+                    size="small"
+                    block
+                  />
+                </a-col>
+              </a-row>
             </a-card>
           </a-col>
         </a-row>
@@ -97,4 +99,12 @@ watch(boardList, () => {
   </scrollbar-component>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.loading-card {
+  &:deep(.ant-card-body) {
+    display: flex;
+    align-items: center;
+    height: 70px;
+  }
+}
+</style>

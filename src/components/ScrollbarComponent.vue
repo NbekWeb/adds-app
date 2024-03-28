@@ -26,7 +26,7 @@ const scroll = (e) => {
 
 <template>
   <div
-    class="scrollbar-content"
+    class="scrollbar-content p-1"
     :style="{ height: height }"
     id="scrollbar-content"
     @scroll="scroll"

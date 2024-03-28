@@ -27,7 +27,6 @@ const { loadingUrl, visibleDrower } = storeToRefs(corePinia)
 const { timeConfigurationList } = storeToRefs(boardTimeConfigurationPinia)
 const form = reactive({
   startTime: null,
-  endTime: null,
   amount: null
 })
 const rules = ref({
@@ -38,13 +37,7 @@ const rules = ref({
       trigger: 'blur'
     }
   ],
-  endTime: [
-    {
-      required: true,
-      message: t('REQUIRED_FIELD'),
-      trigger: 'blur'
-    }
-  ],
+
   amount: [
     {
       validator: (rule, value) => {
@@ -102,19 +95,6 @@ watch(timeConfigurationList, () => {
         </a-col>
 
         <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
-          <a-form-item :label="$t('END_TIME')" v-bind="validateInfos.endTime">
-            <a-time-picker
-              v-model:value="form.endTime"
-              format="HH:mm"
-              value-format="HH:mm"
-              :placeholder="`${$t('HOUR')}:${$t('MINUTE')}`"
-              class="date-picker"
-              :showNow="false"
-              :minuteStep="10"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" :xxl="24">
           <a-form-item
             :label="`${$t('AMOUNT')} (UZS)`"
             v-bind="validateInfos.amount"
