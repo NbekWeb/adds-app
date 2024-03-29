@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import useUser from '@/store/user.pinia.js'
 import useCore from '@/store/core.pinia.js'
@@ -19,13 +19,6 @@ const { collapsed, loadingUrl } = storeToRefs(corePinia)
 // user me check token
 onMounted(() => {
   userPinia.getUserMe()
-})
-onBeforeMount(() => {
-  router.push({
-    params: {
-      role: 'ads'
-    }
-  })
 })
 </script>
 

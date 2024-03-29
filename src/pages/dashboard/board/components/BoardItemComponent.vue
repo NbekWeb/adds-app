@@ -40,7 +40,6 @@ const { user } = storeToRefs(userPinia)
 const baseUrl = ref(
   `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}`
 )
-const role = computed(() => route.params.role)
 
 const boardStatus = ref(
   props.item.boardStatus === 'ACTIVE'
@@ -78,11 +77,10 @@ console.log(boardStatus.value)
           </a-col>
 
           <a-col class="category">
-            <span class="category-label"> Kategoriyasi </span>
             <h3 class="category-name m-0">{{ item?.category?.name }}</h3>
+            <span class="category-label"> Kategoriyasi </span>
           </a-col>
           <a-col class="status">
-            <span class="status-label block"> Holati </span>
             <a-tag
               :bordered="false"
               :color="
@@ -97,13 +95,12 @@ console.log(boardStatus.value)
                 {{ item?.status?.localName }}
               </span>
             </a-tag>
+            <span class="status-label block"> Holati </span>
           </a-col>
           <a-col class="actions">
             <a-button
               @click="
-                router.push(
-                  `/dashboard/${route.params.role}/board/item/${item.id}/configurations`
-                )
+                router.push(`/dashboard/board/item/${item.id}/configurations`)
               "
               size="middle"
               type="primary"
@@ -112,46 +109,6 @@ console.log(boardStatus.value)
             >
               Ta'riflar
             </a-button>
-            <template v-if="role === 'owner'">
-              <a-dropdown
-                placement="bottomRight"
-                class="actions-dropdown"
-                trigger="click"
-              >
-                <a-button
-                  class="btn-card-actions"
-                  size="small"
-                  type="primary"
-                  shape="circle"
-                >
-                  <icon-dots-vertical />
-                </a-button>
-                <template #overlay>
-                  <a-space direction="vertical" class="py-2">
-                    <a-button
-                      @click="
-                        router.push(`/dashboard/${role}/board/edit/${item?.id}`)
-                      "
-                      type="primary"
-                      class="btn-card-actions-edit mx-1"
-                      size="small"
-                      shape="circle"
-                    >
-                      <icon-edit />
-                    </a-button>
-                    <a-button
-                      @click="boardPinia.deleteBoard(item?.id)"
-                      type="primary"
-                      class="btn-card-actions-delete mx-1"
-                      size="small"
-                      shape="circle"
-                    >
-                      <icon-trash />
-                    </a-button>
-                  </a-space>
-                </template>
-              </a-dropdown>
-            </template>
           </a-col>
         </a-row>
       </a-card>

@@ -1,4 +1,4 @@
-const formatTime = (long) => {
+const formatTime = (long, type) => {
   const fullMin = long / 1000 / 60
   const h = Math.floor(fullMin / 60)
   let m
@@ -9,9 +9,9 @@ const formatTime = (long) => {
   } else {
     m = fullMin
   }
-  hh = h < 10 ? `0${h}` : `${h}`
-  mm = m < 10 ? `0${m}` : `${m}`
-  return `${hh}:${mm}`
+  // hh = h < 10 ? `0${h}` : `${h}`
+  // mm = m < 10 ? `0${m}` : `${m}`
+  return type === 'hh' ? h : type === 'mm' ? m : ''
 }
 
 export default formatTime

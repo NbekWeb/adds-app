@@ -17,18 +17,16 @@ const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
       this.totalElements = 0
       this.totalPages = 0
     },
-    getTimeConfigurationsByBoardId(id, orderDate, page = this.page, role) {
+    getTimeConfigurationsByBoardId(id, configId, orderDate, page = this.page) {
       const core = useCore()
       core.loadingUrl.add('board/id/time-configurations')
       this.page = page
       api({
-        url:
-          role === 'owner'
-            ? `board-time-configuration/owner?boardId=${id}`
-            : `board-time-configuration`,
+        url: `board-time-configuration`,
         params: {
           boardId: id,
           orderDate: orderDate,
+          configId: configId,
           page: page,
           size: 10
         }

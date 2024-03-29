@@ -1,16 +1,15 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import dayjs from 'dayjs'
 import useCore from '@/store/core.pinia.js'
 import useBoardConfiguration from '@/store/board-configuration.pinia.js'
 import useBoardTimeConfiguration from '@/store/board-time-configuration.pinia.js'
 
-import IconPlus from '@/components/icons/IconPlus.vue'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import BoardConfigurationListComponent from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationListComponent.vue'
-import BoardTimeConfigurationListComponent from '@/pages/dashboard/board/[id]/configurations/components/BoardTimeConfigurationListComponent.vue'
-import BoardConfigurationsDrowerComponent from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationsDrowerComponent.vue'
+import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
+import BoardConfigurationItem from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationItemComponent.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -19,97 +18,96 @@ const corePinia = useCore()
 const boardConfigurationPinia = useBoardConfiguration()
 const boardTimeConfigurationPinia = useBoardTimeConfiguration()
 
-const { loadingUrl, visibleDrower } = storeToRefs(corePinia)
+const { loadingUrl } = storeToRefs(corePinia)
 
-const role = computed(() => route.params.role)
-
-const months = ref({
-  Jan: '01',
-  Feb: '02',
-  Mar: '03',
-  Apr: '04',
-  May: '05',
-  Jun: '06',
-  Jul: '07',
-  Aug: '08',
-  Sep: '09',
-  Oct: '10',
-  Nov: '11',
-  Dec: '12'
-})
-
-const date = ref(new Date())
 const boardId = ref(null)
-const activeKey = ref('configuration')
-const orderDate = ref(
-  `${date.value.getFullYear()}-${date.value.getMonth() < 10 ? `0${date.value.getMonth()}` : date.value.getMonth()}-${date.value.getDay() < 10 ? `0${date.value.getDay()}` : date.value.getDay()}`
-)
+const orderDate = ref(dayjs())
 
-const handleVisibleDrover = () => {
-  visibleDrower.value.add('configuration/drower')
-}
-watch(role, () => {
-  boardTimeConfigurationPinia.clearTimeConfigurations()
-  boardTimeConfigurationPinia.getTimeConfigurationsByBoardId(
-    boardId.value,
-    0,
-    role.value
-  )
-})
+const { page, totalPages, totalElements, boardConfigurationList } = storeToRefs(
+  boardConfigurationPinia
+)
 onMounted(() => {
   if (route.params.id) {
     boardId.value = route.params.id
     boardConfigurationPinia.clearConfigurations()
-    boardTimeConfigurationPinia.clearTimeConfigurations()
     boardConfigurationPinia.getConfigurationsByBoardId(boardId.value, 0)
-    boardTimeConfigurationPinia.getTimeConfigurationsByBoardId(
-      boardId.value,
-      orderDate.value,
-      0,
-      role.value
-    )
   }
 })
-onBeforeUnmount(() => {
-  boardConfigurationPinia.clearConfigurations()
-})
+const getConfigurations = (page) => {
+  boardConfigurationPinia.getConfigurationsByBoardId(props.boardId, page)
+}
 </script>
 
 <template>
   <page-header-component :title="$t('BoardConfigurationsView')">
     <template #actions>
-      <template v-if="role === 'ads'">
-        <!--        <a-date-picker v-model:value="orderDate" format="YYYY-MM-DD" />-->
-      </template>
-      <template v-if="role === 'owner'">
-        <a-button
-          @click="handleVisibleDrover"
-          class="configuration-add-btn"
-          type="primary"
-          size="middle"
-        >
-          <icon-plus /> {{ $t('ADD') }}
-        </a-button>
-      </template>
+      <a-date-picker v-model:value="orderDate" />
     </template>
   </page-header-component>
 
-  <board-configurations-drower-component
-    :id="boardId"
-    :type="activeKey"
-    :location="'configuration-list'"
-  />
-  <a-tabs v-model:active-key="activeKey">
-    <a-tab-pane key="configuration" :tab="$t('BOARD_CONFIGURATIONS')">
-      <board-configuration-list-component :boardId="boardId" />
-    </a-tab-pane>
-    <a-tab-pane key="time-configuration" :tab="$t('BOARD_TIME_CONFIGURATIONS')">
-      <board-time-configuration-list-component :boardId="boardId" />
-    </a-tab-pane>
-  </a-tabs>
-  <a-button @click="router.back()">
-    {{ $t('BACK') }}
-  </a-button>
+  <scrollbar-component
+    class="scrollbar"
+    :loading="corePinia.loadingUrl.has('board/all')"
+    :count="9"
+    height="calc(100vh - 200px )"
+    :page="page"
+    :total-pages="totalPages"
+    :total-count-all="totalElements"
+    @get-date="getConfigurations"
+  >
+    <template #content>
+      <template
+        v-if="
+          !boardConfigurationList?.length &&
+          !corePinia.loadingUrl.has('board/id/configurations')
+        "
+      >
+        <a-empty class="empty">
+          <template #description>
+            {{ $t('NO_DATA') }}
+          </template>
+        </a-empty>
+      </template>
+      <template
+        v-if="
+          !boardConfigurationList.length &&
+          loadingUrl.has('board/id/configurations')
+        "
+      >
+        <a-card
+          loading
+          class="my-2"
+          :body-style="{ padding: '12px', height: '75px' }"
+          v-for="i in 6"
+          :key="i"
+        >
+          <div></div>
+        </a-card>
+      </template>
+      <a-row :gutter="[10, 10]">
+        <a-col
+          :xs="24"
+          :ms="24"
+          :md="12"
+          :lg="8"
+          :xl="8"
+          :xxl="6"
+          v-for="(item, i) in boardConfigurationList"
+          :key="i"
+        >
+          <board-configuration-item
+            class=""
+            :item="item"
+            :key="item.id"
+            :date="orderDate.format('YYYY-MM-DD')"
+          />
+        </a-col>
+      </a-row>
+      <a-button class="mt-3" @click="router.back()">
+        {{ $t('BACK') }}
+      </a-button>
+    </template>
+  </scrollbar-component>
 </template>
 
 <style scoped lang="scss">

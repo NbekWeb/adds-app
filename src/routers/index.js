@@ -33,10 +33,10 @@ export const router = createRouter({
       component: AuthView
     },
     {
-      path: '/dashboard/:role',
+      path: '/dashboard',
       name: 'DashboardView',
       component: DashboardView,
-      redirect: `/dashboard/ads/main`,
+      redirect: `/dashboard/main`,
       children: [
         {
           path: 'main',
@@ -65,16 +65,6 @@ export const router = createRouter({
                   component: BoardConfigurationsView
                 }
               ]
-            },
-            {
-              name: 'AddBoardView',
-              path: 'add',
-              component: DashboardBoardFormView
-            },
-            {
-              path: 'edit/:id',
-              name: 'EditBoardView',
-              component: DashboardBoardFormView
             }
           ]
         },
@@ -160,7 +150,7 @@ export const router = createRouter({
           ]
         },
         {
-          path: '/:role/:pathMatch(.*)*',
+          path: '/:pathMatch(.*)*',
           component: NotFound,
           name: 'DashboardNotFond'
         }
@@ -184,7 +174,7 @@ const routerFactory = (i18n) => {
       } else if (to.name === 'ServerError') {
         return next()
       } else {
-        return next({ name: 'DashboardView', params: { role: 'ads' } })
+        return next({ name: 'DashboardView' })
       }
     } else {
       if (!to.path.includes('dashboard')) {
