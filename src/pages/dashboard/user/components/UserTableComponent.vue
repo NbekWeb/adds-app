@@ -13,7 +13,7 @@ defineProps({
 })
 const corePinia = useCore()
 const userPinia = useUser()
-const { userList, loading } = storeToRefs(userPinia)
+const { loading } = storeToRefs(userPinia)
 const columns = ref([
   {
     title: 'fullName',

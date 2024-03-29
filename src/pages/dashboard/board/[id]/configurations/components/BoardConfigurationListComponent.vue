@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import useCore from '@/store/core.pinia.js'
 import useBoardConfiguration from '@/store/board-configuration.pinia.js'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 const router = useRouter()
 const corePinia = useCore()
@@ -21,7 +22,7 @@ const { loadingUrl } = storeToRefs(corePinia)
 const { page, totalPages, totalElements, boardConfigurationList } = storeToRefs(
   boardConfigurationPinia
 )
-
+const configId = ref()
 const getConfigurations = (page) => {
   boardConfigurationPinia.getConfigurationsByBoardId(props.boardId, page)
 }
@@ -67,12 +68,26 @@ const getConfigurations = (page) => {
           <div></div>
         </a-card>
       </template>
-      <board-configuration-item
-        class="my-2"
-        v-for="item in boardConfigurationList"
-        :item="item"
-        :key="item.id"
-      />
+      <a-radio-group class="w-full" v-model:value="configId">
+        <a-row :gutter="[10, 10]">
+          <a-col
+            :xs="24"
+            :ms="24"
+            :md="12"
+            :lg="8"
+            :xl="8"
+            :xxl="6"
+            v-for="item in boardConfigurationList"
+          >
+            <!--            <board-configuration-item-->
+            <!--              class=""-->
+            <!--              :item="item"-->
+            <!--              :key="item.id"-->
+            <!--              :date=""-->
+            <!--            />-->
+          </a-col>
+        </a-row>
+      </a-radio-group>
     </template>
   </scrollbar-component>
 </template>

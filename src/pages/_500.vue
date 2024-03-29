@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const goHome = () => {
-  router.push('/dashboard/ads/main')
+  router.push('/dashboard/main')
 }
 </script>
 

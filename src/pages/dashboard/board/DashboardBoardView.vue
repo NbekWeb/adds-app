@@ -1,6 +1,4 @@
-<script setup>
-import BoardConfigurationsForm from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationsDrowerComponent.vue'
-</script>
+<script setup></script>
 
 <template>
   <router-view />

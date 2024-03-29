@@ -16,8 +16,6 @@ const postPinia = usePost()
 
 const { loadingUrl } = storeToRefs(corePinia)
 
-const role = computed(() => route.params.role)
-
 onMounted(() => {
   postPinia.getAllPosts(0)
 })
@@ -30,7 +28,7 @@ onMounted(() => {
         class="add-btn"
         type="primary"
         size="middle"
-        @click="router.push(`/dashboard/${role}/post/create`)"
+        @click="router.push(`/dashboard/post/create`)"
       >
         <icon-plus />
         {{ $t('ADD') }}

@@ -9,15 +9,11 @@ const useUser = defineStore('user', {
       username: null,
       firstName: null,
       lastName: null,
-      balance: 0,
-      role: null
+      balance: 0
     },
     userList: []
   }),
   actions: {
-    changeRole(role) {
-      this.role = role
-    },
     getUserMe() {
       const core = useCore()
       core.loadingUrl.add('user/me')

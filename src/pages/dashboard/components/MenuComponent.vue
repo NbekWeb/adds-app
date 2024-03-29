@@ -32,9 +32,8 @@ const userPinia = useUser()
 
 const selected = ref([])
 const activeLink = computed(() => route.fullPath.split('/')[3])
-const role = computed(() => route.params.role)
 const setCollapse = ({ key }) => {
-  router.push(`/dashboard/${role.value}/${key}`)
+  router.push(`/dashboard/${key}`)
 }
 const logOut = () => {
   localStorage.clear()
@@ -44,10 +43,7 @@ const logOut = () => {
 </script>
 
 <template>
-  <div
-    class="aside"
-    :class="[{ collapsed: collapsed }, { dark: role === 'owner' }]"
-  >
+  <div class="aside" :class="[{ collapsed: collapsed }]">
     <div class="px-3">
       <a-row class="py-3" align="middle" justify="center">
         <a-col
@@ -58,21 +54,13 @@ const logOut = () => {
           :xxl="collapsed ? 24 : 6"
           class="text-center"
         >
-          <template v-if="role === 'ads'">
-            <logo />
-          </template>
-          <template v-else>
-            <logo-dark />
-          </template>
+          <logo />
         </a-col>
         <template v-if="!collapsed">
           <a-col :xs="24" :sm="24" :md="12" :lg="16" :xxl="16">
             <h2 class="m-0 logo-name">
               ADS-<span class="text-primary">PRO</span>
             </h2>
-            <template v-if="role === 'owner'">
-              <p class="m-0 text-muted small">{{ $t('ADMINISTRATOR') }}</p>
-            </template>
           </a-col>
         </template>
       </a-row>
@@ -82,7 +70,6 @@ const logOut = () => {
         v-model="selected"
         :selectedKeys="[activeLink]"
         mode="inline"
-        :theme="role === 'ads' ? 'light' : role === 'owner' ? 'dark' : ''"
       >
         <a-menu-item :key="`main`">
           <template #icon>
@@ -94,25 +81,13 @@ const logOut = () => {
           <template #icon>
             <icon-announcement />
           </template>
-          {{
-            $t(
-              role === 'owner'
-                ? 'DashboardMyBoardListView'
-                : 'DashboardBoardListView'
-            )
-          }}
+          {{ $t('DashboardBoardListView') }}
         </a-menu-item>
         <a-menu-item :key="`kiosk-board`">
           <template #icon>
             <icon-announcement />
           </template>
-          {{
-            $t(
-              role === 'owner'
-                ? 'DashboardMyKioskBoardListView'
-                : 'DashboardKioskBoardListView'
-            )
-          }}
+          {{ $t('DashboardKioskBoardListView') }}
         </a-menu-item>
         <a-menu-item :key="`post`">
           <template #icon>
@@ -141,13 +116,10 @@ const logOut = () => {
       </a-menu>
     </div>
     <div class="aside-footer m-3">
-      <ul
-        class="aside-footer-list px-2"
-        :class="[{ collapse: collapsed }, { 'btn-dark': role === 'owner' }]"
-      >
+      <ul class="aside-footer-list px-2" :class="[{ collapse: collapsed }]">
         <li>
           <a-tooltip :title="$t('Help')">
-            <router-link class="text-success" :to="`/dashboard/${role}/help`">
+            <router-link class="text-success" :to="`/dashboard/help`">
               <a-button type="link" size="small" link>
                 <icon-help />
               </a-button>
@@ -156,7 +128,7 @@ const logOut = () => {
         </li>
         <li>
           <a-tooltip :title="$t('News')">
-            <router-link :to="`/dashboard/${role}/news`">
+            <router-link :to="`/dashboard/news`">
               <a-button type="link" size="small" link>
                 <icon-notification-text />
               </a-button>
@@ -165,7 +137,7 @@ const logOut = () => {
         </li>
         <li>
           <a-tooltip :title="$t('Settings')">
-            <router-link :to="`/dashboard/${role}/settings`">
+            <router-link :to="`/dashboard/settings`">
               <a-button type="link" size="small" link>
                 <icon-settings />
               </a-button>

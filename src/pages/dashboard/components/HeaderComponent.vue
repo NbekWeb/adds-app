@@ -10,15 +10,6 @@ const userPinia = useUser()
 const corePinia = useCore()
 const { user } = storeToRefs(userPinia)
 const account = ref('ads')
-const changeAccountRole = (role) => {
-  account.value = role
-  userPinia.changeRole(role)
-  router.push({
-    params: {
-      role: role
-    }
-  })
-}
 </script>
 
 <template>
@@ -33,18 +24,10 @@ const changeAccountRole = (role) => {
     </a-col>
     <a-col class="ml-auto">
       <div class="header-switch">
-        <div
-          @click="changeAccountRole('ads')"
-          class="switch-item"
-          :class="account === 'ads' && 'active'"
-        >
+        <div class="switch-item" :class="account === 'ads' && 'active'">
           <a-tooltip title="E'lon beruvchi rejimiga o'tish"> 🎉 </a-tooltip>
         </div>
-        <div
-          @click="changeAccountRole('owner')"
-          class="switch-item"
-          :class="account === 'owner' && 'active'"
-        >
+        <div class="switch-item" :class="account === 'owner' && 'active'">
           <a-tooltip title="E'lon oluvchi rejimiga o'tish"> 😎 </a-tooltip>
         </div>
       </div>

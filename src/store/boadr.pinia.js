@@ -7,7 +7,6 @@ const useBoard = defineStore('board', {
   state: () => ({
     categories: [],
     boardList: [],
-    boardStatusAll: [],
     boardConfigurationList: [],
     page: 0,
     totalElements: 0,
@@ -21,17 +20,16 @@ const useBoard = defineStore('board', {
       this.totalPages = 0
     },
 
-    getAllBoard({ page = this.page, role = 'ads', ...props }) {
+    getAllBoard(page = this.page, categoryId) {
       const core = useCore()
       core.loadingUrl.add('board/all')
       this.page = page
       api({
-        url: role === 'owner' ? 'board/owner' : 'board',
+        url: 'board',
         params: {
           size: 9,
           page: page,
-          categoryId: props.categoryId,
-          status: props.status
+          categoryId: categoryId
         }
       })
         .then(({ data }) => {
@@ -97,25 +95,6 @@ const useBoard = defineStore('board', {
         })
         .finally(() => {
           core.loadingUrl.delete('board/category/all')
-        })
-    },
-    getAllBoardStatus() {
-      const core = useCore()
-      core.loadingUrl.add('board/status/all')
-      api({
-        url: 'board/status-list'
-      })
-        .then(({ data }) => {
-          this.boardStatusAll = data.map((item) => ({
-            label: item.localName,
-            value: item.boardStatus
-          }))
-        })
-        .catch((error) => {
-          useCore().switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('board/status/all')
         })
     },
 

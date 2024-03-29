@@ -37,32 +37,6 @@ const { loadingUrl } = storeToRefs(corePinia)
           {{ formatAmount(item.amount) }}
         </p>
       </a-col>
-      <template v-if="$route.params.role === 'owner'">
-        <a-col class="actions">
-          <a-button
-            type="primary"
-            size="middle"
-            class="btn-delete"
-            :disabled="loadingUrl.has(`board/configuration/delete/${item.id}`)"
-            danger
-            @click="
-              boardTimeConfigurationPinia.deleteTimeConfiguration(
-                item.id,
-                item.boardId
-              )
-            "
-          >
-            <template
-              v-if="loadingUrl.has(`board/configuration/delete/${item.id}`)"
-            >
-              <icon-loader size="small" class="loader" />
-            </template>
-            <template v-else>
-              <icon-trash />
-            </template>
-          </a-button>
-        </a-col>
-      </template>
     </a-row>
   </a-card>
 </template>
