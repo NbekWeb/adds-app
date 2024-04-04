@@ -14,6 +14,7 @@ import IconPaperClip from '@/components/icons/IconPaperClip.vue'
 import IconCheck from '@/components/icons/IconCheck.vue'
 import IconX from '@/components/icons/IconX.vue'
 import { useI18n } from 'vue-i18n'
+import IconLink from '@/components/icons/IconLink.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -178,7 +179,7 @@ const submitForm = (formRef) => {
                 <div class="flex align-center">
                   <a-form-item
                     :rules="rule"
-                    class="mb-0"
+                    class="w-full mb-0"
                     :name="['buttons', i, 'text']"
                   >
                     <a-input-group compact class="flex">
@@ -201,7 +202,7 @@ const submitForm = (formRef) => {
                             <icon-check />
                           </template>
                           <template v-else>
-                            <icon-paper-clip />
+                            <icon-link />
                           </template>
                         </a-button>
                       </a-tooltip>
@@ -215,6 +216,7 @@ const submitForm = (formRef) => {
                     <template #content>
                       <a-form-item class="mb-0">
                         <a-input
+                          style="width: 300px"
                           class="button-url-input"
                           v-model:value="item.firstUrl"
                           :placeholder="$t('ENTER_URL')"
@@ -259,7 +261,6 @@ const submitForm = (formRef) => {
             <a-col :lg="8">
               <a-button
                 @click="addLinkedButton"
-                type="link"
                 size="large"
                 class="button-add-btn py-3"
               >
@@ -309,6 +310,7 @@ const submitForm = (formRef) => {
     display: block;
     width: 100%;
   }
+
   .upload-action {
     position: absolute;
     top: 0;
@@ -352,7 +354,10 @@ const submitForm = (formRef) => {
 .button-card {
   &:deep(.ant-card-body) {
     padding: 12px;
-    background-color: $light;
+    //background-color: $light;
+    .button-text-input {
+      width: 100%;
+    }
   }
 }
 
@@ -364,7 +369,7 @@ const submitForm = (formRef) => {
   width: 100%;
   height: 100%;
   color: $muted;
-  background-color: $light;
+  //background-color: $light;
   &:hover {
     color: rgb($body, 0.7);
   }
