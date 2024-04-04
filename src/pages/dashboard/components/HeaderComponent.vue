@@ -14,23 +14,26 @@ const account = ref('ads')
 
 <template>
   <a-row :gutter="16" justify="end" align="middle">
-    <a-col>
-      <h2 class="m-0">
-        <template v-if="account === 'ads'">
-          Siz, <b>E'lon beruvchi rejimidasiz</b>
-        </template>
-        <template v-else> Siz, <b> E'lon oluvchi rejimidasiz</b> </template>
-      </h2>
-    </a-col>
+    <!--    <a-col>-->
+    <!--      <h2 class="m-0">-->
+    <!--        <template v-if="account === 'ads'">-->
+    <!--          Siz, <b>E'lon beruvchi rejimidasiz</b>-->
+    <!--        </template>-->
+    <!--        <template v-else> Siz, <b> E'lon oluvchi rejimidasiz</b> </template>-->
+    <!--      </h2>-->
+    <!--    </a-col>-->
     <a-col class="ml-auto">
-      <div class="header-switch">
-        <div class="switch-item" :class="account === 'ads' && 'active'">
-          <a-tooltip title="E'lon beruvchi rejimiga o'tish"> 🎉 </a-tooltip>
-        </div>
-        <div class="switch-item" :class="account === 'owner' && 'active'">
-          <a-tooltip title="E'lon oluvchi rejimiga o'tish"> 😎 </a-tooltip>
-        </div>
-      </div>
+      <a-button href="http://localhost:3001/" type="primary"
+        >Kanal qo'shish</a-button
+      >
+      <!--      <div class="header-switch">-->
+      <!--        <div class="switch-item" :class="account === 'ads' && 'active'">-->
+      <!--          <a-tooltip title="E'lon beruvchi rejimiga o'tish"> 🎉 </a-tooltip>-->
+      <!--        </div>-->
+      <!--        <div class="switch-item" :class="account === 'owner' && 'active'">-->
+      <!--          <a-tooltip title="E'lon oluvchi rejimiga o'tish"> 😎 </a-tooltip>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </a-col>
     <a-col>
       <div>

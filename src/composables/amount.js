@@ -1,4 +1,4 @@
-function formatAmount(amount) {
+function formatAmount(amount = 0) {
   return amount
     .toString()
     .replace(/\D/g, '')

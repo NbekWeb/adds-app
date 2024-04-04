@@ -16,15 +16,19 @@ const uzLat = {
   BillingView: "Billing va to'lovlar",
   DashboardSettingsView: 'Sozlamalar',
   BoardConfigurationsView: "Ta'riflar",
+  DashboardOrderFormView: "E'lon berish",
+
   Help: 'Yordam',
   News: 'Xabar va yangilik',
   Settings: 'Sozlamalar',
   LogOut: 'Tizimdan chiqish',
+  ServerError: 'Xatolik',
   AddBoardView: "Kanal qo'shish",
   EditBoardView: 'Kanalni tahrirlash',
   DashboardUserEditView: 'Foydalanuvchini tahrirlash',
   DashboardPostFormView: "Post qo'shish",
   DashboardNotFond: 'Sahifa topilmadi',
+  DashboardBoardItemInfoView: "Kanal ma'lumotlari",
 
   //   validations
   REQUIRED_FIELD: 'Majburiy maydon',
@@ -53,6 +57,7 @@ const uzLat = {
   REGISTER: "Ro'yxatdan o'tish",
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   //   labels
+  POST: "E'lon",
   ENTER_TEXT_LINKED_BUTTON: 'Tugma matnini kiriting',
   ENTER_URL: 'Havola kiriting',
   ATTACH_URL: 'Havola biriktirish',
@@ -84,12 +89,18 @@ const uzLat = {
   ENTER_YOUR_FULL_NAME: 'F.I.Oni kiriting',
   ENTER_YOUR_LAST_NAME: 'Familiyangizni kiriting',
   CLICK_TO_UPLOAD_FILE: 'Fayl yuklash uchun bosing',
+  SELECT_DATE: 'Sanani tanlang',
+  OTHER_DATE: 'Boshqa sana',
 
   // statuses
 
   PENDING: 'Kutilmoqda',
   SUCCESS: 'Muvoffaqiyatli',
   CANCELED: 'Bekor qilingan',
+  CREATED: 'Yaratilgan',
+  APPROVED: 'Tasdiqlangan',
+  STARTED: 'Boshlangan',
+  FINISHED: 'Bajarilgan',
   // descriptions
   LOGIN_PAGE_DESCRIPTION:
     'Biznes uchun reklamalarni joylashtirish, boshqarish uchun platforma.',
@@ -99,6 +110,8 @@ const uzLat = {
   // An SMS code was sent to number 3
   //   notificitions
   NO_DATA: "Ma'lumot mavjud emas!",
+  SELECT_DATE_FREE_DATE_FOR_SEE:
+    "E'lon berish uchun bo'sh vaqtlarni ko'rish uchun sanani tanlang",
   DO_YOU_WANT_TO_DELETE_THE_USER: "Foydalanuvchini o'chirishni xoxlaysizmi?",
   YOU_MUST_AGREE_TO_THE_OFFER_TO_REGISTER:
     "Ro'yxatdan o'tish uchun oferta ga rozilik bildirishingiz shart",

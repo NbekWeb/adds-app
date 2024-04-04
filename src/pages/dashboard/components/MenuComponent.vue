@@ -31,7 +31,7 @@ const corePinia = useCore()
 const userPinia = useUser()
 
 const selected = ref([])
-const activeLink = computed(() => route.fullPath.split('/')[3])
+const activeLink = computed(() => route.fullPath.split('/')[2])
 const setCollapse = ({ key }) => {
   router.push(`/dashboard/${key}`)
 }

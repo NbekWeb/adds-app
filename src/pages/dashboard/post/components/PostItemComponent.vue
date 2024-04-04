@@ -1,12 +1,20 @@
 <script setup>
 import { ref } from 'vue'
-import IconTrash from '@/components/icons/IconTrash.vue'
+import { storeToRefs } from 'pinia'
 import usePost from '@/store/post.pinia.js'
 import useCore from '@/store/core.pinia.js'
-import { storeToRefs } from 'pinia'
 import IconLoader from '@/components/icons/IconLoader.vue'
+import IconTrash from '@/components/icons/IconTrash.vue'
 import IconFile from '@/components/icons/IconFile.vue'
+import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
+import { useRouter } from 'vue-router'
+import IconEye from '@/components/icons/IconEye.vue'
+import IconPaperClip from '@/components/icons/IconPaperClip.vue'
+import IconEdit from '@/components/icons/IconEdit.vue'
 
+const router = useRouter()
+
+const emits = defineEmits(['getOne'])
 const props = defineProps({
   item: {
     type: Object,
@@ -31,7 +39,7 @@ const deletePost = () => {
     <template #indicator>
       <icon-loader />
     </template>
-    <a-card hoverable class="card">
+    <a-card class="card">
       <template #cover v-if="item.messageType !== 'TEXT'">
         <div class="post-cover">
           <template v-if="item.messageType === 'DOCUMENT'">
@@ -40,14 +48,14 @@ const deletePost = () => {
           <template v-if="item.messageType === 'IMAGE'">
             <img
               class="post-image"
-              :src="`${baseUrl}/file/${item.fileHashId}`"
+              :src="`${baseUrl}/file/${item.fileHashId}?type=TELEGRAM`"
               alt=""
             />
           </template>
         </div>
       </template>
 
-      <a-card-meta>
+      <a-card-meta class="mb-3">
         <template #description>
           <div
             :class="{ text: item.messageType === 'TEXT' }"
@@ -56,10 +64,30 @@ const deletePost = () => {
           ></div>
         </template>
       </a-card-meta>
-      <div class="actions mt-3">
-        <a-button type="primary" size="small" danger @click="deletePost">
-          <icon-trash />
+      <template #actions>
+        <a-button @click="emits('getOne', item.id)" type="primary" size="small">
+          <icon-eye class="mt-1" />
         </a-button>
+        <a-button
+          @click="
+            router.push({
+              name: 'DashboardOrderFormView',
+              params: {
+                postId: item.id
+              }
+            })
+          "
+          type="primary"
+          size="small"
+        >
+          <icon-shopping-card class="mt-1" />
+        </a-button>
+        <a-button type="primary" size="small" danger @click="deletePost">
+          <icon-trash class="mt-1" />
+        </a-button>
+      </template>
+      <div class="actions">
+        <a-space> </a-space>
       </div>
     </a-card>
   </a-spin>
@@ -70,7 +98,7 @@ const deletePost = () => {
 .card {
   position: relative;
   &:deep(.ant-card-body) {
-    padding: 12px 12px 42px 12px;
+    padding: 12px 12px 12px 12px;
   }
 }
 .post-cover {

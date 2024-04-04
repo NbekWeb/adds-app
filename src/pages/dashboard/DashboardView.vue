@@ -23,9 +23,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <a-spin v-if="loadingUrl.has('user/me')" class="spin" size="large">
-    <template #indicator> <icon-loader size="large" /> </template>
-  </a-spin>
+  <template v-if="loadingUrl.has('user/me')">
+    <a-spin class="spin" size="large">
+      <template #indicator> <icon-loader size="large" /> </template>
+    </a-spin>
+  </template>
 
   <template v-else>
     <a-layout>

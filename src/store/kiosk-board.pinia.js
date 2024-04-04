@@ -7,7 +7,7 @@ const useKioskBoard = defineStore('kiosk-board', {
     kioskBoards: []
   }),
   actions: {
-    getAllKioskBoard({ page, props }) {
+    getAllKioskBoard(page, type, categoryId, status) {
       const core = useCore()
       core.loadingUrl.add('get/kiosk-board/owner/all')
       api({
@@ -15,9 +15,9 @@ const useKioskBoard = defineStore('kiosk-board', {
         params: {
           page: page,
           size: 10,
-          type: props.type,
-          categoryId: props.categoryId,
-          status: props.status
+          type: type,
+          categoryId: categoryId,
+          status: status
         }
       })
         .then(({ data }) => {

@@ -41,6 +41,12 @@ body{
 .justify-center{
   justify-content: center!important;
 }
+.justify-between{
+  justify-content: space-between!important;
+}
+.flex-column{
+  flex-direction: column!important;
+}
 .align-center{
   align-items: center!important;
 }
@@ -49,6 +55,9 @@ body{
 }
 .w-full{
   width: 100%;
+}
+.h-full{
+  height: 100%;
 }
 //Image
 .img-fluid {
@@ -77,6 +86,9 @@ a {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+.avatar {
+  border: 1px solid rgb($muted, 0.5)!important;
 }
 .text-center{
   text-align: center;

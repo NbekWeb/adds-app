@@ -9,7 +9,7 @@ import DashboardUserListView from '@/pages/dashboard/user/DashboardUserListView.
 import DashboardUserView from '@/pages/dashboard/user/DashboardUserView.vue'
 import DashboardUserEditView from '@/pages/dashboard/user/[id]/DashboardUserEditView.vue'
 import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsView.vue'
-import DashboardBoardFormView from '@/pages/dashboard/board/DashboardBoardFormView.vue'
+
 import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 import DashboardBoardItemView from '@/pages/dashboard/board/[id]/DashboardBoardItemView.vue'
 import DashboardPostListView from '@/pages/dashboard/post/DashboardPostListView.vue'
@@ -21,6 +21,8 @@ import DashboardPaymentListView from '@/pages/dashboard/payment/DashboardPayment
 import DashboardPaymentView from '@/pages/dashboard/payment/DashboardPaymentView.vue'
 import DashboardOrderView from '@/pages/dashboard/order/DashboardOrderView.vue'
 import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListView.vue'
+import DashboardBoardItemInfoView from '@/pages/dashboard/board/[id]/DashboardBoardItemInfoView.vue'
+import DashboardOrderFormView from '@/pages/dashboard/order/DashboardOrderFormView.vue'
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -55,12 +57,17 @@ export const router = createRouter({
             },
 
             {
-              path: 'item/:id',
+              path: 'item',
               name: 'DashboardBoardItemView',
               component: DashboardBoardItemView,
               children: [
                 {
-                  path: 'configurations',
+                  path: 'info/:id',
+                  name: 'DashboardBoardItemInfoView',
+                  component: DashboardBoardItemInfoView
+                },
+                {
+                  path: 'configurations/:id',
                   name: 'BoardConfigurationsView',
                   component: BoardConfigurationsView
                 }
@@ -68,10 +75,12 @@ export const router = createRouter({
             }
           ]
         },
+
         {
           path: 'kiosk-board',
           name: 'DashboardKioskBoardView',
           component: DashboardKioskBoardView,
+          redirect: { name: 'DashboardKioskBoardListView' },
           children: [
             {
               path: '',
@@ -89,6 +98,7 @@ export const router = createRouter({
           path: 'post',
           name: 'DashboardPostView',
           component: DashboardPostView,
+          redirect: { name: 'DashboardPostListView' },
           children: [
             {
               path: '',
@@ -111,6 +121,11 @@ export const router = createRouter({
               path: '',
               name: 'DashboardOrderListView',
               component: DashboardOrderListView
+            },
+            {
+              path: 'create/:postId',
+              name: 'DashboardOrderFormView',
+              component: DashboardOrderFormView
             }
           ]
         },

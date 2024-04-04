@@ -4,13 +4,13 @@ import useCore from '@/store/core.pinia.js'
 
 const useUpload = defineStore('upload', {
   actions: {
-    uploadFile(file, callback) {
+    uploadFile(file, type = 'TELEGRAM', callback) {
       const core = useCore()
       const form_data = new FormData()
       form_data.append('file', file)
       core.loadingUrl.add('file/upload')
       api({
-        url: 'file',
+        url: `file/${type === 'TELEGRAM' ? 'telegram' : type === 'KIOSK' ? 'kiosk' : ''}`,
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data'
