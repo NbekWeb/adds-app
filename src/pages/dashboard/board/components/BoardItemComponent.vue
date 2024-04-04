@@ -1,19 +1,13 @@
 <script setup>
-import IconTrash from '@/components/icons/IconTrash.vue'
-import { computed, ref } from 'vue'
-import IconEdit from '@/components/icons/IconEdit.vue'
-import IconDotsVertical from '@/components/icons/IconDotsVertical.vue'
-import IconUser from '@/components/icons/IconUser.vue'
-import useBoard from '@/store/boadr.pinia.js'
-import IconLoader from '@/components/icons/IconLoader.vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
-import { useRoute, useRouter } from 'vue-router'
 import useUser from '@/store/user.pinia.js'
+import IconUser from '@/components/icons/IconUser.vue'
+import IconLoader from '@/components/icons/IconLoader.vue'
 import IconEye from '@/components/icons/IconEye.vue'
-import IconClockStopwatch from '@/components/icons/IconClockStopwatch.vue'
-// import IconTelegram from '@/components/icons/IconTelegram.vue'
-// import IconInstagram from '@/components/icons/IconInstagram.vue'
+import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 
 const props = defineProps({
   item: {
@@ -25,14 +19,11 @@ const props = defineProps({
     default: false
   }
 })
-defineEmits(['addNewConfig'])
 
 const router = useRouter()
-const route = useRoute()
 
 const corePinia = useCore()
 const userPinia = useUser()
-const boardPinia = useBoard()
 
 const { loadingUrl } = storeToRefs(corePinia)
 const { user } = storeToRefs(userPinia)
@@ -40,15 +31,6 @@ const { user } = storeToRefs(userPinia)
 const baseUrl = ref(
   `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}`
 )
-
-const boardStatus = ref(
-  props.item.boardStatus === 'ACTIVE'
-    ? 'success'
-    : props.item.boardStatus === 'INACTIVE'
-      ? 'error'
-      : 'warning'
-)
-console.log(boardStatus.value)
 </script>
 
 <template>
@@ -57,60 +39,60 @@ console.log(boardStatus.value)
       <template #indicator>
         <icon-loader />
       </template>
-      <a-card class="board-item" :loading="loading">
-        <a-row class="board-main-info">
-          <a-col class="logo-col flex align-center">
+      <a-card hoverable class="board-item" :loading="loading">
+        <template #cover>
+          <div class="board-cover">
+            <div class="cover flex align-center">
+              <img
+                :src="`${baseUrl}/file/${item?.logoHashId}?type=TELEGRAM`"
+                alt=""
+              />
+            </div>
             <div class="logo">
-              <img :src="`${baseUrl}/file/${item?.logoHashId}`" alt="" />
+              <img
+                :src="`${baseUrl}/file/${item?.logoHashId}?type=TELEGRAM`"
+                alt=""
+              />
             </div>
-            <div>
-              <h1 class="board-name">{{ item?.name }}</h1>
-              <span class="subscriptions">
-                <icon-user />
-                <span>{{
-                  item?.channelMembersCount > 1000
-                    ? `${Math.floor(item?.channelMembersCount / 1000)}k`
-                    : item?.channelMembersCount
-                }}</span>
-              </span>
-            </div>
-          </a-col>
+          </div>
+        </template>
+        <div class="board-main-info mt-4 pt-2">
+          <span class="subscriptions flex justify-center align-center">
+            <icon-user />
+            <span>{{
+              item?.channelMembersCount > 1000
+                ? `${Math.floor(item?.channelMembersCount / 1000)}k`
+                : item?.channelMembersCount
+            }}</span>
+          </span>
+          <h1 class="board-name text-center">{{ item?.name }}</h1>
 
-          <a-col class="category">
-            <h3 class="category-name m-0">{{ item?.category?.name }}</h3>
-            <span class="category-label"> Kategoriyasi </span>
-          </a-col>
-          <a-col class="status">
-            <a-tag
-              :bordered="false"
-              :color="
-                item.status.boardStatus === 'ACTIVE'
-                  ? 'success'
-                  : item.status.boardStatus === 'INACTIVE'
-                    ? 'error'
-                    : 'warning'
-              "
-            >
-              <span class="status-name">
-                {{ item?.status?.localName }}
-              </span>
-            </a-tag>
-            <span class="status-label block"> Holati </span>
-          </a-col>
-          <a-col class="actions">
-            <a-button
-              @click="
-                router.push(`/dashboard/board/item/${item.id}/configurations`)
-              "
-              size="middle"
-              type="primary"
-              shape="round"
-              class="flex align-center"
-            >
-              Ta'riflar
-            </a-button>
-          </a-col>
-        </a-row>
+          <h3 class="category-name text-center">
+            {{ item?.category?.name }}
+          </h3>
+        </div>
+        <template #actions>
+          <div class="actions flex justify-center">
+            <a-space>
+              <a-button
+                @click="router.push(`board/item/info/${item.id}`)"
+                size="middle"
+                type="primary"
+                class="flex align-center justify-center px-4"
+              >
+                <icon-eye />
+              </a-button>
+              <a-button
+                @click="router.push(`board/item/configurations/${item.id}`)"
+                size="middle"
+                type="primary"
+                class="flex align-center justify-center px-4"
+              >
+                <icon-shopping-card />
+              </a-button>
+            </a-space>
+          </div>
+        </template>
       </a-card>
     </a-spin>
   </div>
@@ -118,41 +100,7 @@ console.log(boardStatus.value)
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
-:deep(.ant-dropdown-menu-item) {
-  padding: 0 !important;
-}
-:deep(.ant-dropdown-menu-item):hover {
-  background-color: transparent !important;
-}
-:deep(.btn-card-actions-delete),
-:deep(.btn-card-actions-edit) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: $body;
-  background-color: transparent;
-  transition: background-color 0.5s;
-  &:hover {
-    //background-color: rgb($primary, 0.1);
-  }
-  box-shadow: none;
-}
-:deep(.btn-card-actions-edit) {
-  color: rgb($success, 0.8) !important;
-  background-color: rgb($success, 0.1) !important;
-}
-:deep(.btn-card-actions-edit):hover {
-  color: $success !important;
-  background-color: rgb($success, 0.4) !important;
-}
-:deep(.btn-card-actions-delete) {
-  color: rgb($danger, 0.8) !important;
-  background-color: rgb($danger, 0.1) !important;
-}
-:deep(.btn-card-actions-delete):hover {
-  color: $danger !important;
-  background-color: rgb($danger, 0.4) !important;
-}
+
 .board-item-container {
   height: 100%;
   :deep(.ant-spin-nested-loading),
@@ -163,59 +111,81 @@ console.log(boardStatus.value)
 
 .board-item {
   height: 100%;
+  transition: background-color 0.5s;
+  //&:hover {
+  //  background-color: $light;
+  //}
+  //overflow: hidden;
   position: relative;
   &:deep(.ant-card-body) {
-    //height: calc(100% - 50px);
-    padding: 12px;
-    cursor: pointer;
-    &:hover {
-      background-color: $light;
-    }
+    padding-top: 24px;
+    //height: calc(100% - 149px);
+    border-radius: 3px;
+    margin-bottom: 56px;
   }
-
-  .btn-card-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    //position: absolute;
-    //right: 8px;
-    //top: 8px;
-    color: $body;
+  &:deep(.ant-card-actions) {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border: none;
     background-color: transparent;
-    transition: background-color 0.5s;
-    &:hover {
-      background-color: rgb($primary, 0.1);
-    }
-    &:focus-visible {
-      outline: none;
-      background-color: rgb($primary, 0.1);
-    }
-    box-shadow: none;
   }
-  .board-main-info {
-    display: flex;
-    align-items: center;
-    //margin-bottom: 5px;
-    .board-name {
-      font-weight: bolder;
-      margin-bottom: 0;
+  .board-cover {
+    position: relative;
+    width: 100%;
+    height: 150px;
+
+    .cover {
+      width: 100%;
+      height: 150px;
+      border-radius: 3px 3px 0 0;
+      overflow: hidden;
     }
-    .subscriptions {
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      color: $muted;
-      svg {
-        margin-bottom: 2px;
+    .logo {
+      position: absolute;
+      top: calc(100% - 50px);
+      left: calc(50% - 50px);
+      display: block;
+      width: 100px;
+      height: 100px;
+      border: 2px solid $muted;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        display: block;
+        width: 100px;
+        height: 100px;
       }
     }
+    img {
+      width: 100%;
+    }
   }
 
-  //.border-bottom {
-  //  border-bottom: 1px solid $muted;
-  //}
+  .subscriptions {
+    font-weight: bolder;
+    font-size: 16px;
+    color: $muted;
+    svg {
+      margin-bottom: 2px;
+    }
+  }
+  .board-main-info {
+    .board-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+  }
+  .actions {
+    button {
+      box-shadow: none;
+    }
+  }
+
   .category {
-    width: 30%;
+    width: 100%;
   }
   .status {
     width: 20%;
@@ -224,10 +194,10 @@ console.log(boardStatus.value)
     }
   }
   .actions {
-    width: 10%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    gap: 5px;
+    button {
+      //width: 50%;
+    }
   }
   .category-label,
   .status-label {
@@ -240,22 +210,6 @@ console.log(boardStatus.value)
   }
   .status {
     font-weight: bolder;
-  }
-}
-.logo-col {
-  width: 40%;
-  gap: 8px;
-  .logo {
-    display: block;
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    border-radius: 50%;
-    img {
-      display: block;
-      width: 50px;
-      height: 50px;
-    }
   }
 }
 </style>

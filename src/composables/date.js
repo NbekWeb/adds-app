@@ -1,4 +1,6 @@
-const formatTime = (long, type) => {
+import dayjs from 'dayjs'
+
+export const formatTime = (long, type) => {
   const fullMin = long / 1000 / 60
   const h = Math.floor(fullMin / 60)
   let m
@@ -14,4 +16,6 @@ const formatTime = (long, type) => {
   return type === 'hh' ? h : type === 'mm' ? m : ''
 }
 
-export default formatTime
+export const formatHourAndMinute = (time) => {
+  return `${dayjs(time).get('hour')}:${dayjs(time).get('minute')}`
+}

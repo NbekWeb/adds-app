@@ -6,7 +6,8 @@ const usePost = defineStore('post', {
   state: () => ({
     posts: [],
     totalElements: 0,
-    totalPages: 0
+    totalPages: 0,
+    page: 0
   }),
   actions: {
     clearPost() {
@@ -52,7 +53,7 @@ const usePost = defineStore('post', {
           core.loadingUrl.delete('get/post/one')
         })
     },
-    createNewPost(form) {
+    createNewPost(form, cb) {
       const core = useCore()
       core.loadingUrl.add('create/post')
       api({
@@ -73,7 +74,7 @@ const usePost = defineStore('post', {
             type: 'success',
             locale: 'POST_ADDED_SUCCESSFULLY'
           })
-          core.redirect('/dashboard/ads/post')
+          cb()
         })
         .catch((error) => {
           core.switchStatus(error)

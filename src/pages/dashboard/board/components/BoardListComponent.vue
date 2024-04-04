@@ -1,15 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import useBoard from '@/store/boadr.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 
 import BoardItemComponent from '@/pages/dashboard/board/components/BoardItemComponent.vue'
+import IconLoader from '@/components/icons/IconLoader.vue'
 
 const boardPinia = useBoard()
 const corePinia = useCore()
 
+const { collapsed, loadingUrl } = storeToRefs(corePinia)
 const { boardList, totalPages, page, totalElements } = storeToRefs(boardPinia)
 
 const getBoardList = (page) => {
@@ -18,62 +19,47 @@ const getBoardList = (page) => {
 </script>
 
 <template>
-  <scrollbar-component
-    :loading="corePinia.loadingUrl.has('board/all')"
-    :count="9"
-    :page="page"
-    height="calc(100vh - 196px)"
-    :total-pages="totalPages"
-    :total-count-all="totalElements"
-    @get-data="getBoardList"
-  >
-    <template #content>
-      <template
-        v-if="!boardList?.length && !corePinia.loadingUrl.has('board/all')"
-      >
-        <a-empty class="empty">
-          <template #description>
-            {{ $t('NO_DATA') }}
-          </template>
-        </a-empty>
-      </template>
-      <template v-if="boardList?.length">
-        <a-row :gutter="[10, 5]" class="mx-0">
-          <a-col :span="24" v-for="item in boardList">
-            <!--            :xs="24"-->
-            <!--            :sm="24"-->
-            <!--            :md="collapsed ? 12 : 24"-->
-            <!--            :lg="collapsed ? 8 : 12"-->
-            <!--            :xl="collapsed ? 6 : 8"-->
-            <!--            :xxl="collapsed ? 4 : 6"-->
-
-            <board-item-component :item="item" />
-          </a-col>
-        </a-row>
-      </template>
-      <template v-if="corePinia.loadingUrl.has('board/all')">
-        <a-row :gutter="[10, 10]" class="mx-0 mt-2">
-          <a-col :span="24" v-for="item in 3" :key="item">
-            <a-card class="loading-card" size="small">
-              <a-row class="flex align-center w-full" align="center">
-                <a-col :span="1">
-                  <a-skeleton-avatar active size="large" shape="circle" />
-                </a-col>
-                <a-col :span="23">
-                  <a-skeleton-input
-                    style="width: 100%"
-                    active
-                    size="small"
-                    block
-                  />
-                </a-col>
-              </a-row>
-            </a-card>
-          </a-col>
-        </a-row>
-      </template>
+  <a-spin :spinning="loadingUrl.has('board/all')">
+    <template #indicator>
+      <icon-loader />
     </template>
-  </scrollbar-component>
+    <scrollbar-component
+      :loading="loadingUrl.has('board/all')"
+      :count="9"
+      :page="page"
+      height="calc(100vh - 196px)"
+      :total-pages="totalPages"
+      :total-count-all="totalElements"
+      @get-data="getBoardList"
+    >
+      <template #content>
+        <template
+          v-if="!boardList?.length && !corePinia.loadingUrl.has('board/all')"
+        >
+          <a-empty class="empty">
+            <template #description>
+              {{ $t('NO_DATA') }}
+            </template>
+          </a-empty>
+        </template>
+        <template v-if="boardList?.length">
+          <a-row :gutter="[10, 10]" class="mx-0">
+            <a-col
+              :xs="24"
+              :sm="24"
+              :md="collapsed ? 12 : 24"
+              :lg="collapsed ? 8 : 12"
+              :xl="collapsed ? 6 : 8"
+              :xxl="collapsed ? 4 : 6"
+              v-for="item in boardList"
+            >
+              <board-item-component :item="item" />
+            </a-col>
+          </a-row>
+        </template>
+      </template>
+    </scrollbar-component>
+  </a-spin>
 </template>
 
 <style scoped lang="scss">

@@ -4,7 +4,11 @@ import useCore from '@/store/core.pinia.js'
 
 const useOrder = defineStore('order', {
   state: () => ({
+    newOrder: {},
     orders: [],
+    page: 0,
+    totalElements: 0,
+    totalPages: 0,
     orderStatuses: []
   }),
   actions: {
@@ -15,7 +19,6 @@ const useOrder = defineStore('order', {
         url: 'order/all-status'
       })
         .then(({ data }) => {
-          console.log(data)
           this.orderStatuses = data
         })
         .catch((error) => {
@@ -25,19 +28,25 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('get/order/status/all')
         })
     },
-    getAllOrders({ page, props }) {
+    getAllOrders(page = this.page, status = null) {
       const core = useCore()
+      this.page = page
       core.loadingUrl.add('get/order/all')
       api({
         url: 'order',
         params: {
           page: page,
           size: 10,
-          status: props.status
+          status: status
         }
       })
         .then(({ data }) => {
-          this.user = data
+          this.orders.push(...data.content)
+          this.totalElements = data.totalElements
+          this.totalPages = data.totalPages
+          this.orders = [
+            ...new Map(this.orders.map((item) => [item['id'], item])).values()
+          ]
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -46,14 +55,14 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('get/order/all')
         })
     },
-    getOrderById(id) {
+    getOrderById(id, callback) {
       const core = useCore()
       core.loadingUrl.add('get/order/one')
       api({
         url: `order/${id}`
       })
         .then(({ data }) => {
-          console.log(data)
+          callback(data)
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -73,8 +82,9 @@ const useOrder = defineStore('order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: ''
+            locale: 'SUCCESS'
           })
+          core.redirect('/dashboard/order')
         })
         .catch((error) => {
           core.switchStatus(error)

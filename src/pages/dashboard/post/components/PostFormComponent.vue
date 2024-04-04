@@ -59,7 +59,7 @@ const editorConfig = ref({
   // The configuration of the editor.
 })
 const uploadLogo = (file) => {
-  uploadPinia.uploadFile(file, (hashId) => {
+  uploadPinia.uploadFile(file, 'TELEGRAM', (hashId) => {
     form.fileHashId = hashId
     imageUrl.value = `${baseUrl.value}file/${hashId}`
   })

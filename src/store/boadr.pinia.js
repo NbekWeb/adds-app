@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
-import date from '@/composables/date.js'
 
 const useBoard = defineStore('board', {
   state: () => ({
@@ -20,7 +19,7 @@ const useBoard = defineStore('board', {
       this.totalPages = 0
     },
 
-    getAllBoard(page = this.page, categoryId) {
+    getAllBoard(page = this.page, categoryId, name = '') {
       const core = useCore()
       core.loadingUrl.add('board/all')
       this.page = page
@@ -29,6 +28,7 @@ const useBoard = defineStore('board', {
         params: {
           size: 9,
           page: page,
+          name: name,
           categoryId: categoryId
         }
       })
@@ -95,97 +95,6 @@ const useBoard = defineStore('board', {
         })
         .finally(() => {
           core.loadingUrl.delete('board/category/all')
-        })
-    },
-
-    checkChannel(link, callback) {
-      const core = useCore()
-      core.loadingUrl.add('channel/check')
-      api({
-        url: 'channel/info',
-        method: 'POST',
-        data: {
-          link: link
-        }
-      })
-        .then(({ data }) => {
-          callback(data?.channelInfo)
-        })
-        .catch((error) => {
-          core.switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('channel/check')
-        })
-    },
-    addNewBoard(form, callback) {
-      const core = useCore()
-      core.loadingUrl.add('board/create')
-      api({
-        url: 'board',
-        method: 'POST',
-        data: form
-      })
-        .then(() => {
-          core.setToast({
-            type: 'success',
-            locale: 'CHANNEL_ADDED_SUCCESSFULLY'
-          })
-          callback()
-        })
-        .catch((error) => {
-          core.switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('board/create')
-        })
-    },
-    updateBoard(id, form, callback) {
-      const core = useCore()
-      core.loadingUrl.add(`update/board`)
-      api({
-        url: `board/${id}`,
-        method: 'PUT',
-        data: {
-          categoryId: form.categoryId,
-          name: form.name,
-          description: form.description,
-          logo: form.logoHashId
-        }
-      })
-        .then(() => {
-          core.setToast({
-            type: 'success',
-            locale: 'CHANNEL_UPDATED_SUCCESSFULLY'
-          })
-          callback()
-        })
-        .catch((error) => {
-          useCore().switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('update/board')
-        })
-    },
-    deleteBoard(id) {
-      const core = useCore()
-      core.loadingUrl.add(`board/delete/${id}`)
-      api({
-        url: `board/${id}`,
-        method: 'DELETE'
-      })
-        .then(() => {
-          this.boardList = [...this.boardList.filter((item) => item.id !== id)]
-          core.setToast({
-            type: 'success',
-            locale: 'CHANNEL_DELETED_SUCCESSFULLY'
-          })
-        })
-        .catch((error) => {
-          core.switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete(`board/delete/${id}`)
         })
     }
   }

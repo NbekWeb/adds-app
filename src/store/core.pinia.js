@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 const useCore = defineStore('core', {
   state: () => ({
     locale: 'uzLat',
-    collapsed: false,
+    collapsed: true,
     loadingUrl: new Set(['user/me']),
-    visibleDrower: new Set(),
+    visibleDrawer: new Set(),
     loadingMain: false,
     toastContent: null,
     redirectUrl: null
