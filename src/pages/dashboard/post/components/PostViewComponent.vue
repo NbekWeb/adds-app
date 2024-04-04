@@ -64,6 +64,7 @@ const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
 <style scoped lang="scss">
 .post-image {
   width: 100%;
+  height: 300px;
   img {
     width: 100%;
     height: 100%;
