@@ -46,14 +46,6 @@ const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
             >
               {{ button.text }}
             </a-button>
-            <a-button
-              type="primary"
-              :href="button.url"
-              v-for="button in post?.buttons"
-              class="w-full mb-2"
-            >
-              {{ button.text }}
-            </a-button>
           </div>
         </template>
       </scrollbar-component>
