@@ -40,6 +40,7 @@ function handleChangeSelect(e) {
   )?.amount
 }
 function handleChangeDate() {
+  date.value = orderDate.value
   timeConfigBoardPinia.getTimeConfigurationsByBoardId(
     boardId,
     configurationId,
@@ -70,7 +71,6 @@ onMounted(() => {
         @on-change="handleChangeDate"
       />
     </div>
-
     <scrollbar-component height="calc(100vh - 300px)">
       <template #content>
         <template
