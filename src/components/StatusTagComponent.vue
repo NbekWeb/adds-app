@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue'
+import { reactive } from 'vue'
 
 const { status } = defineProps({
   status: {

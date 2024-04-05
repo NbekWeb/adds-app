@@ -1,23 +1,20 @@
 <script setup>
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import useCore from '@/store/core.pinia.js'
+import useUser from '@/store/user.pinia.js'
 import Logo from '@/components/Logo.vue'
 import UserComponent from '@/pages/dashboard/components/UserComponent.vue'
-import { computed, ref, watch } from 'vue'
 import IconGrid from '@/components/icons/IconGrid.vue'
-import IconPieChart from '@/components/icons/IconPieChart.vue'
 import IconAnnouncement from '@/components/icons/IconAnnouncement.vue'
 import IconCoinsStacked from '@/components/icons/IconCoinsStacked.vue'
-import IconUsers from '@/components/icons/IconUsers.vue'
 import IconNotificationText from '@/components/icons/IconNotificationText.vue'
 import IconSettings from '@/components/icons/IconSettings.vue'
 import IconHelp from '@/components/icons/IconHelp.vue'
 import IconPowerOff from '@/components/icons/IconPowerOff.vue'
-import { useRoute, useRouter } from 'vue-router'
-import useUser from '@/store/user.pinia.js'
 import IconMessageTextSquare from '@/components/icons/IconMessageTextSquare.vue'
-import useCore from '@/store/core.pinia.js'
-import { storeToRefs } from 'pinia'
-import LogoDark from '@/components/Logo-dark.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
+
 const { collapsed } = defineProps({
   collapsed: {
     type: Boolean,

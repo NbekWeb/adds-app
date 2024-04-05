@@ -35,7 +35,7 @@ function handleChangeFilter() {
   boardPinia.getAllBoard(0, category.value, name.value)
 }
 
-function handleSearch(e) {
+function handleSearch() {
   clearTimeout(timeOut.value)
   timeOut.value = setTimeout(() => {
     handleChangeFilter()
