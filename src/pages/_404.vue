@@ -163,7 +163,7 @@ const goHome = () => {
           y2="554.12"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#CACFDD" />
+          <stop stop-color="#CACFDD" offset="" />
           <stop offset="1" stop-color="#EEF0F1" />
         </linearGradient>
         <linearGradient
@@ -174,7 +174,7 @@ const goHome = () => {
           y2="327.42"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#CACFDD" />
+          <stop stop-color="#CACFDD" offset="" />
           <stop offset="1" stop-color="#EEF0F1" />
         </linearGradient>
         <clipPath id="clip0_156_600">

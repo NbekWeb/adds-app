@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
-import useBoard from '@/store/boadr.pinia.js'
 import corePinia from '@/store/core.pinia.js'
 
 const useTimeConfiguration = defineStore('time-configuration', {

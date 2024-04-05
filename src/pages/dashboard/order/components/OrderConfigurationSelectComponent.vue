@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import useBoardConfiguration from '@/store/board-configuration.pinia.js'
 import OrderBoardConfigurationComponent from '@/pages/dashboard/order/components/OrderBoardConfigurationComponent.vue'
 import { storeToRefs } from 'pinia'
