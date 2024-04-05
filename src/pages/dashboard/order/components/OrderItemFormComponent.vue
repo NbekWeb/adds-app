@@ -88,7 +88,6 @@ function handleBackStep() {
     <template #indicator>
       <icon-loader />
     </template>
-
     <template v-if="currentStep === 0">
       <order-board-select-component
         v-model:value="form.board"
