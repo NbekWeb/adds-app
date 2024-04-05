@@ -23,9 +23,9 @@ const account = ref('ads')
     <!--      </h2>-->
     <!--    </a-col>-->
     <a-col class="ml-auto">
-      <a-button href="http://localhost:3001/" type="primary"
-        >Kanal qo'shish</a-button
-      >
+      <a-button href="http://localhost:3001/" type="primary">
+        {{ $t('ADD_BOARD') }}
+      </a-button>
       <!--      <div class="header-switch">-->
       <!--        <div class="switch-item" :class="account === 'ads' && 'active'">-->
       <!--          <a-tooltip title="E'lon beruvchi rejimiga o'tish"> 🎉 </a-tooltip>-->
@@ -39,7 +39,9 @@ const account = ref('ads')
       <div>
         <b>ID: {{ user?.id }}</b>
       </div>
-      <p class="m-0 small text-muted">Balans: {{ user?.balance }} so'm</p>
+      <p class="m-0 small text-muted">
+        {{ $t('BALANCE') }}: {{ user?.balance }} {{ $t('SOUM') }}
+      </p>
     </a-col>
   </a-row>
 </template>

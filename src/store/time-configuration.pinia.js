@@ -4,9 +4,21 @@ import useCore from '@/store/core.pinia.js'
 import useBoard from '@/store/boadr.pinia.js'
 import corePinia from '@/store/core.pinia.js'
 
-const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
+const useTimeConfiguration = defineStore('time-configuration', {
+  state: () => ({
+    timeConfigurations: [],
+    page: 0,
+    totalElements: 0,
+    totalPages: 0
+  }),
   actions: {
-    getTimeConfigurationsByBoardId(id, configId, orderDate, page = 0, cb) {
+    clearTimeConfiguration() {
+      this.timeConfigurations = []
+      this.page = 0
+      this.totalElements = 0
+      this.totalPages = 0
+    },
+    getTimeConfigurationsByBoardId(id, configId, orderDate, page) {
       const core = useCore()
       core.loadingUrl.add('board/time-configurations')
       api({
@@ -20,7 +32,9 @@ const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
         }
       })
         .then(({ data }) => {
-          cb(data)
+          this.timeConfigurations = data.content
+          this.totalElements = data.totalElements
+          this.totalPages = data.totalPages
         })
         .catch((error) => {
           useCore().switchStatus(error)
@@ -29,13 +43,7 @@ const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
           core.loadingUrl.delete('board/time-configurations')
         })
     },
-    getKioskTimeConfigurations(
-      page = 0,
-      boardId,
-      orderDate,
-      configId,
-      callback
-    ) {
+    getKioskTimeConfigurations(page, boardId, orderDate, configId, callback) {
       const core = corePinia()
       core.loadingUrl.add('get/kiosk-board/time-configuration/all')
       api({
@@ -61,4 +69,4 @@ const useBoardTimeConfiguration = defineStore('boardTimeConfiguration', {
   }
 })
 
-export default useBoardTimeConfiguration
+export default useTimeConfiguration

@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
@@ -13,15 +12,12 @@ const corePinia = useCore()
 const postPinia = usePost()
 
 const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
-const { posts } = storeToRefs(postPinia)
+const { posts, postInfo } = storeToRefs(postPinia)
 
-const postInfo = ref({})
 function handleGetOnePost(id) {
   postInfo.value = {}
   visibleDrawer.value.add('post/get/one')
-  postPinia.getOnePostById(id, (data) => {
-    postInfo.value = data
-  })
+  postPinia.getOnePostById(id)
 }
 </script>
 

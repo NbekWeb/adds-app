@@ -51,8 +51,10 @@ const { item } = defineProps({
           <icon-announcement-voic />
         </span>
         <p class="text-bold mb-1">
-          {{ formatTime(item.configuration.liveTime, 'hh') }} soat,
-          {{ formatTime(item.configuration.liveTime, 'mm') }} daqiqa
+          {{ formatTime(item.configuration.liveTime, 'hh') }}
+          {{ $t('HOUR').toLowerCase() }},
+          {{ formatTime(item.configuration.liveTime, 'mm') }}
+          {{ $t('MINUTE').toLowerCase() }}
         </p>
       </div>
       <!--      pin-->
@@ -61,28 +63,32 @@ const { item } = defineProps({
           <icon-pin />
         </span>
         <p class="text-bold mb-1">
-          {{ formatTime(item.configuration.pinTime, 'hh') }} soat,
-          {{ formatTime(item.configuration.pinTime, 'mm') }} daqiqa
+          {{ formatTime(item.configuration.pinTime, 'hh') }}
+          {{ $t('HOUR').toLowerCase() }},
+          {{ formatTime(item.configuration.pinTime, 'mm') }}
+          {{ $t('MINUTE').toLowerCase() }}
         </p>
       </div>
       <!--      top-->
       <span class="time-value text-bold">
-        {{ formatTime(item.configuration.topTime, 'hh') }} soat,
-        {{ formatTime(item.configuration.topTime, 'mm') }} daqiqa
+        {{ formatTime(item.configuration.topTime, 'hh') }}
+        {{ $t('HOUR').toLowerCase() }},
+        {{ formatTime(item.configuration.topTime, 'mm') }}
+        {{ $t('MINUTE').toLowerCase() }}
       </span>
     </div>
 
     <div class="flex justify-between align-center">
-      <span class="label">E'lon chiqish vaqti:</span>
+      <span class="label">{{ $t('THE_TIME_OF_PUBLICATION') }}:</span>
       <span class="date text-bold">
         {{ item.orderDate }}, {{ item.timeConfiguration.startTime.slice(0, 5) }}
       </span>
     </div>
     <div class="flex justify-between">
-      <span class="label"> Umumiy narxi: </span>
+      <span class="label"> {{ $t('ORDER_PRICE') }}: </span>
       <span class="amount text-bold">
         {{ formatAmount(item.amount) }}
-        <span class="currency text-bold">UZS</span>
+        <span class="currency text-bold">{{ $t('SOUM') }}</span>
       </span>
     </div>
   </div>

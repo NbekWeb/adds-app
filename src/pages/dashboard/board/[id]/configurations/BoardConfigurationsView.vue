@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import dayjs from 'dayjs'
@@ -18,54 +18,39 @@ const corePinia = useCore()
 const boardConfigurationPinia = useBoardConfiguration()
 
 const { loadingUrl } = storeToRefs(corePinia)
-
-const boardConfigList = ref([])
-const totalElements = ref(0)
-const totalPages = ref(0)
-const page = ref(0)
+const { configurations, page, totalPages, totalElements } = storeToRefs(
+  boardConfigurationPinia
+)
 
 const boardId = ref(null)
 const orderDate = ref(dayjs())
 
 function getAllConfiguration(page) {
-  boardConfigurationPinia.getConfigurationsByBoardId(
-    boardId.value,
-    page,
-    (data) => {
-      boardConfigList.value.push(...data.content)
-      totalElements.value = data.totalElements
-      totalPages.value = data.totalPages
-      boardConfigList.value = [
-        ...new Map(
-          boardConfigList.value.map((item) => [item['id'], item])
-        ).values()
-      ]
-    }
-  )
+  boardConfigurationPinia.getConfigurationsByBoardId(boardId.value, page)
 }
-function handleChangeDate() {
-  boardConfigList.value = []
-  getAllConfiguration(0)
-}
+
 onMounted(() => {
   if (route.params.id) {
     boardId.value = route.params.id
     getAllConfiguration(0)
   }
 })
+onBeforeUnmount(() => {
+  boardConfigurationPinia.clearConfigurations()
+})
 </script>
 
 <template>
   <page-header-component :title="$t('BoardConfigurationsView')" />
 
-  <a-spin :spinning="loadingUrl.has('board/id/configurations')">
+  <a-spin :spinning="loadingUrl.has('board/configurations')">
     <template #indicator>
       <icon-loader size="default" />
     </template>
     <scrollbar-component
       class="scrollbar"
-      :loading="loadingUrl.has('board/id/configurations')"
-      :count="9"
+      :loading="loadingUrl.has('board/configurations')"
+      :count="6"
       height="calc(100vh - 200px )"
       :page="page"
       :total-pages="totalPages"
@@ -76,8 +61,7 @@ onMounted(() => {
         <div class="h-full flex justify-between flex-column">
           <template
             v-if="
-              !boardConfigList.length &&
-              !loadingUrl.has('board/id/configurations')
+              !configurations.length && !loadingUrl.has('board/configurations')
             "
           >
             <a-empty class="empty">
@@ -96,7 +80,7 @@ onMounted(() => {
                 :lg="8"
                 :xl="8"
                 :xxl="6"
-                v-for="(item, i) in boardConfigList"
+                v-for="(item, i) in configurations"
                 :key="i"
               >
                 <board-configuration-item

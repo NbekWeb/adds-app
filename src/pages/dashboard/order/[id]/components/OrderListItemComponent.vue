@@ -36,9 +36,10 @@ const { item } = defineProps({
     </div>
 
     <div class="order-amount flex justify-between mt-2">
-      <span class="">Buyurtma narxi:</span>
+      <span class="">{{ $t('ORDER_PRICE') }}:</span>
       <span>
-        {{ formatAmount(item.totalAmount) }} <span class="currency">UZS</span>
+        {{ formatAmount(item.totalAmount) }}
+        <span class="currency">{{ $t('SOUM') }}</span>
       </span>
     </div>
 

@@ -1,5 +1,3 @@
-import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListView.vue'
-
 const uzLat = {
   // menus
   AuthView: 'Tizimga kirish',
@@ -50,18 +48,32 @@ const uzLat = {
   BACK: 'Orqaga',
   ADD: "Qo'shish",
   CANCEL: 'Bekor qilish',
+  CONTINUE: 'Davom etish',
+  ADD_BOARD: "Kanal qo'shish",
   CHANGE_PHONE_NUMBER: "Raqamni o'zgartirish",
   RESEND_THE_CODE: 'Kodni qayta yuborish',
   ENTER: 'Kirish',
   SEND_SMS_CODE: 'Sms kodni olish',
   REGISTER: "Ro'yxatdan o'tish",
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
+  CREATE_AN_ORDER: "E'lon berish",
   //   labels
+  POST_LIVE_TIME: "E'lonni kanalda turish muddati",
+  POST_PIN_TIME: "E'lonni pinda turish muddati",
+  POST_TOP_TIME: "E'lonni topda turish muddati",
+  ADD_NEW_ORDER_ITEM: "Yangi xarid qo'shish",
+  THE_TIME_OF_PUBLICATION: "E'lon chiqish vaqti",
+  TOTAL_PRICE: "Jami to'lov",
+  ORDER_PRICE: 'Buyurtma narxi',
+  SEARCH: 'Qidirish',
+  BALANCE: 'Balans',
+  TOTAL: 'Jami',
+  SOUM: "so'm",
   POST: "E'lon",
   ENTER_TEXT_LINKED_BUTTON: 'Tugma matnini kiriting',
   ENTER_URL: 'Havola kiriting',
   ATTACH_URL: 'Havola biriktirish',
-  SELECT_STATUS: 'Holatini tanlang',
+  FILTER_BY_STATUS: "Holat bo'yicha filterlash",
   STATUS: 'Holati',
   HOUR: 'Soat',
   MINUTE: 'Daqiqa',
@@ -91,6 +103,9 @@ const uzLat = {
   CLICK_TO_UPLOAD_FILE: 'Fayl yuklash uchun bosing',
   SELECT_DATE: 'Sanani tanlang',
   OTHER_DATE: 'Boshqa sana',
+  SELECT_CHANNEL: 'Kanalni tanlang',
+  SELECT_CONFIGURATION: "Ta'rifni tanlang",
+  SELECT_DATE_AND_TIME: 'Sana va vaqtni tanlang',
 
   // statuses
 

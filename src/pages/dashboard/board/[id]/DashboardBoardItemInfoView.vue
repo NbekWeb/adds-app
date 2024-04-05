@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { fileBaseUrl } from '@/composables'
@@ -18,14 +18,15 @@ const corePinia = useCore()
 const boardPinia = useBoard()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const boardInfo = ref()
+const { boardInfo } = storeToRefs(boardPinia)
 
 onMounted(() => {
   if (route.params.id) {
-    boardPinia.getOneById(route.params.id, (data) => {
-      boardInfo.value = data
-    })
+    boardPinia.getOneById(route.params.id)
   }
+})
+onBeforeUnmount(() => {
+  boardPinia.clearBoardInfo()
 })
 </script>
 
@@ -75,20 +76,20 @@ onMounted(() => {
                     )
                   "
                 >
-                  E'lon berish
+                  {{ $t('CREATE_AN_ORDER') }}
                 </a-button>
               </div>
             </div>
             <div class="board-sub-info flex justify-start">
               <div class="category">
-                <h3 class="category-label">Kategoriya</h3>
+                <h3 class="category-label">{{ $t('CATEGORY') }}</h3>
                 <h3 class="category-value mt-1">
                   {{ boardInfo?.category.name }}
                 </h3>
               </div>
             </div>
             <div class="description mt-3">
-              <h3 class="description-label">Description</h3>
+              <h3 class="description-label">{{ $t('DESCRIPTION') }}</h3>
               <h3 class="description-value mt-1">
                 {{ boardInfo?.description }}
               </h3>

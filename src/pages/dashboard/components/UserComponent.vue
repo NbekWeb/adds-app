@@ -31,7 +31,7 @@ const { user } = storeToRefs(userPinia)
       </template>
     </div>
     <div class="name">
-      <b>{{ user?.fullName ? user?.fullName : 'Firstname Lastname' }} </b>
+      <b>{{ user?.fullName }} </b>
       <p class="m-0">ID: {{ user?.id }}</p>
     </div>
   </div>

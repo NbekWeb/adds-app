@@ -2,30 +2,23 @@
 import { computed, ref } from 'vue'
 import dayjs from 'dayjs'
 
-const model = defineModel('value', {
-  default: '',
-  type: [String, Number, Object]
-})
 const emits = defineEmits(['onChange'])
-const data = ref([])
 
+const data = ref([])
+const date = ref(dayjs())
 const dataList = computed(() => {
-  const startDate = ref(dayjs())
   const dateList = []
 
-  if (model.value) {
-    if (dayjs(model.value.subtract(3, 'day')).diff(dayjs()) >= 0) {
-      for (let i = 0; i < 7; i++) {
-        dateList.push(
-          dayjs(dayjs(model.value).subtract(3, 'day')).add(i, 'day')
-        )
-      }
-    } else {
-      for (let i = 0; i < 7; i++) {
-        dateList.push(dayjs(dayjs(startDate.value)).add(i, 'day'))
-      }
+  if (dayjs(date.value.subtract(3, 'day')).diff(dayjs()) >= 0) {
+    for (let i = 0; i < 7; i++) {
+      dateList.push(dayjs(dayjs(date.value).subtract(3, 'day')).add(i, 'day'))
+    }
+  } else {
+    for (let i = 0; i < 7; i++) {
+      dateList.push(dayjs(dayjs(dayjs())).add(i, 'day'))
     }
   }
+
   return dateList
 })
 </script>
@@ -34,8 +27,8 @@ const dataList = computed(() => {
   <template v-if="dataList.length">
     <div class="segmented flex py-1">
       <a-radio-group
-        v-model:value="model"
-        @change="emits('onChange')"
+        v-model:value="date"
+        @change="emits('onChange', date)"
         class="segmented-radio-group"
       >
         <a-row :gutter="10" justify="space-between" class="pl-1 segment-group">
@@ -45,7 +38,7 @@ const dataList = computed(() => {
                 class="segmented-item flex align-center justify-between px-4 py-1"
                 :class="{
                   selected:
-                    dayjs(model).format('D MMM') === dayjs(item).format('D MMM')
+                    dayjs(date).format('D MMM') === dayjs(item).format('D MMM')
                 }"
               >
                 <span>
@@ -61,16 +54,16 @@ const dataList = computed(() => {
 
   <div class="other-date flex justify-end align-center pl-3">
     <span class="label mr-2">
-      {{ model ? $t('OTHER_DATE') : $t('SELECT_DATE') }}
+      {{ $t('OTHER_DATE') }}
     </span>
     <a-date-picker
       class="order-date"
-      v-model:value="model"
-      :disabledDate="(date) => dayjs().diff(date, 'day') >= 1"
+      v-model:value="date"
+      :disabledDate="(currentDate) => dayjs().diff(currentDate, 'day') >= 1"
       :showToday="false"
       format="YYYY.MM.DD"
-      :placeholder="model ? $t('OTHER_DATE') : $t('SELECT_DATE')"
-      @change="emits('onChange')"
+      :placeholder="$t('OTHER_DATE')"
+      @change="emits('onChange', date)"
     />
   </div>
 </template>

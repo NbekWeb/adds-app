@@ -2,7 +2,13 @@
 import formatAmount from '../../../../composables/amount.js'
 import IconX from '@/components/icons/IconX.vue'
 import dayjs from 'dayjs'
-import { fileBaseUrl, formatTextLength } from '@/composables/index.js'
+import {
+  fileBaseUrl,
+  formatTextLength,
+  formatTime
+} from '@/composables/index.js'
+import IconAnnouncementVoic from '@/components/icons/IconAnnouncementVoic.vue'
+import IconPin from '@/components/icons/IconPin.vue'
 const emits = defineEmits(['close'])
 const { item } = defineProps({
   item: {
@@ -18,29 +24,69 @@ const { item } = defineProps({
       <icon-x />
     </a-button>
     <div class="order-item-info">
-      <div class="flex align-center">
-        <a-avatar
-          :src="`${fileBaseUrl}/file/${item.board.logoHashId}`"
-          size="large"
-          class="avatar"
-        />
-        <h1 class="channel-name ml-2 m-0">
-          {{ formatTextLength(item.board?.name, 25) }}
-        </h1>
+      <div class="flex justify-between align-center">
+        <div class="flex align-center">
+          <a-avatar
+            :src="`${fileBaseUrl}/file/${item.board.logoHashId}`"
+            size="large"
+            class="avatar"
+          />
+          <h1 class="channel-name ml-2 m-0">
+            {{ formatTextLength(item.board?.name, 25) }}
+          </h1>
+        </div>
+        <h1 class="configuration-name m-0">{{ item.configuration?.name }}</h1>
       </div>
-      <span> Ta'rif </span>
-      <h1 class="configuration-name">{{ item.configuration?.name }}</h1>
+      <!--      <span> Ta'rif </span>-->
+      <div class="flex justify-between align-center">
+        <!--      kanal-->
+        <div class="flex justify-between align-center my-2">
+          <span class="mr-1">
+            <icon-announcement-voic />
+          </span>
+          <p class="mb-1">
+            {{ formatTime(item.configuration.liveTime, 'hh') }}
+            {{ $t('HOUR').toLowerCase() }},
+            {{ formatTime(item.configuration.liveTime, 'mm') }}
+            {{ $t('MINUTE').toLowerCase() }}
+          </p>
+        </div>
+        <!--      pin-->
+        <div class="flex justify-between align-center">
+          <span class="mr-1">
+            <icon-pin />
+          </span>
+          <p class="mb-1">
+            {{ formatTime(item.configuration.pinTime, 'hh') }}
+            {{ $t('HOUR').toLowerCase() }},
+            {{ formatTime(item.configuration.pinTime, 'mm') }}
+            {{ $t('MINUTE').toLowerCase() }}
+          </p>
+        </div>
+        <div class="flex justify-between align-center">
+          <!--      top-->
+          <span class="mr-1">
+            <icon-pin />
+          </span>
+          <span class="">
+            {{ formatTime(item.configuration.topTime, 'hh') }}
+            {{ $t('HOUR').toLowerCase() }},
+            {{ formatTime(item.configuration.topTime, 'mm') }}
+            {{ $t('MINUTE').toLowerCase() }}
+          </span>
+        </div>
+      </div>
 
       <div class="flex justify-between">
         <div class="date">
-          <span>E'lon chiqish vaqti</span>
+          <span>{{ $t('THE_TIME_OF_PUBLICATION') }}</span>
           <p class="m-0">
             {{ dayjs(item.orderDate).format('DD.MM.YYYY') }},
             {{ item.timeConfiguration?.startTime.slice(0, 5) }}
           </p>
         </div>
         <div class="amount">
-          <span> Narxi </span>
+          <span> {{ $t('AMOUNT') }} </span>
           <p class="m-0">
             {{
               formatAmount(
@@ -63,8 +109,8 @@ const { item } = defineProps({
   }
   .close-btn {
     position: absolute;
-    top: 10px;
-    right: 0;
+    top: 0;
+    right: -5px;
     font-size: 20px;
     color: $muted;
     &:hover {
@@ -75,8 +121,8 @@ const { item } = defineProps({
 .order-item-info {
   span {
     font-size: 12px;
-    font-weight: bolder;
-    color: $muted;
+    //font-weight: bolder;
+    //color: $muted;
   }
 }
 .channel-name {

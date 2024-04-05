@@ -101,12 +101,12 @@ const logOut = () => {
           </template>
           {{ $t('DashboardOrderListView') }}
         </a-menu-item>
-        <a-menu-item :key="`user`">
-          <template #icon>
-            <icon-users />
-          </template>
-          {{ $t('DashboardUserListView') }}
-        </a-menu-item>
+        <!--        <a-menu-item :key="`user`">-->
+        <!--          <template #icon>-->
+        <!--            <icon-users />-->
+        <!--          </template>-->
+        <!--          {{ $t('DashboardUserListView') }}-->
+        <!--        </a-menu-item>-->
         <a-menu-item :key="`payment`">
           <template #icon>
             <icon-coins-stacked />
