@@ -38,13 +38,13 @@ const { item } = defineProps({
         <h1 class="configuration-name m-0">{{ item.configuration?.name }}</h1>
       </div>
       <!--      <span> Ta'rif </span>-->
-      <div class="flex justify-between align-center">
+      <div class="flex flex-column justify-between my-2">
         <!--      kanal-->
-        <div class="flex justify-between align-center my-2">
+        <div class="flex align-center">
           <span class="mr-1">
             <icon-announcement-voic />
           </span>
-          <p class="mb-1">
+          <p class="mb-0">
             {{ formatTime(item.configuration.liveTime, 'hh') }}
             {{ $t('HOUR').toLowerCase() }},
             {{ formatTime(item.configuration.liveTime, 'mm') }}
@@ -52,18 +52,18 @@ const { item } = defineProps({
           </p>
         </div>
         <!--      pin-->
-        <div class="flex justify-between align-center">
+        <div class="flex align-center">
           <span class="mr-1">
             <icon-pin />
           </span>
-          <p class="mb-1">
+          <p class="mb-0">
             {{ formatTime(item.configuration.pinTime, 'hh') }}
             {{ $t('HOUR').toLowerCase() }},
             {{ formatTime(item.configuration.pinTime, 'mm') }}
             {{ $t('MINUTE').toLowerCase() }}
           </p>
         </div>
-        <div class="flex justify-between align-center">
+        <div class="flex align-center">
           <!--      top-->
           <span class="mr-1">
             <icon-pin />
