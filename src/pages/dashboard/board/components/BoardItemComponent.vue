@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { fileBaseUrl } from '@/composables'
 import useCore from '@/store/core.pinia.js'
 import useUser from '@/store/user.pinia.js'
 import IconUser from '@/components/icons/IconUser.vue'
@@ -27,10 +27,6 @@ const userPinia = useUser()
 
 const { loadingUrl } = storeToRefs(corePinia)
 const { user } = storeToRefs(userPinia)
-
-const baseUrl = ref(
-  `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}`
-)
 </script>
 
 <template>
@@ -39,18 +35,18 @@ const baseUrl = ref(
       <template #indicator>
         <icon-loader />
       </template>
-      <a-card hoverable class="board-item" :loading="loading">
+      <a-card class="board-item" :loading="loading">
         <template #cover>
           <div class="board-cover">
             <div class="cover flex align-center">
               <img
-                :src="`${baseUrl}/file/${item?.logoHashId}?type=TELEGRAM`"
+                :src="`${fileBaseUrl}/file/${item?.logoHashId}?type=TELEGRAM`"
                 alt=""
               />
             </div>
             <div class="logo">
               <img
-                :src="`${baseUrl}/file/${item?.logoHashId}?type=TELEGRAM`"
+                :src="`${fileBaseUrl}/file/${item?.logoHashId}?type=TELEGRAM`"
                 alt=""
               />
             </div>

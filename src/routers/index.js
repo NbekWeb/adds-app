@@ -5,12 +5,9 @@ import DashboardBoardListView from '@/pages/dashboard/board/DashboardBoardListVi
 import DashboardListView from '@/pages/dashboard/DashboardListView.vue'
 import NotFound from '@/pages/_404.vue'
 import ServerError from '@/pages/_500.vue'
-import DashboardUserListView from '@/pages/dashboard/user/DashboardUserListView.vue'
-import DashboardUserView from '@/pages/dashboard/user/DashboardUserView.vue'
-import DashboardUserEditView from '@/pages/dashboard/user/[id]/DashboardUserEditView.vue'
+
 import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsView.vue'
 
-import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 import DashboardBoardItemView from '@/pages/dashboard/board/[id]/DashboardBoardItemView.vue'
 import DashboardPostListView from '@/pages/dashboard/post/DashboardPostListView.vue'
 import DashboardPostView from '@/pages/dashboard/post/DashboardPostView.vue'
@@ -23,6 +20,7 @@ import DashboardOrderView from '@/pages/dashboard/order/DashboardOrderView.vue'
 import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListView.vue'
 import DashboardBoardItemInfoView from '@/pages/dashboard/board/[id]/DashboardBoardItemInfoView.vue'
 import DashboardOrderFormView from '@/pages/dashboard/order/DashboardOrderFormView.vue'
+import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -146,30 +144,13 @@ export const router = createRouter({
           path: 'settings',
           name: 'DashboardSettingsView',
           component: DashboardSettingsView
-        },
-        {
-          path: 'user',
-          name: 'DashboardUserView',
-          component: DashboardUserView,
-          children: [
-            {
-              path: '',
-              name: 'DashboardUserListView',
-              component: DashboardUserListView
-            },
-            {
-              path: 'edit/:id',
-              name: 'DashboardUserEditView',
-              component: DashboardUserEditView
-            }
-          ]
-        },
-        {
-          path: '/:pathMatch(.*)*',
-          component: NotFound,
-          name: 'DashboardNotFond'
         }
       ]
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: NotFound,
+      name: 'DashboardNotFond'
     },
     {
       path: '/500',

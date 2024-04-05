@@ -2,36 +2,35 @@
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import dayjs from 'dayjs'
-import formatAmount from '@/composables/amount.js'
-import useBoard from '@/store/boadr.pinia.js'
+import { formatAmount } from '@/composables'
 import useCore from '@/store/core.pinia.js'
+import dayjs from 'dayjs'
 
 import OrderBoardSelectComponent from '@/pages/dashboard/order/components/OrderBoardSelectComponent.vue'
 import OrderConfigurationSelectComponent from '@/pages/dashboard/order/components/OrderConfigurationSelectComponent.vue'
 import OrderTimeConfigSelectComponent from '@/pages/dashboard/order/components/OrderTimeConfigSelectComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
+import { useI18n } from 'vue-i18n'
 
 const emits = defineEmits(['addOrder', 'cancel'])
 const {} = defineProps({
   selectedBoards: Array
 })
+const { t } = useI18n()
 const router = useRouter()
-
 const corePinia = useCore()
-const boardPinia = useBoard()
 
 const { loadingUrl } = storeToRefs(corePinia)
 
 const steps = ref([
   {
-    title: 'Kanalni tanlang'
+    title: t('SELECT_CHANNEL')
   },
   {
-    title: "Ta'rifni tanlang"
+    title: t('SELECT_CONFIGURATION')
   },
   {
-    title: 'Sana va vaqtni tanlang'
+    title: t('SELECT_DATE_AND_TIME')
   }
 ])
 const currentStep = ref(0)
@@ -114,12 +113,13 @@ function handleBackStep() {
 
   <div class="flex justify-end">
     <h3>
-      Jami: {{ formatAmount(selectedConfigAmount + selectedTimeConfigAmount) }}
+      {{ $t('TOTAL') }}:
+      {{ formatAmount(selectedConfigAmount + selectedTimeConfigAmount) }}
       <span class="">UZS</span>
     </h3>
   </div>
   <div class="flex justify-between">
-    <a-button @click="router.back()"> Bekor qilish </a-button>
+    <a-button @click="router.back()"> {{ $t('CANCEL') }} </a-button>
     <a-space>
       <a-button @click="handleBackStep">
         {{ $t('BACK') }}
@@ -130,7 +130,7 @@ function handleBackStep() {
         type="primary"
         size="middle"
       >
-        Davom etish
+        {{ $t('CONTINUE') }}
       </a-button>
     </a-space>
   </div>

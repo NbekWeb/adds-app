@@ -14,7 +14,7 @@ const statusIcon = reactive({
   FINISHED: '✅',
   CANCELED: '🚫'
 })
-const statusTag = computed(() => {
+const statusTag = () => {
   if (status === 'CREATED') {
     return 'magenta'
   } else if (status === 'PENDING') {
@@ -30,11 +30,29 @@ const statusTag = computed(() => {
   } else {
     return ''
   }
-})
+}
 </script>
 
 <template>
-  <a-tag :color="statusTag" :bordered="false" v-bind="$attrs">
+  <a-tag
+    :color="
+      status === 'CREATED'
+        ? 'magenta'
+        : status === 'PENDING'
+          ? 'processing'
+          : status === 'APPROVED'
+            ? 'lime'
+            : status === 'CANCELED'
+              ? 'error'
+              : status === 'FINISHED'
+                ? 'success'
+                : status === 'STARTED'
+                  ? 'warning'
+                  : ''
+    "
+    :bordered="false"
+    v-bind="$attrs"
+  >
     <template #icon> {{ statusIcon[status] }} </template>
     {{ $t(status) }}
   </a-tag>

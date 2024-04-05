@@ -1,77 +1,72 @@
 <script setup>
-import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import { useRouter } from 'vue-router'
-import useOrder from '@/store/order.pinia.js'
-import { storeToRefs } from 'pinia'
 import { onMounted, ref } from 'vue'
-import OrderListItemComponent from '@/pages/dashboard/order/[id]/components/OrderListItemComponent.vue'
-import OrderItemDrowerComponent from '@/pages/dashboard/order/[id]/components/OrderItemDrowerComponent.vue'
+import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import useOrder from '@/store/order.pinia.js'
 import useCore from '@/store/core.pinia.js'
-import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-import IconLoader from '@/components/icons/IconLoader.vue'
+import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
+import OrderItemDrawerComponent from '@/pages/dashboard/order/[id]/components/OrderItemDrawerComponent.vue'
+import OrderListComponent from '@/pages/dashboard/order/components/OrderListComponent.vue'
 
 const router = useRouter()
-
+const route = useRoute()
 const corePinia = useCore()
 const orderPinia = useOrder()
 
-const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
-const { orders, page, totalElements, totalPages } = storeToRefs(orderPinia)
+const { loadingUrl } = storeToRefs(corePinia)
+const { orderInfo, statusList } = storeToRefs(orderPinia)
 
-const orderId = ref(null)
-const orderInfo = ref(null)
-function handleOpenDrawer(id) {
-  visibleDrawer.value.add('order/items/drawer')
-  orderId.value = id
-  orderInfo.value = null
-  getOrderItems(id)
-}
+const orderStatus = ref(route.query.status)
 
-function getOrderItems(id) {
-  orderPinia.getOrderById(id, (data) => {
-    orderInfo.value = data
+function handleChange() {
+  router.push({
+    query: {
+      status: orderStatus.value
+    }
   })
+  orderPinia.getAllOrders(0, orderStatus.value)
 }
 
 onMounted(() => {
-  orderPinia.getAllOrders()
+  orderPinia.getAllOrders(0, orderStatus.value)
+  orderPinia.getAllOrdersStatus()
 })
 </script>
 
 <template>
-  <page-header-component :title="$t('DashboardOrderListView')" />
-  <a-spin :spinning="loadingUrl.has('get/order/all')">
-    <template #indicator>
-      <icon-loader />
-    </template>
-    <scrollbar-component
-      :total-pages="totalPages"
-      :total-count-all="totalElements"
-      @get-data="orderPinia.getAllOrders"
-      height="calc(100vh - 190px)"
-    >
-      <template #content>
-        <a-row :gutter="[10, 10]">
-          <a-col
-            :xs="24"
-            :ms="24"
-            :md="24"
-            :lg="12"
-            :xl="8"
-            :xxl="6"
-            v-for="item in orders"
+  <page-header-component :title="$t('DashboardOrderListView')">
+    <template #actions>
+      <a-space>
+        <a-select
+          class="order-status"
+          allow-clear
+          :placeholder="$t('FILTER_BY_STATUS')"
+          v-model:value="orderStatus"
+          @change="handleChange"
+        >
+          <a-select-option
+            v-for="status in statusList"
+            :value="status?.orderStatus"
+            :key="status?.orderStatus"
           >
-            <order-list-item-component
-              :item="item"
-              @get-one="handleOpenDrawer"
-            />
-          </a-col>
-        </a-row>
-      </template>
-    </scrollbar-component>
-  </a-spin>
-
-  <order-item-drower-component :order="orderInfo" />
+            {{ status?.localName }}
+          </a-select-option>
+        </a-select>
+        <a-button
+          type="primary"
+          @click="router.push({ name: 'DashboardPostView' })"
+        >
+          {{ $t('CREATE_AN_ORDER') }}
+        </a-button>
+      </a-space>
+    </template>
+  </page-header-component>
+  <order-item-drawer-component :order="orderInfo" />
+  <order-list-component />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.order-status {
+  width: 200px;
+}
+</style>

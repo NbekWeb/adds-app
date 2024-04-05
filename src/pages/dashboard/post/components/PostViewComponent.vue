@@ -1,25 +1,27 @@
 <script setup>
-import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
-import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import { fileBaseUrl } from '@/composables/index.js'
+import useCore from '@/store/core.pinia.js'
+import usePost from '@/store/post.pinia.js'
+import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 
-defineProps({
-  post: {
-    type: Object,
-    required: true
-  }
-})
 const corePinia = useCore()
+const postPinia = usePost()
 
 const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
+const { postInfo } = storeToRefs(postPinia)
+
+function closeDrawer() {
+  visibleDrawer.value.delete('post/get/one')
+  postPinia.clearPostInfo()
+}
 </script>
 
 <template>
   <a-drawer
     :open="visibleDrawer.has('post/get/one')"
-    @close="visibleDrawer.delete('post/get/one')"
+    @close="closeDrawer"
     width="500"
     :title="$t('POST')"
   >
@@ -29,19 +31,22 @@ const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
       </template>
       <scrollbar-component height="calc(100vh - 110px)">
         <template #content>
-          <template v-if="post.messageType === 'IMAGE'">
+          <template v-if="postInfo?.messageType === 'IMAGE'">
             <div class="post-image mb-2">
-              <img :src="`${fileBaseUrl}/file/${post.fileHashId}`" alt="" />
+              <img
+                :src="`${fileBaseUrl}/file/${postInfo?.fileHashId}`"
+                alt=""
+              />
             </div>
           </template>
           <div>
-            <div v-html="post.text"></div>
+            <div v-html="postInfo?.text"></div>
           </div>
           <div>
             <a-button
               type="primary"
               :href="button.url"
-              v-for="button in post?.buttons"
+              v-for="button in postInfo?.buttons"
               class="w-full mb-2"
             >
               {{ button.text }}

@@ -18,7 +18,7 @@ const { loadingUrl } = storeToRefs(corePinia)
 const { boardList } = storeToRefs(boardPinia)
 
 onMounted(() => {
-  boardPinia.getAllBoard()
+  boardPinia.getAllBoard(0)
 })
 </script>
 

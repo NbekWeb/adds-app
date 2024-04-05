@@ -1,4 +1,11 @@
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const goHome = () => {
+  router.push('/dashboard/main')
+}
+</script>
 
 <template>
   <div class="pt-4 text-center">
@@ -181,6 +188,9 @@
           Bunday sahifa mavjud emas! Yoki tizim administratori tomonidan
           o'chirib yuborilgan!
         </h4>
+        <a-button @click="goHome" type="primary" size="large">
+          Go Home
+        </a-button>
       </a-col>
     </a-row>
   </div>

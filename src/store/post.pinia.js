@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia'
+import { uniqueItems } from '@/composables/index.js'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
 
 const usePost = defineStore('post', {
   state: () => ({
     posts: [],
+    postInfo: null,
+    page: 0,
     totalElements: 0,
-    totalPages: 0,
-    page: 0
+    totalPages: 0
   }),
   actions: {
     clearPost() {
@@ -15,9 +17,13 @@ const usePost = defineStore('post', {
       this.totalElements = 0
       this.totalPages = 0
     },
+    clearPostInfo() {
+      this.postInfo = null
+    },
     getAllPosts(page) {
       const core = useCore()
       core.loadingUrl.add('get/post/all')
+      this.page = page
       api({
         url: 'post',
         params: {
@@ -26,7 +32,8 @@ const usePost = defineStore('post', {
         }
       })
         .then(({ data }) => {
-          this.posts = data.content
+          this.posts.push(...data.content)
+          this.posts = uniqueItems(this.posts, 'id')
           this.totalElements = data.totalElements
           this.totalPages = data.totalPages
         })
@@ -37,14 +44,14 @@ const usePost = defineStore('post', {
           core.loadingUrl.delete('get/post/all')
         })
     },
-    getOnePostById(id, callback) {
+    getOnePostById(id) {
       const core = useCore()
       core.loadingUrl.add('get/post/one')
       api({
         url: `post/${id}`
       })
         .then(({ data }) => {
-          callback(data)
+          this.postInfo = data
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -69,7 +76,7 @@ const usePost = defineStore('post', {
           }))
         }
       })
-        .then(({ data }) => {
+        .then(() => {
           core.setToast({
             type: 'success',
             locale: 'POST_ADDED_SUCCESSFULLY'

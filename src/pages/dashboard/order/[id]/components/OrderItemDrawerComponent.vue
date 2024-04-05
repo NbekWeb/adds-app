@@ -5,26 +5,28 @@ import OrderItemComponent from '@/pages/dashboard/order/[id]/components/OrderIte
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { formatAmount } from '../../../../../composables/index.js'
-
-const { order } = defineProps({
-  order: {
-    type: [Object, null, undefined],
-    required: true
-  }
-})
+import useOrder from '@/store/order.pinia.js'
 
 const corePinia = useCore()
+const orderPinia = useOrder()
+
 const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
+const { orderInfo } = storeToRefs(orderPinia)
+
+function closeDrawer() {
+  visibleDrawer.value.delete('order/items/drawer')
+  orderPinia.clearOrderInfo()
+}
 </script>
 
 <template>
   <a-drawer
     :open="visibleDrawer.has('order/items/drawer')"
     class="custom-class"
-    :title="`#${order ? order?.id : ''}`"
+    :title="`#${orderInfo ? orderInfo?.id : ''}`"
     width="500px"
     placement="right"
-    @close="visibleDrawer.delete('order/items/drawer')"
+    @close="closeDrawer"
   >
     <a-spin :spinning="loadingUrl.has('get/order/one')">
       <template #indicator>
@@ -32,19 +34,17 @@ const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
       </template>
       <scrollbar-component height="calc(100vh - 105px)">
         <template #content>
-          <order-item-component v-for="item in order?.items" :item="item" />
+          <order-item-component v-for="item in orderInfo?.items" :item="item" />
           <div class="total-amount flex justify-between pb-2">
-            <span> Jami to'lov: </span>
+            <span> {{ $t('TOTAL_PRICE') }}: </span>
             <span class="text-bold">
-              {{ formatAmount(order?.totalAmount) }}
-              <span class="currency">UZS</span>
+              {{ formatAmount(orderInfo?.totalAmount) }}
+              <span class="currency">{{ $t('SOUM') }}</span>
             </span>
           </div>
         </template>
       </scrollbar-component>
     </a-spin>
-
-    <!--    <pre>{{ order }}</pre>-->
   </a-drawer>
 </template>
 

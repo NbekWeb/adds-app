@@ -19,23 +19,32 @@ const corePinia = useCore()
 const configPinia = useBoardConfiguration()
 
 const { loadingUrl } = storeToRefs(corePinia)
-
-const configurations = ref([])
+const { configurations, page, totalElements, totalPages } =
+  storeToRefs(configPinia)
 
 function handleSelectConfig(e) {
   amount.value = configurations.value.find(
     (item) => item.id === e.target.value.id
   )?.amount
 }
+function getPaginationAllConfiguration(page) {
+  configPinia.getConfigurationsByBoardId(boardId, page)
+}
 onMounted(() => {
-  configPinia.getConfigurationsByBoardId(boardId, 0, (data) => {
-    configurations.value = data.content
-  })
+  configPinia.getConfigurationsByBoardId(boardId, 0)
 })
 </script>
 
 <template>
-  <scrollbar-component height="calc(100vh - 250px)">
+  <scrollbar-component
+    height="calc(100vh - 250px)"
+    :loading="loadingUrl.has('board/configurations')"
+    :page="page"
+    :count="12"
+    :total-count-all="totalElements"
+    :total-pages="totalPages"
+    @get-data="getPaginationAllConfiguration"
+  >
     <template #content>
       <template
         v-if="!configurations.length && !loadingUrl.has('board/configurations')"

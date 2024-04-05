@@ -28,24 +28,24 @@ const { item } = defineProps({
         <h1 class="text-center mt-2">
           <span class="config-amount">
             {{ formatAmount(item.amount) }}
-            <span class="amount-label">UZS</span>
+            <span class="amount-label">{{ $t('SOUM') }}</span>
           </span>
         </h1>
       </div>
-      <span class="time-label"> E'lonni kanalda turish muddati </span>
+      <span class="time-label"> {{ $t('POST_LIVE_TIME') }} </span>
       <h1 class="time-value">
-        {{ formatTime(item.liveTime, 'hh') }} soat,
-        {{ formatTime(item.liveTime, 'mm') }} daqiqa
+        {{ formatTime(item.liveTime, 'hh') }} {{ $t('HOUR').toLowerCase() }},
+        {{ formatTime(item.liveTime, 'mm') }} {{ $t('MINUTE').toLowerCase() }}
       </h1>
-      <span class="time-label"> E'lonni pinda turish muddati </span>
+      <span class="time-label"> {{ $t('POST_PIN_TIME') }} </span>
       <h1 class="time-value">
-        {{ formatTime(item.pinTime, 'hh') }} soat,
-        {{ formatTime(item.pinTime, 'mm') }} daqiqa
+        {{ formatTime(item.pinTime, 'hh') }} {{ $t('HOUR').toLowerCase() }},
+        {{ formatTime(item.pinTime, 'mm') }} {{ $t('MINUTE').toLowerCase() }}
       </h1>
-      <span class="time-label"> E'lonni topda turish muddati </span>
+      <span class="time-label"> {{ $t('POST_TOP_TIME') }} </span>
       <h1 class="time-value">
-        {{ formatTime(item.topTime, 'hh') }} soat,
-        {{ formatTime(item.topTime, 'mm') }} daqiqa
+        {{ formatTime(item.topTime, 'hh') }} {{ $t('HOUR').toLowerCase() }},
+        {{ formatTime(item.topTime, 'mm') }} {{ $t('MINUTE').toLowerCase() }}
       </h1>
       <div class="checkbox" :class="{ checked: selected }">
         <div class="checkbox-circle">

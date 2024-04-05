@@ -1,17 +1,27 @@
 import { defineStore } from 'pinia'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
+import { uniqueItems } from '@/composables/index.js'
 
 const useOrder = defineStore('order', {
   state: () => ({
-    newOrder: {},
+    statusList: [],
+    orderInfo: null,
     orders: [],
     page: 0,
     totalElements: 0,
-    totalPages: 0,
-    orderStatuses: []
+    totalPages: 0
   }),
   actions: {
+    clearOrders() {
+      this.orders = []
+      this.page = 0
+      this.totalElements = 0
+      this.totalPages = 0
+    },
+    clearOrderInfo() {
+      this.orderInfo = null
+    },
     getAllOrdersStatus() {
       const core = useCore()
       core.loadingUrl.add('get/order/status/all')
@@ -19,7 +29,7 @@ const useOrder = defineStore('order', {
         url: 'order/all-status'
       })
         .then(({ data }) => {
-          this.orderStatuses = data
+          this.statusList = data
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -28,7 +38,7 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('get/order/status/all')
         })
     },
-    getAllOrders(page = this.page, status = null) {
+    getAllOrders(page, status) {
       const core = useCore()
       this.page = page
       core.loadingUrl.add('get/order/all')
@@ -36,17 +46,18 @@ const useOrder = defineStore('order', {
         url: 'order',
         params: {
           page: page,
-          size: 10,
+          size: 12,
           status: status
         }
       })
         .then(({ data }) => {
+          if (!page) {
+            this.clearOrders()
+          }
           this.orders.push(...data.content)
+          this.orders = uniqueItems(this.orders, 'id')
           this.totalElements = data.totalElements
           this.totalPages = data.totalPages
-          this.orders = [
-            ...new Map(this.orders.map((item) => [item['id'], item])).values()
-          ]
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -55,14 +66,14 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('get/order/all')
         })
     },
-    getOrderById(id, callback) {
+    getOrderById(id) {
       const core = useCore()
       core.loadingUrl.add('get/order/one')
       api({
         url: `order/${id}`
       })
         .then(({ data }) => {
-          callback(data)
+          this.orderInfo = data
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -128,7 +139,7 @@ const useOrder = defineStore('order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: ''
+            locale: 'SUCCESS'
           })
         })
         .catch((error) => {
@@ -148,7 +159,7 @@ const useOrder = defineStore('order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: ''
+            locale: 'SUCCESS'
           })
         })
         .catch((error) => {
@@ -168,7 +179,7 @@ const useOrder = defineStore('order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: ''
+            locale: 'SUCCESS'
           })
         })
         .catch((error) => {

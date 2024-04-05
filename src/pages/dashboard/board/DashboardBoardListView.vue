@@ -1,35 +1,53 @@
 <script setup>
-import BoardListComponent from '@/pages/dashboard/board/components/BoardListComponent.vue'
-import { onMounted, ref } from 'vue'
-import useBoard from '@/store/boadr.pinia.js'
-import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import IconPlus from '@/components/icons/IconPlus.vue'
-import useCore from '@/store/core.pinia.js'
-import { storeToRefs } from 'pinia'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import useCore from '@/store/core.pinia.js'
+import useBoard from '@/store/boadr.pinia.js'
+
+import BoardListComponent from '@/pages/dashboard/board/components/BoardListComponent.vue'
+import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
+import IconSearch from '@/components/icons/IconSearch.vue'
 
 const router = useRouter()
+const route = useRoute()
 const corePinia = useCore()
 const boardPinia = useBoard()
 
 const { loadingUrl } = storeToRefs(corePinia)
 const { categories } = storeToRefs(boardPinia)
-const status = ref(null)
-const category = ref(null)
 
-const handleChangeFilter = () => {
-  boardPinia.clearBoardList()
-  boardPinia.getAllBoard({
-    page: 0,
-    categoryId: category.value,
-    status: status.value
+const categoryId = computed(() => route.query.category)
+const searchName = computed(() => route.query.name)
+
+const category = ref(categoryId.value)
+const name = ref(searchName.value)
+
+const timeOut = ref(null)
+
+function handleChangeFilter() {
+  router.push({
+    query: {
+      category: category.value,
+      name: name.value
+    }
   })
+  boardPinia.getAllBoard(0, category.value, name.value)
+}
+
+function handleSearch(e) {
+  clearTimeout(timeOut.value)
+  timeOut.value = setTimeout(() => {
+    handleChangeFilter()
+  }, 500)
 }
 
 onMounted(() => {
-  boardPinia.clearBoardList()
-  boardPinia.getAllBoard(0, category.value)
+  boardPinia.getAllBoard(0, category.value, name.value)
   boardPinia.getBoardCategories()
+})
+onBeforeUnmount(() => {
+  boardPinia.clearBoardList()
 })
 </script>
 
@@ -38,11 +56,22 @@ onMounted(() => {
     <template #actions>
       <a-row :gutter="10" justify="end">
         <a-col>
+          <a-input
+            :placeholder="$t('SEARCH')"
+            v-model:value="name"
+            allow-clear
+            @keyup="handleSearch"
+          >
+            <template #prefix>
+              <icon-search />
+            </template>
+          </a-input>
+        </a-col>
+        <a-col>
           <a-tree-select
             v-model:value="category"
             class="board-category-filter"
             :loading="loadingUrl.has('board/category/all')"
-            style="width: 100%"
             :dropdown-style="{
               maxHeight: '500px',
               overflow: 'auto'
