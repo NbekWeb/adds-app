@@ -25,25 +25,27 @@ const handlePaste = (e) => {
   if (onlyNumbers) {
     digits.value = pasteData.split('')
     model.value = pasteData
-  } else {
   }
 }
-
 const handleInput = (e) => {
   if (new RegExp('^([0-9])$').test(e.data)) {
     digits.value[inputIndex.value] = e.data
     if (e.target.nextElementSibling) e.target.nextElementSibling.focus()
-  } else {
-    digits.value[inputIndex.value] = ''
   }
   model.value = digits.value.join('')
 }
+
 const handleKeydown = (e) => {
-  if (e.key === 'Backspace' && !e.target.value) {
-    if (e.target.previousElementSibling) e.target.previousElementSibling.focus()
+  if (e.key === 'Backspace') {
+    if (e.target.previousElementSibling && !digits.value[inputIndex.value]) {
+      e.target.previousElementSibling.focus()
+    } else if (digits.value[inputIndex.value]) {
+      digits.value[inputIndex.value] = ''
+    }
   }
   model.value = digits.value.join('')
 }
+
 const handleFocus = (index) => {
   inputIndex.value = index
 }
@@ -54,17 +56,21 @@ onMounted(() => {
 
 <template>
   <a-input-group>
-    <a-row class="otp-container" @keydown="handleKeydown" @input="handleInput">
+    <a-row
+      class="otp-container"
+      @keydown="handleKeydown"
+      @input="handleInput"
+      @paste="handlePaste"
+    >
       <a-input
         v-for="(item, i) in digits"
         :key="i"
         :disabled="disabled"
-        @paste="handlePaste"
         @focus="handleFocus(i)"
         type="text"
         class="digit-box ant-col"
         size="large"
-        v-model:value="digits[i]"
+        :value="item"
         :autofocus="i === 0"
         placeholder="#"
         :maxlength="1"
