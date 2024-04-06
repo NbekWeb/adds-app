@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 import useBoardConfiguration from '@/store/board-configuration.pinia.js'
 import OrderBoardConfigurationComponent from '@/pages/dashboard/order/components/OrderBoardConfigurationComponent.vue'
 import { storeToRefs } from 'pinia'
@@ -32,6 +32,9 @@ function getPaginationAllConfiguration(page) {
 }
 onMounted(() => {
   configPinia.getConfigurationsByBoardId(boardId, 0)
+})
+onBeforeUnmount(() => {
+  configPinia.clearConfigurations()
 })
 </script>
 
