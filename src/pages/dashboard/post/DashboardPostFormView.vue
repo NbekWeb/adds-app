@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
@@ -58,7 +58,9 @@ const ruleTextAndFile = reactive({
 
 const editorConfig = ref({
   // The configuration of the editor.
+  toolbar: ['bold', 'italic']
 })
+
 const uploadLogo = (file) => {
   uploadPinia.uploadFile(file, 'TELEGRAM', (hashId) => {
     form.fileHashId = hashId
@@ -112,6 +114,7 @@ const submitForm = (formRef) => {
     .validate()
     .then(() => {
       if (!validate.length) {
+        form.text = form.text.replace('<p>', '').replace('</p>', '')
         postPinia.createNewPost(form, () => {
           router.back()
         })
@@ -172,7 +175,6 @@ const submitForm = (formRef) => {
               ></ckeditor>
             </div>
           </a-form-item>
-
           <a-row :gutter="[10, 10]">
             <a-col v-for="(item, i) in form.buttons" :key="i" :lg="8">
               <a-card class="button-card">
