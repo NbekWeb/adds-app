@@ -111,7 +111,7 @@ const submitForm = (formRef) => {
 
   formRef.validate().then(() => {
     if (!validate.length) {
-      form.text = form.text.replace('<p>', '<br/>').replace('</p>', '')
+      form.text = form.text.replace('<p>', '/n').replace('</p>', '')
       postPinia.createNewPost(form, () => {
         router.back()
       })
