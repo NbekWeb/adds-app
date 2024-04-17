@@ -34,18 +34,24 @@ const { item } = defineProps({
       </div>
       <span class="time-label"> {{ $t('POST_LIVE_TIME') }} </span>
       <h1 class="time-value">
-        {{ formatTime(item.liveTime, 'hh') }} {{ $t('HOUR').toLowerCase() }},
-        {{ formatTime(item.liveTime, 'mm') }} {{ $t('MINUTE').toLowerCase() }}
+        {{ formatTime(item.liveTime, 'day') }} {{ $t('DAY').toLowerCase() }},
+        {{ formatTime(item.liveTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
+        {{ formatTime(item.liveTime, 'minute') }}
+        {{ $t('MINUTE').toLowerCase() }}
       </h1>
       <span class="time-label"> {{ $t('POST_PIN_TIME') }} </span>
       <h1 class="time-value">
-        {{ formatTime(item.pinTime, 'hh') }} {{ $t('HOUR').toLowerCase() }},
-        {{ formatTime(item.pinTime, 'mm') }} {{ $t('MINUTE').toLowerCase() }}
+        {{ formatTime(item.pinTime, 'day') }} {{ $t('DAY').toLowerCase() }},
+        {{ formatTime(item.pinTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
+        {{ formatTime(item.pinTime, 'minute') }}
+        {{ $t('MINUTE').toLowerCase() }}
       </h1>
       <span class="time-label"> {{ $t('POST_TOP_TIME') }} </span>
       <h1 class="time-value">
-        {{ formatTime(item.topTime, 'hh') }} {{ $t('HOUR').toLowerCase() }},
-        {{ formatTime(item.topTime, 'mm') }} {{ $t('MINUTE').toLowerCase() }}
+        {{ formatTime(item.topTime, 'day') }} {{ $t('DAY').toLowerCase() }},
+        {{ formatTime(item.topTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
+        {{ formatTime(item.topTime, 'minute') }}
+        {{ $t('MINUTE').toLowerCase() }}
       </h1>
       <div class="checkbox" :class="{ checked: selected }">
         <div class="checkbox-circle">
