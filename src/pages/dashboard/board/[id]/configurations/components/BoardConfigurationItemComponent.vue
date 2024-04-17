@@ -33,20 +33,23 @@ const { item } = defineProps({
         </span>
       </h1>
     </div>
-    <span class="time-label"> E'lonni kanalda turish muddati </span>
+    <span class="time-label"> {{ $t('POST_LIVE_TIME') }} </span>
     <h1 class="time-value">
-      {{ formatTime(item.liveTime, 'hh') }} soat,
-      {{ formatTime(item.liveTime, 'mm') }} daqiqa
+      {{ formatTime(item.liveTime, 'day') }} {{ $t('DAY').toLowerCase() }},
+      {{ formatTime(item.liveTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
+      {{ formatTime(item.liveTime, 'minute') }} {{ $t('MINUTE').toLowerCase() }}
     </h1>
-    <span class="time-label"> E'lonni pinda turish muddati </span>
+    <span class="time-label"> {{ $t('POST_PIN_TIME') }} </span>
     <h1 class="time-value">
-      {{ formatTime(item.pinTime, 'hh') }} soat,
-      {{ formatTime(item.pinTime, 'mm') }} daqiqa
+      {{ formatTime(item.pinTime, 'day') }} {{ $t('DAY').toLowerCase() }},
+      {{ formatTime(item.pinTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
+      {{ formatTime(item.pinTime, 'minute') }} {{ $t('MINUTE').toLowerCase() }}
     </h1>
-    <span class="time-label"> E'lonni topda turish muddati </span>
+    <span class="time-label"> {{ $t('POST_TOP_TIME') }} </span>
     <h1 class="time-value">
-      {{ formatTime(item.topTime, 'hh') }} soat,
-      {{ formatTime(item.topTime, 'mm') }} daqiqa
+      {{ formatTime(item.topTime, 'day') }} {{ $t('DAY').toLowerCase() }},
+      {{ formatTime(item.topTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
+      {{ formatTime(item.topTime, 'minute') }} {{ $t('MINUTE').toLowerCase() }}
     </h1>
 
     <div>
@@ -55,7 +58,7 @@ const { item } = defineProps({
         class="w-full"
         type="primary"
       >
-        E'lon berish
+        {{ $t('CREATE_AN_ORDER') }}
       </a-button>
     </div>
   </a-card>
