@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
@@ -10,7 +10,6 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
-import IconPaperClip from '@/components/icons/IconPaperClip.vue'
 import IconCheck from '@/components/icons/IconCheck.vue'
 import IconX from '@/components/icons/IconX.vue'
 import { useI18n } from 'vue-i18n'
@@ -110,19 +109,14 @@ const submitForm = (formRef) => {
     return item
   })
 
-  formRef
-    .validate()
-    .then(() => {
-      if (!validate.length) {
-        form.text = form.text.replace('<p>', '').replace('</p>', '')
-        postPinia.createNewPost(form, () => {
-          router.back()
-        })
-      }
-    })
-    .catch((error) => {
-      console.log('error', error)
-    })
+  formRef.validate().then(() => {
+    if (!validate.length) {
+      form.text = form.text.replace('<p>', '<br/>').replace('</p>', '')
+      postPinia.createNewPost(form, () => {
+        router.back()
+      })
+    }
+  })
 }
 </script>
 

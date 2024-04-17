@@ -1,19 +1,20 @@
 import dayjs from 'dayjs'
 
 export const formatTime = (long, type) => {
-  const fullMin = long / 1000 / 60
-  const h = Math.floor(fullMin / 60)
-  let m
-  let hh
-  let mm
-  if (h > 0) {
-    m = fullMin - h * 60
+  const day = Math.floor(long / 1000 / 60 / 60 / 24)
+  const hour = Math.floor((long - day * 24 * 60 * 60 * 1000) / 1000 / 60 / 60)
+  const minute = Math.floor(
+    (long - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000) / 1000 / 60
+  )
+  if (type === 'day') {
+    return day
+  } else if (type === 'hour') {
+    return hour
+  } else if (type === 'minute') {
+    return minute
   } else {
-    m = fullMin
+    return 'Type is required'
   }
-  // hh = h < 10 ? `0${h}` : `${h}`
-  // mm = m < 10 ? `0${m}` : `${m}`
-  return type === 'hh' ? h : type === 'mm' ? m : ''
 }
 
 export const formatHourAndMinute = (time) => {

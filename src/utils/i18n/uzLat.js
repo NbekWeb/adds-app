@@ -75,6 +75,7 @@ const uzLat = {
   ATTACH_URL: 'Havola biriktirish',
   FILTER_BY_STATUS: "Holat bo'yicha filterlash",
   STATUS: 'Holati',
+  DAY: 'Kun',
   HOUR: 'Soat',
   MINUTE: 'Daqiqa',
   ENTER_SMS_CODE: 'Sms kodni kiriting',
