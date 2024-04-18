@@ -51,9 +51,11 @@ const { item } = defineProps({
           <icon-announcement-voic />
         </span>
         <p class="text-bold mb-1">
-          {{ formatTime(item.configuration.liveTime, 'hh') }}
+          {{ formatTime(item.configuration.liveTime, 'day') }}
+          {{ $t('DAY').toLowerCase() }},
+          {{ formatTime(item.configuration.liveTime, 'hour') }}
           {{ $t('HOUR').toLowerCase() }},
-          {{ formatTime(item.configuration.liveTime, 'mm') }}
+          {{ formatTime(item.configuration.liveTime, 'minute') }}
           {{ $t('MINUTE').toLowerCase() }}
         </p>
       </div>
@@ -63,17 +65,21 @@ const { item } = defineProps({
           <icon-pin />
         </span>
         <p class="text-bold mb-1">
-          {{ formatTime(item.configuration.pinTime, 'hh') }}
+          {{ formatTime(item.configuration.pinTime, 'day') }}
+          {{ $t('DAY').toLowerCase() }},
+          {{ formatTime(item.configuration.pinTime, 'hour') }}
           {{ $t('HOUR').toLowerCase() }},
-          {{ formatTime(item.configuration.pinTime, 'mm') }}
+          {{ formatTime(item.configuration.pinTime, 'minute') }}
           {{ $t('MINUTE').toLowerCase() }}
         </p>
       </div>
       <!--      top-->
       <span class="time-value text-bold">
-        {{ formatTime(item.configuration.topTime, 'hh') }}
+        {{ formatTime(item.configuration.topTime, 'day') }}
+        {{ $t('DAY').toLowerCase() }},
+        {{ formatTime(item.configuration.topTime, 'hour') }}
         {{ $t('HOUR').toLowerCase() }},
-        {{ formatTime(item.configuration.topTime, 'mm') }}
+        {{ formatTime(item.configuration.topTime, 'minute') }}
         {{ $t('MINUTE').toLowerCase() }}
       </span>
     </div>

@@ -10,11 +10,11 @@ import OrderListComponent from '@/pages/dashboard/order/components/OrderListComp
 
 const router = useRouter()
 const route = useRoute()
-const corePinia = useCore()
 const orderPinia = useOrder()
 
-const { loadingUrl } = storeToRefs(corePinia)
-const { orderInfo, statusList } = storeToRefs(orderPinia)
+const { orderInfo } = storeToRefs(orderPinia)
+
+const statuses = ref(['PENDING', 'APPROVED', 'REJECTED', 'CANCELED'])
 
 const orderStatus = ref(route.query.status)
 
@@ -29,7 +29,6 @@ function handleChange() {
 
 onMounted(() => {
   orderPinia.getAllOrders(0, orderStatus.value)
-  orderPinia.getAllOrdersStatus()
 })
 </script>
 
@@ -45,11 +44,11 @@ onMounted(() => {
           @change="handleChange"
         >
           <a-select-option
-            v-for="status in statusList"
-            :value="status?.orderStatus"
-            :key="status?.orderStatus"
+            v-for="status in statuses"
+            :value="status"
+            :key="status"
           >
-            {{ status?.localName }}
+            {{ $t(status) }}
           </a-select-option>
         </a-select>
         <a-button

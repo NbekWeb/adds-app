@@ -5,7 +5,6 @@ import { uniqueItems } from '@/composables/index.js'
 
 const useOrder = defineStore('order', {
   state: () => ({
-    statusList: [],
     orderInfo: null,
     orders: [],
     page: 0,
@@ -22,22 +21,7 @@ const useOrder = defineStore('order', {
     clearOrderInfo() {
       this.orderInfo = null
     },
-    getAllOrdersStatus() {
-      const core = useCore()
-      core.loadingUrl.add('get/order/status/all')
-      api({
-        url: 'order/all-status'
-      })
-        .then(({ data }) => {
-          this.statusList = data
-        })
-        .catch((error) => {
-          core.switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('get/order/status/all')
-        })
-    },
+
     getAllOrders(page, status) {
       const core = useCore()
       this.page = page
