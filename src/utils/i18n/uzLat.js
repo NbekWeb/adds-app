@@ -110,6 +110,9 @@ const uzLat = {
 
   // statuses
 
+  INACTIVE: 'Faol emas',
+  ACTIVE: 'Faol',
+  EDITED: 'Tahrirlangan',
   PENDING: 'Kutilmoqda',
   SUCCESS: 'Muvoffaqiyatli',
   CANCELED: 'Bekor qilingan',
@@ -117,6 +120,10 @@ const uzLat = {
   APPROVED: 'Tasdiqlangan',
   STARTED: 'Boshlangan',
   FINISHED: 'Bajarilgan',
+  APPROVE: 'Tasdiqlash',
+  REJECTED: 'Rad qilingan',
+  REJECT: 'Rad qilish',
+  BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
   // descriptions
   LOGIN_PAGE_DESCRIPTION:
     'Biznes uchun reklamalarni joylashtirish, boshqarish uchun platforma.',
