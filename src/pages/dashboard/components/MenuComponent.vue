@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useCore from '@/store/core.pinia.js'
 import useUser from '@/store/user.pinia.js'
@@ -14,6 +14,7 @@ import IconHelp from '@/components/icons/IconHelp.vue'
 import IconPowerOff from '@/components/icons/IconPowerOff.vue'
 import IconMessageTextSquare from '@/components/icons/IconMessageTextSquare.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
+import IconHome from '@/components/icons/IconHome.vue'
 
 const { collapsed } = defineProps({
   collapsed: {
@@ -37,6 +38,28 @@ const logOut = () => {
   userPinia.$reset()
   router.push('/')
 }
+const menuList = shallowRef([
+  {
+    path: 'main',
+    name: 'DashboardListView',
+    icon: IconHome
+  },
+  {
+    path: 'board',
+    name: 'DashboardBoardListView',
+    icon: IconAnnouncement
+  },
+  {
+    path: 'post',
+    name: 'DashboardPostListView',
+    icon: IconMessageTextSquare
+  },
+  {
+    path: 'order',
+    name: 'DashboardOrderListView',
+    icon: IconShoppingCard
+  }
+])
 </script>
 
 <template>
@@ -68,47 +91,11 @@ const logOut = () => {
         :selectedKeys="[activeLink]"
         mode="inline"
       >
-        <a-menu-item :key="`main`">
+        <a-menu-item v-for="menu in menuList" :key="menu.path">
           <template #icon>
-            <icon-grid />
+            <component :is="menu.icon" />
           </template>
-          {{ $t('DashboardListView') }}
-        </a-menu-item>
-        <a-menu-item :key="`board`">
-          <template #icon>
-            <icon-announcement />
-          </template>
-          {{ $t('DashboardBoardListView') }}
-        </a-menu-item>
-        <a-menu-item :key="`kiosk-board`">
-          <template #icon>
-            <icon-announcement />
-          </template>
-          {{ $t('DashboardKioskBoardListView') }}
-        </a-menu-item>
-        <a-menu-item :key="`post`">
-          <template #icon>
-            <icon-message-text-square />
-          </template>
-          {{ $t('DashboardPostListView') }}
-        </a-menu-item>
-        <a-menu-item :key="`order`">
-          <template #icon>
-            <icon-shopping-card />
-          </template>
-          {{ $t('DashboardOrderListView') }}
-        </a-menu-item>
-        <!--        <a-menu-item :key="`user`">-->
-        <!--          <template #icon>-->
-        <!--            <icon-users />-->
-        <!--          </template>-->
-        <!--          {{ $t('DashboardUserListView') }}-->
-        <!--        </a-menu-item>-->
-        <a-menu-item :key="`payment`">
-          <template #icon>
-            <icon-coins-stacked />
-          </template>
-          {{ $t('DashboardPaymentListView') }}
+          {{ $t(menu.name) }}
         </a-menu-item>
       </a-menu>
     </div>
