@@ -1,15 +1,17 @@
 <script setup>
-import formatAmount from '../../../../composables/amount.js'
-import IconX from '@/components/icons/IconX.vue'
-import dayjs from 'dayjs'
 import {
-  fileBaseUrl,
   formatTextLength,
-  formatTime
+  formatTime,
+  formatAmount
 } from '@/composables/index.js'
+import dayjs from 'dayjs'
+import IconX from '@/components/icons/IconX.vue'
 import IconAnnouncementVoic from '@/components/icons/IconAnnouncementVoic.vue'
 import IconPin from '@/components/icons/IconPin.vue'
+import { fileBaseUrl } from '@/utils/conf.js'
+
 const emits = defineEmits(['close'])
+
 const { item } = defineProps({
   item: {
     type: Object,

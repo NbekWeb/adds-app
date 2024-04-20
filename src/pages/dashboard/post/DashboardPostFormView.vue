@@ -15,6 +15,9 @@ import IconX from '@/components/icons/IconX.vue'
 import { useI18n } from 'vue-i18n'
 import IconLink from '@/components/icons/IconLink.vue'
 import IconFile from '@/components/icons/IconFile.vue'
+import IconEye from '@/components/icons/IconEye.vue'
+import PostFileViewModalComponent from '@/pages/dashboard/post/components/PostFileViewModalComponent.vue'
+import VideoPlayerComponent from '@/components/VideoPlayerComponent.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -23,7 +26,7 @@ const corePinia = useCore()
 const uploadPinia = useUpload()
 const postPinia = usePost()
 
-const { loadingUrl } = storeToRefs(corePinia)
+const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 
 const baseUrl = ref(
   `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}/`
@@ -60,29 +63,31 @@ const editorConfig = ref({
   toolbar: ['bold', 'italic']
 })
 
-const fileUrl = ref(null)
+const uploadResponse = reactive({
+  hashId: null,
+  snapshotHashId: null
+})
 const fileTypes = ref(['image', 'video', 'application'])
 const fileType = ref(null)
-const fileName = ref(null)
 
 const uploadLogo = (file) => {
-  console.log(file.type.split('/')[0])
-  console.log(file)
   if (fileTypes.value.includes(file.type.split('/')[0])) {
-    uploadPinia.uploadFile(file, 'TELEGRAM', (hashId) => {
-      form.fileHashId = hashId
-      fileUrl.value = `${baseUrl.value}file/${hashId}`
+    uploadPinia.uploadFile(file, 'TELEGRAM', (data) => {
+      form.fileHashId = data.hashId
       fileType.value = file.type.split('/')[0]
-      fileName.value = file.name
+      uploadResponse.hashId = data.hashId
+      uploadResponse.snapshotHashId = data.snapshotHashId
+      console.log(data)
     })
   }
 
   return false
 }
+function viewModal() {
+  visibleDrawer.value.add(`post/file/view`)
+}
 const clearFile = () => {
   form.fileHashId = null
-  fileUrl.value = null
-  fileName.value = null
   fileType.value = null
 }
 const addLinkedButton = () => {
@@ -104,7 +109,6 @@ const confirmUrl = (index) => {
 const cancelUrl = (index) => {
   form.buttons[index].open = false
   form.buttons[index].firstUrl = null
-  // form.buttons[index].url = null
 }
 const removeLinkedButton = (index) => {
   form.buttons.splice(index, 1)
@@ -143,27 +147,70 @@ const submitForm = (formRef) => {
               <template #indicator>
                 <icon-loader size="small" />
               </template>
-              <template v-if="fileUrl">
+
+              <template v-if="form.fileHashId">
+                <post-file-view-modal-component
+                  :file-type="fileType"
+                  :file="uploadResponse"
+                />
                 <template v-if="fileType === 'image'">
                   <div class="post-image">
-                    <img :src="fileUrl" alt="" />
+                    <img :src="`${baseUrl}file/${form.fileHashId}`" alt="" />
                     <div class="upload-action">
-                      <a-button @click="clearFile" class="delete-btn btn">
+                      <a-button
+                        type="link"
+                        @click="clearFile"
+                        class="delete-btn btn"
+                      >
                         <template #icon>
                           <icon-trash />
+                        </template>
+                      </a-button>
+                      <a-button
+                        type="link"
+                        @click="viewModal"
+                        class="delete-btn btn"
+                      >
+                        <template #icon>
+                          <IconEye />
                         </template>
                       </a-button>
                     </div>
                   </div>
                 </template>
-                <template v-if="fileType === 'video'"> </template>
+                <template v-if="fileType === 'video'">
+                  <div class="post-image">
+                    <img
+                      :src="`${baseUrl}file/${uploadResponse.snapshotHashId}`"
+                      alt=""
+                    />
+                    <div class="upload-action">
+                      <a-button
+                        type="link"
+                        @click="clearFile"
+                        class="delete-btn btn"
+                      >
+                        <template #icon>
+                          <icon-trash />
+                        </template>
+                      </a-button>
+                      <a-button
+                        type="link"
+                        @click="viewModal"
+                        class="delete-btn btn"
+                      >
+                        <template #icon>
+                          <IconEye />
+                        </template>
+                      </a-button>
+                    </div>
+                  </div>
+                </template>
                 <template v-if="fileType === 'application'">
                   <div class="application flex justify-between">
                     <span>
                       <IconFile />
-                      <span>
-                        {{ fileName }}
-                      </span>
+                      <span> </span>
                     </span>
                     <a-space>
                       <a-button class="btn file-close" @click="clearFile">
@@ -318,6 +365,7 @@ const submitForm = (formRef) => {
               @click="submitForm(formRef)"
               type="primary"
               size="middle"
+              :loading="loadingUrl.has('create/post')"
               >{{ $t('SAVE') }}</a-button
             >
           </a-space>
@@ -355,8 +403,8 @@ const submitForm = (formRef) => {
     top: 0;
     left: 0;
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     opacity: 0;

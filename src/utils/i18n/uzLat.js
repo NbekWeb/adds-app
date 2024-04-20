@@ -58,7 +58,7 @@ const uzLat = {
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   CREATE_AN_ORDER: "E'lon berish",
   //   labels
-  POST_IMAGE: 'Post rasmi',
+  POST_IMAGE: "Postga fayl qo'shish",
   POST_DESCRIPTION: 'Post tavsifi',
   POST_BUTTONS: 'Post tugmalari',
   POST_LIVE_TIME: "E'lonni kanalda turish muddati",

@@ -1,6 +1,7 @@
 <script setup>
 import dayjs from 'dayjs'
-import { formatHourAndMinute, formatAmount, fileBaseUrl } from '@/composables'
+import { formatHourAndMinute, formatAmount } from '@/composables'
+import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 
 const emits = defineEmits(['getOne'])

@@ -4,7 +4,7 @@ import useCore from '@/store/core.pinia.js'
 
 const useUpload = defineStore('upload', {
   actions: {
-    uploadFile(file, type = 'TELEGRAM', callback) {
+    uploadFile(file, type = 'TELEGRAM', callback, progress) {
       const core = useCore()
       const form_data = new FormData()
       form_data.append('file', file)
@@ -15,7 +15,14 @@ const useUpload = defineStore('upload', {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
-        data: form_data
+        data: form_data,
+        onUploadProgress: (progressEvent) => {
+          progress(
+            parseInt(
+              Math.round((progressEvent.loaded / progressEvent.total) * 100)
+            )
+          )
+        }
       })
         .then(({ data }) => {
           callback(data)

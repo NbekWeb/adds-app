@@ -3,7 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { onBeforeUnmount, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import { fileBaseUrl } from '@/composables'
+import { fileBaseUrl } from '@/utils/conf.js'
 import useCore from '@/store/core.pinia.js'
 import useBoard from '@/store/boadr.pinia.js'
 

@@ -1,13 +1,13 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { fileBaseUrl } from '@/composables'
 import useCore from '@/store/core.pinia.js'
 import useUser from '@/store/user.pinia.js'
 import IconUser from '@/components/icons/IconUser.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
+import { fileBaseUrl } from '@/utils/conf.js'
 
 const props = defineProps({
   item: {
