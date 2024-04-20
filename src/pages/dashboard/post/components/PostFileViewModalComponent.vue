@@ -10,7 +10,7 @@ const props = defineProps({
     required: true
   },
   fileType: {
-    type: String,
+    type: [String, null],
     required: true
   }
 })
