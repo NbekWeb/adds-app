@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { fileBaseUrl } from '@/composables/index.js'
+import { fileBaseUrl } from '@/utils/conf.js'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'

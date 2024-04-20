@@ -9,7 +9,21 @@ const usePost = defineStore('post', {
     postInfo: null,
     page: 0,
     totalElements: 0,
-    totalPages: 0
+    totalPages: 0,
+    form: {
+      fileHashId: null,
+      text: '',
+      buttons: [
+        {
+          orderNumber: 0,
+          text: null,
+          url: null,
+          firstUrl: null,
+          open: false,
+          error: false
+        }
+      ]
+    }
   }),
   actions: {
     clearPost() {
@@ -32,6 +46,9 @@ const usePost = defineStore('post', {
         }
       })
         .then(({ data }) => {
+          if (page === 0) {
+            this.clearPost()
+          }
           this.posts.push(...data.content)
           this.posts = uniqueItems(this.posts, 'id')
           this.totalElements = data.totalElements
@@ -60,16 +77,16 @@ const usePost = defineStore('post', {
           core.loadingUrl.delete('get/post/one')
         })
     },
-    createNewPost(form, cb) {
+    createNewPost(callback) {
       const core = useCore()
       core.loadingUrl.add('create/post')
       api({
         url: 'post',
         method: 'POST',
         data: {
-          text: form.text,
-          fileHashId: form.fileHashId,
-          buttons: form.buttons.map((item) => ({
+          text: this.form.text,
+          fileHashId: this.form.fileHashId,
+          buttons: this.form.buttons.map((item) => ({
             orderNumber: item.orderNumber,
             text: item.text,
             url: item.url
@@ -81,9 +98,11 @@ const usePost = defineStore('post', {
             type: 'success',
             locale: 'POST_ADDED_SUCCESSFULLY'
           })
-          cb()
+          callback()
+          this.getAllPosts(0)
         })
         .catch((error) => {
+          console.log(error)
           core.switchStatus(error)
         })
         .finally(() => {

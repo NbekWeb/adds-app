@@ -1,5 +1,6 @@
 <script setup>
-import { formatAmount, formatTime, fileBaseUrl } from '@/composables'
+import { formatAmount, formatTime } from '@/composables'
+import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import IconAnnouncementVoic from '@/components/icons/IconAnnouncementVoic.vue'
 import IconPin from '@/components/icons/IconPin.vue'

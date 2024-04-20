@@ -7,6 +7,7 @@ import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import PostListComponent from '@/pages/dashboard/post/components/PostListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
+import PostFormDrawerComponent from '@/pages/dashboard/post/components/PostFormDrawerComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -14,7 +15,7 @@ const route = useRoute()
 const corePinia = useCore()
 const postPinia = usePost()
 
-const { loadingUrl } = storeToRefs(corePinia)
+const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 
 onMounted(() => {
   postPinia.getAllPosts(0)
@@ -28,13 +29,14 @@ onMounted(() => {
         class="add-btn"
         type="primary"
         size="middle"
-        @click="router.push(`/dashboard/post/create`)"
+        @click="visibleDrawer.add('post/form/modal')"
       >
         <icon-plus />
         {{ $t('ADD') }}
       </a-button>
     </template>
   </page-header-component>
+  <post-form-drawer-component />
   <post-list-component />
 </template>
 
