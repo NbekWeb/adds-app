@@ -8,36 +8,33 @@ const props = defineProps({
   file: {
     type: Object,
     required: true
-  },
-  fileType: {
-    type: [String, null],
-    required: true
   }
 })
 const corePinia = useCore()
 const { visibleDrawer } = storeToRefs(corePinia)
 
 function modalCLose() {
-  visibleDrawer.value.delete('post/file/view')
+  corePinia.visibleDrawer.delete(`post/file/view/${props.file?.hashId}`)
 }
 </script>
 
 <template>
   <a-modal
-    :open="visibleDrawer.has('post/file/view')"
+    :open="visibleDrawer.has(`post/file/view/${file?.hashId}`)"
     centered
     width="65%"
     :body-style="{ height: `${100}%` }"
     class="modal"
+    destroy-on-close
     :footer="null"
     @cancel="modalCLose"
   >
     <p class="mb-4"></p>
     <div class="modal-content flex justify-center align-center">
-      <template v-if="fileType === 'video'">
+      <template v-if="file?.fileType?.toLowerCase() === 'video'">
         <video-player-component :file="file" />
       </template>
-      <template v-if="fileType === 'image'">
+      <template v-if="file?.fileType?.toLowerCase() === 'image'">
         <div class="image-view">
           <img :src="`${fileBaseUrl}/file/${file?.hashId}`" />
         </div>

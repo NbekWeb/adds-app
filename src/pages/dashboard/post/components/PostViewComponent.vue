@@ -1,51 +1,62 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { fileBaseUrl } from '@/utils/conf.js'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
+import PostFilesComponent from '@/pages/dashboard/post/components/PostFilesComponent.vue'
+import { computed, onMounted, ref } from 'vue'
 
 const corePinia = useCore()
 const postPinia = usePost()
 
-const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
-const { postInfo } = storeToRefs(postPinia)
+const { id } = defineProps({
+  id: {
+    type: [String, Number],
+    required: true
+  }
+})
+const { loadingUrl } = storeToRefs(corePinia)
 
-function closeDrawer() {
-  visibleDrawer.value.delete('post/get/one')
-  postPinia.clearPostInfo()
+const postInfo = ref({})
+function handleOpenUrlNewTab(url) {
+  window.open(
+    url.includes('https') || url.includes('http') ? url : `http://${url}`,
+    '_blank'
+  )
 }
+onMounted(() => {
+  postPinia.getOnePostById(id, (data) => {
+    postInfo.value = data
+  })
+})
 </script>
 
 <template>
-  <a-drawer
-    :open="visibleDrawer.has('post/get/one')"
-    @close="closeDrawer"
-    width="500"
-    :title="$t('POST')"
-  >
-    <a-spin :spinning="loadingUrl.has('get/post/one')">
-      <template #indicator>
-        <icon-loader />
-      </template>
-      <scrollbar-component height="calc(100vh - 110px)">
-        <template #content>
-          <template v-if="postInfo?.messageType === 'IMAGE'">
-            <div class="post-image mb-2">
-              <img
-                :src="`${fileBaseUrl}/file/${postInfo?.fileHashId}`"
-                alt=""
-              />
-            </div>
-          </template>
-          <div>
+  <a-spin :spinning="loadingUrl.has('get/post/one')">
+    <template #indicator>
+      <icon-loader />
+    </template>
+    <scrollbar-component height="calc(100vh - 110px)">
+      <template #content>
+        <template v-if="postInfo">
+          <div class="post-file">
+            <post-files-component
+              :file="{
+                messageType: postInfo.messageType,
+                hashId: postInfo.fileHashId,
+                snapshotHashId: postInfo.snapshotHashId
+              }"
+            />
+          </div>
+
+          <div class="mt-2">
             <div v-html="postInfo?.text"></div>
           </div>
           <div>
             <a-button
               type="primary"
-              :href="button.url"
+              @click="handleOpenUrlNewTab(button.url)"
               v-for="button in postInfo?.buttons"
               class="w-full mb-2"
             >
@@ -53,19 +64,15 @@ function closeDrawer() {
             </a-button>
           </div>
         </template>
-      </scrollbar-component>
-    </a-spin>
-  </a-drawer>
+      </template>
+    </scrollbar-component>
+  </a-spin>
 </template>
 
 <style scoped lang="scss">
-.post-image {
-  width: 100%;
-  height: 300px;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-  }
+@import '@/assets/styles/variable';
+.post-file {
+  border-radius: 2px;
+  border: 1px dashed $muted;
 }
 </style>

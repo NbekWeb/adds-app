@@ -6,24 +6,9 @@ import useCore from '@/store/core.pinia.js'
 const usePost = defineStore('post', {
   state: () => ({
     posts: [],
-    postInfo: null,
     page: 0,
     totalElements: 0,
-    totalPages: 0,
-    form: {
-      fileHashId: null,
-      text: '',
-      buttons: [
-        {
-          orderNumber: 0,
-          text: null,
-          url: null,
-          firstUrl: null,
-          open: false,
-          error: false
-        }
-      ]
-    }
+    totalPages: 0
   }),
   actions: {
     clearPost() {
@@ -61,14 +46,15 @@ const usePost = defineStore('post', {
           core.loadingUrl.delete('get/post/all')
         })
     },
-    getOnePostById(id) {
+    getOnePostById(id, callback) {
       const core = useCore()
       core.loadingUrl.add('get/post/one')
       api({
-        url: `post/${id}`
+        url: `post`,
+        pk: id
       })
         .then(({ data }) => {
-          this.postInfo = data
+          callback(data)
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -77,16 +63,16 @@ const usePost = defineStore('post', {
           core.loadingUrl.delete('get/post/one')
         })
     },
-    createNewPost(callback) {
+    createNewPost(form, callback) {
       const core = useCore()
       core.loadingUrl.add('create/post')
       api({
         url: 'post',
         method: 'POST',
         data: {
-          text: this.form.text,
-          fileHashId: this.form.fileHashId,
-          buttons: this.form.buttons.map((item) => ({
+          text: form.text,
+          fileHashId: form.fileHashId,
+          buttons: form.buttons.map((item) => ({
             orderNumber: item.orderNumber,
             text: item.text,
             url: item.url
@@ -113,7 +99,8 @@ const usePost = defineStore('post', {
       const core = useCore()
       core.loadingUrl.add(`delete/post/${id}`)
       api({
-        url: `post/${id}`,
+        url: `post`,
+        pk: id,
         method: 'DELETE'
       })
         .then(() => {

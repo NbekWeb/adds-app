@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import { fileBaseUrl } from '@/utils/conf.js'
+
 const props = defineProps({
   file: {
     type: Object,
     required: true
   }
 })
+
 const options = ref({ quality: { default: '1080p' } })
 </script>
 
@@ -27,6 +29,11 @@ const options = ref({ quality: { default: '1080p' } })
 <style lang="scss">
 .plyr-video {
   height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
   .plyr {
     height: 100%;
   }

@@ -58,6 +58,7 @@ const uzLat = {
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   CREATE_AN_ORDER: "E'lon berish",
   //   labels
+  DOWNLOAD: 'Yuklab olish',
   POST_IMAGE: "Postga fayl qo'shish",
   POST_DESCRIPTION: 'Post tavsifi',
   POST_BUTTONS: 'Post tugmalari',
@@ -136,6 +137,8 @@ const uzLat = {
   // An SMS code was sent to number 3
   //   notificitions
   NO_DATA: "Ma'lumot mavjud emas!",
+  // The uploaded file is invalid
+  THE_UPLOADED_FILE_IS_INVALID: 'Yuklangan fayl yaroqsiz',
   SELECT_DATE_FREE_DATE_FOR_SEE:
     "E'lon berish uchun bo'sh vaqtlarni ko'rish uchun sanani tanlang",
   DO_YOU_WANT_TO_DELETE_THE_USER: "Foydalanuvchini o'chirishni xoxlaysizmi?",

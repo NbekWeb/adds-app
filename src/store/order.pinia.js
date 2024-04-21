@@ -54,7 +54,8 @@ const useOrder = defineStore('order', {
       const core = useCore()
       core.loadingUrl.add('get/order/one')
       api({
-        url: `order/${id}`
+        url: `order`,
+        pk: id
       })
         .then(({ data }) => {
           this.orderInfo = data
@@ -116,7 +117,8 @@ const useOrder = defineStore('order', {
       const core = useCore()
       core.loadingUrl.add('update/order')
       api({
-        url: `order/${id}`,
+        url: `order`,
+        pk: id,
         method: 'PUT',
         data: form
       })
@@ -137,7 +139,8 @@ const useOrder = defineStore('order', {
       const core = useCore()
       core.loadingUrl.add(`confirm/order/${id}`)
       api({
-        url: `order/confirm/${id}`,
+        url: `order/confirm`,
+        pk: id,
         method: 'POST'
       })
         .then(() => {
@@ -157,7 +160,8 @@ const useOrder = defineStore('order', {
       const core = useCore()
       core.loadingUrl.add('delete/order')
       api({
-        url: `order/${id}`,
+        url: `order`,
+        pk: id,
         method: 'DELETE'
       })
         .then(() => {

@@ -6,23 +6,16 @@ import usePost from '@/store/post.pinia.js'
 import PostItemComponent from '@/pages/dashboard/post/components/PostItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
-import PostViewComponent from '@/pages/dashboard/post/components/PostViewComponent.vue'
+import PostViewDrawerComponent from '@/pages/dashboard/post/components/PostViewComponent.vue'
 
 const corePinia = useCore()
 const postPinia = usePost()
 
 const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
-const { posts, postInfo } = storeToRefs(postPinia)
-
-function handleGetOnePost(id) {
-  postInfo.value = {}
-  visibleDrawer.value.add('post/get/one')
-  postPinia.getOnePostById(id)
-}
+const { posts } = storeToRefs(postPinia)
 </script>
 
 <template>
-  <post-view-component :post="postInfo" />
   <a-spin :spinning="loadingUrl.has('get/post/all')">
     <template #indicator>
       <icon-loader />
@@ -42,7 +35,7 @@ function handleGetOnePost(id) {
               :key="item.id"
               v-for="item in posts"
             >
-              <post-item-component :item="item" @get-one="handleGetOnePost" />
+              <post-item-component :item="item" />
             </a-col>
           </a-row>
         </template>

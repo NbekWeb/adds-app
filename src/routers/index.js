@@ -11,7 +11,6 @@ import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsV
 import DashboardBoardItemView from '@/pages/dashboard/board/[id]/DashboardBoardItemView.vue'
 import DashboardPostListView from '@/pages/dashboard/post/DashboardPostListView.vue'
 import DashboardPostView from '@/pages/dashboard/post/DashboardPostView.vue'
-import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
 import DashboardKioskBoardView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardView.vue'
 import DashboardKioskBoardListView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardListView.vue'
 import DashboardPaymentListView from '@/pages/dashboard/payment/DashboardPaymentListView.vue'
@@ -84,11 +83,6 @@ export const router = createRouter({
               path: '',
               name: 'DashboardKioskBoardListView',
               component: DashboardKioskBoardListView
-            },
-            {
-              path: 'create',
-              name: 'DashboardPostFormView',
-              component: DashboardPostFormView
             }
           ]
         },
@@ -102,11 +96,6 @@ export const router = createRouter({
               path: '',
               name: 'DashboardPostListView',
               component: DashboardPostListView
-            },
-            {
-              path: 'create',
-              name: 'DashboardPostFormView',
-              component: DashboardPostFormView
             }
           ]
         },

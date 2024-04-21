@@ -1,21 +1,18 @@
 <script setup>
-import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import usePost from '@/store/post.pinia.js'
 import useCore from '@/store/core.pinia.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
-import IconFile from '@/components/icons/IconFile.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
-import { useRouter } from 'vue-router'
 import IconEye from '@/components/icons/IconEye.vue'
-import IconPaperClip from '@/components/icons/IconPaperClip.vue'
-import IconEdit from '@/components/icons/IconEdit.vue'
+import PostFilesComponent from '@/pages/dashboard/post/components/PostFilesComponent.vue'
+import PostViewComponent from '@/pages/dashboard/post/components/PostViewComponent.vue'
 
 const router = useRouter()
 
-const emits = defineEmits(['getOne'])
-const props = defineProps({
+const { item } = defineProps({
   item: {
     type: Object,
     required: true
@@ -24,35 +21,39 @@ const props = defineProps({
 const corePinia = useCore()
 const postPinia = usePost()
 
-const { loadingUrl } = storeToRefs(corePinia)
-const baseUrl = ref(
-  `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}`
-)
+const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 
 const deletePost = () => {
-  postPinia.deletePostById(props.item.id)
+  postPinia.deletePostById(item.id)
+}
+function handleGetOnePost() {
+  corePinia.visibleDrawer.add(`post/get/one/${item.id}`)
 }
 </script>
 
 <template>
+  <a-drawer
+    :open="visibleDrawer.has(`post/get/one/${item.id}`)"
+    @close="visibleDrawer.delete(`post/get/one/${item.id}`)"
+    destroy-on-close
+    width="500"
+    :title="$t('POST')"
+  >
+    <post-view-component :id="item.id" />
+  </a-drawer>
   <a-spin class="spin" :spinning="loadingUrl.has(`delete/post/${item.id}`)">
     <template #indicator>
       <icon-loader />
     </template>
     <a-card class="card">
       <template #cover v-if="item.messageType !== 'TEXT'">
-        <div class="post-cover">
-          <template v-if="item.messageType === 'DOCUMENT'">
-            <icon-file class="file" />
-          </template>
-          <template v-if="item.messageType === 'IMAGE'">
-            <img
-              class="post-image"
-              :src="`${baseUrl}/file/${item.fileHashId}?type=TELEGRAM`"
-              alt=""
-            />
-          </template>
-        </div>
+        <post-files-component
+          :file="{
+            messageType: item.messageType,
+            hashId: item.fileHashId,
+            snapshotHashId: item.snapshotHashId
+          }"
+        />
       </template>
 
       <a-card-meta class="mb-3">
@@ -65,7 +66,11 @@ const deletePost = () => {
         </template>
       </a-card-meta>
       <template #actions>
-        <a-button @click="emits('getOne', item.id)" type="primary" size="small">
+        <a-button
+          @click="handleGetOnePost(item.id)"
+          type="primary"
+          size="small"
+        >
           <icon-eye class="mt-1" />
         </a-button>
         <a-button
@@ -98,23 +103,8 @@ const deletePost = () => {
 .card {
   position: relative;
   &:deep(.ant-card-body) {
-    padding: 12px 12px 12px 12px;
-  }
-}
-.post-cover {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 200px;
-  .post-image {
-    width: 100%;
     height: 100%;
-    object-fit: fill;
-  }
-  .file {
-    font-size: 88px;
-    color: $muted;
+    padding: 12px 12px 12px 12px;
   }
 }
 

@@ -5,7 +5,6 @@ import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import useUpload from '@/store/upload.pinia.js'
 import usePost from '@/store/post.pinia.js'
-import IconLoader from '@/components/icons/IconLoader.vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -27,13 +26,25 @@ const uploadPinia = useUpload()
 const postPinia = usePost()
 
 const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
-const { form } = storeToRefs(postPinia)
 const baseUrl = ref(
   `${import.meta.env.VITE_APP_BASE_URL}${import.meta.env.VITE_AOO_BASE_API_VERSION}/`
 )
 
 const formRef = ref()
-
+const form = reactive({
+  fileHashId: null,
+  text: '',
+  buttons: [
+    {
+      orderNumber: 0,
+      text: null,
+      url: null,
+      firstUrl: null,
+      open: false,
+      error: false
+    }
+  ]
+})
 const rule = reactive({
   required: true,
   message: '',
@@ -56,6 +67,7 @@ const uploadResponse = reactive({
 })
 const fileTypes = ref(['image', 'video', 'application'])
 const fileType = ref(null)
+const fileName = ref(null)
 const fileProgress = ref(0)
 
 const uploadLogo = (file) => {
@@ -64,8 +76,9 @@ const uploadLogo = (file) => {
       file,
       'TELEGRAM',
       (data) => {
-        form.value.fileHashId = data.hashId
+        form.fileHashId = data.hashId
         fileType.value = file.type.split('/')[0]
+        fileName.value = file.name
         uploadResponse.hashId = data.hashId
         uploadResponse.snapshotHashId = data.snapshotHashId
         fileProgress.value = 0
@@ -74,19 +87,24 @@ const uploadLogo = (file) => {
         fileProgress.value = progress
       }
     )
+  } else {
+    corePinia.setToast({
+      type: 'warning',
+      locale: 'THE_UPLOADED_FILE_IS_INVALID'
+    })
   }
 
   return false
 }
 function viewModal() {
-  visibleDrawer.value.add(`post/file/view`)
+  visibleDrawer.value.add(`post/file/view/${uploadResponse.hashId}`)
 }
 const clearFile = () => {
-  form.value.fileHashId = null
+  form.fileHashId = null
   fileType.value = null
 }
 const addLinkedButton = () => {
-  form.value.buttons.push({
+  form.buttons.push({
     orderNumber: 0,
     text: null,
     url: null,
@@ -97,21 +115,21 @@ const addLinkedButton = () => {
 }
 
 const confirmUrl = (index) => {
-  form.value.buttons[index].open = false
-  form.value.buttons[index].url = form.value.buttons[index].firstUrl
-  form.value.buttons[index].error = false
+  form.buttons[index].open = false
+  form.buttons[index].url = form.buttons[index].firstUrl
+  form.buttons[index].error = false
 }
 const cancelUrl = (index) => {
-  form.value.buttons[index].open = false
-  form.value.buttons[index].firstUrl = null
+  form.buttons[index].open = false
+  form.buttons[index].firstUrl = null
 }
 const removeLinkedButton = (index) => {
-  form.value.buttons.splice(index, 1)
+  form.buttons.splice(index, 1)
 }
 
 const submitForm = (formRef) => {
   const validate = []
-  form.value.buttons = form.value.buttons.map((item, index) => {
+  form.buttons = form.buttons.map((item, index) => {
     if (!item.url) {
       item.error = true
       validate.push(index)
@@ -124,7 +142,7 @@ const submitForm = (formRef) => {
 
   formRef.validate().then(() => {
     if (!validate.length) {
-      postPinia.createNewPost(() => {
+      postPinia.createNewPost(form, () => {
         visibleDrawer.value.delete('post/form/modal')
       })
     }
@@ -133,250 +151,254 @@ const submitForm = (formRef) => {
 </script>
 
 <template>
-  <a-drawer
-    :title="$t('DashboardPostFormView')"
-    width="500"
-    :open="visibleDrawer.has('post/form/modal')"
-    @close="visibleDrawer.delete('post/form/modal')"
-  >
-    <scrollbar-component height="calc(100vh - 105px)">
-      <template #content>
-        <div class="form-container mx-1">
-          <a-form layout="vertical" ref="formRef" :model="form">
-            <a-form-item :label="$t('POST_IMAGE')">
-              <progress-component
-                loading-url="file/upload"
-                :percent="fileProgress"
-                type="circle"
-                :size="40"
-              >
-                <template v-if="form.fileHashId">
-                  <post-file-view-modal-component
-                    :file-type="fileType"
-                    :file="uploadResponse"
-                  />
-                  <template v-if="fileType === 'image'">
-                    <div class="post-image">
-                      <img :src="`${baseUrl}file/${form.fileHashId}`" alt="" />
-                      <div class="upload-action">
-                        <a-button
-                          type="link"
-                          @click="clearFile"
-                          class="delete-btn btn"
-                        >
-                          <template #icon>
-                            <icon-trash />
-                          </template>
-                        </a-button>
-                        <a-button
-                          type="link"
-                          @click="viewModal"
-                          class="delete-btn btn"
-                        >
-                          <template #icon>
-                            <IconEye />
-                          </template>
-                        </a-button>
-                      </div>
-                    </div>
-                  </template>
-                  <template v-if="fileType === 'video'">
-                    <div class="post-image">
-                      <img
-                        :src="`${baseUrl}file/${uploadResponse.snapshotHashId}`"
-                        alt=""
-                      />
-                      <div class="upload-action">
-                        <a-button
-                          type="link"
-                          @click="clearFile"
-                          class="delete-btn btn"
-                        >
-                          <template #icon>
-                            <icon-trash />
-                          </template>
-                        </a-button>
-                        <a-button
-                          type="link"
-                          @click="viewModal"
-                          class="delete-btn btn"
-                        >
-                          <template #icon>
-                            <IconEye />
-                          </template>
-                        </a-button>
-                      </div>
-                    </div>
-                  </template>
-                  <template v-if="fileType === 'application'">
-                    <div class="application flex justify-between">
-                      <span>
-                        <IconFile />
-                        <span> </span>
-                      </span>
-                      <a-space>
-                        <a-button class="btn file-close" @click="clearFile">
-                          <template #icon>
-                            <IconX />
-                          </template>
-                        </a-button>
-                      </a-space>
-                    </div>
-                  </template>
-                </template>
-                <template v-else>
-                  <a-upload
-                    class="upload"
-                    list-type="picture-card"
-                    :multiple="false"
-                    :show-upload-list="false"
-                    :before-upload="uploadLogo"
-                  >
-                    <div>
-                      <icon-plus class="upload-icon" />
-                      <div class="mt-1">{{ $t('CLICK_TO_UPLOAD_FILE') }}</div>
-                    </div>
-                  </a-upload>
-                </template>
-              </progress-component>
-            </a-form-item>
-            <a-form-item
-              :label="$t('POST_DESCRIPTION')"
-              :rules="ruleTextAndFile"
-              name="text"
+  <scrollbar-component height="calc(100vh - 105px)">
+    <template #content>
+      <div class="form-container mx-1">
+        <a-form layout="vertical" ref="formRef" :model="form">
+          <a-form-item :label="$t('POST_IMAGE')">
+            <progress-component
+              loading-url="file/upload"
+              :percent="fileProgress"
+              type="circle"
+              :size="40"
             >
-              <div class="editor">
-                <ckeditor
-                  :editor="ClassicEditor"
-                  v-model="form.text"
-                  :config="editorConfig"
-                ></ckeditor>
-              </div>
-            </a-form-item>
-            <a-form-item
-              :label="$t('POST_BUTTONS')"
-              :rules="[{ required: true }]"
-            >
-              <a-row :gutter="[10, 10]">
-                <a-col v-for="(item, i) in form.buttons" :key="i" :span="24">
-                  <a-card class="button-card">
-                    <div class="flex align-center">
-                      <a-form-item
-                        :rules="rule"
-                        class="w-full mb-0"
-                        :name="['buttons', i, 'text']"
-                      >
-                        <a-input-group compact class="flex">
-                          <a-input
-                            v-model:value="item.text"
-                            @input="item.orderNumber = i"
-                            class="button-text-input"
-                            :placeholder="$t('ENTER_TEXT_LINKED_BUTTON')"
-                          />
-                          <a-tooltip placement="topRight">
-                            <template #title>
-                              <span>{{ $t('ATTACH_URL') }}</span>
-                            </template>
-                            <a-button
-                              @click="item.open = true"
-                              class="flex align-center"
-                              :danger="item.error"
-                            >
-                              <template v-if="item.url">
-                                <icon-check />
-                              </template>
-                              <template v-else>
-                                <icon-link />
-                              </template>
-                            </a-button>
-                          </a-tooltip>
-                        </a-input-group>
-                      </a-form-item>
-                      <a-popover
-                        :open="item.open"
-                        :title="$t('ENTER_URL')"
-                        trigger="click"
-                        placement="topRight"
-                      >
-                        <template #content>
-                          <a-form-item class="mb-0">
-                            <a-input
-                              style="width: 300px"
-                              class="button-url-input"
-                              v-model:value="item.firstUrl"
-                              :placeholder="$t('ENTER_URL')"
-                            />
-                          </a-form-item>
-                          <div class="flex justify-end mt-1">
-                            <a-space>
-                              <a-button
-                                @click="confirmUrl(i)"
-                                size="small"
-                                type="primary"
-                                class="flex align-center"
-                              >
-                                <icon-check />
-                              </a-button>
-                              <a-button
-                                @click="cancelUrl(i)"
-                                class="flex align-center"
-                                type="primary"
-                                size="small"
-                                danger
-                              >
-                                <icon-x />
-                              </a-button>
-                            </a-space>
-                          </div>
-                        </template>
-                      </a-popover>
+              <template v-if="form.fileHashId">
+                <post-file-view-modal-component
+                  :file="{
+                    fileType: fileType,
+                    hashId: uploadResponse?.hashId,
+                    snapshotHashId: uploadResponse?.snapshotHashId
+                  }"
+                />
+                <template v-if="fileType === 'image'">
+                  <div class="post-image">
+                    <img :src="`${baseUrl}file/${form.fileHashId}`" alt="" />
+                    <div class="upload-action">
                       <a-button
-                        @click="removeLinkedButton(i)"
-                        :disabled="form.buttons.length <= 1"
-                        type="primary"
-                        size="small"
-                        class="flex justify-center align-center ml-2"
-                        danger
+                        type="link"
+                        @click="clearFile"
+                        class="delete-btn btn"
+                        size="middle"
                       >
-                        <icon-x />
+                        <template #icon>
+                          <icon-trash />
+                        </template>
+                      </a-button>
+                      <a-button
+                        type="link"
+                        @click="viewModal"
+                        class="eye-btn btn"
+                        size="middle"
+                      >
+                        <template #icon>
+                          <IconEye />
+                        </template>
                       </a-button>
                     </div>
-                  </a-card>
-                </a-col>
-                <a-col :span="24" class="flex justify-center">
-                  <a-button
-                    @click="addLinkedButton"
-                    size="middle"
-                    class="button-add-btn"
-                  >
-                    <template #icon>
-                      <icon-plus />
-                    </template>
-                    {{ $t('ADD_NEW_LINKED_BUTTON') }}
-                  </a-button>
-                </a-col>
-              </a-row>
-            </a-form-item>
-          </a-form>
+                  </div>
+                </template>
+                <template v-if="fileType === 'video'">
+                  <div class="post-image">
+                    <img
+                      :src="`${baseUrl}file/${uploadResponse.snapshotHashId}`"
+                      alt=""
+                    />
+                    <div class="upload-action">
+                      <a-button
+                        type="link"
+                        @click="clearFile"
+                        class="delete-btn btn"
+                        size="middle"
+                      >
+                        <template #icon>
+                          <icon-trash />
+                        </template>
+                      </a-button>
+                      <a-button
+                        type="link"
+                        @click="viewModal"
+                        class="delete-btn btn"
+                        size="middle"
+                      >
+                        <template #icon>
+                          <IconEye />
+                        </template>
+                      </a-button>
+                    </div>
+                  </div>
+                </template>
+                <template v-if="fileType === 'application'">
+                  <div class="application flex justify-between">
+                    <span>
+                      <IconFile />
+                      <span>{{ fileName }}</span>
+                    </span>
+                    <a-space>
+                      <a-button
+                        class="btn file-close"
+                        @click="clearFile"
+                        size="small"
+                      >
+                        <template #icon>
+                          <IconX />
+                        </template>
+                      </a-button>
+                    </a-space>
+                  </div>
+                </template>
+              </template>
+              <template v-else>
+                <a-upload
+                  class="upload"
+                  list-type="picture-card"
+                  :multiple="false"
+                  :show-upload-list="false"
+                  :before-upload="uploadLogo"
+                >
+                  <div>
+                    <icon-plus class="upload-icon" />
+                    <div class="mt-1">{{ $t('CLICK_TO_UPLOAD_FILE') }}</div>
+                  </div>
+                </a-upload>
+              </template>
+            </progress-component>
+          </a-form-item>
+          <a-form-item
+            :label="$t('POST_DESCRIPTION')"
+            :rules="ruleTextAndFile"
+            name="text"
+          >
+            <div class="editor">
+              <ckeditor
+                :editor="ClassicEditor"
+                v-model="form.text"
+                :config="editorConfig"
+              ></ckeditor>
+            </div>
+          </a-form-item>
+          <a-form-item
+            :label="$t('POST_BUTTONS')"
+            :rules="[{ required: true }]"
+          >
+            <a-row :gutter="[10, 10]">
+              <a-col v-for="(item, i) in form.buttons" :key="i" :span="24">
+                <a-card class="button-card">
+                  <div class="flex align-center">
+                    <a-form-item
+                      :rules="rule"
+                      class="w-full mb-0"
+                      :name="['buttons', i, 'text']"
+                    >
+                      <a-input-group compact class="flex">
+                        <a-input
+                          v-model:value="item.text"
+                          @input="item.orderNumber = i"
+                          class="button-text-input"
+                          :placeholder="$t('ENTER_TEXT_LINKED_BUTTON')"
+                        />
+                        <a-tooltip placement="topRight">
+                          <template #title>
+                            <span>{{ $t('ATTACH_URL') }}</span>
+                          </template>
+                          <a-button
+                            @click="item.open = true"
+                            class="flex align-center"
+                            :danger="item.error"
+                          >
+                            <template v-if="item.url">
+                              <icon-check />
+                            </template>
+                            <template v-else>
+                              <icon-link />
+                            </template>
+                          </a-button>
+                        </a-tooltip>
+                      </a-input-group>
+                    </a-form-item>
+                    <a-popover
+                      :open="item.open"
+                      :title="$t('ENTER_URL')"
+                      trigger="click"
+                      placement="topRight"
+                    >
+                      <template #content>
+                        <a-form-item class="mb-0">
+                          <a-input
+                            style="width: 300px"
+                            class="button-url-input"
+                            v-model:value="item.firstUrl"
+                            :placeholder="$t('ENTER_URL')"
+                          />
+                        </a-form-item>
+                        <div class="flex justify-end mt-1">
+                          <a-space>
+                            <a-button
+                              @click="confirmUrl(i)"
+                              size="small"
+                              type="primary"
+                              class="flex align-center"
+                            >
+                              <icon-check />
+                            </a-button>
+                            <a-button
+                              @click="cancelUrl(i)"
+                              class="flex align-center"
+                              type="primary"
+                              size="small"
+                              danger
+                            >
+                              <icon-x />
+                            </a-button>
+                          </a-space>
+                        </div>
+                      </template>
+                    </a-popover>
+                    <a-button
+                      @click="removeLinkedButton(i)"
+                      :disabled="form.buttons.length <= 1"
+                      type="primary"
+                      size="small"
+                      class="flex justify-center align-center ml-2"
+                      danger
+                    >
+                      <icon-x />
+                    </a-button>
+                  </div>
+                </a-card>
+              </a-col>
+              <a-col :span="24" class="flex justify-center">
+                <a-button
+                  @click="addLinkedButton"
+                  size="middle"
+                  class="button-add-btn"
+                >
+                  <template #icon>
+                    <icon-plus />
+                  </template>
+                  {{ $t('ADD_NEW_LINKED_BUTTON') }}
+                </a-button>
+              </a-col>
+            </a-row>
+          </a-form-item>
+        </a-form>
 
-          <div class="btn-group mt-3">
-            <a-space>
-              <a-button @click="router.back()" size="middle">{{
-                $t('BACK')
-              }}</a-button>
-              <a-button
-                @click="submitForm(formRef)"
-                :loading="loadingUrl.has('create/post')"
-                type="primary"
-                size="middle"
-                >{{ $t('SAVE') }}</a-button
-              >
-            </a-space>
-          </div>
+        <div class="btn-group mt-3">
+          <a-space>
+            <a-button @click="router.back()" size="middle">{{
+              $t('BACK')
+            }}</a-button>
+            <a-button
+              @click="submitForm(formRef)"
+              :loading="loadingUrl.has('create/post')"
+              type="primary"
+              size="middle"
+              >{{ $t('SAVE') }}</a-button
+            >
+          </a-space>
         </div>
-      </template>
-    </scrollbar-component>
-  </a-drawer>
+      </div>
+    </template>
+  </scrollbar-component>
 </template>
 
 <style scoped lang="scss">
@@ -416,17 +438,24 @@ const submitForm = (formRef) => {
     transition: opacity 0.3s;
     .delete-btn {
       font-size: 24px;
-      color: $muted;
+      color: $white;
       &:hover {
         color: $danger;
+      }
+    }
+    .eye-btn {
+      font-size: 24px;
+      color: $white;
+      &:hover {
+        color: $muted;
       }
     }
   }
 }
 .application {
-  font-size: 24px;
+  font-size: 20px;
   .file-close {
-    font-size: 22px;
+    font-size: 16px;
   }
 }
 .upload {
