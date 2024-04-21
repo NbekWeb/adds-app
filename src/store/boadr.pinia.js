@@ -55,7 +55,8 @@ const useBoard = defineStore('board', {
       const core = useCore()
       core.loadingUrl.add(`get/board/one`)
       api({
-        url: `board/${id}`
+        url: `board`,
+        pk: id
       })
         .then(({ data }) => {
           this.boardInfo = data
@@ -85,12 +86,7 @@ const useBoard = defineStore('board', {
               pId: item.parentId
             }))
           ]
-
-          this.categories = [
-            ...new Map(
-              this.categories.map((item) => [item['value'], item])
-            ).values()
-          ]
+          this.categories = uniqueItems(this.categories, 'value')
         })
         .catch((error) => {
           useCore().switchStatus(error)

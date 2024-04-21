@@ -36,7 +36,15 @@ onMounted(() => {
       </a-button>
     </template>
   </page-header-component>
-  <post-form-drawer-component />
+  <a-drawer
+    :title="$t('DashboardPostFormView')"
+    width="500"
+    destroy-on-close
+    :open="visibleDrawer.has('post/form/modal')"
+    @close="visibleDrawer.delete('post/form/modal')"
+  >
+    <post-form-drawer-component />
+  </a-drawer>
   <post-list-component />
 </template>
 
