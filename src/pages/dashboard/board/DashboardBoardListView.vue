@@ -40,7 +40,7 @@ onBeforeUnmount(() => {
         </a-button>
         <a-drawer
           root-class-name="isMobile"
-          height="200"
+          height="250"
           v-model:open="open"
           placement="bottom"
         >
