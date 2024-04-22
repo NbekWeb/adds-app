@@ -93,7 +93,7 @@ useRecaptchaProvider()
     margin: 0 !important;
     padding: 0 2px 0 2px;
     .login-page-banner {
-      @include responsive-xs {
+      @include responsive-xl {
         display: block;
       }
       @include responsive-lg {
@@ -145,6 +145,10 @@ useRecaptchaProvider()
     @include responsive-lg {
       display: block;
       padding: 0 46px 0 46px;
+    }
+    @include responsive-md {
+      display: block;
+      padding: 0;
     }
   }
 }
