@@ -13,7 +13,7 @@ const route = useRoute()
 const corePinia = useCore()
 const orderPinia = useOrder()
 
-const { visibleDrawer, loadingUrl } = storeToRefs(corePinia)
+const { visibleDrawer, loadingUrl, collapsed } = storeToRefs(corePinia)
 const { orders, orderInfo, page, totalElements, totalPages } =
   storeToRefs(orderPinia)
 
@@ -59,8 +59,8 @@ function getPaginationAllOrders(page) {
           <a-row :gutter="[10, 10]">
             <a-col
               :xs="24"
-              :ms="24"
-              :md="24"
+              :sm="12"
+              :md="collapsed ? 12 : 24"
               :lg="12"
               :xl="8"
               :xxl="6"
