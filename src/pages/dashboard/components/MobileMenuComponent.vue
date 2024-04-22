@@ -22,7 +22,7 @@ const open = ref(false)
     :header-style="{ 'flex-direction': 'row-reverse' }"
   >
     <template #extra>
-      <a-row class="py-3" align="middle" justify="center">
+      <a-row align="middle" justify="center">
         <a-col class="text-center">
           <logo />
         </a-col>
