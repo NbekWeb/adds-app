@@ -76,7 +76,7 @@ const getBoardList = (page) => {
   }
 }
 .board-page-spin {
-  height: 96% !important;
+  height: 90% !important;
   .ant-spin-container {
     height: 100% !important;
   }
