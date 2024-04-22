@@ -19,7 +19,6 @@ const open = ref(false)
     placement="left"
     class="menu-drawer"
     width="300"
-    destroy-on-close
     :header-style="{ 'flex-direction': 'row-reverse' }"
   >
     <template #extra>
@@ -49,12 +48,12 @@ const open = ref(false)
 @import '@/assets/styles/responsive';
 .menu-drawer {
   .ant-drawer-content-wrapper {
-    @include responsive-sm {
-      width: 300px !important;
-    }
-    @include responsive-xs {
-      width: 100% !important;
-    }
+    //@include responsive-sm {
+    //  width: 200px !important;
+    //}
+    //@include responsive-xs {
+    //  width: 100% !important;
+    //}
   }
   .logo {
     margin-right: 4px;
