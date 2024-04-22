@@ -83,6 +83,9 @@ onMounted(() => {
   line-height: 18px;
   height: auto;
   padding: 1rem 2rem;
+  @include responsive-md {
+    padding: 1rem 12px;
+  }
 }
 .menu {
   border-right: 1px solid rgba($muted, 0.3);
@@ -127,5 +130,8 @@ onMounted(() => {
 .view {
   width: 100%;
   height: calc(100vh - 162px);
+  @include responsive-md {
+    height: calc(100vh - 122px);
+  }
 }
 </style>
