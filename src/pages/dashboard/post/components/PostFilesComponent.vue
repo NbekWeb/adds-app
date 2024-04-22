@@ -4,6 +4,7 @@ import useCore from '@/store/core.pinia.js'
 import IconFile from '@/components/icons/IconFile.vue'
 import PostFileViewModalComponent from '@/pages/dashboard/post/components/PostFileViewModalComponent.vue'
 import IconDownloadCloud from '@/components/icons/IconDownloadCloud.vue'
+import IconPlay from '@/components/icons/IconPlay.vue'
 const props = defineProps({
   file: {
     type: Object,
@@ -24,7 +25,10 @@ function openViewModal() {
       snapshotHashId: file?.snapshotHashId
     }"
   />
-  <div class="post-cover">
+  <div
+    class="post-cover"
+    :class="{ 'type-text': file?.messageType === 'TEXT' }"
+  >
     <template v-if="file?.messageType === 'IMAGE'">
       <div class="post-image">
         <img :src="`${fileBaseUrl}/file/${file?.hashId}`" alt="" />
@@ -124,5 +128,8 @@ function openViewModal() {
       }
     }
   }
+}
+.type-text {
+  height: 0 !important;
 }
 </style>

@@ -58,7 +58,7 @@ const ruleTextAndFile = reactive({
 
 const editorConfig = ref({
   // The configuration of the editor.
-  toolbar: ['bold', 'italic']
+  toolbar: ['bold', 'italic', 'link']
 })
 
 const uploadResponse = reactive({

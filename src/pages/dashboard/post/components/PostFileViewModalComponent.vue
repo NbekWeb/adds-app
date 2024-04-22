@@ -32,7 +32,7 @@ function modalCLose() {
       </template>
       <template v-if="file?.fileType?.toLowerCase() === 'image'">
         <div class="image-view">
-          <img :src="`${fileBaseUrl}/file/${file?.hashId}`" />
+          <img :src="`${fileBaseUrl}/file/${file?.hashId}`" alt="" />
         </div>
       </template>
     </div>
