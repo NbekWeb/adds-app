@@ -26,12 +26,12 @@ useRecaptchaProvider()
       </a-col>
       <a-col
         :xs="24"
-        :sm="24"
-        :md="24"
-        :lg="24"
-        :xl="13"
-        :xxl="10"
-        class="login-form"
+        :sm="20"
+        :md="20"
+        :lg="12"
+        :xl="10"
+        :xxl="8"
+        class="login-form flex justify-center"
       >
         <a-card shadow>
           <div class="auth-form">
@@ -114,20 +114,27 @@ useRecaptchaProvider()
       }
     }
     .login-form {
+      padding: 20px;
+
       .ant-card {
-        @include responsive-xs {
+        @include responsive-xl {
+          margin: 0 24px;
+        }
+        @include responsive-lg {
           max-width: 100%;
+        }
+        @include responsive-md {
+          max-width: 460px;
+          margin: 0;
         }
         @include responsive-sm {
           max-width: 460px;
           margin: 0 auto;
         }
-        @include responsive-md {
-          max-width: 460px;
-        }
-        @include responsive-lg {
+        @include responsive-xs {
           max-width: 100%;
         }
+
         &:deep(.ant-card-body) {
           padding: 12px !important;
         }
@@ -142,14 +149,6 @@ useRecaptchaProvider()
     margin: 0 auto;
     overflow: auto;
     padding: 4px;
-    @include responsive-lg {
-      display: block;
-      padding: 0 46px 0 46px;
-    }
-    @include responsive-md {
-      display: block;
-      padding: 0;
-    }
   }
 }
 </style>
