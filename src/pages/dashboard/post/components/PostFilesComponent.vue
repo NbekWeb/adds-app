@@ -24,7 +24,10 @@ function openViewModal() {
       snapshotHashId: file?.snapshotHashId
     }"
   />
-  <div class="post-cover">
+  <div
+    class="post-cover"
+    :class="{ 'type-text': file?.messageType === 'TEXT' }"
+  >
     <template v-if="file?.messageType === 'IMAGE'">
       <div class="post-image">
         <img :src="`${fileBaseUrl}/file/${file?.hashId}`" alt="" />
@@ -124,5 +127,8 @@ function openViewModal() {
       }
     }
   }
+}
+.type-text {
+  height: 0 !important;
 }
 </style>
