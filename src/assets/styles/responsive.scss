@@ -7,31 +7,35 @@ $xl: 1200px;
 
 
 @mixin responsive-xs{
-  @media (min-width: $xs){
+  @media (max-width: $xs){
     @content;
   }
 }
 
 @mixin responsive-sm {
-  @media (min-width: $sm) {
+  @media (max-width: $sm) {
     @content;
   }
 }
 
 @mixin responsive-md{
-  @media (min-width: $md){
+  @media (max-width: $md){
     @content;
   }
 }
 
 @mixin responsive-lg{
-  @media (min-width: $lg){
+  @media (max-width: $lg){
     @content;
   }
 }
 @mixin responsive-xl{
-  @media (min-width: $xl){
+  @media (max-width: $xl){
     @content;
   }
+}
+
+.isMobile{
+
 }
 

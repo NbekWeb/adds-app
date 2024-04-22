@@ -9,6 +9,7 @@ import IconChevronLeft from '@/components/icons/IconChevronLeft.vue'
 import IconChevronRight from '@/components/icons/IconChevronRight.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { useRouter } from 'vue-router'
+import MobileMenuComponent from '@/pages/dashboard/components/MobileMenuComponent.vue'
 
 const router = useRouter()
 
@@ -35,7 +36,7 @@ onMounted(() => {
         :width="250"
         :collapsed="collapsed"
         theme="light"
-        class="menu"
+        class="menu isDesktop"
       >
         <menu-component :collapsed="collapsed" />
         <button @click="corePinia.collapse()" type="button" class="btn-toggle">

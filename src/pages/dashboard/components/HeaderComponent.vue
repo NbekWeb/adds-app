@@ -1,9 +1,12 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import useUser from '@/store/user.pinia.js'
+import MobileMenuComponent from '@/pages/dashboard/components/MobileMenuComponent.vue'
+import { ref } from 'vue'
 
 const userPinia = useUser()
 const { user } = storeToRefs(userPinia)
+
 function navigateToClient() {
   window.location.replace('https://admin.adspro.uz')
 }
@@ -11,6 +14,9 @@ function navigateToClient() {
 
 <template>
   <a-row :gutter="16" justify="end" align="middle">
+    <a-col>
+      <mobile-menu-component />
+    </a-col>
     <a-col class="ml-auto">
       <a-button @click="navigateToClient" type="primary">
         {{ $t('ADD_BOARD') }}

@@ -40,7 +40,7 @@ onMounted(() => {
     <scrollbar-component height="calc(100vh - 110px)">
       <template #content>
         <template v-if="postInfo">
-          <div class="post-file">
+          <div :class="{ 'post-file': postInfo.messageType === 'DOCUMENT' }">
             <post-files-component
               :file="{
                 messageType: postInfo.messageType,

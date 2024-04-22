@@ -28,8 +28,8 @@ useRecaptchaProvider()
         :xs="24"
         :sm="24"
         :md="24"
-        :lg="12"
-        :xl="12"
+        :lg="24"
+        :xl="13"
         :xxl="10"
         class="login-form"
       >
@@ -70,36 +70,43 @@ useRecaptchaProvider()
 
 .login-page {
   height: 100vh;
-
-  @include responsive-xs {
-    padding: 0;
-  }
-  @include responsive-sm {
+  @include responsive-xl {
     display: block;
-  }
-  @include responsive-md {
     padding: 3rem;
   }
   @include responsive-lg {
     display: block;
+    padding: 3rem;
   }
+  @include responsive-md {
+    padding: 1rem;
+  }
+  @include responsive-sm {
+    display: block;
+  }
+  @include responsive-xs {
+    padding: 0;
+  }
+
   .ant-row {
     height: 100%;
     margin: 0 !important;
     padding: 0 2px 0 2px;
     .login-page-banner {
-      display: none;
       @include responsive-xs {
-        display: none;
+        display: block;
       }
-      @include responsive-sm {
+      @include responsive-lg {
         display: none;
       }
       @include responsive-md {
         display: none;
       }
-      @include responsive-lg {
-        display: block;
+      @include responsive-sm {
+        display: none;
+      }
+      @include responsive-xs {
+        display: none;
       }
 
       .login-image {
