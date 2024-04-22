@@ -22,14 +22,10 @@ function modalCLose() {
   <a-modal
     :open="visibleDrawer.has(`post/file/view/${file?.hashId}`)"
     centered
-    width="65%"
-    :body-style="{ height: `${100}%` }"
     class="modal"
-    destroy-on-close
     :footer="null"
     @cancel="modalCLose"
   >
-    <p class="mb-4"></p>
     <div class="modal-content flex justify-center align-center">
       <template v-if="file?.fileType?.toLowerCase() === 'video'">
         <video-player-component :file="file" />
@@ -43,10 +39,29 @@ function modalCLose() {
   </a-modal>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '@/assets/styles/variable';
+.video-player {
+  width: auto;
+}
+.modal {
+  width: auto !important;
+  .ant-modal-content {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    .ant-modal-close {
+      top: 0 !important;
+      inset-inline-end: -26px !important;
+    }
+  }
+
+  .anticon-close {
+    color: white;
+  }
+}
 .modal-content {
-  height: 80vh;
+  //height: 80vh;
   background: $muted;
 }
 .image-view {

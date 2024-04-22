@@ -28,7 +28,10 @@ const options = ref({ quality: { default: '1080p' } })
 </template>
 <style lang="scss">
 .plyr-video {
-  height: 100%;
+  width: 100%;
+  //height: 100%;
+  //height: 100vh;
+  object-fit: contain;
   img {
     width: 100%;
     height: 100%;
