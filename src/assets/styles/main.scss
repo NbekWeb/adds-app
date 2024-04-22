@@ -105,7 +105,7 @@ a {
   display: none;
 }
 .isDesktop{
-  display: block;
+  display: flex;
 }
 @include responsive-md {
   .isMobile {

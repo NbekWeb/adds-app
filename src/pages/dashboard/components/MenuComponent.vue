@@ -25,7 +25,7 @@ const { collapsed } = defineProps({
           :xxl="collapsed ? 24 : 6"
           class="text-center"
         >
-          <logo />
+          <logo class="desktop-logo" />
         </a-col>
         <template v-if="!collapsed">
           <a-col :xs="24" :sm="24" :md="12" :lg="16" :xxl="16">
@@ -44,7 +44,7 @@ const { collapsed } = defineProps({
 
 <style lang="scss">
 @import '@/assets/styles/variable';
-:deep(.logo) {
+.desktop-logo {
   font-size: 36px;
   color: $primary;
 }
