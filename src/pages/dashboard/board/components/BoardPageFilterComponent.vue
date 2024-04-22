@@ -5,7 +5,14 @@ import useBoard from '@/store/boadr.pinia.js'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import useCore from '@/store/core.pinia.js'
-const timeOut = ref(null)
+
+const emits = defineEmits(['change'])
+const props = defineProps({
+  isMobile: {
+    type: Boolean,
+    default: false
+  }
+})
 
 const router = useRouter()
 const route = useRoute()
@@ -16,10 +23,30 @@ const boardPinia = useBoard()
 const { loadingUrl } = storeToRefs(corePinia)
 const { categories } = storeToRefs(boardPinia)
 
+const timeOut = ref(null)
 const category = ref(route.query.category)
 const name = ref(route.query.name)
 
 function handleChangeFilter() {
+  if (!props.isMobile) {
+    router.push({
+      query: {
+        category: category.value,
+        name: name.value
+      }
+    })
+    boardPinia.getAllBoard(0, category.value, name.value)
+  }
+}
+function handleSearch() {
+  if (!props.isMobile) {
+    clearTimeout(timeOut.value)
+    timeOut.value = setTimeout(() => {
+      handleChangeFilter()
+    }, 500)
+  }
+}
+function handleFilterInMobile() {
   router.push({
     query: {
       category: category.value,
@@ -27,18 +54,13 @@ function handleChangeFilter() {
     }
   })
   boardPinia.getAllBoard(0, category.value, name.value)
-}
-function handleSearch() {
-  clearTimeout(timeOut.value)
-  timeOut.value = setTimeout(() => {
-    handleChangeFilter()
-  }, 500)
+  emits('change')
 }
 </script>
 
 <template>
-  <a-row :gutter="10" justify="end">
-    <a-col>
+  <a-row :gutter="[10, 10]" justify="end">
+    <a-col :xl="12" :lg="12" :md="24" :sm="24" :xs="24">
       <a-input
         :placeholder="$t('SEARCH')"
         v-model:value="name"
@@ -50,7 +72,7 @@ function handleSearch() {
         </template>
       </a-input>
     </a-col>
-    <a-col>
+    <a-col :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
       <a-tree-select
         v-model:value="category"
         class="board-category-filter"
@@ -69,6 +91,11 @@ function handleSearch() {
         @change="handleChangeFilter"
       >
       </a-tree-select>
+    </a-col>
+    <a-col :span="24" class="isMobile">
+      <a-button @click="handleFilterInMobile" type="primary" class="w-full">
+        {{ $t('READY') }}
+      </a-button>
     </a-col>
   </a-row>
 </template>

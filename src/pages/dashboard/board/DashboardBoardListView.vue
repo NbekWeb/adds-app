@@ -9,13 +9,14 @@ import BoardListComponent from '@/pages/dashboard/board/components/BoardListComp
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import IconSearch from '@/components/icons/IconSearch.vue'
 import BoardPageFilterComponent from '@/pages/dashboard/board/components/BoardPageFilterComponent.vue'
+import IconFilterFunnel from '@/components/icons/IconFilterFunnel.vue'
 
 const route = useRoute()
 const boardPinia = useBoard()
 
 const categoryId = computed(() => route.query.category)
 const searchName = computed(() => route.query.name)
-
+const open = ref(false)
 onMounted(() => {
   boardPinia.getAllBoard(0, categoryId.value, searchName.value)
   boardPinia.getBoardCategories()
@@ -30,6 +31,21 @@ onBeforeUnmount(() => {
     <template #actions>
       <div class="isDesktop">
         <board-page-filter-component />
+      </div>
+      <div class="isMobile">
+        <a-button class="btn" @click="open = true">
+          <template #icon>
+            <IconFilterFunnel />
+          </template>
+        </a-button>
+        <a-drawer
+          root-class-name="isMobile"
+          height="200"
+          v-model:open="open"
+          placement="bottom"
+        >
+          <board-page-filter-component is-mobile @change="open = false" />
+        </a-drawer>
       </div>
     </template>
   </page-header-component>

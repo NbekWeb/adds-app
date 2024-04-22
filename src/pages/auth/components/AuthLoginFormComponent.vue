@@ -14,7 +14,6 @@ const corePinia = useCore()
 const authPinia = useAuth()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { otp } = storeToRefs(authPinia)
 
 const model = reactive({
   phone_number: null,
@@ -41,7 +40,7 @@ const { execute } = useChallengeV3('submit')
 const getOtpGenerate = () => {
   validate()
     .then(async () => {
-      loadingUrl.value.add('auth/generate/otp')
+      corePinia.loadingUrl.add('auth/generate/otp')
       model.token = await execute()
       authPinia.getGenerateOtp(model)
     })

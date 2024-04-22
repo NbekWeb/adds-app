@@ -25,6 +25,7 @@ function closeDrawer() {
     class="custom-class"
     :title="`#${orderInfo ? orderInfo?.id : ''}`"
     width="500px"
+    root-class-name="order-view"
     placement="right"
     @close="closeDrawer"
   >
@@ -48,8 +49,9 @@ function closeDrawer() {
   </a-drawer>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
 .custom-class {
   width: 500px;
 }
@@ -60,5 +62,12 @@ function closeDrawer() {
 .currency {
   font-size: 12px;
   color: $muted;
+}
+.order-view {
+  .ant-drawer-content-wrapper {
+    @include responsive-md {
+      width: 100% !important;
+    }
+  }
 }
 </style>

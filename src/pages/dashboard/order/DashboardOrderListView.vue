@@ -7,6 +7,7 @@ import useCore from '@/store/core.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderItemDrawerComponent from '@/pages/dashboard/order/[id]/components/OrderItemDrawerComponent.vue'
 import OrderListComponent from '@/pages/dashboard/order/components/OrderListComponent.vue'
+import IconPlus from '@/components/icons/IconPlus.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -52,10 +53,14 @@ onMounted(() => {
           </a-select-option>
         </a-select>
         <a-button
+          class="btn"
           type="primary"
           @click="router.push({ name: 'DashboardPostView' })"
         >
-          {{ $t('CREATE_AN_ORDER') }}
+          <template #icon>
+            <IconPlus />
+          </template>
+          <span class="isDesktop">{{ $t('CREATE_AN_ORDER') }}</span>
         </a-button>
       </a-space>
     </template>
@@ -65,7 +70,11 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/responsive';
 .order-status {
   width: 200px;
+  @include responsive-md {
+    width: 150px;
+  }
 }
 </style>
