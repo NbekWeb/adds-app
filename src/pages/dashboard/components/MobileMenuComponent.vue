@@ -18,6 +18,7 @@ const open = ref(false)
     root-class-name="isMobile menu-drawer"
     placement="left"
     class="menu-drawer"
+    width="300"
     destroy-on-close
     :header-style="{ 'flex-direction': 'row-reverse' }"
   >
@@ -45,7 +46,16 @@ const open = ref(false)
 
 <style lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
 .menu-drawer {
+  .ant-drawer-content-wrapper {
+    @include responsive-sm {
+      width: 300px !important;
+    }
+    @include responsive-xs {
+      width: 100% !important;
+    }
+  }
   .logo {
     margin-right: 4px;
     font-size: 36px;

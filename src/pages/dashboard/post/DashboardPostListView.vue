@@ -40,6 +40,7 @@ onMounted(() => {
     :title="$t('DashboardPostFormView')"
     width="500"
     destroy-on-close
+    root-class-name="post-form-drawer"
     :open="visibleDrawer.has('post/form/modal')"
     @close="visibleDrawer.delete('post/form/modal')"
   >
@@ -48,10 +49,18 @@ onMounted(() => {
   <post-list-component />
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+@import '@/assets/styles/responsive';
 .add-btn {
   display: flex;
   align-items: center;
   gap: 4px;
+}
+.post-form-drawer {
+  .ant-drawer-content-wrapper {
+    @include responsive-sm {
+      width: 100% !important;
+    }
+  }
 }
 </style>
