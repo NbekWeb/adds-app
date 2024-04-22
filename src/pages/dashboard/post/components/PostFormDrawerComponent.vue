@@ -382,7 +382,7 @@ const submitForm = (formRef) => {
           </a-form-item>
         </a-form>
 
-        <div class="btn-group mt-3">
+        <div class="btn-group">
           <a-space>
             <a-button @click="router.back()" size="middle">{{
               $t('BACK')

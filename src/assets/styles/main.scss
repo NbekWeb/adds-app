@@ -1,6 +1,7 @@
 @import 'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap';
 @import "./variable";
 @import "./spacing";
+@import "responsive";
 
 * {
   font-family: "Roboto Flex", sans-serif;
@@ -98,3 +99,21 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+// Mobile and Desktop classes
+.isMobile {
+  display: none;
+}
+.isDesktop{
+  display: block;
+}
+@include responsive-md {
+  .isMobile {
+    display: flex !important;
+  }
+  .isDesktop {
+    display: none !important;
+  }
+
+}
+

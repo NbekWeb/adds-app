@@ -1,20 +1,9 @@
 <script setup>
-import { computed, ref, shallowRef } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import useCore from '@/store/core.pinia.js'
-import useUser from '@/store/user.pinia.js'
 import Logo from '@/components/Logo.vue'
 import UserComponent from '@/pages/dashboard/components/UserComponent.vue'
-import IconGrid from '@/components/icons/IconGrid.vue'
-import IconAnnouncement from '@/components/icons/IconAnnouncement.vue'
-import IconCoinsStacked from '@/components/icons/IconCoinsStacked.vue'
-import IconNotificationText from '@/components/icons/IconNotificationText.vue'
-import IconSettings from '@/components/icons/IconSettings.vue'
-import IconHelp from '@/components/icons/IconHelp.vue'
-import IconPowerOff from '@/components/icons/IconPowerOff.vue'
-import IconMessageTextSquare from '@/components/icons/IconMessageTextSquare.vue'
-import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
-import IconHome from '@/components/icons/IconHome.vue'
+
+import MenuMainComponent from '@/pages/dashboard/components/MenuMainComponent.vue'
+import MenuFooterComponent from '@/pages/dashboard/components/MenuFooterComponent.vue'
 
 const { collapsed } = defineProps({
   collapsed: {
@@ -22,50 +11,12 @@ const { collapsed } = defineProps({
     default: false
   }
 })
-const router = useRouter()
-const route = useRoute()
-
-const corePinia = useCore()
-const userPinia = useUser()
-
-const selected = ref([])
-const activeLink = computed(() => route.fullPath.split('/')[2])
-const setCollapse = ({ key }) => {
-  router.push(`/dashboard/${key}`)
-}
-const logOut = () => {
-  localStorage.clear()
-  userPinia.$reset()
-  router.push('/')
-}
-const menuList = shallowRef([
-  {
-    path: 'main',
-    name: 'DashboardListView',
-    icon: IconHome
-  },
-  {
-    path: 'board',
-    name: 'DashboardBoardListView',
-    icon: IconAnnouncement
-  },
-  {
-    path: 'post',
-    name: 'DashboardPostListView',
-    icon: IconMessageTextSquare
-  },
-  {
-    path: 'order',
-    name: 'DashboardOrderListView',
-    icon: IconShoppingCard
-  }
-])
 </script>
 
 <template>
   <div class="aside" :class="[{ collapsed: collapsed }]">
     <div class="px-3">
-      <a-row class="py-3" align="middle" justify="center">
+      <a-row class="isDesktop py-3" align="middle" justify="center">
         <a-col
           :xs="24"
           :sm="24"
@@ -85,77 +36,19 @@ const menuList = shallowRef([
         </template>
       </a-row>
       <user-component :avatar="true" class="mb-4" />
-      <a-menu
-        @click="setCollapse"
-        v-model="selected"
-        :selectedKeys="[activeLink]"
-        mode="inline"
-      >
-        <a-menu-item v-for="menu in menuList" :key="menu.path">
-          <template #icon>
-            <component :is="menu.icon" />
-          </template>
-          {{ $t(menu.name) }}
-        </a-menu-item>
-      </a-menu>
+      <menu-main-component :collapsed="collapsed" />
     </div>
-    <div class="aside-footer m-3">
-      <ul class="aside-footer-list px-2" :class="[{ collapse: collapsed }]">
-        <li>
-          <a-tooltip :title="$t('Help')">
-            <router-link class="text-success" :to="`/dashboard/help`">
-              <a-button type="link" size="small" link>
-                <icon-help />
-              </a-button>
-            </router-link>
-          </a-tooltip>
-        </li>
-        <li>
-          <a-tooltip :title="$t('News')">
-            <router-link :to="`/dashboard/news`">
-              <a-button type="link" size="small" link>
-                <icon-notification-text />
-              </a-button>
-            </router-link>
-          </a-tooltip>
-        </li>
-        <li>
-          <a-tooltip :title="$t('Settings')">
-            <router-link :to="`/dashboard/settings`">
-              <a-button type="link" size="small" link>
-                <icon-settings />
-              </a-button>
-            </router-link>
-          </a-tooltip>
-        </li>
-        <li>
-          <a-tooltip :title="$t('LogOut')">
-            <a-popconfirm
-              :title="$t('DOU_YOU_WANT_TO_LOG_OUT')"
-              :ok-text="$t('YES')"
-              :cancel-text="$t('NO')"
-              @confirm="logOut"
-            >
-              <a-button class="log-out" type="link" size="small" link danger>
-                <icon-power-off />
-              </a-button>
-            </a-popconfirm>
-          </a-tooltip>
-        </li>
-      </ul>
-    </div>
+    <menu-footer-component :collapsed="collapsed" />
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '@/assets/styles/variable';
 :deep(.logo) {
   font-size: 36px;
   color: $primary;
 }
-:deep(.ant-menu) {
-  border: none !important;
-}
+
 .logo-name {
   font-weight: 700;
   * {
@@ -166,67 +59,6 @@ const menuList = shallowRef([
   height: 100%;
   overflow: auto;
   position: relative;
-  .aside-footer {
-    font-size: 16px;
-    border-top: 1px solid rgba($muted, 0.3);
-    padding-top: 1rem;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    &-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      li {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        button {
-          color: $body !important;
-        }
-        .log-out {
-          color: $danger !important;
-        }
-        .router-link-exact-active {
-          button {
-            background-color: rgb($info, 0.2);
-            color: $primary !important;
-          }
-        }
-
-        svg {
-          vertical-align: -2px;
-        }
-      }
-      &.collapse {
-        flex-direction: column;
-        li {
-          padding: 0.5rem 0.6rem 0.5rem 0.6rem;
-        }
-      }
-    }
-    .btn-dark {
-      li {
-        button {
-          color: rgba(255, 255, 255, 0.65) !important;
-        }
-        .log-out {
-          color: $danger !important;
-        }
-        .router-link-exact-active {
-          button {
-            background: $primary;
-            color: $white !important;
-          }
-        }
-      }
-    }
-  }
 }
 .dark {
   background: #001529;
