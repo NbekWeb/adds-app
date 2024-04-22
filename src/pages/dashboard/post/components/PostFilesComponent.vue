@@ -4,6 +4,7 @@ import useCore from '@/store/core.pinia.js'
 import IconFile from '@/components/icons/IconFile.vue'
 import PostFileViewModalComponent from '@/pages/dashboard/post/components/PostFileViewModalComponent.vue'
 import IconDownloadCloud from '@/components/icons/IconDownloadCloud.vue'
+import IconPlay from '@/components/icons/IconPlay.vue'
 const props = defineProps({
   file: {
     type: Object,

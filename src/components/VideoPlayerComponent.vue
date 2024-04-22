@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeUnmount, ref } from 'vue'
+import { ref } from 'vue'
 import { fileBaseUrl } from '@/utils/conf.js'
 
 const props = defineProps({
