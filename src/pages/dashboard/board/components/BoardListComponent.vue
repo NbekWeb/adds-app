@@ -19,7 +19,10 @@ const getBoardList = (page) => {
 </script>
 
 <template>
-  <a-spin :spinning="loadingUrl.has('board/all')">
+  <a-spin
+    wrapper-class-name="board-page-spin"
+    :spinning="loadingUrl.has('board/all')"
+  >
     <template #indicator>
       <icon-loader />
     </template>
@@ -27,6 +30,7 @@ const getBoardList = (page) => {
       :loading="loadingUrl.has('board/all')"
       :count="9"
       :page="page"
+      class="board-list"
       height="calc(100vh - 196px)"
       :total-pages="totalPages"
       :total-count-all="totalElements"
@@ -62,12 +66,24 @@ const getBoardList = (page) => {
   </a-spin>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+@import '@/assets/styles/responsive';
 .loading-card {
   &:deep(.ant-card-body) {
     display: flex;
     align-items: center;
     height: 70px;
+  }
+}
+.board-page-spin {
+  height: 96% !important;
+  .ant-spin-container {
+    height: 100% !important;
+  }
+}
+.board-list {
+  @include responsive-md {
+    height: 100% !important;
   }
 }
 </style>
