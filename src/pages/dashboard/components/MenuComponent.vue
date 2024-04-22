@@ -16,7 +16,7 @@ const { collapsed } = defineProps({
 <template>
   <div class="aside" :class="[{ collapsed: collapsed }]">
     <div class="px-3">
-      <a-row class="isDesktop py-3" align="middle" justify="center">
+      <a-row class="py-3" align="middle" justify="center">
         <a-col
           :xs="24"
           :sm="24"
