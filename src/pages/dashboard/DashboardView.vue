@@ -53,7 +53,7 @@ onMounted(() => {
           <header-component />
         </a-layout-header>
         <a-layout-content class="content">
-          <a-card>
+          <a-card class="view-card">
             <div class="view">
               <router-view />
             </div>
@@ -66,6 +66,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
 :global(.grecaptcha-badge) {
   visibility: hidden;
   pointer-events: none;
@@ -92,8 +93,17 @@ onMounted(() => {
   background-color: rgba($muted, 0.1);
   height: calc(100vh - 80px);
   overflow: auto;
+
+  @include responsive-md {
+    padding: 1rem 0 0 0;
+  }
 }
-.content {
+.view-card {
+  &:deep(.ant-card-body) {
+    @include responsive-md {
+      padding: 12px !important;
+    }
+  }
 }
 .btn-toggle {
   width: 24px;
