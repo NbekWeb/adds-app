@@ -23,6 +23,7 @@ function modalCLose() {
     :open="visibleDrawer.has(`post/file/view/${file?.hashId}`)"
     centered
     class="modal"
+    :class="{ 'type-image': file?.fileType?.toLowerCase() === 'image' }"
     :footer="null"
     @cancel="modalCLose"
   >
@@ -58,6 +59,19 @@ function modalCLose() {
 
   .anticon-close {
     color: white;
+  }
+}
+.type-image {
+  //width: 60% !important;
+  height: 100%;
+  .image-view {
+    width: 100%;
+    height: 100vh;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
 .modal-content {

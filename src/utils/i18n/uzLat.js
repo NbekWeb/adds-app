@@ -129,6 +129,8 @@ const uzLat = {
   REJECTED: 'Rad qilingan',
   REJECT: 'Rad qilish',
   BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
+  AWAITING_BOARD_OWNER: 'Kanal egasi tasdiqlashi kutilmoqda',
+  ACCEPTED: 'Qabul qilingan',
   // descriptions
   LOGIN_PAGE_DESCRIPTION:
     'Biznes uchun reklamalarni joylashtirish, boshqarish uchun platforma.',
