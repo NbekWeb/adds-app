@@ -23,9 +23,11 @@ const statusIcon = reactive({
     :color="
       status === 'CREATED'
         ? 'magenta'
-        : status === 'PENDING'
+        : status === 'PENDING' || status === 'AWAITING_BOARD_OWNER'
           ? 'processing'
-          : status === 'APPROVED' || status === 'BOARD_OWNER_APPROVED'
+          : status === 'APPROVED' ||
+              status === 'BOARD_OWNER_APPROVED' ||
+              status === 'ACCEPTED'
             ? 'lime'
             : status === 'CANCELED' || status === 'REJECTED'
               ? 'error'
