@@ -4,8 +4,9 @@ import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
-import PostFilesComponent from '@/pages/dashboard/post/components/PostFilesComponent.vue'
+import PostFileViewModalComponent from '@/pages/dashboard/post/components/PostFileViewModalComponent.vue'
 import { computed, onMounted, ref } from 'vue'
+import { fileBaseUrl } from '@/utils/conf.js'
 
 const corePinia = useCore()
 const postPinia = usePost()
@@ -25,6 +26,9 @@ function handleOpenUrlNewTab(url) {
     '_blank'
   )
 }
+function openViewModal() {
+  corePinia.visibleDrawer.add(`post/file/view/${postInfo.value?.fileHashId}`)
+}
 onMounted(() => {
   postPinia.getOnePostById(id, (data) => {
     postInfo.value = data
@@ -40,14 +44,63 @@ onMounted(() => {
     <scrollbar-component height="calc(100vh - 110px)">
       <template #content>
         <template v-if="postInfo">
-          <div :class="{ 'post-file': postInfo.messageType === 'DOCUMENT' }">
-            <post-files-component
+          <div :class="{ 'post-file': postInfo?.messageType === 'DOCUMENT' }">
+            <post-file-view-modal-component
               :file="{
-                messageType: postInfo.messageType,
-                hashId: postInfo.fileHashId,
-                snapshotHashId: postInfo.snapshotHashId
+                fileType: postInfo?.messageType,
+                hashId: postInfo?.fileHashId,
+                snapshotHashId: postInfo?.snapshotHashId
               }"
             />
+            <div
+              class="post-cover"
+              :class="{ 'type-text': postInfo?.messageType === 'TEXT' }"
+            >
+              <template v-if="postInfo?.messageType === 'IMAGE'">
+                <div class="post-image">
+                  <img
+                    :src="`${fileBaseUrl}/file/${postInfo?.fileHashId}`"
+                    alt=""
+                  />
+                </div>
+              </template>
+              <template v-if="postInfo?.messageType === 'VIDEO'">
+                <div class="post-video">
+                  <img
+                    :src="`${fileBaseUrl}/file/${postInfo?.snapshotHashId}`"
+                    alt=""
+                  />
+                  <div class="video-play flex justify-center align-center">
+                    <a-button
+                      @click="openViewModal"
+                      size="large"
+                      shape="circle"
+                      type="primary"
+                      class="btn"
+                    >
+                      <template #icon>
+                        <IconPlay />
+                      </template>
+                    </a-button>
+                  </div>
+                </div>
+              </template>
+              <template v-if="postInfo?.messageType === 'DOCUMENT'">
+                <div class="post-document">
+                  <icon-file class="file" />
+                  <div class="download-btn flex justify-center align-center">
+                    <a-tooltip :title="$t('DOWNLOAD')">
+                      <a
+                        :href="`${fileBaseUrl}/file/${postInfo?.fileHashId}`"
+                        download
+                      >
+                        <IconDownloadCloud />
+                      </a>
+                    </a-tooltip>
+                  </div>
+                </div>
+              </template>
+            </div>
           </div>
 
           <div class="mt-2">
@@ -74,5 +127,29 @@ onMounted(() => {
 .post-file {
   border-radius: 2px;
   border: 1px dashed $muted;
+}
+.post-image {
+  width: 100%;
+  height: auto;
+  img {
+    width: 100%;
+  }
+}
+.post-video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .video-play {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>
