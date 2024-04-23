@@ -47,9 +47,11 @@ const { item } = defineProps({
             <icon-announcement-voic />
           </span>
           <p class="mb-0">
-            {{ formatTime(item.configuration.liveTime, 'hh') }}
-            {{ $t('HOUR').toLowerCase() }},
-            {{ formatTime(item.configuration.liveTime, 'mm') }}
+            {{ formatTime(item.configuration.liveTime, 'day') }}
+            {{ $t('DAY').toLowerCase() }},
+            {{ formatTime(item.configuration.liveTime, 'hour') }}
+            {{ $t('HOUR').toLowerCase() }}
+            {{ formatTime(item.configuration.liveTime, 'minute') }}
             {{ $t('MINUTE').toLowerCase() }}
           </p>
         </div>
@@ -59,9 +61,11 @@ const { item } = defineProps({
             <icon-pin />
           </span>
           <p class="mb-0">
-            {{ formatTime(item.configuration.pinTime, 'hh') }}
-            {{ $t('HOUR').toLowerCase() }},
-            {{ formatTime(item.configuration.pinTime, 'mm') }}
+            {{ formatTime(item.configuration.pinTime, 'day') }}
+            {{ $t('DAY').toLowerCase() }},
+            {{ formatTime(item.configuration.pinTime, 'hour') }}
+            {{ $t('HOUR').toLowerCase() }}
+            {{ formatTime(item.configuration.pinTime, 'minute') }}
             {{ $t('MINUTE').toLowerCase() }}
           </p>
         </div>
@@ -70,12 +74,14 @@ const { item } = defineProps({
           <span class="mr-1">
             <icon-pin />
           </span>
-          <span class="">
-            {{ formatTime(item.configuration.topTime, 'hh') }}
+          <p class="mb-0">
+            {{ formatTime(item.configuration.topTime, 'day') }}
+            {{ $t('DAY').toLowerCase() }},
+            {{ formatTime(item.configuration.topTime, 'hour') }}
             {{ $t('HOUR').toLowerCase() }},
-            {{ formatTime(item.configuration.topTime, 'mm') }}
+            {{ formatTime(item.configuration.topTime, 'minute') }}
             {{ $t('MINUTE').toLowerCase() }}
-          </span>
+          </p>
         </div>
       </div>
 
