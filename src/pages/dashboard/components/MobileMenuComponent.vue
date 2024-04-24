@@ -47,14 +47,6 @@ const open = ref(false)
 @import '@/assets/styles/variable';
 @import '@/assets/styles/responsive';
 .menu-drawer {
-  .ant-drawer-content-wrapper {
-    //@include responsive-sm {
-    //  width: 200px !important;
-    //}
-    //@include responsive-xs {
-    //  width: 100% !important;
-    //}
-  }
   .logo {
     margin-right: 4px;
     font-size: 36px;

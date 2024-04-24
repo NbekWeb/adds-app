@@ -36,6 +36,7 @@ function handleGetOnePost() {
     :open="visibleDrawer.has(`post/get/one/${item.id}`)"
     @close="visibleDrawer.delete(`post/get/one/${item.id}`)"
     destroy-on-close
+    root-class-name="post-view-drawer"
     width="500"
     :title="$t('POST')"
   >
@@ -98,8 +99,9 @@ function handleGetOnePost() {
   </a-spin>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
 .card {
   position: relative;
   &:deep(.ant-card-body) {
@@ -135,5 +137,13 @@ function handleGetOnePost() {
 }
 .text {
   -webkit-line-clamp: 15;
+}
+
+.post-view-drawer {
+  .ant-drawer-content-wrapper {
+    @include responsive-sm {
+      width: 100% !important;
+    }
+  }
 }
 </style>
