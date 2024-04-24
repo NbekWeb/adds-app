@@ -29,8 +29,8 @@ useRecaptchaProvider()
         :sm="20"
         :md="20"
         :lg="12"
-        :xl="10"
-        :xxl="8"
+        :xl="11"
+        :xxl="10"
         class="login-form flex justify-center"
       >
         <a-card shadow>

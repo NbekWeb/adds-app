@@ -55,19 +55,22 @@ onBeforeMount(() => {
       />
     </a-form-item>
     <a-form-item>
-      <a-checkbox
-        @change="(e) => handleCheck(e)"
-        v-model:checked="model.checked"
-        :disabled="loadingUrl.has('auth/register')"
-      >
-      </a-checkbox>
-      <p class="mb-0">
-        Ro'yxatdan o'tish orqali siz
-        <a href="#" class="offer-link">oferta shartlariga</a> roziligingizni
-        bildirasiz.
-      </p>
+      <div class="flex">
+        <a-checkbox
+          @change="(e) => handleCheck(e)"
+          v-model:checked="model.checked"
+          :disabled="loadingUrl.has('auth/register')"
+        >
+        </a-checkbox>
+
+        <p class="mb-0 ml-2">
+          Ro'yxatdan o'tish orqali siz
+          <a href="#" class="offer-link">oferta shartlariga</a> roziligingizni
+          bildirasiz.
+        </p>
+      </div>
     </a-form-item>
-    <a-form-item>
+    <div>
       <a-button
         @click="register"
         :loading="loadingUrl.has('auth/register')"
@@ -87,7 +90,7 @@ onBeforeMount(() => {
       >
         {{ $t('ENTER') }}
       </a-button>
-    </a-form-item>
+    </div>
   </a-form>
 </template>
 
