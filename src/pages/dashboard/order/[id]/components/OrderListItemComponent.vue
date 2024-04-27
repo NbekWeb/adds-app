@@ -3,8 +3,12 @@ import dayjs from 'dayjs'
 import { formatHourAndMinute, formatAmount } from '@/composables'
 import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
+import { useRouter } from 'vue-router'
 
 const emits = defineEmits(['getOne'])
+
+const router = useRouter()
+
 const { item } = defineProps({
   item: {
     type: Object,
@@ -14,7 +18,12 @@ const { item } = defineProps({
 </script>
 
 <template>
-  <a-card class="order-item-card" @click="emits('getOne', item.id)">
+  <a-card
+    class="order-item-card"
+    @click="
+      router.push({ name: 'DashboardOrderItemView', params: { id: item.id } })
+    "
+  >
     <div class="status flex justify-between align-center">
       <div>
         <status-tag-component :status="item.status" />

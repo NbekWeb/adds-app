@@ -41,6 +41,7 @@ const statusIcon = reactive({
                   : ''
     "
     :bordered="false"
+    class="m-0"
     v-bind="$attrs"
   >
     <template #icon> {{ statusIcon[status] }} </template>

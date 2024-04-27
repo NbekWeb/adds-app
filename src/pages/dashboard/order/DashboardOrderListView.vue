@@ -3,9 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useOrder from '@/store/order.pinia.js'
-import useCore from '@/store/core.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import OrderItemDrawerComponent from '@/pages/dashboard/order/[id]/components/OrderItemDrawerComponent.vue'
 import OrderListComponent from '@/pages/dashboard/order/components/OrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 
@@ -65,7 +63,6 @@ onMounted(() => {
       </a-space>
     </template>
   </page-header-component>
-  <order-item-drawer-component :order="orderInfo" />
   <order-list-component />
 </template>
 

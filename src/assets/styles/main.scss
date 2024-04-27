@@ -10,7 +10,12 @@
 body{
   color: #1C232C;
 }
-
+.text-muted{
+  color: $muted;
+}
+.text-body{
+  color: $body;
+}
 .text-bold {
   font-weight: 600;
 }
@@ -53,6 +58,9 @@ body{
 }
 .justify-end{
   justify-content: flex-end!important;
+}
+.justify-start{
+  justify-content: flex-start!important;
 }
 .w-full{
   width: 100%;
