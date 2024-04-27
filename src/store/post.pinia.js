@@ -108,7 +108,8 @@ const usePost = defineStore('post', {
           buttons: form.buttons.map((item) => ({
             orderNumber: item.orderNumber,
             text: item.text,
-            url: item.url
+            url: item.url,
+            id: item.id
           }))
         }
       })
