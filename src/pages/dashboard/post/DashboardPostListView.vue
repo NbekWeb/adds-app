@@ -5,9 +5,8 @@ import usePost from '@/store/post.pinia.js'
 import { computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
-import PostListComponent from '@/pages/dashboard/post/components/PostListComponent.vue'
+import PostListComponent from '@/pages/dashboard/post/component/PostListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
-import PostFormDrawerComponent from '@/pages/dashboard/post/components/PostFormDrawerComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -29,23 +28,14 @@ onMounted(() => {
         class="add-btn"
         type="primary"
         size="middle"
-        @click="visibleDrawer.add('post/form/modal')"
+        @click="router.push({ name: 'DashboardPostCreateFormView' })"
       >
         <icon-plus />
         {{ $t('ADD') }}
       </a-button>
     </template>
   </page-header-component>
-  <a-drawer
-    :title="$t('DashboardPostFormView')"
-    width="500"
-    destroy-on-close
-    root-class-name="post-form-drawer"
-    :open="visibleDrawer.has('post/form/modal')"
-    @close="visibleDrawer.delete('post/form/modal')"
-  >
-    <post-form-drawer-component />
-  </a-drawer>
+
   <post-list-component />
 </template>
 

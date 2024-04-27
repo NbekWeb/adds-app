@@ -95,6 +95,39 @@ const usePost = defineStore('post', {
           core.loadingUrl.delete('create/post')
         })
     },
+    updatePost(id, form, callback) {
+      const core = useCore()
+      core.loadingUrl.add('create/post')
+      api({
+        url: 'post',
+        pk: id,
+        method: 'PUT',
+        data: {
+          text: form.text,
+          fileHashId: form.fileHashId,
+          buttons: form.buttons.map((item) => ({
+            orderNumber: item.orderNumber,
+            text: item.text,
+            url: item.url
+          }))
+        }
+      })
+        .then(() => {
+          core.setToast({
+            type: 'success',
+            locale: 'POST_UPDATED_SUCCESSFULLY'
+          })
+          callback()
+          this.getAllPosts(0)
+        })
+        .catch((error) => {
+          console.log(error)
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('create/post')
+        })
+    },
     deletePostById(id) {
       const core = useCore()
       core.loadingUrl.add(`delete/post/${id}`)

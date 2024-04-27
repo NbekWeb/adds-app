@@ -15,6 +15,7 @@ const uzLat = {
   DashboardSettingsView: 'Sozlamalar',
   BoardConfigurationsView: "Ta'riflar",
   DashboardOrderFormView: "E'lon berish",
+  DashboardPostItemView: "Postni ko'rish",
 
   Help: 'Yordam',
   News: 'Xabar va yangilik',
@@ -60,7 +61,7 @@ const uzLat = {
   CREATE_AN_ORDER: "E'lon berish",
   //   labels
   DOWNLOAD: 'Yuklab olish',
-  POST_IMAGE: "Postga fayl qo'shish",
+  ADD_FILE_TO_FILE: "Postga fayl qo'shish",
   POST_DESCRIPTION: 'Post tavsifi',
   POST_BUTTONS: 'Post tugmalari',
   POST_LIVE_TIME: "E'lonni kanalda turish muddati",
@@ -75,8 +76,12 @@ const uzLat = {
   TOTAL: 'Jami',
   SOUM: "so'm",
   POST: "E'lon",
+  URL: 'Havola',
   ENTER_TEXT_LINKED_BUTTON: 'Tugma matnini kiriting',
+  LINKED_BUTTON_TEXT: 'Tugma matni',
+  LINKED_BUTTON_URL: 'Tugma havolasi',
   ENTER_URL: 'Havola kiriting',
+
   ATTACH_URL: 'Havola biriktirish',
   FILTER_BY_STATUS: "Holat bo'yicha filterlash",
   STATUS: 'Holati',
@@ -114,7 +119,7 @@ const uzLat = {
   SELECT_DATE_AND_TIME: 'Sana va vaqtni tanlang',
 
   // statuses
-
+  FAILED: 'Muvaffaqiyatsiz',
   INACTIVE: 'Faol emas',
   ACTIVE: 'Faol',
   EDITED: 'Tahrirlangan',
@@ -155,6 +160,7 @@ const uzLat = {
   BOARD_CONFIGURATION_DELETED_SUCCESSFULLY: "Ta'rif muvafaqiyatli o'chirildi",
   BOARD_TIME_CONFIGURATION_DELETED_SUCCESSFULLY:
     "Ta'rif muvafaqiyatli o'chirildi",
+  POST_UPDATED_SUCCESSFULLY: 'Post muvafaqiyatli yangilandi',
   POST_ADDED_SUCCESSFULLY: "Post muvafaqiyatli qo'shildi",
   POST_DELETED_SUCCESSFULLY: "Post muvafaqiyatli o'chirildi",
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',

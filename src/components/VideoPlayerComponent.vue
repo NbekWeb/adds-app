@@ -13,35 +13,30 @@ const options = ref({ quality: { default: '1080p' } })
 </script>
 
 <template>
-  <div class="plyr-video">
-    <vue-plyr :options="options">
+  <div class="plyr-video" v-bind="$attrs">
+    <vue-plyr :options="options" class="plyr--video">
       <video
+        class="video-player"
         controls
         crossorigin
         playsinline
         :data-poster="`${fileBaseUrl}/file/${file.snapshotHashId}`"
       >
-        <source :src="`${fileBaseUrl}/file/${file.hashId}`" />
+        <source
+          class="vide0-source"
+          :src="`${fileBaseUrl}/file/${file.hashId}`"
+        />
       </video>
     </vue-plyr>
   </div>
 </template>
 <style lang="scss">
+@import '@/assets/styles/responsive';
 .plyr-video {
-  width: 100%;
-  //height: 100%;
-  //height: 100vh;
-  object-fit: contain;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  .plyr {
-    height: 100%;
-  }
-  .plyr__video-wrapper {
-    height: 100%;
+  width: 80vw;
+  height: 80dvh;
+  @include responsive-md {
+    height: auto;
   }
 }
 </style>
