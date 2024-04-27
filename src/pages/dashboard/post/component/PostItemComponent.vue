@@ -47,7 +47,7 @@ function editPost(id) {
           >
             <img
               class="post-cover"
-              :src="`${fileBaseUrl}/file/${item.messageType === 'IMAGE' ? item.fileHashId : item.snapshotHashId}`"
+              :src="`${fileBaseUrl}/file/${item.messageType === 'IMAGE' ? item?.fileDto?.fileHashId : item.snapshotHashId}`"
               alt=""
             />
           </template>

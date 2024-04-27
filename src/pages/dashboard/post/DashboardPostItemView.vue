@@ -40,7 +40,10 @@ onMounted(() => {
       <template #content>
         <div class="post-item-file">
           <template v-if="post?.messageType === 'IMAGE'">
-            <img :src="`${fileBaseUrl}/file/${post?.fileHashId}`" alt="" />
+            <img
+              :src="`${fileBaseUrl}/file/${post?.fileDto?.fileHashId}`"
+              alt=""
+            />
           </template>
           <template v-if="post?.messageType === 'VIDEO'">
             <div class="flex justify-center">
@@ -48,7 +51,7 @@ onMounted(() => {
                 class="plyr-video"
                 :file="{
                   snapshotHashId: post?.snapshotHashId,
-                  hashId: post?.fileHashId
+                  hashId: post?.fileDto?.fileHashId
                 }"
               />
             </div>
