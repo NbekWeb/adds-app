@@ -1,138 +1,117 @@
 <script setup>
-import { formatAmount, formatTime } from '@/composables'
 import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
-import IconAnnouncementVoic from '@/components/icons/IconAnnouncementVoic.vue'
-import IconPin from '@/components/icons/IconPin.vue'
+import { formatHourAndMinute, formatTime } from '@/composables/index.js'
+import ConfigurationComponent from '@/pages/dashboard/order/[id]/components/ConfigurationComponent.vue'
+import ReactionsComponent from '@/pages/dashboard/order/[id]/components/ReactionsComponent.vue'
+import dayjs from 'dayjs'
+import amount from '../../../../../composables/amount.js'
 
-const { item } = defineProps({
-  item: {
-    type: Object,
-    required: true
-  }
+const props = defineProps({
+  order: Object
 })
 </script>
 
 <template>
-  <div class="card mb-3">
-    <div class="flex align-center justify-between align-center">
-      <div class="flex justify-between align-center">
+  <a-card class="order-item-card">
+    <a-row>
+      <a-col :span="5" class="flex justify-start">
         <a-avatar
+          :src="`${fileBaseUrl}/file/${order?.board.logoHashId}`"
           size="large"
-          class="board-item-avatar avatar"
-          :src="`${fileBaseUrl}/file/${item.channelHashId}`"
         />
-        <div>
-          <h3 class="channel-name m-0 ml-1">
-            {{
-              item.board.name.length > 30
-                ? `${item.board.name.slice(0, 25)}...`
-                : item.board.name
-            }}
-          </h3>
-          <status-tag-component
-            class="order-status ml-1 py-0"
-            :status="item.status"
-          />
+        <div class="item ml-2">
+          <p class="m-0">
+            {{ order?.board.name }}
+          </p>
+          <span class="text-muted">
+            {{ $t('NAME') }}
+          </span>
         </div>
-      </div>
-      <p class="configuration">
-        {{
-          item.configuration.name.length > 10
-            ? `${item.configuration.name.slice(0, 10)}...`
-            : item.configuration.name
-        }}
-      </p>
-    </div>
-
-    <div class="flex justify-between align-center">
-      <!--      kanal-->
-      <div class="flex justify-between align-center my-2">
-        <span class="mr-1">
-          <icon-announcement-voic />
-        </span>
-        <p class="text-bold mb-1">
-          {{ formatTime(item.configuration.liveTime, 'day') }}
-          {{ $t('DAY').toLowerCase() }},
-          {{ formatTime(item.configuration.liveTime, 'hour') }}
-          {{ $t('HOUR').toLowerCase() }},
-          {{ formatTime(item.configuration.liveTime, 'minute') }}
-          {{ $t('MINUTE').toLowerCase() }}
+      </a-col>
+      <a-col :span="1" class="item border">
+        <p class="m-0">
+          {{ order?.configuration.name }}
         </p>
-      </div>
-      <!--      pin-->
-      <div class="flex justify-between align-center">
-        <span class="mr-1">
-          <icon-pin />
+        <span class="text-muted">
+          {{ $t('RATE') }}
         </span>
-        <p class="text-bold mb-1">
-          {{ formatTime(item.configuration.pinTime, 'day') }}
-          {{ $t('DAY').toLowerCase() }},
-          {{ formatTime(item.configuration.pinTime, 'hour') }}
-          {{ $t('HOUR').toLowerCase() }},
-          {{ formatTime(item.configuration.pinTime, 'minute') }}
-          {{ $t('MINUTE').toLowerCase() }}
+      </a-col>
+      <a-col :span="3" class="item border">
+        <p class="m-0">
+          {{ dayjs(order?.taskResponse.startDate).format('DD.MM.YYYY') }},
+          {{ formatHourAndMinute(order?.taskResponse.startDate) }}
         </p>
-      </div>
-      <!--      top-->
-      <span class="time-value text-bold">
-        {{ formatTime(item.configuration.topTime, 'day') }}
-        {{ $t('DAY').toLowerCase() }},
-        {{ formatTime(item.configuration.topTime, 'hour') }}
-        {{ $t('HOUR').toLowerCase() }},
-        {{ formatTime(item.configuration.topTime, 'minute') }}
-        {{ $t('MINUTE').toLowerCase() }}
-      </span>
-    </div>
+        <span class="text-muted">
+          {{ $t('START_DATE') }}
+        </span>
+      </a-col>
+      <a-col :span="3" class="item border">
+        <p class="m-0">
+          {{ dayjs(order?.taskResponse.endDate).format('DD.MM.YYYY') }},
+          {{ formatHourAndMinute(order?.taskResponse.endDate) }}
+        </p>
+        <span class="text-muted">
+          {{ $t('END_DATE') }}
+        </span>
+      </a-col>
+      <a-col :span="3" class="item border">
+        <p class="m-0">
+          {{ amount(order?.amount) }}
+        </p>
+        <span class="text-muted">
+          {{ $t('AMOUNT') }}
+        </span>
+      </a-col>
+      <a-col :span="7">
+        <reactions-component :reactions="order?.taskResponse.reactions" />
+      </a-col>
+      <a-col :span="2">
+        <status-tag-component :status="order?.status" />
+      </a-col>
+    </a-row>
 
-    <div class="flex justify-between align-center">
-      <span class="label">{{ $t('THE_TIME_OF_PUBLICATION') }}:</span>
-      <span class="date text-bold">
-        {{ item.orderDate }}, {{ item.timeConfiguration.startTime.slice(0, 5) }}
-      </span>
-    </div>
-    <div class="flex justify-between">
-      <span class="label"> {{ $t('ORDER_PRICE') }}: </span>
-      <span class="amount text-bold">
-        {{ formatAmount(item.amount) }}
-        <span class="currency text-bold">{{ $t('SOUM') }}</span>
-      </span>
-    </div>
-  </div>
+    <!--    <configuration-component :configuration="order?.configuration" />-->
+
+    <!--    <a-row justify="space-between">-->
+    <!--      <a-col>-->
+    <!--        <h4>-->
+    <!--          {{ $t('AMOUNT') }}-->
+    <!--        </h4>-->
+    <!--      </a-col>-->
+    <!--      <a-col>{{ order?.amount }}</a-col>-->
+    <!--    </a-row>-->
+  </a-card>
 </template>
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
-.card {
-  border-bottom: 1px dashed $muted;
+.order-item-card {
+  &:deep(.ant-card-body) {
+    transition: background-color 0.3s;
+    &:hover {
+      background-color: rgb($light, 0.5);
+    }
+  }
 }
-.board-item-avatar {
-  width: 50px;
-  height: 50px;
-}
-.label {
-  margin-bottom: 8px;
-  //font-weight: bolder;
-  font-size: 14px;
-  //color: $muted;
-}
-.channel-name {
-  font-weight: bold;
-}
-.order-status {
-  line-height: 15px;
-}
-.configuration {
-  font-weight: bolder;
-  font-size: 14px;
-  margin: 0;
-}
+.item {
+  p {
+    font-weight: bolder;
+    //font-size: 16px;
+    line-height: 18px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
 
-.currency {
-  font-size: 10px;
-  color: $muted;
+  span {
+    font-size: 14px;
+    line-height: 16px;
+  }
 }
-.time-value {
-  font-size: 14px;
+.border {
+  //border-left: 1px solid $muted;
+  //padding-left: 10px;
 }
 </style>

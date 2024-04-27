@@ -16,6 +16,7 @@ const uzLat = {
   BoardConfigurationsView: "Ta'riflar",
   DashboardOrderFormView: "E'lon berish",
   DashboardPostItemView: "Postni ko'rish",
+  DashboardOrderItemView: "Buyurtmani ko'rish",
 
   Help: 'Yordam',
   News: 'Xabar va yangilik',
@@ -60,6 +61,8 @@ const uzLat = {
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   CREATE_AN_ORDER: "E'lon berish",
   //   labels
+  START_DATE: 'Boshlanish vaqt',
+  END_DATE: 'Tugash vaqti',
   DOWNLOAD: 'Yuklab olish',
   ADD_FILE_TO_FILE: "Postga fayl qo'shish",
   POST_DESCRIPTION: 'Post tavsifi',
@@ -84,6 +87,7 @@ const uzLat = {
 
   ATTACH_URL: 'Havola biriktirish',
   FILTER_BY_STATUS: "Holat bo'yicha filterlash",
+  NAME: 'Nomi',
   STATUS: 'Holati',
   DAY: 'Kun',
   HOUR: 'Soat',
@@ -95,6 +99,7 @@ const uzLat = {
   LAST_NAME: 'Familiya',
   CHANNEL_LINK: 'Kanal havolasi',
   CHANNEL_NAME: 'Kanal nomi',
+  RATE: "Ta'rif",
   RATE_NAME: "Ta'rif nomi",
   ENTER_RATE_NAME: "Ta'rif nomini kiriting",
   LIVE_TIME: 'Muddati',

@@ -50,7 +50,7 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('get/order/all')
         })
     },
-    getOrderById(id) {
+    getOrderById(id, callback) {
       const core = useCore()
       core.loadingUrl.add('get/order/one')
       api({
@@ -58,7 +58,7 @@ const useOrder = defineStore('order', {
         pk: id
       })
         .then(({ data }) => {
-          this.orderInfo = data
+          callback(data)
         })
         .catch((error) => {
           core.switchStatus(error)

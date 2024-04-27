@@ -22,6 +22,7 @@ import DashboardOrderFormView from '@/pages/dashboard/order/DashboardOrderFormVi
 import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
 import DashboardPostItemView from '@/pages/dashboard/post/DashboardPostItemView.vue'
+import DashboardOrderItemView from '@/pages/dashboard/order/[id]/DashboardOrderView.vue'
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -130,6 +131,11 @@ export const router = createRouter({
               path: 'create/:postId',
               name: 'DashboardOrderFormView',
               component: DashboardOrderFormView
+            },
+            {
+              path: 'item/:id',
+              name: 'DashboardOrderItemView',
+              component: DashboardOrderItemView
             }
           ]
         },
