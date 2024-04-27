@@ -15,7 +15,8 @@ const hashId = defineModel('hashId')
 
 const props = defineProps({
   snapshotHashId: String,
-  type: String
+  type: String,
+  fileName: String
 })
 
 const corePinia = useCore()
@@ -24,7 +25,7 @@ const { visibleDrawer, screenWidth, screenHeight } = storeToRefs(corePinia)
 
 const fileTypes = ref(['image', 'video', 'application'])
 const fileType = ref()
-const fileName = ref(null)
+const uploadedFilename = ref(null)
 const fileProgress = ref(0)
 const snapshot = ref()
 
@@ -37,7 +38,7 @@ const uploadLogo = (file) => {
         hashId.value = data.hashId
         snapshot.value = data.snapshotHashId
         fileType.value = file.type.split('/')[0]
-        fileName.value = file.name
+        uploadedFilename.value = file.name
         fileProgress.value = 0
       },
       (progress) => {
@@ -61,7 +62,7 @@ function clearFile() {
   hashId.value = null
   snapshot.value = null
   fileType.value = null
-  fileName.value = null
+  uploadedFilename.value = null
   fileProgress.value = 0
 }
 </script>
@@ -128,13 +129,11 @@ function clearFile() {
         </div>
       </div>
     </template>
-    <template
-      v-if="type?.toLowerCase() === 'DOCUMENT' || fileType === 'application'"
-    >
+    <template v-if="type === 'DOCUMENT' || fileType === 'application'">
       <div class="document justify-between align-center p-2">
         <span class="flex align-center">
           <IconFile />
-          <span>{{ fileName }}</span>
+          <span>{{ fileName || uploadedFilename }}</span>
         </span>
         <a-space class="ml-3">
           <a

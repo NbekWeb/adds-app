@@ -28,8 +28,8 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .image-wrapper {
-  width: 75vw;
-  height: auto;
+  width: auto;
+  height: 90vh;
   img {
     width: 100%;
     height: 100%;

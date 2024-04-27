@@ -16,6 +16,8 @@ const uzLat = {
   BoardConfigurationsView: "Ta'riflar",
   DashboardOrderFormView: "E'lon berish",
   DashboardPostItemView: "Postni ko'rish",
+  DashboardPostCreateFormView: "Post qo'shish",
+  DashboardPostEditFormView: 'Postni tahrirlash',
   DashboardOrderItemView: "Buyurtmani ko'rish",
 
   Help: 'Yordam',

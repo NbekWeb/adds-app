@@ -28,6 +28,7 @@ const form = reactive({
 })
 const snapshotHashId = ref()
 const messageType = ref()
+const fileName = ref()
 
 const rules = reactive({
   text: [
@@ -68,11 +69,12 @@ function submitForm() {
 onMounted(() => {
   if (route.params.id) {
     postPinia.getOnePostById(route.params.id, (data) => {
-      form.fileHashId = data.fileHashId
+      form.fileHashId = data?.fileDto.fileHashId
       form.text = data.text
       form.buttons = data.buttons
       snapshotHashId.value = data.snapshotHashId
       messageType.value = data.messageType
+      fileName.value = data?.fileDto.fileName
     })
   }
 })
@@ -87,6 +89,7 @@ onMounted(() => {
           <post-file-component
             v-model:hash-id="form.fileHashId"
             :snapshot-hash-id="snapshotHashId"
+            :file-name="fileName"
             :type="messageType"
           />
         </a-form-item>
