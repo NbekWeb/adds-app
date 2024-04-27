@@ -1,18 +1,29 @@
 <script setup>
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
 
-import PostItemComponent from '@/pages/dashboard/post/components/PostItemComponent.vue'
+import PostItemComponent from '@/pages/dashboard/post/component/PostItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
-import PostViewDrawerComponent from '@/pages/dashboard/post/components/PostViewComponent.vue'
 
 const corePinia = useCore()
 const postPinia = usePost()
 
 const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 const { posts } = storeToRefs(postPinia)
+
+const postId = ref(null)
+
+function editPost(id) {
+  postId.value = id
+  corePinia.visibleDrawer.add('post/form/modal')
+}
+function close() {
+  corePinia.visibleDrawer.add('post/form/modal')
+  postId.value = null
+}
 </script>
 
 <template>
@@ -35,7 +46,7 @@ const { posts } = storeToRefs(postPinia)
               :key="item.id"
               v-for="item in posts"
             >
-              <post-item-component :item="item" />
+              <post-item-component :item="item" @edit="editPost" />
             </a-col>
           </a-row>
         </template>

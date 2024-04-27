@@ -7,11 +7,13 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconEye from '@/components/icons/IconEye.vue'
-import PostFilesComponent from '@/pages/dashboard/post/components/PostFilesComponent.vue'
-import PostViewComponent from '@/pages/dashboard/post/components/PostViewComponent.vue'
+import IconEdit from '@/components/icons/IconEdit.vue'
+import { fileBaseUrl } from '@/utils/conf.js'
+import IconFile from '@/components/icons/IconFile.vue'
 
 const router = useRouter()
 
+const emits = defineEmits(['edit'])
 const { item } = defineProps({
   item: {
     type: Object,
@@ -26,35 +28,37 @@ const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 const deletePost = () => {
   postPinia.deletePostById(item.id)
 }
-function handleGetOnePost() {
-  corePinia.visibleDrawer.add(`post/get/one/${item.id}`)
+
+function editPost(id) {
+  emits('edit', id)
 }
 </script>
 
 <template>
-  <a-drawer
-    :open="visibleDrawer.has(`post/get/one/${item.id}`)"
-    @close="visibleDrawer.delete(`post/get/one/${item.id}`)"
-    destroy-on-close
-    root-class-name="post-view-drawer"
-    width="500"
-    :title="$t('POST')"
-  >
-    <post-view-component :id="item.id" />
-  </a-drawer>
   <a-spin class="spin" :spinning="loadingUrl.has(`delete/post/${item.id}`)">
     <template #indicator>
       <icon-loader />
     </template>
     <a-card class="card">
       <template #cover v-if="item.messageType !== 'TEXT'">
-        <post-files-component
-          :file="{
-            messageType: item.messageType,
-            hashId: item.fileHashId,
-            snapshotHashId: item.snapshotHashId
-          }"
-        />
+        <div class="cover">
+          <template
+            v-if="item.messageType === 'IMAGE' || item.messageType === 'VIDEO'"
+          >
+            <img
+              class="post-cover"
+              :src="`${fileBaseUrl}/file/${item.messageType === 'IMAGE' ? item.fileHashId : item.snapshotHashId}`"
+              alt=""
+            />
+          </template>
+          <template v-if="item.messageType === 'DOCUMENT'">
+            <div
+              class="post-item-document flex justify-center align-center h-full"
+            >
+              <IconFile />
+            </div>
+          </template>
+        </div>
       </template>
 
       <a-card-meta class="mb-3">
@@ -68,12 +72,30 @@ function handleGetOnePost() {
       </a-card-meta>
       <template #actions>
         <a-button
-          @click="handleGetOnePost(item.id)"
-          type="primary"
+          @click="
+            router.push({
+              name: 'DashboardPostItemView',
+              params: { id: item.id }
+            })
+          "
           size="small"
         >
           <icon-eye class="mt-1" />
         </a-button>
+        <template v-if="item?.editable">
+          <a-button
+            @click="
+              router.push({
+                name: 'DashboardPostEditFormView',
+                params: { id: item.id }
+              })
+            "
+            size="small"
+          >
+            <IconEdit class="mt-1" />
+          </a-button>
+        </template>
+
         <a-button
           @click="
             router.push({
@@ -83,18 +105,14 @@ function handleGetOnePost() {
               }
             })
           "
-          type="primary"
           size="small"
         >
           <icon-shopping-card class="mt-1" />
         </a-button>
-        <a-button type="primary" size="small" danger @click="deletePost">
+        <a-button size="small" danger @click="deletePost">
           <icon-trash class="mt-1" />
         </a-button>
       </template>
-      <div class="actions">
-        <a-space> </a-space>
-      </div>
     </a-card>
   </a-spin>
 </template>
@@ -109,7 +127,15 @@ function handleGetOnePost() {
     padding: 12px 12px 12px 12px;
   }
 }
-
+.cover {
+  width: 100%;
+  height: 200px;
+}
+.post-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .actions {
   width: 100%;
   display: flex;
@@ -124,7 +150,10 @@ function handleGetOnePost() {
     align-items: center;
   }
 }
-
+.post-item-document {
+  background: $light;
+  font-size: 48px;
+}
 .post-text {
   overflow: hidden;
   display: -webkit-box;

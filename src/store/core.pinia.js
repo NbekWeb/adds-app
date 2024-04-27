@@ -7,7 +7,9 @@ const useCore = defineStore('core', {
     visibleDrawer: new Set(),
     loadingMain: false,
     toastContent: null,
-    redirectUrl: null
+    redirectUrl: null,
+    screenWidth: screen.width,
+    screenHeight: screen.height
   }),
   actions: {
     loading() {

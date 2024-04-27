@@ -8,13 +8,14 @@ const { status } = defineProps({
 })
 const statusIcon = reactive({
   CREATED: '📌',
-  APPROVED: '✔️',
-  BOARD_OWNER_APPROVED: '✔️',
+  APPROVED: '✅',
+  BOARD_OWNER_APPROVED: '✅',
   PENDING: '🕒',
   STARTED: '💼',
   FINISHED: '✅',
   CANCELED: '🚫',
-  REJECTED: '🚫'
+  REJECTED: '🚫',
+  FAILED: '🚫'
 })
 </script>
 
@@ -29,7 +30,9 @@ const statusIcon = reactive({
               status === 'BOARD_OWNER_APPROVED' ||
               status === 'ACCEPTED'
             ? 'lime'
-            : status === 'CANCELED' || status === 'REJECTED'
+            : status === 'CANCELED' ||
+                status === 'REJECTED' ||
+                status === 'FAILED'
               ? 'error'
               : status === 'FINISHED'
                 ? 'success'
