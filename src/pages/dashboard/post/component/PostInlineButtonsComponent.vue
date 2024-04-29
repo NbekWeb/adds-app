@@ -21,7 +21,7 @@ function addButton(data) {
 function editButton(data) {
   buttons.value = buttons.value.map((item, i) => {
     if (i === index.value) {
-      item = data
+      Object.assign(item, data)
     }
     return item
   })
