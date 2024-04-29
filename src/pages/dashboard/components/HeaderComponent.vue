@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import useUser from '@/store/user.pinia.js'
 import MobileMenuComponent from '@/pages/dashboard/components/MobileMenuComponent.vue'
 import { ref } from 'vue'
+import { formatAmount } from '../../../composables/index.js'
 
 const userPinia = useUser()
 const { user } = storeToRefs(userPinia)
@@ -27,7 +28,7 @@ function navigateToClient() {
         <b>ID: {{ user?.id }}</b>
       </div>
       <p class="m-0 small text-muted">
-        {{ $t('BALANCE') }}: {{ user?.balance }} {{ $t('SOUM') }}
+        {{ $t('BALANCE') }}: {{ formatAmount(user?.balance) }} {{ $t('SOUM') }}
       </p>
     </a-col>
   </a-row>
