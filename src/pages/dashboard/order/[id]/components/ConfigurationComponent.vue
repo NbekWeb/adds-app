@@ -6,7 +6,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="configuration pb-1 mb-3">
+  <div class="configuration pb-1 mb-2">
     <h2>{{ configuration.name }}</h2>
     <div class="">
       <div class="flex justify-between">
