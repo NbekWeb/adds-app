@@ -1,6 +1,6 @@
 <script setup>
 import dayjs from 'dayjs'
-import { formatHourAndMinute, formatAmount } from '@/composables'
+import { formatAmount } from '@/composables'
 import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import { useRouter } from 'vue-router'
@@ -54,8 +54,7 @@ const { item } = defineProps({
 
     <div class="flex justify-between mt-1">
       <span class="order-date">
-        {{ dayjs(item.createdDate).format('DD.MM.YYYY') }},
-        {{ formatHourAndMinute(item.createdDate) }}
+        {{ dayjs(item.createdDate).format('DD.MM.YYYY, HH:mm') }},
       </span>
     </div>
   </a-card>
