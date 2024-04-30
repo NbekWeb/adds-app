@@ -136,7 +136,21 @@ useRecaptchaProvider()
         }
 
         &:deep(.ant-card-body) {
-          padding: 12px !important;
+          @include responsive-xl {
+            padding: 24px !important;
+          }
+          @include responsive-lg {
+            padding: 24px !important;
+          }
+          @include responsive-md {
+            padding: 12px !important;
+          }
+          @include responsive-sm {
+            padding: 12px !important;
+          }
+          @include responsive-xs {
+            padding: 12px !important;
+          }
         }
       }
     }

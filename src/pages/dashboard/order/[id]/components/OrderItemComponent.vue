@@ -1,19 +1,20 @@
 <script setup>
 import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
-import { formatHourAndMinute, formatTime } from '@/composables/index.js'
-import ConfigurationComponent from '@/pages/dashboard/order/[id]/components/ConfigurationComponent.vue'
-import ReactionsComponent from '@/pages/dashboard/order/[id]/components/ReactionsComponent.vue'
 import dayjs from 'dayjs'
-import amount from '../../../../../composables/amount.js'
+import { formatAmount } from '@/composables'
+import OrderItemViewDrawerComponent from '@/pages/dashboard/order/[id]/components/OrderItemViewDrawerComponent.vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   order: Object
 })
+
+const open = ref(false)
 </script>
 
 <template>
-  <a-card class="order-item-card">
+  <a-card class="order-item-card" @click="open = true">
     <a-row>
       <a-col :span="5" class="flex justify-start">
         <a-avatar
@@ -29,7 +30,7 @@ const props = defineProps({
           </span>
         </div>
       </a-col>
-      <a-col :span="1" class="item border">
+      <a-col :span="3" class="item border">
         <p class="m-0">
           {{ order?.configuration.name }}
         </p>
@@ -37,39 +38,40 @@ const props = defineProps({
           {{ $t('RATE') }}
         </span>
       </a-col>
-      <a-col :span="3" class="item border">
+      <a-col :span="5" class="item border">
         <p class="m-0">
-          {{ dayjs(order?.taskResponse.startDate).format('DD.MM.YYYY') }},
-          {{ formatHourAndMinute(order?.taskResponse.startDate) }}
+          {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }},
         </p>
         <span class="text-muted">
-          {{ $t('START_DATE') }}
+          {{ $t('THE_TIME_OF_PUBLICATION') }}
+        </span>
+      </a-col>
+      <a-col :span="5" class="item border">
+        <p class="m-0">
+          {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
+        </p>
+        <span class="text-muted">
+          {{ $t('POST_DELETED_DATE') }}
         </span>
       </a-col>
       <a-col :span="3" class="item border">
         <p class="m-0">
-          {{ dayjs(order?.taskResponse.endDate).format('DD.MM.YYYY') }},
-          {{ formatHourAndMinute(order?.taskResponse.endDate) }}
-        </p>
-        <span class="text-muted">
-          {{ $t('END_DATE') }}
-        </span>
-      </a-col>
-      <a-col :span="3" class="item border">
-        <p class="m-0">
-          {{ amount(order?.amount) }}
+          {{ formatAmount(order?.amount) }}
         </p>
         <span class="text-muted">
           {{ $t('AMOUNT') }}
         </span>
       </a-col>
-      <a-col :span="7">
-        <reactions-component :reactions="order?.taskResponse.reactions" />
-      </a-col>
-      <a-col :span="2">
-        <status-tag-component :status="order?.status" />
+      <a-col :span="3" class="flex justify-end">
+        <span>
+          <status-tag-component :status="order?.status" />
+        </span>
       </a-col>
     </a-row>
+    <order-item-view-drawer-component :item="order" v-model:open="open" />
+    <!--      <a-col :span="7">-->
+    <!--        <reactions-component :reactions="order?.taskResponse.reactions" />-->
+    <!--      </a-col>-->
 
     <!--    <configuration-component :configuration="order?.configuration" />-->
 
@@ -89,8 +91,9 @@ const props = defineProps({
 .order-item-card {
   &:deep(.ant-card-body) {
     transition: background-color 0.3s;
+    cursor: pointer;
     &:hover {
-      background-color: rgb($light, 0.5);
+      background-color: rgb($light, 0.3);
     }
   }
 }
