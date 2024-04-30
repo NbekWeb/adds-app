@@ -9,13 +9,6 @@ const props = defineProps({
   item: { type: Object, required: true }
 })
 const model = defineModel('open')
-const configurationStatistics = computed(() => ({
-  startDate: props.item?.taskResponse?.startDate,
-  endDate: props.item?.taskResponse?.startDate,
-  startPinDate: props.item?.taskResponse?.startPinDate,
-  endPinDate: props.item?.taskResponse?.endPinDate,
-  endTopDate: props.item?.taskResponse?.endTopDate
-}))
 </script>
 
 <template>
