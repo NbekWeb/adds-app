@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="mt-3">
+  <div class="statistics-reaction my-3 pb-3">
     <h2>Reaksiyalar</h2>
 
     <a-row :gutter="[5, 10]">
@@ -20,8 +20,12 @@ defineProps({
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/variable';
 .reaction {
   //margin-left: 2px;
   color: black;
+}
+.statistics-reaction {
+  border-bottom: 1px dashed $muted;
 }
 </style>

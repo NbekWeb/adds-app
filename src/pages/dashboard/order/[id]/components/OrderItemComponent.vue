@@ -16,7 +16,15 @@ const open = ref(false)
 <template>
   <a-card class="order-item-card" @click="open = true">
     <a-row>
-      <a-col :span="5" class="flex justify-start">
+      <a-col
+        :span="5"
+        :xs="12"
+        :sm="12"
+        :md="5"
+        :lg="5"
+        :xl="5"
+        class="flex justify-start"
+      >
         <a-avatar
           :src="`${fileBaseUrl}/file/${order?.board.logoHashId}`"
           size="large"
@@ -30,7 +38,15 @@ const open = ref(false)
           </span>
         </div>
       </a-col>
-      <a-col :span="3" class="item border">
+      <a-col
+        :span="4"
+        :xs="12"
+        :sm="12"
+        :md="2"
+        :lg="4"
+        :xl="4"
+        class="item config-name border"
+      >
         <p class="m-0">
           {{ order?.configuration.name }}
         </p>
@@ -38,7 +54,15 @@ const open = ref(false)
           {{ $t('RATE') }}
         </span>
       </a-col>
-      <a-col :span="5" class="item border">
+      <a-col
+        :span="4"
+        :xs="12"
+        :sm="12"
+        :md="5"
+        :lg="4"
+        :xl="4"
+        class="item border"
+      >
         <p class="m-0">
           {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }},
         </p>
@@ -46,7 +70,15 @@ const open = ref(false)
           {{ $t('THE_TIME_OF_PUBLICATION') }}
         </span>
       </a-col>
-      <a-col :span="5" class="item border">
+      <a-col
+        :span="5"
+        :xs="12"
+        :sm="12"
+        :md="6"
+        :lg="5"
+        :xl="5"
+        class="item border"
+      >
         <p class="m-0">
           {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
         </p>
@@ -54,40 +86,32 @@ const open = ref(false)
           {{ $t('POST_DELETED_DATE') }}
         </span>
       </a-col>
-      <a-col :span="3" class="item border">
-        <p class="m-0">
-          {{ formatAmount(order?.amount) }}
-        </p>
-        <span class="text-muted">
-          {{ $t('AMOUNT') }}
-        </span>
-      </a-col>
-      <a-col :span="3" class="flex justify-end">
-        <span>
-          <status-tag-component :status="order?.status" />
-        </span>
+
+      <a-col :xs="24" :sm="24" :md="5" :lg="5" :xl="6" class="item border">
+        <div class="amount-status">
+          <div>
+            <p class="m-0">
+              {{ formatAmount(order?.amount) }} <span>{{ $t('SOUM') }}</span>
+            </p>
+            <span class="amount text-muted">
+              {{ $t('AMOUNT') }}
+            </span>
+          </div>
+
+          <span>
+            <status-tag-component :status="order?.status" />
+          </span>
+        </div>
       </a-col>
     </a-row>
     <order-item-view-drawer-component :item="order" v-model:open="open" />
-    <!--      <a-col :span="7">-->
-    <!--        <reactions-component :reactions="order?.taskResponse.reactions" />-->
-    <!--      </a-col>-->
-
-    <!--    <configuration-component :configuration="order?.configuration" />-->
-
-    <!--    <a-row justify="space-between">-->
-    <!--      <a-col>-->
-    <!--        <h4>-->
-    <!--          {{ $t('AMOUNT') }}-->
-    <!--        </h4>-->
-    <!--      </a-col>-->
-    <!--      <a-col>{{ order?.amount }}</a-col>-->
-    <!--    </a-row>-->
   </a-card>
 </template>
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
+
 .order-item-card {
   &:deep(.ant-card-body) {
     transition: background-color 0.3s;
@@ -98,6 +122,9 @@ const open = ref(false)
   }
 }
 .item {
+  @include responsive-md {
+    margin-bottom: 8px;
+  }
   p {
     font-weight: bolder;
     //font-size: 16px;
@@ -111,6 +138,30 @@ const open = ref(false)
   span {
     font-size: 14px;
     line-height: 16px;
+  }
+}
+.config-name {
+  @include responsive-md {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
+.amount-status {
+  display: flex;
+  justify-content: space-between;
+
+  @include responsive-md {
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .amount {
+    @include responsive-md {
+      display: none;
+    }
   }
 }
 .border {
