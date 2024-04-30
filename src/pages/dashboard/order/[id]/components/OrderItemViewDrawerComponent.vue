@@ -29,13 +29,12 @@ const configurationStatistics = computed(() => ({
       </div>
     </template>
     <configuration-component :configuration="item?.configuration" />
-    <template v-if="item?.taskResponse.startDate">
+    <template v-if="item?.taskResponse?.startDate">
       <configuration-statistics-component :statistics="item?.taskResponse" />
     </template>
     <template v-if="item?.taskResponse?.reactions?.length">
       <reactions-component :reactions="item?.taskResponse?.reactions" />
     </template>
-    <!--    <pre>{{ item }}</pre>-->
   </a-drawer>
 </template>
 
