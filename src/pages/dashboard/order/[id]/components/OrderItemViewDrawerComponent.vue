@@ -3,7 +3,6 @@ import { fileBaseUrl } from '@/utils/conf.js'
 import ConfigurationComponent from '@/pages/dashboard/order/[id]/components/ConfigurationComponent.vue'
 import ReactionsComponent from '@/pages/dashboard/order/[id]/components/ReactionsComponent.vue'
 import ConfigurationStatisticsComponent from '@/pages/dashboard/order/[id]/components/ConfigurationStatisticsComponent.vue'
-import { computed } from 'vue'
 
 const props = defineProps({
   item: { type: Object, required: true }

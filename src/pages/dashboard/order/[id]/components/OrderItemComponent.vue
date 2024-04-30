@@ -30,7 +30,7 @@ const open = ref(false)
           </span>
         </div>
       </a-col>
-      <a-col :span="3" class="item border">
+      <a-col :span="4" class="item border">
         <p class="m-0">
           {{ order?.configuration.name }}
         </p>
@@ -38,7 +38,7 @@ const open = ref(false)
           {{ $t('RATE') }}
         </span>
       </a-col>
-      <a-col :span="5" class="item border">
+      <a-col :span="4" class="item border">
         <p class="m-0">
           {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }},
         </p>
@@ -46,7 +46,7 @@ const open = ref(false)
           {{ $t('THE_TIME_OF_PUBLICATION') }}
         </span>
       </a-col>
-      <a-col :span="5" class="item border">
+      <a-col :span="4" class="item border">
         <p class="m-0">
           {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
         </p>
@@ -54,12 +54,26 @@ const open = ref(false)
           {{ $t('POST_DELETED_DATE') }}
         </span>
       </a-col>
-      <a-col :span="3" class="item border">
+
+      <a-col :span="2" class="item border">
         <p class="m-0">
           {{ formatAmount(order?.amount) }}
         </p>
         <span class="text-muted">
           {{ $t('AMOUNT') }}
+        </span>
+      </a-col>
+      <a-col :span="2" class="item border">
+        <p class="m-0">
+          {{
+            order?.taskResponse?.views > 1000
+              ? `${Math.floor(order?.taskResponse?.views / 1000)}k`
+              : order?.taskResponse?.views
+          }}
+        </p>
+        <span class="text-muted">
+          <!--          {{ $t('POST_DELETED_DATE') }}-->
+          Ko'rishlar
         </span>
       </a-col>
       <a-col :span="3" class="flex justify-end">
