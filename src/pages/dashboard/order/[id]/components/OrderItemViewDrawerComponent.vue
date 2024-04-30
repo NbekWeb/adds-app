@@ -9,13 +9,6 @@ const props = defineProps({
   item: { type: Object, required: true }
 })
 const model = defineModel('open')
-const configurationStatistics = computed(() => ({
-  startDate: props.item?.taskResponse?.startDate,
-  endDate: props.item?.taskResponse?.startDate,
-  startPinDate: props.item?.taskResponse?.startPinDate,
-  endPinDate: props.item?.taskResponse?.endPinDate,
-  endTopDate: props.item?.taskResponse?.endTopDate
-}))
 </script>
 
 <template>
@@ -29,13 +22,12 @@ const configurationStatistics = computed(() => ({
       </div>
     </template>
     <configuration-component :configuration="item?.configuration" />
-    <template v-if="item?.taskResponse.startDate">
+    <template v-if="item?.taskResponse?.startDate">
       <configuration-statistics-component :statistics="item?.taskResponse" />
     </template>
     <template v-if="item?.taskResponse?.reactions?.length">
       <reactions-component :reactions="item?.taskResponse?.reactions" />
     </template>
-    <!--    <pre>{{ item }}</pre>-->
   </a-drawer>
 </template>
 
