@@ -6,7 +6,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div>
+  <div class="configuration pb-1 mb-3">
     <h2>{{ configuration.name }}</h2>
     <div class="">
       <div class="flex justify-between">
@@ -64,4 +64,9 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import '@/assets/styles/variable';
+.configuration {
+  border-bottom: 1px dashed $muted;
+}
+</style>

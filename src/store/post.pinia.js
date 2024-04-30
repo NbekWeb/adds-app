@@ -122,7 +122,6 @@ const usePost = defineStore('post', {
           this.getAllPosts(0)
         })
         .catch((error) => {
-          console.log(error)
           core.switchStatus(error)
         })
         .finally(() => {
