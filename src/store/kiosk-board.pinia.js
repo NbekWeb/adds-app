@@ -21,6 +21,7 @@ const useKioskBoard = defineStore('kiosk-board', {
         }
       })
         .then(({ data }) => {
+          this.kioskBoards.push(...data.content)
           console.log(data)
         })
         .catch((error) => {
@@ -58,6 +59,7 @@ const useKioskBoard = defineStore('kiosk-board', {
       })
         .then(({ data }) => {
           console.log(data)
+        
         })
         .catch((error) => {
           core.switchStatus(error)

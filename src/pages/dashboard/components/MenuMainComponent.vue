@@ -29,6 +29,11 @@ const menuList = shallowRef([
     icon: IconAnnouncement
   },
   {
+    path: 'kiosk-board',
+    name: 'KioskBorder',
+    icon: IconAnnouncement
+  },
+  {
     path: 'post',
     name: 'DashboardPostListView',
     icon: IconMessageTextSquare
@@ -38,6 +43,7 @@ const menuList = shallowRef([
     name: 'DashboardOrderListView',
     icon: IconShoppingCard
   }
+ 
 ])
 </script>
 

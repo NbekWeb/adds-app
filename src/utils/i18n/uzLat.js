@@ -173,7 +173,10 @@ const uzLat = {
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
-  ERROR: 'Xatolik!'
+  ERROR: 'Xatolik!',
+
+  //KiosKBoard
+  KioskBorder:"Kiosk border"
 }
 
 export default uzLat
