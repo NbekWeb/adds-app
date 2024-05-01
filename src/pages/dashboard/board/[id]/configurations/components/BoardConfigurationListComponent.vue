@@ -1,13 +1,11 @@
 <script setup>
-import BoardConfigurationItem from '@/pages/dashboard/board/[id]/configurations/components/BoardConfigurationItemComponent.vue'
-import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import useCore from '@/store/core.pinia.js'
 import useBoardConfiguration from '@/store/board-configuration.pinia.js'
-import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
 
-const router = useRouter()
 const corePinia = useCore()
 const boardConfigurationPinia = useBoardConfiguration()
 
@@ -22,7 +20,6 @@ const { loadingUrl } = storeToRefs(corePinia)
 const { page, totalPages, totalElements, boardConfigurationList } = storeToRefs(
   boardConfigurationPinia
 )
-const configId = ref()
 const getConfigurations = (page) => {
   boardConfigurationPinia.getConfigurationsByBoardId(props.boardId, page)
 }
