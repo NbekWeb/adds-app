@@ -17,9 +17,15 @@ const { item } = defineProps({
         padding: '24px'
       }"
     >
-      <h1 class="config-name text-center">
-        {{ $t('POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL') }}
-      </h1>
+      <div>
+        <h1 class="config-name text-center">
+          {{ $t('POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL') }}
+        </h1>
+        <p class="text-muted text-center">
+          {{ $t('POST_A_ONE_TIME_ANNOUNCEMENT_TO_A_CHANNEL') }}
+        </p>
+      </div>
+
       <div class="checkbox" :class="{ checked: selected }">
         <div class="checkbox-circle">
           <icon-check class="mt-1" />
