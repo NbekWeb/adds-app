@@ -141,6 +141,8 @@ const uzLat = {
   APPROVE: 'Tasdiqlash',
   REJECTED: 'Rad qilingan',
   REJECT: 'Rad qilish',
+  NAME:'Nomi',
+  CATEGORY:'Kategoriyasi',
   BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
   AWAITING_BOARD_OWNER: 'Kanal egasi tasdiqlashi kutilmoqda',
   ACCEPTED: 'Qabul qilingan',
@@ -177,7 +179,9 @@ const uzLat = {
   ERROR: 'Xatolik!',
 
   //KiosKBoard
-  KioskBorder:"Kiosk border"
+  KIOSKBOARD:"Kiosk board",
+  SingleKiosk:"Kiosk ma'lumotlari"
+  
 }
 
 export default uzLat

@@ -30,7 +30,7 @@ const menuList = shallowRef([
   },
   {
     path: 'kiosk-board',
-    name: 'KioskBorder',
+    name: 'KIOSKBOARD',
     icon: IconAnnouncement
   },
   {

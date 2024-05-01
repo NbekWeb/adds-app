@@ -1,5 +1,8 @@
 <script setup>
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
+import { useRouter } from 'vue-router'
+
+const router=useRouter()
 
 const props = defineProps({
   item: {
@@ -13,42 +16,48 @@ const props = defineProps({
 })
 </script>
 <template>
-  <div class="kioskBoard-item-container">
-    <a-card class="kioskBoard-item " :loading="loading">
-      <div class="flex justify-between">
-        <div>
-          <p class="text-muted text-xs">name</p>
-          <p class="text-bold text-lg">nomi</p>
-        </div>
-        <div>
-          <p class="text-muted text-xs">Kategoriyasi</p>
-          <p class="text-bold text-lg">nomi</p>
-        </div>
-        <div class="">
-          <p class="text-muted text-xs">Manzili</p>
-          <p class="text-bold text-lg">nomi</p>
-        </div>
-        <div class="flex align-center ">
+  <div class="kioskBoard-item-container mb-2">
+    <a-card class="kioskBoard-item text-xs" :loading="loading">
+      <a-row class="flex justify-between">
+        <a-col :lg="4" class="">
+          <p class="text-bold mb-1"> {{  item?.name }} </p>
+          <p class="text-muted ">{{ $t('NAME') }}</p>
+        </a-col>
+        <a-col :lg="4">
+          <p class="text-bold mb-1">{{  item?.category?.name }}</p>
+          <p class="text-muted">{{ $t('CATEGORY') }}  </p>
+        </a-col>
+        <a-col :lg="4" class="">
+          <p class="text-bold mb-1">nomi</p>
+          <p class="text-muted">Manzili</p>
+        </a-col>
+        <a-col :lg="2" class="flex align-center">
           <a-button
-            @click="router.push(`board/item/configurations/${item.id}`)"
+            @click="router.push(`kiosk-board/item/${item.id}`)"
             size="middle"
             type="primary"
             class="flex align-center justify-center px-4"
           >
             <icon-shopping-card />
           </a-button>
-        </div>
-      </div>
+        </a-col>
+      </a-row>
     </a-card>
   </div>
 </template>
 <style lang="scss">
-.kiosk {
+/* .text-muted, .text-bold,.text-xs{
   border: 1px solid red;
+} */
+/* .text-xs{
+  border: 1px solid red;
+} */
+.kioskBoard-item-container {
+  .ant-card-body {
+    padding: 16px !important;
+  }
 }
-
-.kioskBoard-item-container{
-.ant-card-body{
-  padding: 16px !important;
-}}
+/* p{
+  margin-bottom: 0 !important;
+} */
 </style>
