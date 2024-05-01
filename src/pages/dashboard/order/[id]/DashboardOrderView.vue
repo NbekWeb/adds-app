@@ -8,6 +8,7 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
+import IconRefresh from '@/components/icons/IconRefresh.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -18,6 +19,13 @@ const orderPinia = useOrder()
 const { loadingUrl } = storeToRefs(corePinia)
 
 const order = ref()
+function refreshOrder() {
+  if (route.params.id) {
+    orderPinia.getOrderById(route.params.id, (data) => {
+      order.value = data
+    })
+  }
+}
 onMounted(() => {
   if (route.params.id) {
     orderPinia.getOrderById(route.params.id, (data) => {
@@ -28,7 +36,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <page-header-component :title="$t('DashboardOrderItemView')" />
+  <page-header-component :title="$t('DashboardOrderItemView')">
+    <template #actions>
+      <a-button class="btn" @click="refreshOrder">
+        <template #icon>
+          <IconRefresh class="mr-1" />
+        </template>
+        {{ $t('UPDATE') }}
+      </a-button>
+    </template>
+  </page-header-component>
   <a-spin :spinning="loadingUrl.has('get/order/one')">
     <template #indicator>
       <IconLoader />

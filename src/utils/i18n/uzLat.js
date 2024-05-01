@@ -49,6 +49,7 @@ const uzLat = {
   YES: 'Ha',
   NO: "Yo'q",
   SAVE: 'Saqlash',
+  UPDATE: 'Yangilash',
   READY: 'Tayyor',
   BACK: 'Orqaga',
   ADD: "Qo'shish",
