@@ -21,7 +21,7 @@ const props = defineProps({
         </div>
       </template>
 
-      <template v-if="statistics?.startDate || statistics?.startPinDate">
+      <template v-if="statistics?.startPinDate">
         <span class="step-border my-2"></span>
       </template>
 

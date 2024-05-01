@@ -1,5 +1,5 @@
 <script setup>
-import OrderItemComponent from '@/pages/dashboard/order/components/OrderItemComponent.vue'
+import OrderItemComponent from '@/pages/dashboard/order/components/order-form/OrderItemComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import IconCheck from '@/components/icons/IconCheck.vue'
-import formatAmount from '../../../../composables/amount.js'
+import formatAmount from '../../../../../composables/amount.js'
 
 const { item } = defineProps({
   item: {

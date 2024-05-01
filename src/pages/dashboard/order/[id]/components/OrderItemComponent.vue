@@ -48,7 +48,7 @@ const open = ref(false)
         class="item config-name border"
       >
         <p class="m-0">
-          {{ order?.configuration.name }}
+          {{ order?.configuration?.name }}
         </p>
         <span class="text-muted">
           {{ $t('RATE') }}

@@ -5,8 +5,6 @@ import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import { useRouter } from 'vue-router'
 
-const emits = defineEmits(['getOne'])
-
 const router = useRouter()
 
 const { item } = defineProps({
