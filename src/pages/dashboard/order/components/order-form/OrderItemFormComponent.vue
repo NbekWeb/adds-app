@@ -2,13 +2,13 @@
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { formatAmount } from '@/composables'
+import { formatAmount } from '@/composables/index.js'
 import useCore from '@/store/core.pinia.js'
 import dayjs from 'dayjs'
 
-import OrderBoardSelectComponent from '@/pages/dashboard/order/components/OrderBoardSelectComponent.vue'
-import OrderConfigurationSelectComponent from '@/pages/dashboard/order/components/OrderConfigurationSelectComponent.vue'
-import OrderTimeConfigSelectComponent from '@/pages/dashboard/order/components/OrderTimeConfigSelectComponent.vue'
+import OrderBoardSelectComponent from '@/pages/dashboard/order/components/order-form/OrderBoardSelectComponent.vue'
+import OrderConfigurationSelectComponent from '@/pages/dashboard/order/components/order-form/OrderConfigurationSelectComponent.vue'
+import OrderTimeConfigSelectComponent from '@/pages/dashboard/order/components/order-form/OrderTimeConfigSelectComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { useI18n } from 'vue-i18n'
 
@@ -106,7 +106,7 @@ function handleBackStep() {
         v-model:date="form.orderDate"
         v-model:amount="selectedTimeConfigAmount"
         :board-id="form.board.id"
-        :configuration-id="form.configuration.id"
+        :configuration-id="form?.configuration?.id"
       />
     </template>
   </a-spin>

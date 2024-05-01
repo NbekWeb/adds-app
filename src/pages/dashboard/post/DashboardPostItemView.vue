@@ -1,15 +1,14 @@
 <script setup>
-import { fileBaseUrl } from '@/utils/conf.js'
-import { onMounted, ref } from 'vue'
-import usePost from '@/store/post.pinia.js'
 import { useRoute, useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { fileBaseUrl } from '@/utils/conf.js'
+import useCore from '@/store/core.pinia.js'
+import usePost from '@/store/post.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
-import useCore from '@/store/core.pinia.js'
-import { storeToRefs } from 'pinia'
 import VideoPlayerComponent from '@/components/VideoPlayerComponent.vue'
 import IconEye from '@/components/icons/IconEye.vue'
-import IconTrash from '@/components/icons/IconTrash.vue'
 import IconFile from '@/components/icons/IconFile.vue'
 
 const route = useRoute()
@@ -66,7 +65,7 @@ onMounted(() => {
                 <a
                   target="_blank"
                   rel="opener"
-                  :href="`${fileBaseUrl}/file/${post?.fileHashId}`"
+                  :href="`${fileBaseUrl}/file/${post?.fileDto?.fileHashId}`"
                 >
                   <a-button class="btn" type="text">
                     <template #icon>

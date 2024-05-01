@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
@@ -13,19 +13,11 @@ const route = useRoute()
 const corePinia = useCore()
 const orderPinia = useOrder()
 
-const { visibleDrawer, loadingUrl, collapsed } = storeToRefs(corePinia)
-const { orders, orderInfo, page, totalElements, totalPages } =
-  storeToRefs(orderPinia)
+const { loadingUrl, collapsed } = storeToRefs(corePinia)
+const { orders, page, totalElements, totalPages } = storeToRefs(orderPinia)
 
 const orderStatus = computed(() => route.query.status)
-const orderId = ref(null)
 
-function handleOpenDrawer(id) {
-  visibleDrawer.value.add('order/items/drawer')
-  orderId.value = id
-  orderInfo.value = null
-  orderPinia.getOrderById(id)
-}
 function getPaginationAllOrders(page) {
   orderPinia.getAllOrders(page, orderStatus.value)
 }
@@ -66,10 +58,7 @@ function getPaginationAllOrders(page) {
               :xxl="6"
               v-for="item in orders"
             >
-              <order-list-item-component
-                :item="item"
-                @get-one="handleOpenDrawer"
-              />
+              <order-list-item-component :item="item" />
             </a-col>
           </a-row>
         </template>

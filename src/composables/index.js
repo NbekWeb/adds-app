@@ -1,6 +1,7 @@
 import formatAmount from '@/composables/amount.js'
 import { formatTime } from '@/composables/date.js'
 import { formatTextLength } from '@/composables/format-text-length.js'
-import { uniqueItems } from '@/composables/arrayUniqueItem.js'
+import { uniqueItems } from '@/composables/array.js'
+import { treeData } from '@/composables/array.js'
 
-export { formatAmount, formatTime, formatTextLength, uniqueItems }
+export { formatAmount, formatTime, formatTextLength, uniqueItems, treeData }

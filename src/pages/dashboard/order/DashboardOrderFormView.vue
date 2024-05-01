@@ -7,8 +7,8 @@ import useCore from '@/store/core.pinia.js'
 import useOrder from '@/store/order.pinia.js'
 
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import OrderItemFormComponent from '@/pages/dashboard/order/components/OrderItemFormComponent.vue'
-import OrderItemsListComponent from '@/pages/dashboard/order/components/OrderItemsListComponent.vue'
+import OrderItemFormComponent from '@/pages/dashboard/order/components/order-form/OrderItemFormComponent.vue'
+import OrderItemsListComponent from '@/pages/dashboard/order/components/order-form/OrderItemsListComponent.vue'
 
 const router = useRouter()
 const route = useRoute()

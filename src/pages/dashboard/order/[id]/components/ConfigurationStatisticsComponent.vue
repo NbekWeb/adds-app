@@ -11,7 +11,7 @@ const props = defineProps({
 
 <template>
   <h2>Jarayon</h2>
-  <div class="statistics flex pb-4">
+  <div class="statistics flex pb-3">
     <div class="order-statistics flex flex-column align-center">
       <template v-if="statistics?.startDate">
         <div
@@ -21,7 +21,7 @@ const props = defineProps({
         </div>
       </template>
 
-      <template v-if="statistics?.startDate || statistics?.startPinDate">
+      <template v-if="statistics?.startPinDate">
         <span class="step-border my-2"></span>
       </template>
 
