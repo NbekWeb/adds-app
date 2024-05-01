@@ -103,7 +103,6 @@ onMounted(() => {
     :count="9"
     :page="page"
     :total-pages="totalPages"
-    :total-count-all="totalElements"
     @get-date="getPayments"
   >
     <template #content>

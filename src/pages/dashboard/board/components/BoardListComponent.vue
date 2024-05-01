@@ -32,7 +32,6 @@ const getBoardList = (page) => {
       class="board-list"
       height="calc(100vh - 196px)"
       :total-pages="totalPages"
-      :total-count-all="totalElements"
       @get-data="getBoardList"
     >
       <template #content>
