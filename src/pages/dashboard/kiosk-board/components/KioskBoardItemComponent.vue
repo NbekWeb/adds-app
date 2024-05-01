@@ -28,8 +28,8 @@ const props = defineProps({
           <p class="text-muted">{{ $t('CATEGORY') }}  </p>
         </a-col>
         <a-col :lg="4" class="">
-          <p class="text-bold mb-1">nomi</p>
-          <p class="text-muted">Manzili</p>
+          <p class="text-bold mb-1">qo'shilmagan</p>
+          <p class="text-muted">{{ $t('LOCATION') }} </p>
         </a-col>
         <a-col :lg="2" class="flex align-center">
           <a-button

@@ -40,7 +40,7 @@ const useKioskBoard = defineStore('kiosk-board', {
     // },
     getAllKioskBoard(page, name = null, categoryId = null) {
       const core = useCore()
-      core.loadingUrl.add('get/kiosk-board/owner/all')
+      core.loadingUrl.add('get/kiosk-board/all')
       api({
         url: 'kiosk-board',
         params: {
@@ -66,6 +66,7 @@ const useKioskBoard = defineStore('kiosk-board', {
     },
     getOneKioskBoard(id, callback) {
       const core = useCore()
+      core.loadingUrl.add('get/kiosk-board')
       api({
         url: `kiosk-board/${id}`
       })
@@ -76,7 +77,7 @@ const useKioskBoard = defineStore('kiosk-board', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/kiosk-board/owner/all')
+          core.loadingUrl.delete('get/kiosk-board')
         })
     },
     createBoard(form) {

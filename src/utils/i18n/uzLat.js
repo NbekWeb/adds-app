@@ -146,7 +146,7 @@ const uzLat = {
   APPROVE: 'Tasdiqlash',
   REJECTED: 'Rad qilingan',
   REJECT: 'Rad qilish',
-  NAME:'Nomi',
+  
   CATEGORY:'Kategoriyasi',
   BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
   AWAITING_BOARD_OWNER: 'Kanal egasi tasdiqlashi kutilmoqda',
@@ -182,6 +182,11 @@ const uzLat = {
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
   ERROR: 'Xatolik!',
+
+  //
+  NAME:'Nomi',
+  Category:'Kategoriya',
+  LOCATION:'Manzil',
 
   //KiosKBoard
   KIOSKBOARD:"Kiosk board",

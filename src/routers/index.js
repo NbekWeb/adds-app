@@ -23,7 +23,7 @@ import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations
 import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
 import DashboardPostItemView from '@/pages/dashboard/post/DashboardPostItemView.vue'
 import DashboardOrderItemView from '@/pages/dashboard/order/[id]/DashboardOrderView.vue'
-import SingleKiosk from '@/pages/dashboard/kiosk-board/[id]/SingleKiosk.vue'
+import SingleKioskView from '@/pages/dashboard/kiosk-board/[id]/SingleKioskView.vue'
 
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
@@ -92,7 +92,7 @@ export const router = createRouter({
             {
               path: 'item/:id',
               name: 'SingleKiosk',
-              component: SingleKiosk
+              component: SingleKioskView
             },
           ]
         },

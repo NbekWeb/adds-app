@@ -3,7 +3,8 @@ import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import KioskBoardListComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardListComponent.vue'
 import KioskBoardItemComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardItemComponent.vue'
 import KioskBoardPageFilterComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardPageFilterComponent.vue'
-import useBoard from '@/store/boadr.pinia.js'
+
+import useCategories from '@/store/category.pinia.js'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import useKioskBoard from '@/store/kiosk-board.pinia.js'
@@ -11,21 +12,19 @@ import useKioskBoard from '@/store/kiosk-board.pinia.js'
 const route = useRoute()
 const kioskBoardPinia = useKioskBoard()
 
-const boardPinia = useBoard()
+const categoryPinia = useCategories()
 
 const open = ref(false)
 
 onMounted(() => {
   kioskBoardPinia.getAllKioskBoard(null, route.query.name)
-  // kioskBoardPinia.getKioskBoardCategories()
-  boardPinia.getBoardCategories()
+  categoryPinia.getBoardCategories()
 })
 </script>
 
 <template>
   <div>
     <page-header-component :title="$t('KIOSKBOARD')">
-      <!-- <a-input style="width: 10px;"/> -->
       <template #actions>
         <div class="isDesktop">
           <kiosk-board-page-filter-component />

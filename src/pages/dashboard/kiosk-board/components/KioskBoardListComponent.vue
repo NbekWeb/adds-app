@@ -4,7 +4,6 @@ import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
 
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-// import IconLoader from '@/components/icons/IconLoader.vue'
 
 import KioskBoardItemComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardItemComponent.vue'
 
@@ -19,7 +18,6 @@ const getKioskBoardList = (page) => {
 </script>
 <template>
   <div>
-    
     <scrollbar-component
       :loading="loadingUrl.has('kiosk-board/all')"
       :count="9"
@@ -31,12 +29,8 @@ const getKioskBoardList = (page) => {
       @get-data="getKioskBoardList"
     >
       <template #content>
-        <template
-          v-if="
-            !kioskBoards?.length 
-          "
-        >
-        <!-- && !corePinia.loadingUrl.has('kiosk-board/all') -->
+        <template v-if="!kioskBoards?.length">
+         
           <a-empty class="empty">
             <template #description>
               {{ $t('NO_DATA') }}
@@ -45,11 +39,12 @@ const getKioskBoardList = (page) => {
         </template>
         <template v-if="kioskBoards?.length">
           <kiosk-board-item-component
-          v-for="(item, i) of kioskBoards"
+            v-for="(item, i) of kioskBoards"
             :key="i"
             :item="item"
-            @click="$router.push({path: `/dashboard/kiosk-board/item/${item.id}`})"
-
+            @click="
+              $router.push({ path: `/dashboard/kiosk-board/item/${item.id}` })
+            "
           />
         </template>
       </template>
