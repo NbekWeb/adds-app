@@ -42,7 +42,7 @@ onMounted(() => {
           <div class="flex justify-between">
             <div>
               <p class="text-muted text-sm">{{ $t('NAME') }}</p>
-              <h2 class="text-2xl text-bold">{{ boardInfo?.name }}</h2>
+              <h2 class="text-xl text-bold">{{ boardInfo?.name }}</h2>
             </div>
             <div class="">
               <a-button type="primary" @click="router.push(``)">
@@ -70,12 +70,9 @@ onMounted(() => {
   </a-spin>
 </template>
 <style scoped lang="scss">
-.text-2xl {
-  line-height: 100%;
-}
 .text-xl,
 .text-sm,
 .text-xs {
-  line-height: 0.8rem;
+  line-height: 0.6rem;
 }
 </style>
