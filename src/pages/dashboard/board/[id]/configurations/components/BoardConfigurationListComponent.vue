@@ -67,26 +67,6 @@ const getConfigurations = (page) => {
           <div></div>
         </a-card>
       </template>
-      <a-radio-group class="w-full" v-model:value="configId">
-        <a-row :gutter="[10, 10]">
-          <a-col
-            :xs="24"
-            :ms="24"
-            :md="12"
-            :lg="8"
-            :xl="8"
-            :xxl="6"
-            v-for="item in boardConfigurationList"
-          >
-            <!--            <board-configuration-item-->
-            <!--              class=""-->
-            <!--              :item="item"-->
-            <!--              :key="item.id"-->
-            <!--              :date=""-->
-            <!--            />-->
-          </a-col>
-        </a-row>
-      </a-radio-group>
     </template>
   </scrollbar-component>
 </template>
