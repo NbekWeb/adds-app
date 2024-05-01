@@ -18,7 +18,7 @@ const uzLat = {
   DashboardPostItemView: "Postni ko'rish",
   DashboardPostCreateFormView: "Post qo'shish",
   DashboardPostEditFormView: 'Postni tahrirlash',
-  DashboardOrderItemView: "Buyurtmani ko'rish",
+  DashboardOrderItemView: "Kanallar bo'yicha xaridlar",
 
   Help: 'Yordam',
   News: 'Xabar va yangilik',
@@ -63,6 +63,7 @@ const uzLat = {
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   CREATE_AN_ORDER: "E'lon berish",
   //   labels
+
   POST_A_ONE_TIME_ANNOUNCEMENT_TO_A_CHANNEL:
     "Kanalga bir martalik e'lon berish",
   POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL:

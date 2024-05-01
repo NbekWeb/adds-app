@@ -7,6 +7,7 @@ import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
+import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -27,11 +28,12 @@ onMounted(() => {
 </script>
 
 <template>
+  <page-header-component :title="$t('DashboardOrderItemView')" />
   <a-spin :spinning="loadingUrl.has('get/order/one')">
     <template #indicator>
       <IconLoader />
     </template>
-    <scrollbar-component height="calc(100vh - 180px)">
+    <scrollbar-component height="calc(100vh - 220px)">
       <template #content>
         <a-row :gutter="[10, 10]">
           <a-col :span="24" v-for="item in order?.items">
