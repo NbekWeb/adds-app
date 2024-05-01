@@ -5,7 +5,6 @@ import { uniqueItems } from '@/composables'
 
 const useBoard = defineStore('board', {
   state: () => ({
-    categories: [],
     boardList: [],
     boardInfo: null,
     page: 0,
@@ -66,33 +65,6 @@ const useBoard = defineStore('board', {
         })
         .finally(() => {
           core.loadingUrl.delete('get/board/one')
-        })
-    },
-    getBoardCategories(id = null) {
-      const core = useCore()
-      core.loadingUrl.add('board/category/all')
-      api({
-        url: 'board-category',
-        params: {
-          parentId: id
-        }
-      })
-        .then(({ data }) => {
-          this.categories = [
-            ...data.map((item) => ({
-              id: item.id,
-              value: item.id,
-              title: item.name,
-              pId: item.parentId
-            }))
-          ]
-          this.categories = uniqueItems(this.categories, 'value')
-        })
-        .catch((error) => {
-          useCore().switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('board/category/all')
         })
     }
   }
