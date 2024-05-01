@@ -47,12 +47,14 @@ const open = ref(false)
         :xl="4"
         class="item config-name border"
       >
-        <p class="m-0">
-          {{ order?.configuration?.name }}
-        </p>
-        <span class="text-muted">
-          {{ $t('RATE') }}
-        </span>
+        <template v-if="order?.configuration?.name">
+          <p class="m-0">
+            {{ order?.configuration?.name }}
+          </p>
+          <span class="text-muted">
+            {{ $t('RATE') }}
+          </span>
+        </template>
       </a-col>
       <a-col
         :span="4"
