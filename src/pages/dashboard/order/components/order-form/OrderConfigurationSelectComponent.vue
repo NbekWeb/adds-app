@@ -50,33 +50,23 @@ onBeforeUnmount(() => {
     @get-data="getPaginationAllConfiguration"
   >
     <template #content>
-      <template
-        v-if="!configurations.length && !loadingUrl.has('board/configurations')"
-      >
-        <a-empty class="empty">
-          <template #description>
-            {{ $t('NO_DATA') }}
-          </template>
-        </a-empty>
-      </template>
-
-      <template v-if="configurations.length">
-        <a-radio-group v-model:value="model" @change="handleSelectConfig">
-          <a-row>
+      <a-radio-group v-model:value="model" @change="handleSelectConfig">
+        <a-row>
+          <template v-if="configurations.length">
             <a-col v-for="(item, i) in configurations" :key="i">
               <order-board-configuration-component
                 :item="item"
                 :selected="model?.id === item.id"
               />
             </a-col>
-            <a-col>
-              <order-board-default-configuration-component
-                :selected="model === 'default'"
-              />
-            </a-col>
-          </a-row>
-        </a-radio-group>
-      </template>
+          </template>
+          <a-col>
+            <order-board-default-configuration-component
+              :selected="model === 'default'"
+            />
+          </a-col>
+        </a-row>
+      </a-radio-group>
     </template>
   </scrollbar-component>
 </template>
