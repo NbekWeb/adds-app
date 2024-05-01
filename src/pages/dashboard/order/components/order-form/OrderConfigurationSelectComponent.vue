@@ -45,7 +45,6 @@ onBeforeUnmount(() => {
     :loading="loadingUrl.has('board/configurations')"
     :page="page"
     :count="12"
-    :total-count-all="totalElements"
     :total-pages="totalPages"
     @get-data="getPaginationAllConfiguration"
   >

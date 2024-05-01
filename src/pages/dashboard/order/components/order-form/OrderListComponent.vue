@@ -30,7 +30,6 @@ function getPaginationAllOrders(page) {
     </template>
     <scrollbar-component
       :total-pages="totalPages"
-      :total-count-all="totalElements"
       :count="12"
       :page="page"
       :loading="loadingUrl.has('get/order/all')"

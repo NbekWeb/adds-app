@@ -54,7 +54,6 @@ onBeforeUnmount(() => {
       height="calc(100vh - 200px )"
       :page="page"
       :total-pages="totalPages"
-      :total-count-all="totalElements"
       @get-date="getAllConfiguration"
     >
       <template #content>
