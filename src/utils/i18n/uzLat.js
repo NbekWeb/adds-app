@@ -49,6 +49,7 @@ const uzLat = {
   YES: 'Ha',
   NO: "Yo'q",
   SAVE: 'Saqlash',
+  UPDATE: 'Yangilash',
   READY: 'Tayyor',
   BACK: 'Orqaga',
   ADD: "Qo'shish",
@@ -146,6 +147,8 @@ const uzLat = {
   APPROVE: 'Tasdiqlash',
   REJECTED: 'Rad qilingan',
   REJECT: 'Rad qilish',
+  
+  CATEGORY:'Kategoriyasi',
   BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
   AWAITING_BOARD_OWNER: 'Kanal egasi tasdiqlashi kutilmoqda',
   ACCEPTED: 'Qabul qilingan',
@@ -179,7 +182,17 @@ const uzLat = {
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
-  ERROR: 'Xatolik!'
+  ERROR: 'Xatolik!',
+
+  //
+  NAME:'Nomi',
+  Category:'Kategoriya',
+  LOCATION:'Manzil',
+
+  //KiosKBoard
+  KIOSKBOARD:"Kiosk board",
+  SingleKiosk:"Kiosk ma'lumotlari"
+  
 }
 
 export default uzLat

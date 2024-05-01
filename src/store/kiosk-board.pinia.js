@@ -4,23 +4,57 @@ import useCore from '@/store/core.pinia.js'
 
 const useKioskBoard = defineStore('kiosk-board', {
   state: () => ({
-    kioskBoards: []
+    kioskBoards: [],
+    kioskBoard: {}
   }),
   actions: {
-    getAllKioskBoard(page, type, categoryId, status) {
+    clearBoardInfo() {
+      this.kioskBoards = []
+    },
+    // getKioskBoardCategories(id = null) {
+    //   const core = useCore()
+    //   core.loadingUrl.add('board/category/all')
+    //   api({
+    //     url: 'board-category',
+    //     params: {
+    //       parentId: id
+    //     }
+    //   })
+    //     .then(({ data }) => {
+    //       this.categories = [
+    //         ...data.map((item) => ({
+    //           id: item.id,
+    //           value: item.id,
+    //           title: item.name,
+    //           pId: item.parentId
+    //         }))
+    //       ]
+    //       this.categories = uniqueItems(this.categories, 'value')
+    //     })
+    //     .catch((error) => {
+    //       core.switchStatus(error)
+    //     })
+    //     .finally(() => {
+    //       core.loadingUrl.delete('board/category/all')
+    //     })
+    // },
+    getAllKioskBoard(page, name = null, categoryId = null) {
       const core = useCore()
-      core.loadingUrl.add('get/kiosk-board/owner/all')
+      core.loadingUrl.add('get/kiosk-board/all')
       api({
         url: 'kiosk-board',
         params: {
           page: page,
           size: 10,
-          type: type,
-          categoryId: categoryId,
-          status: status
+          name: name,
+          categoryId: categoryId
         }
       })
         .then(({ data }) => {
+          // this.kioskBoards.push(...data.content)
+          // this.kioskBoards.push(...data.content)
+          console.log('data.content', data.content)
+          this.kioskBoards = [...data.content]
           console.log(data)
         })
         .catch((error) => {
@@ -28,6 +62,22 @@ const useKioskBoard = defineStore('kiosk-board', {
         })
         .finally(() => {
           core.loadingUrl.delete('get/kiosk-board/owner/all')
+        })
+    },
+    getOneKioskBoard(id, callback) {
+      const core = useCore()
+      core.loadingUrl.add('get/kiosk-board')
+      api({
+        url: `kiosk-board/${id}`
+      })
+        .then(({data}) => {
+          callback(data)
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('get/kiosk-board')
         })
     },
     createBoard(form) {
