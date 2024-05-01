@@ -1,6 +1,5 @@
 <script setup>
 const props = defineProps({
-  totalCountAll: Number,
   totalPages: Number,
   page: Number,
   count: Number,

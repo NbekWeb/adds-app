@@ -36,7 +36,6 @@ const getConfigurations = (page) => {
     height="calc(100vh - 288px )"
     :page="page"
     :total-pages="totalPages"
-    :total-count-all="totalElements"
     @get-date="getConfigurations"
   >
     <template #content>
