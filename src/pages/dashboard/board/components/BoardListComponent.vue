@@ -3,7 +3,6 @@ import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import useBoard from '@/store/boadr.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-
 import BoardItemComponent from '@/pages/dashboard/board/components/BoardItemComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 
@@ -53,7 +52,7 @@ const getBoardList = (page) => {
               :sm="24"
               :md="collapsed ? 12 : 24"
               :lg="collapsed ? 8 : 12"
-              :xl="collapsed ? 6 : 8"
+              :xl="8"
               :xxl="collapsed ? 4 : 6"
               v-for="item in boardList"
             >
