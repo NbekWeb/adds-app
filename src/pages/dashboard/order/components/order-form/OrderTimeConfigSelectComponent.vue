@@ -5,9 +5,9 @@ import dayjs from 'dayjs'
 import useTimeConfiguration from '@/store/time-configuration.pinia.js'
 import useCore from '@/store/core.pinia.js'
 
-import OrderTimeConfigComponent from '@/pages/dashboard/order/components/OrderTimeConfigComponent.vue'
+import OrderTimeConfigComponent from '@/pages/dashboard/order/components/order-form/OrderTimeConfigComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-import OrderDateComponent from '@/pages/dashboard/order/components/OrderDateComponent.vue'
+import OrderDateComponent from '@/pages/dashboard/order/components/order-form/OrderDateComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 
 const { boardId, configurationId } = defineProps({
@@ -16,8 +16,7 @@ const { boardId, configurationId } = defineProps({
     required: true
   },
   configurationId: {
-    type: [String, Number],
-    required: true
+    type: [String, Number]
   }
 })
 

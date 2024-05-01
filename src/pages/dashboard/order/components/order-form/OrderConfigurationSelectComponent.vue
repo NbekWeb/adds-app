@@ -1,10 +1,11 @@
 <script setup>
 import { onBeforeUnmount, onMounted } from 'vue'
 import useBoardConfiguration from '@/store/board-configuration.pinia.js'
-import OrderBoardConfigurationComponent from '@/pages/dashboard/order/components/OrderBoardConfigurationComponent.vue'
+import OrderBoardConfigurationComponent from '@/pages/dashboard/order/components/order-form/OrderBoardConfigurationComponent.vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
+import OrderBoardDefaultConfigurationComponent from '@/pages/dashboard/order/components/order-form/OrderBoardDefaultConfigurationComponent.vue'
 
 const model = defineModel('value')
 const amount = defineModel('amount')
@@ -61,12 +62,19 @@ onBeforeUnmount(() => {
 
       <template v-if="configurations.length">
         <a-radio-group v-model:value="model" @change="handleSelectConfig">
-          <order-board-configuration-component
-            v-for="(item, i) in configurations"
-            :item="item"
-            :selected="model?.id === item.id"
-            :key="i"
-          />
+          <a-row>
+            <a-col v-for="(item, i) in configurations" :key="i">
+              <order-board-configuration-component
+                :item="item"
+                :selected="model?.id === item.id"
+              />
+            </a-col>
+            <a-col>
+              <order-board-default-configuration-component
+                :selected="model === 'default'"
+              />
+            </a-col>
+          </a-row>
         </a-radio-group>
       </template>
     </template>

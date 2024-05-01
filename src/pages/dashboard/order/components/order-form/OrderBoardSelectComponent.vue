@@ -1,11 +1,11 @@
 <script setup>
 import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 import useCore from '@/store/core.pinia.js'
 import useBoard from '@/store/boadr.pinia.js'
 
-import OrderBoardItemComponent from '@/pages/dashboard/order/components/OrderBoardItemComponent.vue'
+import OrderBoardItemComponent from '@/pages/dashboard/order/components/order-form/OrderBoardItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
-import { onMounted } from 'vue'
 
 defineProps({
   selectedBoards: Array

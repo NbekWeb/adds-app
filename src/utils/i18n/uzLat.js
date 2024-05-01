@@ -63,6 +63,9 @@ const uzLat = {
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   CREATE_AN_ORDER: "E'lon berish",
   //   labels
+  //Posting an ad without description on the channel
+  POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL:
+    "Kanalda ta'rifsiz e'lon chiqarish",
   START_DATE: 'Boshlanish vaqt',
   END_DATE: 'Tugash vaqti',
   DOWNLOAD: 'Yuklab olish',

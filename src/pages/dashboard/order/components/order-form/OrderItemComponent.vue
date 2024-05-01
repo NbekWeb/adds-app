@@ -37,52 +37,60 @@ const { item } = defineProps({
             {{ formatTextLength(item.board?.name, 25) }}
           </h1>
         </div>
-        <h1 class="configuration-name m-0">{{ item.configuration?.name }}</h1>
+        <template v-if="item?.configuration?.name"> </template>
+        <h1 class="configuration-name m-0">{{ item?.configuration?.name }}</h1>
       </div>
       <!--      <span> Ta'rif </span>-->
       <div class="flex flex-column justify-between my-2">
-        <!--      kanal-->
-        <div class="flex align-center">
-          <span class="mr-1">
-            <icon-announcement-voic />
-          </span>
-          <p class="mb-0">
-            {{ formatTime(item.configuration.liveTime, 'day') }}
-            {{ $t('DAY').toLowerCase() }},
-            {{ formatTime(item.configuration.liveTime, 'hour') }}
-            {{ $t('HOUR').toLowerCase() }}
-            {{ formatTime(item.configuration.liveTime, 'minute') }}
-            {{ $t('MINUTE').toLowerCase() }}
-          </p>
-        </div>
-        <!--      pin-->
-        <div class="flex align-center">
-          <span class="mr-1">
-            <icon-pin />
-          </span>
-          <p class="mb-0">
-            {{ formatTime(item.configuration.pinTime, 'day') }}
-            {{ $t('DAY').toLowerCase() }},
-            {{ formatTime(item.configuration.pinTime, 'hour') }}
-            {{ $t('HOUR').toLowerCase() }}
-            {{ formatTime(item.configuration.pinTime, 'minute') }}
-            {{ $t('MINUTE').toLowerCase() }}
-          </p>
-        </div>
-        <div class="flex align-center">
-          <!--      top-->
-          <span class="mr-1">
-            <icon-pin />
-          </span>
-          <p class="mb-0">
-            {{ formatTime(item.configuration.topTime, 'day') }}
-            {{ $t('DAY').toLowerCase() }},
-            {{ formatTime(item.configuration.topTime, 'hour') }}
-            {{ $t('HOUR').toLowerCase() }},
-            {{ formatTime(item.configuration.topTime, 'minute') }}
-            {{ $t('MINUTE').toLowerCase() }}
-          </p>
-        </div>
+        <template v-if="item?.configuration?.liveTime">
+          <!--      kanal-->
+          <div class="flex align-center">
+            <span class="mr-1">
+              <icon-announcement-voic />
+            </span>
+            <p class="mb-0">
+              {{ formatTime(item?.configuration?.liveTime, 'day') }}
+              {{ $t('DAY').toLowerCase() }},
+              {{ formatTime(item?.configuration?.liveTime, 'hour') }}
+              {{ $t('HOUR').toLowerCase() }}
+              {{ formatTime(item?.configuration?.liveTime, 'minute') }}
+              {{ $t('MINUTE').toLowerCase() }}
+            </p>
+          </div>
+          <!--      pin-->
+          <div class="flex align-center">
+            <span class="mr-1">
+              <icon-pin />
+            </span>
+            <p class="mb-0">
+              {{ formatTime(item?.configuration?.pinTime, 'day') }}
+              {{ $t('DAY').toLowerCase() }},
+              {{ formatTime(item?.configuration?.pinTime, 'hour') }}
+              {{ $t('HOUR').toLowerCase() }}
+              {{ formatTime(item?.configuration?.pinTime, 'minute') }}
+              {{ $t('MINUTE').toLowerCase() }}
+            </p>
+          </div>
+          <div class="flex align-center">
+            <!--      top-->
+            <span class="mr-1">
+              <icon-pin />
+            </span>
+            <p class="mb-0">
+              {{ formatTime(item?.configuration?.topTime, 'day') }}
+              {{ $t('DAY').toLowerCase() }},
+              {{ formatTime(item?.configuration?.topTime, 'hour') }}
+              {{ $t('HOUR').toLowerCase() }},
+              {{ formatTime(item?.configuration?.topTime, 'minute') }}
+              {{ $t('MINUTE').toLowerCase() }}
+            </p>
+          </div>
+        </template>
+        <template v-else>
+          <h1>
+            {{ $t('POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL') }}
+          </h1>
+        </template>
       </div>
 
       <div class="flex justify-between">
@@ -98,7 +106,9 @@ const { item } = defineProps({
           <p class="m-0">
             {{
               formatAmount(
-                item.configuration?.amount + item.timeConfiguration?.amount
+                item?.configuration?.amount
+                  ? item?.configuration?.amount
+                  : 0 + item?.timeConfiguration?.amount
               )
             }}
           </p>

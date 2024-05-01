@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useOrder from '@/store/order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import OrderListComponent from '@/pages/dashboard/order/components/OrderListComponent.vue'
+import OrderListComponent from '@/pages/dashboard/order/components/order-form/OrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 
 const router = useRouter()

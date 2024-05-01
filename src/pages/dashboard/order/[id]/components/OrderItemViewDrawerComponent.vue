@@ -28,7 +28,9 @@ const model = defineModel('open')
     </template>
     <scrollbar-component height="calc(100vh - 115px)">
       <template #content>
-        <configuration-component :configuration="item?.configuration" />
+        <template v-if="item?.configuration">
+          <configuration-component :configuration="item?.configuration" />
+        </template>
         <template v-if="item?.taskResponse?.startDate">
           <configuration-statistics-component
             :statistics="item?.taskResponse"
