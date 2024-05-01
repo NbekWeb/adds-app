@@ -82,7 +82,10 @@ const open = ref(false)
         class="item border"
       >
         <p class="m-0">
-          {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
+          <template v-if="order?.endDate">
+            {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
+          </template>
+          <template v-else> - </template>
         </p>
         <span class="text-muted">
           {{ $t('POST_DELETED_DATE') }}
