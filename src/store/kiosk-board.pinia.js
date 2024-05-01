@@ -5,39 +5,13 @@ import useCore from '@/store/core.pinia.js'
 const useKioskBoard = defineStore('kiosk-board', {
   state: () => ({
     kioskBoards: [],
-    kioskBoard: {}
+    kioskBoard: {},
+    totalPages: 0
   }),
   actions: {
     clearBoardInfo() {
       this.kioskBoards = []
     },
-    // getKioskBoardCategories(id = null) {
-    //   const core = useCore()
-    //   core.loadingUrl.add('board/category/all')
-    //   api({
-    //     url: 'board-category',
-    //     params: {
-    //       parentId: id
-    //     }
-    //   })
-    //     .then(({ data }) => {
-    //       this.categories = [
-    //         ...data.map((item) => ({
-    //           id: item.id,
-    //           value: item.id,
-    //           title: item.name,
-    //           pId: item.parentId
-    //         }))
-    //       ]
-    //       this.categories = uniqueItems(this.categories, 'value')
-    //     })
-    //     .catch((error) => {
-    //       core.switchStatus(error)
-    //     })
-    //     .finally(() => {
-    //       core.loadingUrl.delete('board/category/all')
-    //     })
-    // },
     getAllKioskBoard(page, name = null, categoryId = null) {
       const core = useCore()
       core.loadingUrl.add('get/kiosk-board/all')
@@ -51,11 +25,11 @@ const useKioskBoard = defineStore('kiosk-board', {
         }
       })
         .then(({ data }) => {
-          // this.kioskBoards.push(...data.content)
-          // this.kioskBoards.push(...data.content)
-          console.log('data.content', data.content)
+          if (page == 0) {
+            this.kioskBoards = []
+          }
           this.kioskBoards = [...data.content]
-          console.log(data)
+          this.totalPages = data.totalPages
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -70,7 +44,7 @@ const useKioskBoard = defineStore('kiosk-board', {
       api({
         url: `kiosk-board/${id}`
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           callback(data)
         })
         .catch((error) => {

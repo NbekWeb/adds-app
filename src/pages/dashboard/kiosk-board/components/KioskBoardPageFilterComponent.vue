@@ -1,7 +1,7 @@
 <script setup>
 import IconSearch from '@/components/icons/IconSearch.vue'
 import { ref } from 'vue'
-import useBoard from '@/store/boadr.pinia.js'
+import useCategories from '@/store/category.pinia.js'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import useCore from '@/store/core.pinia.js'
@@ -19,10 +19,10 @@ const router = useRouter()
 const route = useRoute()
 
 const corePinia = useCore()
-const boardPinia = useBoard()
+const categoryPinia = useCategories()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { categories } = storeToRefs(boardPinia)
+const { categories } = storeToRefs(categoryPinia)
 const kioskBoardPinia = useKioskBoard()
 
 const timeOut = ref(null)
@@ -37,7 +37,7 @@ function handleChangeFilter() {
         name: name.value
       }
     })
-    kioskBoardPinia.getAllKioskBoard(null, name.value, category.value)
+    kioskBoardPinia.getAllKioskBoard(0, name.value, category.value)
   }
 }
 function handleSearch() {
@@ -45,7 +45,6 @@ function handleSearch() {
     clearTimeout(timeOut.value)
     timeOut.value = setTimeout(() => {
       handleChangeFilter()
-      // kioskBoardPinia.getAllKioskBoard(null, name.value)
     }, 500)
   }
 }
@@ -86,11 +85,11 @@ function handleFilterInMobile() {
         }"
         :placeholder="$t('SELECT_CATEGORY')"
         size="middle"
+        style="min-width: 250px"
         allow-clear
         tree-default-expand-all
-        :tree-data-simple-mode="[categories]"
-        :tree-data="categories"
         tree-node-filter-prop="label"
+        :tree-data="categories"
         @change="handleChangeFilter"
       >
       </a-tree-select>

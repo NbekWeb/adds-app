@@ -46,18 +46,10 @@ const props = defineProps({
   </div>
 </template>
 <style lang="scss">
-/* .text-muted, .text-bold,.text-xs{
-  border: 1px solid red;
-} */
-/* .text-xs{
-  border: 1px solid red;
-} */
+
 .kioskBoard-item-container {
   .ant-card-body {
     padding: 16px !important;
   }
 }
-/* p{
-  margin-bottom: 0 !important;
-} */
 </style>

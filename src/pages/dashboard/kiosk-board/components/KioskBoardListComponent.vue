@@ -2,6 +2,7 @@
 import useKioskBoard from '@/store/kiosk-board.pinia.js'
 import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 
@@ -11,8 +12,11 @@ const corePinia = useCore()
 const kioskBoardPinia = useKioskBoard()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { kioskBoards, page, type } = storeToRefs(kioskBoardPinia)
+const { kioskBoards, totalPages } = storeToRefs(kioskBoardPinia)
+
+const page = ref(0)
 const getKioskBoardList = (page) => {
+  page.value = page
   kioskBoardPinia.getAllKioskBoard(page)
 }
 </script>
@@ -24,13 +28,11 @@ const getKioskBoardList = (page) => {
       :page="page"
       class="board-list"
       height="calc(100vh - 235px)"
-      :total-pages="page"
-      :total-count-all="page"
+      :total-pages="totalPages"
       @get-data="getKioskBoardList"
     >
       <template #content>
         <template v-if="!kioskBoards?.length">
-         
           <a-empty class="empty">
             <template #description>
               {{ $t('NO_DATA') }}
@@ -49,8 +51,6 @@ const getKioskBoardList = (page) => {
         </template>
       </template>
     </scrollbar-component>
-
-    <!-- <p v-for="k of kioskBoards" :key="k.id">{{ k }}</p> -->
   </div>
 </template>
 <style></style>
