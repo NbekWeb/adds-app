@@ -41,7 +41,8 @@ onMounted(() => {
       <template #content>
         <a-empty class="empty" v-show="!boardInfo">
           <template #description>
-            {{ $t('NO_DATA') }}
+            <div>{{ $t('NO_DATA') }}</div>
+            <a-button class="mt-2" @click="router.push({name:'DashboardKioskBoardView'})">{{ $t('BACK') }}</a-button>
           </template>
         </a-empty>
         <div class="h-full mr-2" v-show="boardInfo">
