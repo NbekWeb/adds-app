@@ -81,14 +81,15 @@ const open = ref(false)
         :xl="5"
         class="item border"
       >
-        <template v-if="order?.endDate">
-          <p class="m-0">
+        <p class="m-0">
+          <template v-if="order?.endDate">
             {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
-          </p>
-          <span class="text-muted">
-            {{ $t('POST_DELETED_DATE') }}
-          </span>
-        </template>
+          </template>
+          <template v-else> - </template>
+        </p>
+        <span class="text-muted">
+          {{ $t('POST_DELETED_DATE') }}
+        </span>
       </a-col>
 
       <a-col :xs="24" :sm="24" :md="5" :lg="5" :xl="6" class="item border">
