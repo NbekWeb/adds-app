@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
-import { treeData, uniqueItems } from '@/composables'
+import { treeData } from '@/composables'
 
 const useCategories = defineStore('categories', {
   state: () => ({
