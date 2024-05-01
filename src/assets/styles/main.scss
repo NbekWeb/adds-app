@@ -1,19 +1,19 @@
 @import 'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap';
-@import "./variable";
-@import "./spacing";
-@import "responsive";
+@import './variable';
+@import './spacing';
+@import 'responsive';
 
 * {
-  font-family: "Roboto Flex", sans-serif;
+  font-family: 'Roboto Flex', sans-serif;
   font-weight: 400;
 }
-body{
-  color: #1C232C;
+body {
+  color: #1c232c;
 }
-.text-muted{
+.text-muted {
   color: $muted;
 }
-.text-body{
+.text-body {
   color: $body;
 }
 .text-bold {
@@ -24,6 +24,42 @@ body{
 }
 .text-normal {
   font-weight: 400;
+}
+.text-xs {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
+}
+.text-sm {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+.text-base {
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+}
+.text-lg {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75rem; /* 28px */
+}
+.text-xl {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
+}
+.text-2xl {
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+}
+.text-3xl {
+  font-size: 1.875rem; /* 30px */
+  line-height: 2.25rem; /* 36px */
+}
+.text-4xl {
+  font-size: 2.25rem; /* 36px */
+  line-height: 2.5rem; /* 40px */
+}
+.text-5xl {
+  font-size: 3rem; /* 48px */
+  line-height: 1;
 }
 .mx-auto {
   margin-left: auto;
@@ -38,34 +74,34 @@ body{
 .small {
   font-size: 0.75rem;
 }
-.block{
+.block {
   display: block;
 }
-.flex{
-  display: flex!important;
+.flex {
+  display: flex !important;
 }
-.justify-center{
-  justify-content: center!important;
+.justify-center {
+  justify-content: center !important;
 }
-.justify-between{
-  justify-content: space-between!important;
+.justify-between {
+  justify-content: space-between !important;
 }
-.flex-column{
-  flex-direction: column!important;
+.flex-column {
+  flex-direction: column !important;
 }
-.align-center{
-  align-items: center!important;
+.align-center {
+  align-items: center !important;
 }
-.justify-end{
-  justify-content: flex-end!important;
+.justify-end {
+  justify-content: flex-end !important;
 }
-.justify-start{
-  justify-content: flex-start!important;
+.justify-start {
+  justify-content: flex-start !important;
 }
-.w-full{
+.w-full {
   width: 100%;
 }
-.h-full{
+.h-full {
   height: 100%;
 }
 //Image
@@ -85,7 +121,8 @@ a {
   }
 }
 // Ant style changed
-.ant-select,.ant-input{
+.ant-select,
+.ant-input {
   width: 100%;
 }
 
@@ -97,12 +134,12 @@ a {
   height: 100%;
 }
 .avatar {
-  border: 1px solid rgb($muted, 0.5)!important;
+  border: 1px solid rgb($muted, 0.5) !important;
 }
-.text-center{
+.text-center {
   text-align: center;
 }
-.btn{
+.btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,7 +149,7 @@ a {
 .isMobile {
   display: none;
 }
-.isDesktop{
+.isDesktop {
   display: block;
 }
 @include responsive-md {
@@ -122,6 +159,8 @@ a {
   .isDesktop {
     display: none !important;
   }
-
 }
 
+.border{
+  border: 1px solid red;
+}
