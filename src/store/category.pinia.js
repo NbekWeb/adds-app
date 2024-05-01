@@ -19,8 +19,6 @@ const useCategories = defineStore('categories', {
       })
         .then(({ data }) => {
           this.categories = treeData(data)
-          console.log(this.categories)
-          // this.categories = uniqueItems(this.categories, 'value')
         })
         .catch((error) => {
           useCore().switchStatus(error)
