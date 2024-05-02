@@ -61,8 +61,9 @@ function handleFilterInMobile() {
 </script>
 
 <template>
-  <a-row :gutter="[10, 10]" justify="end">
-    <a-col :xl="12" :lg="12" :md="24" :sm="24" :xs="24">
+  <a-space>
+
+  
       <a-input
         :placeholder="$t('SEARCH')"
         v-model:value="name"
@@ -73,8 +74,7 @@ function handleFilterInMobile() {
           <icon-search />
         </template>
       </a-input>
-    </a-col>
-    <a-col :xl="12" :lg="12" :md="12" :sm="24" :xs="24">
+    
       <a-tree-select
         v-model:value="category"
         class="board-category-filter"
@@ -93,13 +93,11 @@ function handleFilterInMobile() {
         @change="handleChangeFilter"
       >
       </a-tree-select>
-    </a-col>
-    <a-col :span="24" class="isMobile">
+    
       <a-button @click="handleFilterInMobile" type="primary" class="w-full">
         {{ $t('READY') }}
       </a-button>
-    </a-col>
-  </a-row>
+    </a-space>
 </template>
 
 <style scoped lang="scss"></style>
