@@ -3,12 +3,10 @@ import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import usePost from '@/store/post.pinia.js'
 import useCore from '@/store/core.pinia.js'
+import { fileBaseUrl } from '@/utils/conf.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
-import IconTrash from '@/components/icons/IconTrash.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconEye from '@/components/icons/IconEye.vue'
-import IconEdit from '@/components/icons/IconEdit.vue'
-import { fileBaseUrl } from '@/utils/conf.js'
 import IconFile from '@/components/icons/IconFile.vue'
 
 const router = useRouter()
@@ -21,9 +19,8 @@ const { item } = defineProps({
   }
 })
 const corePinia = useCore()
-const postPinia = usePost()
 
-const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
+const { loadingUrl } = storeToRefs(corePinia)
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 const props = defineProps({

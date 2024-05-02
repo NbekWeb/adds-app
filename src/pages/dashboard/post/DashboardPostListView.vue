@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import usePost from '@/store/post.pinia.js'
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import PostListComponent from '@/pages/dashboard/post/component/PostListComponent.vue'
