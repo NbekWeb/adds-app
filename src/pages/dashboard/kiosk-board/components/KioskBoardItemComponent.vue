@@ -1,9 +1,15 @@
 <script setup>
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
+import KioskBoardItemLocationComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardItemLocationComponent.vue'
+
+import useKioskBoard from '@/store/kiosk-board.pinia.js'
+
 import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
 
-const router=useRouter()
-
+const router = useRouter()
+const mapName = ref('')
+const { changeMap } = useKioskBoard()
 const props = defineProps({
   item: {
     type: Object,
@@ -14,50 +20,46 @@ const props = defineProps({
     default: false
   }
 })
+
+
 </script>
 <template>
   <div class="kioskBoard-item-container mb-2">
     <a-card class="kioskBoard-item text-xs" :loading="loading">
-      <a-row class="flex justify-between">
-        <a-col :lg="4" class="">
-          <p class="text-bold mb-1"> {{  item?.name }} </p>
-          <p class="text-muted ">{{ $t('NAME') }}</p>
-        </a-col>
-        <a-col :lg="4">
-          <p class="text-bold mb-1">{{  item?.category?.name }}</p>
-          <p class="text-muted">{{ $t('CATEGORY') }}  </p>
-        </a-col>
-        <a-col :lg="4" class="">
-          <p class="text-bold mb-1">qo'shilmagan</p>
-          <p class="text-muted">{{ $t('LOCATION') }} </p>
-        </a-col>
-        <a-col :lg="2" class="flex align-center">
-          <a-button
-            @click="router.push(`kiosk-board/item/${item.id}`)"
-            size="middle"
-            type="primary"
-            class="flex align-center justify-center px-4"
-          >
-            <icon-shopping-card />
-          </a-button>
-        </a-col>
-      </a-row>
+      <div class="flex flex-column justify-between h-full">
+        <div class="flex justify-between align-center mb-2">
+          <h1 class="kiosk-board-name mb-0">{{ item?.name }}</h1>
+
+          <p class="category-name m-0">{{ item?.category?.name }}</p>
+        </div>
+        <div>
+          <p class="description">{{ item?.description }}</p>
+        </div>
+        <div class="flex justify-between align-center flex-wrap gx-2 ">
+          <a-space class="ml-auto">
+            <kiosk-board-item-location-component
+              :locMap="[item.latitude, item.longitude]"
+            />
+            <a-button
+              size="small"
+              class="flex justify-center align-center kiosk-board-item-btn"
+            >
+              <IconShoppingCard />
+            </a-button>
+          </a-space>
+        </div>
+      </div>
     </a-card>
   </div>
 </template>
 <style lang="scss">
-/* .text-muted, .text-bold,.text-xs{
-  border: 1px solid red;
-} */
-/* .text-xs{
-  border: 1px solid red;
-} */
 .kioskBoard-item-container {
+  
+  .kioskBoard-item:hover {
+    background-color: #f0f0f0;
+  }
   .ant-card-body {
     padding: 16px !important;
   }
 }
-/* p{
-  margin-bottom: 0 !important;
-} */
 </style>
