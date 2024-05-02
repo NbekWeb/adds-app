@@ -6,15 +6,39 @@ const useKioskBoard = defineStore('kiosk-board', {
   state: () => ({
     kioskBoards: [],
     kioskBoard: {},
-    totalPages: 0
+    totalPages: 0,
   }),
   actions: {
+    changeMap(lat, lon,callback) {
+      const core = useCore()
+      core.loadingUrl.add('kiosk-board/map-info')
+
+      api({
+        url: 'https://nominatim.openstreetmap.org/reverse',
+        params: {
+          format: 'json',
+          lat: lat,
+          lon: lon,
+          'accept-language': 'uz'
+        }
+      })
+        .then(({data}) => {
+          callback(data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('kiosk-board/map-info')
+        })
+    },
+
     clearBoardInfo() {
       this.kioskBoards = []
     },
     getAllKioskBoard(page, name = null, categoryId = null) {
       const core = useCore()
-      core.loadingUrl.add('get/kiosk-board/all')
+      core.loadingUrl.add('kiosk-board/all')
       api({
         url: 'kiosk-board',
         params: {

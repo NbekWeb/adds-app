@@ -26,8 +26,8 @@ const getKioskBoardList = (page) => {
       :loading="loadingUrl.has('kiosk-board/all')"
       :count="9"
       :page="page"
-      class="board-list"
-      height="calc(100vh - 235px)"
+      class="kiosk-board-list"
+      height="calc(100vh - 160px)"
       :total-pages="totalPages"
       @get-data="getKioskBoardList"
     >
@@ -40,17 +40,22 @@ const getKioskBoardList = (page) => {
           </a-empty>
         </template>
         <template v-if="kioskBoards?.length">
-          <kiosk-board-item-component
-            v-for="(item, i) of kioskBoards"
-            :key="i"
-            :item="item"
-            @click="
-              $router.push({ path: `/dashboard/kiosk-board/item/${item.id}` })
-            "
-          />
+          <a-row :gutter="[16, 16]">
+            <a-col
+              :xs="24"
+              :sm="12"
+              :md="8"
+              :lg="6"
+              v-for="(item, i) of kioskBoards"
+              :key="i"
+            >
+              <kiosk-board-item-component :item="item" />
+            </a-col>
+          </a-row>
         </template>
       </template>
     </scrollbar-component>
   </div>
 </template>
+
 <style></style>

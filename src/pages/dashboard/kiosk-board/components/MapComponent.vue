@@ -76,8 +76,8 @@ const click = (e) => {
         fill-color="#6265F0"
       />
       <l-circle
-        v-for="c in circle"
-        :key="`circleKey${Math.random()}`"
+        v-for="(c, index) in circle"
+        :key="`circleKey${index}`"
         :lat-lng="c.center"
         :radius="c.radius || 2"
         :color="c.color || '#6265F0'"
@@ -89,7 +89,7 @@ const click = (e) => {
 <style scoped lang="scss">
 .map-block {
   position: relative;
-  height: 100%;
+  height: 70vh;
   .map-buttons {
     text-align: right;
     position: absolute;
