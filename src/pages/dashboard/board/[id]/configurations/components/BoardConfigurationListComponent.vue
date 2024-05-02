@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import useCore from '@/store/core.pinia.js'

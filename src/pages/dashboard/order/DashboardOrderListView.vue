@@ -6,6 +6,7 @@ import useOrder from '@/store/order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderListComponent from '@/pages/dashboard/order/components/order-form/OrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
+import PostListDrawerComponent from '@/pages/dashboard/order/components/PostListDrawerComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -16,6 +17,7 @@ const { orderInfo } = storeToRefs(orderPinia)
 const statuses = ref(['PENDING', 'APPROVED', 'REJECTED', 'CANCELED'])
 
 const orderStatus = ref(route.query.status)
+const open = ref(false)
 
 function handleChange() {
   router.push({
@@ -50,11 +52,7 @@ onMounted(() => {
             {{ $t(status) }}
           </a-select-option>
         </a-select>
-        <a-button
-          class="btn"
-          type="primary"
-          @click="router.push({ name: 'DashboardPostView' })"
-        >
+        <a-button class="btn" type="primary" @click="open = true">
           <template #icon>
             <IconPlus />
           </template>
@@ -63,15 +61,47 @@ onMounted(() => {
       </a-space>
     </template>
   </page-header-component>
+  <a-drawer
+    v-model:open="open"
+    width="800px"
+    destroy-on-close
+    root-class-name="order-post-list"
+  >
+    <template #title>
+      <div class="flex justify-between align-center">
+        <h3 class="title m-0">{{ $t('DashboardPostListView') }}</h3>
+        <a-button
+          type="primary"
+          class="btn"
+          @click="router.push({ name: 'DashboardPostCreateFormView' })"
+        >
+          <template #icon>
+            <IconPlus />
+          </template>
+          {{ $t('ADD') }}
+        </a-button>
+      </div>
+    </template>
+    <post-list-drawer-component />
+  </a-drawer>
   <order-list-component />
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '@/assets/styles/responsive';
 .order-status {
   width: 200px;
   @include responsive-md {
     width: 150px;
   }
+}
+.order-post-list .ant-drawer-content-wrapper {
+  @include responsive-md {
+    width: 100% !important;
+  }
+}
+
+.title {
+  line-height: 20px;
 }
 </style>

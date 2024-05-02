@@ -94,7 +94,7 @@ onMounted(() => {
           />
         </a-form-item>
         <a-form-item :label="$t('POST_DESCRIPTION')" name="text">
-          <post-editor-component v-model:value="form.text" />
+          <post-editor-component v-model:value="form.text" :max-count="1024" />
         </a-form-item>
         <a-form-item :label="$t('POST_BUTTONS')" name="buttons">
           <post-inline-buttons-component v-model:buttons="form.buttons" />

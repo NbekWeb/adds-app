@@ -16,6 +16,10 @@ const index = ref()
 
 function addButton(data) {
   buttons.value.push(data)
+  buttons.value = buttons.value.map((item, i) => {
+    item.orderNumber = i
+    return item
+  })
   corePinia.visibleDrawer.delete('button/form')
 }
 function editButton(data) {
@@ -23,6 +27,7 @@ function editButton(data) {
     if (i === index.value) {
       Object.assign(item, data)
     }
+    item.orderNumber = i
     return item
   })
   corePinia.visibleDrawer.delete('button/form')
