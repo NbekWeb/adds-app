@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
 
-import PostItemComponent from '@/pages/dashboard/post/component/PostItemComponent.vue'
+import PostItemComponent from '@/pages/dashboard/order/components/PostItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 
@@ -12,18 +12,18 @@ const corePinia = useCore()
 const postPinia = usePost()
 
 const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
-const { posts } = storeToRefs(postPinia)
+const { posts, totalPages } = storeToRefs(postPinia)
 
 const postId = ref(null)
+const pageValue = ref(0)
 
-function editPost(id) {
-  postId.value = id
-  corePinia.visibleDrawer.add('post/form/modal')
+function handleGetPostPagination(page) {
+  postPinia.getAllPosts(page, 4)
+  pageValue.value = page
 }
-function close() {
-  corePinia.visibleDrawer.add('post/form/modal')
-  postId.value = null
-}
+onMounted(() => {
+  postPinia.getAllPosts(0, 4)
+})
 </script>
 
 <template>
@@ -31,7 +31,14 @@ function close() {
     <template #indicator>
       <icon-loader />
     </template>
-    <scrollbar-component height="calc(100vh - 190px)">
+    <scrollbar-component
+      height="calc(100vh - 125px)"
+      :loading="loadingUrl.has('get/post/all')"
+      :count="4"
+      :total-pages="totalPages"
+      :page="pageValue"
+      @get-data="handleGetPostPagination"
+    >
       <template #content>
         <template v-if="posts.length">
           <a-row :gutter="[10, 10]">
@@ -39,14 +46,14 @@ function close() {
               class="card-item"
               :xs="24"
               :sm="24"
-              :md="collapsed ? 12 : 24"
-              :lg="collapsed ? 8 : 12"
-              :xl="8"
-              :xxl="6"
+              :md="24"
+              :lg="12"
+              :xl="12"
+              :xxl="8"
               :key="item.id"
               v-for="item in posts"
             >
-              <post-item-component :item="item" @edit="editPost" />
+              <post-item-component :item="item" />
             </a-col>
           </a-row>
         </template>

@@ -14,7 +14,7 @@ const route = useRoute()
 const corePinia = useCore()
 const postPinia = usePost()
 
-const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
+const { loadingUrl } = storeToRefs(corePinia)
 
 onMounted(() => {
   postPinia.getAllPosts(0)

@@ -2,9 +2,7 @@
 const props = defineProps({
   totalPages: Number,
   page: Number,
-  count: Number,
   loading: Boolean,
-
   height: String
 })
 const emits = defineEmits(['getData'])
