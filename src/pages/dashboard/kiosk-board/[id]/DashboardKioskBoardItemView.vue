@@ -85,4 +85,5 @@ onMounted(() => {
 .text-xs {
   margin-bottom: 0.2rem;
 }
+
 </style>
