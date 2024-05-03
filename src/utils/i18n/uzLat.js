@@ -4,8 +4,9 @@ const uzLat = {
   DashboardListView: 'Asosiy sahifa',
   DashboardBoardListView: 'Kanallar',
   DashboardMyBoardListView: 'Mening kanallarim',
-  DashboardKioskBoardListView: 'Kiosk boards',
+  DashboardKioskBoardListView: 'Kiosk boardlar',
   DashboardMyKioskBoardListView: 'My kiosk boards',
+  DashboardKioskBoardItemView: "Kiosk boardni ko'rish",
   DashboardPostListView: "E'lonlar",
   DashboardOrderListView: 'Xaridlar',
   ReportView: "E'lon bo'yicha hisobot",
@@ -131,6 +132,7 @@ const uzLat = {
   SELECT_CHANNEL: 'Kanalni tanlang',
   SELECT_CONFIGURATION: "Ta'rifni tanlang",
   SELECT_DATE_AND_TIME: 'Sana va vaqtni tanlang',
+  LOCATION: 'Manzil',
 
   // statuses
   FAILED: 'Muvaffaqiyatsiz',
@@ -147,8 +149,8 @@ const uzLat = {
   APPROVE: 'Tasdiqlash',
   REJECTED: 'Rad qilingan',
   REJECT: 'Rad qilish',
-  
-  CATEGORY:'Kategoriyasi',
+
+  CATEGORY: 'Kategoriyasi',
   BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
   AWAITING_BOARD_OWNER: 'Kanal egasi tasdiqlashi kutilmoqda',
   ACCEPTED: 'Qabul qilingan',
@@ -182,17 +184,7 @@ const uzLat = {
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
-  ERROR: 'Xatolik!',
-
-  //
-  NAME:'Nomi',
-  Category:'Kategoriya',
-  LOCATION:'Manzil',
-
-  //KiosKBoard
-  KIOSKBOARD:"Kiosk board",
-  SingleKiosk:"Kiosk ma'lumotlari"
-  
+  ERROR: 'Xatolik!'
 }
 
 export default uzLat

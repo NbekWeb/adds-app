@@ -4,6 +4,7 @@ import IconHome from '@/components/icons/IconHome.vue'
 import IconAnnouncement from '@/components/icons/IconAnnouncement.vue'
 import IconMessageTextSquare from '@/components/icons/IconMessageTextSquare.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
+import IconMonitor from '@/components/icons/IconMonitor.vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -30,8 +31,8 @@ const menuList = shallowRef([
   },
   {
     path: 'kiosk-board',
-    name: 'KIOSKBOARD',
-    icon: IconAnnouncement
+    name: 'DashboardKioskBoardListView',
+    icon: IconMonitor
   },
   {
     path: 'post',
