@@ -23,7 +23,7 @@ import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations
 import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
 import DashboardPostItemView from '@/pages/dashboard/post/DashboardPostItemView.vue'
 import DashboardOrderItemView from '@/pages/dashboard/order/[id]/DashboardOrderView.vue'
-
+import DashboardKioskBoardItemView from '@/pages/dashboard/kiosk-board/[id]/DashboardKioskBoardItemView.vue'
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
 export const router = createRouter({
@@ -86,9 +86,15 @@ export const router = createRouter({
               path: '',
               name: 'DashboardKioskBoardListView',
               component: DashboardKioskBoardListView
+            },
+            {
+              path: 'item/:id',
+              name: 'DashboardKioskBoardItemView',
+              component: DashboardKioskBoardItemView
             }
           ]
         },
+
         {
           path: 'post',
           name: 'DashboardPostView',

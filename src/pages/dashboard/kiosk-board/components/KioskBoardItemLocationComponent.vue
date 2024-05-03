@@ -51,7 +51,7 @@ const showDrawer = () => {
         <icon-loader />
       </template>
     </a-spin>
-    <template v-if="mapName">
+    <template v-if="mapName" >
       <p class="mx-4">{{ mapName }}</p>
     </template>
   </a-drawer>
