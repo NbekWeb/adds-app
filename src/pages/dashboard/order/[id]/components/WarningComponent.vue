@@ -4,9 +4,6 @@ import { ref } from 'vue'
 const props = defineProps({
   order: Object
 })
-console.log(
-  'The order has expired because it was not confirmed by the moderator or channel owner'.toUpperCase()
-)
 
 const statusList = ref({
   REJECTED_BY_MODERATOR: 'error',

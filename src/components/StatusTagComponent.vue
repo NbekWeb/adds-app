@@ -13,6 +13,7 @@ const statusList = ref({
   REJECTED: 'error',
   FAILED: 'error',
   EXPIRED: 'error',
+  REJECTED_BY_BOARD_OWNER: 'error',
   APPROVED: 'lime',
   BOARD_OWNER_APPROVED: 'lime',
   ACCEPTED: 'lime',
