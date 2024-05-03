@@ -1,5 +1,5 @@
 <script setup>
-import { formatAmount, formatTime } from '@/composables/index.js'
+import { formatAmount } from '@/composables/index.js'
 
 import IconCheck from '@/components/icons/IconCheck.vue'
 import BoardConfigurationTimeComponent from '@/components/BoardConfigurationTimeComponent.vue'

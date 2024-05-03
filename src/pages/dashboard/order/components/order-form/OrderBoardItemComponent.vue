@@ -1,5 +1,4 @@
 <script setup>
-import IconCheck from '@/components/icons/IconCheck.vue'
 import { fileBaseUrl } from '@/utils/conf.js'
 
 const { item } = defineProps({

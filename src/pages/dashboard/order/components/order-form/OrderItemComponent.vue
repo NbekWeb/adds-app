@@ -1,13 +1,7 @@
 <script setup>
-import {
-  formatTextLength,
-  formatTime,
-  formatAmount
-} from '@/composables/index.js'
+import { formatTextLength, formatAmount } from '@/composables/index.js'
 import dayjs from 'dayjs'
 import IconX from '@/components/icons/IconX.vue'
-import IconAnnouncementVoic from '@/components/icons/IconAnnouncementVoic.vue'
-import IconPin from '@/components/icons/IconPin.vue'
 import { fileBaseUrl } from '@/utils/conf.js'
 import BoardConfigurationTimeComponent from '@/components/BoardConfigurationTimeComponent.vue'
 
