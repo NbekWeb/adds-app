@@ -10,7 +10,11 @@ const { item } = defineProps({
 </script>
 
 <template>
-  <a-radio class="config-item" :class="{ selected: selected }" value="default">
+  <a-radio
+    class="config-item w-full"
+    :class="{ selected: selected }"
+    value="default"
+  >
     <a-card
       class="item-card w-full h-full"
       :body-style="{
@@ -38,7 +42,8 @@ const { item } = defineProps({
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
 .config-item {
-  width: 245px;
+  width: 100%;
+  min-width: 245px;
   height: 100%;
   &:deep(.ant-radio) {
     display: none;

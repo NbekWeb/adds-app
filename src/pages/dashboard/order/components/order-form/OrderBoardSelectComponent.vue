@@ -33,14 +33,14 @@ onMounted(() => {
         </a-empty>
       </template>
       <template v-if="boardList?.length">
-        <a-radio-group v-model:value="model" class="w-full">
+        <a-radio-group style="width: 100%" v-model:value="model" class="w-full">
           <a-row :gutter="[10, 7]">
             <a-col
               :xs="24"
               :ms="24"
               :md="12"
               :lg="12"
-              :xl="12"
+              :xl="8"
               :xxl="8"
               v-for="(item, index) in boardList"
             >

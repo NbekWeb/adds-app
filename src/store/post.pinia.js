@@ -69,7 +69,7 @@ const usePost = defineStore('post', {
         method: 'POST',
         data: {
           text: form.text,
-          fileHashId: form.fileHashId,
+          fileHashId: form.fileHashId !== '' ? form.fileHashId : null,
           buttons: form.buttons.map((item) => ({
             orderNumber: item.orderNumber,
             text: item.text,

@@ -1,7 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import usePost from '@/store/post.pinia.js'
 import useCore from '@/store/core.pinia.js'
 import { fileBaseUrl } from '@/utils/conf.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
