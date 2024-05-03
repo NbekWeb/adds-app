@@ -17,28 +17,28 @@ const editorConfig = ref({
 const textCount = ref(0)
 const keyCode = ref()
 
-function handleCheckCharacterLength(e) {
-  if (
-    (e.keyCode === 86 || e.keyCode === 88 || e.keyCode === 8) &&
-    keyCode.value === 17
-  ) {
-    setTimeout(() => {
-      textCount.value = e.target.innerText.slice(0, props.maxCount).length
-      model.value = `<p>${e.target.innerText.slice(0, props.maxCount)}</p>`
-    })
-  } else {
-    keyCode.value = e.keyCode
-    textCount.value = e.target.innerText.length
-
-    if (textCount.value >= props.maxCount && e.keyCode !== 8) {
-      e.preventDefault()
-    }
-  }
-}
+// function handleCheckCharacterLength(e) {
+//   if (
+//     (e.keyCode === 86 || e.keyCode === 88 || e.keyCode === 8) &&
+//     keyCode.value === 17
+//   ) {
+//     setTimeout(() => {
+//       textCount.value = e.target.innerText.slice(0, props.maxCount).length
+//       model.value = `<p>${e.target.innerText.slice(0, props.maxCount)}</p>`
+//     })
+//   } else {
+//     keyCode.value = e.keyCode
+//     textCount.value = e.target.innerText.length
+//
+//     if (textCount.value >= props.maxCount && e.keyCode !== 8) {
+//       e.preventDefault()
+//     }
+//   }
+// }
 </script>
 
 <template>
-  <div class="editor-container" @keydown="handleCheckCharacterLength">
+  <div class="editor-container">
     <ckeditor
       class="editor-test"
       :editor="ClassicEditor"
@@ -46,7 +46,6 @@ function handleCheckCharacterLength(e) {
       :config="editorConfig"
     >
     </ckeditor>
-    <div class="count">{{ textCount }}/{{ maxCount }}</div>
   </div>
 </template>
 

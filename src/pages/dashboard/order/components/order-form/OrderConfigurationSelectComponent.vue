@@ -49,17 +49,30 @@ onBeforeUnmount(() => {
     @get-data="getPaginationAllConfiguration"
   >
     <template #content>
-      <a-radio-group v-model:value="model" @change="handleSelectConfig">
-        <a-row>
+      <a-radio-group
+        class="w-full"
+        v-model:value="model"
+        @change="handleSelectConfig"
+      >
+        <a-row :gutter="[10, 10]">
           <template v-if="configurations.length">
-            <a-col v-for="(item, i) in configurations" :key="i">
+            <a-col
+              :xs="24"
+              :sm="24"
+              :md="12"
+              :lg="8"
+              :xl="6"
+              :xll="4"
+              v-for="(item, i) in configurations"
+              :key="i"
+            >
               <order-board-configuration-component
                 :item="item"
                 :selected="model?.id === item.id"
               />
             </a-col>
           </template>
-          <a-col>
+          <a-col :xs="24" :sm="24" :md="12" :lg="8" :xl="6" :xll="4">
             <order-board-default-configuration-component
               :selected="model === 'default'"
             />

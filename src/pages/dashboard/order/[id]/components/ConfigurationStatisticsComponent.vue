@@ -2,86 +2,89 @@
 import dayjs from 'dayjs'
 
 const props = defineProps({
-  statistics: {
-    type: Object,
-    required: true
-  }
+  statistics: Object
 })
 </script>
 
 <template>
-  <h2>Jarayon</h2>
-  <div class="statistics flex pb-3">
-    <div class="order-statistics flex flex-column align-center">
-      <template v-if="statistics?.startDate">
-        <div
-          class="order-statistics-status flex justify-center align-center p-3"
-        >
-          🕐
-        </div>
-      </template>
+  <template v-if="statistics?.startDate">
+    <div class="statistics pb-3 mb-3">
+      <h3>{{ $t('PROCESS') }}</h3>
 
-      <template v-if="statistics?.startPinDate">
-        <span class="step-border my-2"></span>
-      </template>
+      <div class="flex">
+        <div class="order-statistics flex flex-column align-center">
+          <template v-if="statistics?.startDate">
+            <div
+              class="order-statistics-status flex justify-center align-center p-3"
+            >
+              🕐
+            </div>
+          </template>
 
-      <template v-if="statistics?.startPinDate">
-        <div
-          class="order-statistics-status flex justify-center align-center p-3"
-        >
-          📌
-        </div>
-      </template>
+          <template v-if="statistics?.startPinDate">
+            <span class="step-border my-2"></span>
+          </template>
 
-      <template v-if="statistics?.startDate || statistics?.startPinDate">
-        <span class="step-border my-2"></span>
-      </template>
-      <template v-if="statistics?.startDate">
-        <div
-          class="order-statistics-status flex justify-center align-center p-3"
-        >
-          🔝
+          <template v-if="statistics?.startPinDate">
+            <div
+              class="order-statistics-status flex justify-center align-center p-3"
+            >
+              📌
+            </div>
+          </template>
+
+          <template v-if="statistics?.startDate || statistics?.startPinDate">
+            <span class="step-border my-2"></span>
+          </template>
+          <template v-if="statistics?.startDate">
+            <div
+              class="order-statistics-status flex justify-center align-center p-3"
+            >
+              🔝
+            </div>
+          </template>
         </div>
-      </template>
+        <div class="flex flex-column justify-between pl-2">
+          <template v-if="statistics?.startDate">
+            <div class="order-statistics-value flex align-center">
+              E'lon
+              {{ dayjs(statistics?.startDate).format('DD.MM.YYYY, HH:mm') }} dan
+              <template v-if="statistics?.endDate">
+                {{ dayjs(statistics?.endDate).format('DD.MM.YYYY, HH:mm') }}
+                gacha kanalda turgan
+              </template>
+              <template v-else> boshlab kanalda turibdi </template>
+            </div>
+          </template>
+
+          <template v-if="statistics?.startPinDate">
+            <div class="order-statistics-value flex align-center">
+              E'lon
+              {{ dayjs(statistics?.startPinDate).format('DD.MM.YYYY, HH:mm') }}
+              dan
+              <template v-if="statistics?.endPinDate">
+                {{ dayjs(statistics?.endPinDate).format('DD.MM.YYYY, HH:mm') }}
+                gacha pinda turgan
+              </template>
+              <template v-else> boshlab pinda turibdi </template>
+            </div>
+          </template>
+
+          <template v-if="statistics?.startDate">
+            <div class="order-statistics-value flex align-center">
+              E'lon
+              {{ dayjs(statistics?.startDate).format('DD.MM.YYYY, HH:mm') }} dan
+              <template v-if="statistics?.endTopDate">
+                {{ dayjs(statistics?.endTopDate).format('DD.MM.YYYY, HH:mm') }}
+                gacha topda turgan
+              </template>
+              <template v-else> boshlab topda turibdi </template>
+            </div>
+          </template>
+        </div>
+      </div>
     </div>
-    <div class="flex flex-column justify-between pl-2">
-      <template v-if="statistics?.startDate">
-        <div class="order-statistics-value flex align-center">
-          E'lon
-          {{ dayjs(statistics?.startDate).format('DD.MM.YYYY, HH:mm') }} dan
-          <template v-if="statistics?.endDate">
-            {{ dayjs(statistics?.endDate).format('DD.MM.YYYY, HH:mm') }} gacha
-            kanalda turgan
-          </template>
-          <template v-else> boshlab kanalda turibdi </template>
-        </div>
-      </template>
-
-      <template v-if="statistics?.startPinDate">
-        <div class="order-statistics-value flex align-center">
-          E'lon
-          {{ dayjs(statistics?.startPinDate).format('DD.MM.YYYY, HH:mm') }} dan
-          <template v-if="statistics?.endPinDate">
-            {{ dayjs(statistics?.endPinDate).format('DD.MM.YYYY, HH:mm') }}
-            gacha pinda turgan
-          </template>
-          <template v-else> boshlab pinda turibdi </template>
-        </div>
-      </template>
-
-      <template v-if="statistics?.startDate">
-        <div class="order-statistics-value flex align-center">
-          E'lon
-          {{ dayjs(statistics?.startDate).format('DD.MM.YYYY, HH:mm') }} dan
-          <template v-if="statistics?.endTopDate">
-            {{ dayjs(statistics?.endTopDate).format('DD.MM.YYYY, HH:mm') }}
-            gacha topda turgan
-          </template>
-          <template v-else> boshlab topda turibdi </template>
-        </div>
-      </template>
-    </div>
-  </div>
+  </template>
 </template>
 
 <style scoped lang="scss">

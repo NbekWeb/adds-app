@@ -9,6 +9,7 @@ import IconX from '@/components/icons/IconX.vue'
 import IconAnnouncementVoic from '@/components/icons/IconAnnouncementVoic.vue'
 import IconPin from '@/components/icons/IconPin.vue'
 import { fileBaseUrl } from '@/utils/conf.js'
+import BoardConfigurationTimeComponent from '@/components/BoardConfigurationTimeComponent.vue'
 
 const emits = defineEmits(['close'])
 
@@ -40,51 +41,24 @@ const { item } = defineProps({
         <template v-if="item?.configuration?.name"> </template>
         <h1 class="configuration-name m-0">{{ item?.configuration?.name }}</h1>
       </div>
-      <!--      <span> Ta'rif </span>-->
       <div class="flex flex-column justify-between my-2">
         <template v-if="item?.configuration?.liveTime">
-          <!--      kanal-->
-          <div class="flex align-center">
-            <span class="mr-1">
-              <icon-announcement-voic />
-            </span>
-            <p class="mb-0">
-              {{ formatTime(item?.configuration?.liveTime, 'day') }}
-              {{ $t('DAY').toLowerCase() }},
-              {{ formatTime(item?.configuration?.liveTime, 'hour') }}
-              {{ $t('HOUR').toLowerCase() }}
-              {{ formatTime(item?.configuration?.liveTime, 'minute') }}
-              {{ $t('MINUTE').toLowerCase() }}
-            </p>
-          </div>
-          <!--      pin-->
-          <div class="flex align-center">
-            <span class="mr-1">
-              <icon-pin />
-            </span>
-            <p class="mb-0">
-              {{ formatTime(item?.configuration?.pinTime, 'day') }}
-              {{ $t('DAY').toLowerCase() }},
-              {{ formatTime(item?.configuration?.pinTime, 'hour') }}
-              {{ $t('HOUR').toLowerCase() }}
-              {{ formatTime(item?.configuration?.pinTime, 'minute') }}
-              {{ $t('MINUTE').toLowerCase() }}
-            </p>
-          </div>
-          <div class="flex align-center">
-            <!--      top-->
-            <span class="mr-1">
-              <icon-pin />
-            </span>
-            <p class="mb-0">
-              {{ formatTime(item?.configuration?.topTime, 'day') }}
-              {{ $t('DAY').toLowerCase() }},
-              {{ formatTime(item?.configuration?.topTime, 'hour') }}
-              {{ $t('HOUR').toLowerCase() }},
-              {{ formatTime(item?.configuration?.topTime, 'minute') }}
-              {{ $t('MINUTE').toLowerCase() }}
-            </p>
-          </div>
+          <board-configuration-time-component
+            icon="🕐"
+            :configuration="item?.configuration"
+            time-type="liveTime"
+          />
+          <board-configuration-time-component
+            icon="🔝"
+            :configuration="item?.configuration"
+            time-type="topTime"
+            class="my-2"
+          />
+          <board-configuration-time-component
+            icon="📌"
+            :configuration="item?.configuration"
+            time-type="pinTime"
+          />
         </template>
         <template v-else>
           <h1>

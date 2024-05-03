@@ -41,7 +41,6 @@ const { item } = defineProps({
         />
       </a-avatar-group>
     </div>
-
     <div class="order-amount flex justify-between mt-2">
       <span class="">{{ $t('ORDER_PRICE') }}:</span>
       <span>
@@ -52,7 +51,7 @@ const { item } = defineProps({
 
     <div class="flex justify-between mt-1">
       <span class="order-date">
-        {{ dayjs(item.createdDate).format('DD.MM.YYYY, HH:mm') }},
+        {{ dayjs(item.createdDate).format('DD.MM.YYYY, HH:mm') }}
       </span>
     </div>
   </a-card>

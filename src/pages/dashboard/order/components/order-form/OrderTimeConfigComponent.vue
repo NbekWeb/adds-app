@@ -1,6 +1,7 @@
 <script setup>
 import formatAmount from '@/composables/amount.js'
 import IconCheck from '@/components/icons/IconCheck.vue'
+import IconInfo from '@/components/icons/IconInfo.vue'
 
 const { item } = defineProps({
   item: {
@@ -27,9 +28,16 @@ const { item } = defineProps({
             {{ item.startTime.slice(0, 5) }}
           </h1>
 
-          <h1 class="board-amount mb-0 ml-2">
-            +{{ formatAmount(item.amount) }} <span>UZS</span>
-          </h1>
+          <div class="board-amount mb-0 ml-2 flex justify-end align-center">
+            <p class="m-0 amount-number">+{{ formatAmount(item.amount) }}</p>
+            <p class="m-0">UZS</p>
+            <div class="ml-1 flex align-center">
+              <a-popover>
+                <template #content> E'lon chiqadigan vaqt narxi </template>
+                <IconInfo />
+              </a-popover>
+            </div>
+          </div>
         </div>
         <div class="checkbox" :class="{ checked: selected }">
           <icon-check />
@@ -52,6 +60,14 @@ const { item } = defineProps({
   .board-info {
     .time-amount {
       width: 90%;
+      .board-amount {
+        width: 50%;
+        font-size: 16px;
+      }
+      .amount-number {
+        display: flex;
+        //min-width: 100px;
+      }
     }
     .board-time {
       font-size: 18px;
