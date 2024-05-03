@@ -19,6 +19,7 @@ const router = useRouter()
       <div class="flex justify-between">
         <div class="flex align-center">
           <a-avatar
+            class="avatar"
             :src="`${fileBaseUrl}/file/${item.logoHashId}`"
             size="large"
           />
