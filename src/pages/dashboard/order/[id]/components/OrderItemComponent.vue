@@ -28,12 +28,13 @@ const open = ref(false)
         <a-avatar
           :src="`${fileBaseUrl}/file/${order?.board.logoHashId}`"
           size="large"
+          class="avatar"
         />
         <div class="item ml-2">
           <p class="m-0">
             {{ order?.board.name }}
           </p>
-          <span class="text-muted">
+          <span class="sub-title text-muted">
             {{ $t('NAME') }}
           </span>
         </div>
@@ -47,14 +48,17 @@ const open = ref(false)
         :xl="4"
         class="item config-name border"
       >
-        <template v-if="order?.configuration?.name">
-          <p class="m-0">
+        <p class="m-0">
+          <template v-if="order?.configuration?.name">
             {{ order?.configuration?.name }}
-          </p>
-          <span class="text-muted">
-            {{ $t('RATE') }}
-          </span>
-        </template>
+          </template>
+          <template v-else>
+            {{ $t('NOT_AVAILABLE') }}
+          </template>
+        </p>
+        <span class="sub-title text-muted">
+          {{ $t('RATE') }}
+        </span>
       </a-col>
       <a-col
         :span="4"
@@ -68,7 +72,7 @@ const open = ref(false)
         <p class="m-0">
           {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }},
         </p>
-        <span class="text-muted">
+        <span class="sub-title text-muted">
           {{ $t('THE_TIME_OF_PUBLICATION') }}
         </span>
       </a-col>
@@ -85,9 +89,9 @@ const open = ref(false)
           <template v-if="order?.endDate">
             {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
           </template>
-          <template v-else> - </template>
+          <template v-else> {{ $t('NOT_AVAILABLE') }}</template>
         </p>
-        <span class="text-muted">
+        <span class="sub-title text-muted">
           {{ $t('POST_DELETED_DATE') }}
         </span>
       </a-col>
@@ -98,7 +102,7 @@ const open = ref(false)
             <p class="m-0">
               {{ formatAmount(order?.amount) }} <span>{{ $t('SOUM') }}</span>
             </p>
-            <span class="amount text-muted">
+            <span class="sub-title amount text-muted">
               {{ $t('AMOUNT') }}
             </span>
           </div>
@@ -140,7 +144,7 @@ const open = ref(false)
     -webkit-line-clamp: 1;
   }
 
-  span {
+  .sub-title {
     font-size: 14px;
     line-height: 16px;
   }

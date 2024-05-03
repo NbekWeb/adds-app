@@ -1,5 +1,4 @@
 <script setup>
-import IconCheck from '@/components/icons/IconCheck.vue'
 import { fileBaseUrl } from '@/utils/conf.js'
 
 const { item } = defineProps({
@@ -38,7 +37,7 @@ const { item } = defineProps({
           </h1>
         </div>
         <div class="checkbox" :class="{ checked: checked }">
-          <icon-check />
+          <span class="radio-icon"> </span>
         </div>
       </div>
     </a-card>
@@ -66,9 +65,12 @@ const { item } = defineProps({
 }
 .disabled {
   opacity: 0.7;
+  filter: grayscale(100%);
+  background-color: rgb($muted, 0.3);
 }
 .checked-board {
   border-color: $primary;
+
   &:deep(.ant-card-body) {
     border-radius: 3px;
     background: rgb($primary, 0.1);
@@ -100,7 +102,15 @@ const { item } = defineProps({
   font-size: 12px;
   overflow: hidden;
   color: white;
+  background-color: $white;
   transition: background 0.3s;
+  .radio-icon {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: $white;
+    border-radius: 50%;
+  }
 }
 .checked {
   background-color: $primary;

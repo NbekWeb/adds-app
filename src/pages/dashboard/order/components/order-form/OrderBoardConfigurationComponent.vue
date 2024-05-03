@@ -1,7 +1,8 @@
 <script setup>
-import { formatAmount, formatTime } from '@/composables/index.js'
+import { formatAmount } from '@/composables/index.js'
 
 import IconCheck from '@/components/icons/IconCheck.vue'
+import BoardConfigurationTimeComponent from '@/components/BoardConfigurationTimeComponent.vue'
 
 const { item } = defineProps({
   item: {
@@ -32,27 +33,21 @@ const { item } = defineProps({
           </span>
         </h1>
       </div>
-      <span class="time-label"> {{ $t('POST_LIVE_TIME') }} </span>
-      <h1 class="time-value">
-        {{ formatTime(item.liveTime, 'day') }} {{ $t('DAY').toLowerCase() }},
-        {{ formatTime(item.liveTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
-        {{ formatTime(item.liveTime, 'minute') }}
-        {{ $t('MINUTE').toLowerCase() }}
-      </h1>
-      <span class="time-label"> {{ $t('POST_PIN_TIME') }} </span>
-      <h1 class="time-value">
-        {{ formatTime(item.pinTime, 'day') }} {{ $t('DAY').toLowerCase() }},
-        {{ formatTime(item.pinTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
-        {{ formatTime(item.pinTime, 'minute') }}
-        {{ $t('MINUTE').toLowerCase() }}
-      </h1>
-      <span class="time-label"> {{ $t('POST_TOP_TIME') }} </span>
-      <h1 class="time-value">
-        {{ formatTime(item.topTime, 'day') }} {{ $t('DAY').toLowerCase() }},
-        {{ formatTime(item.topTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
-        {{ formatTime(item.topTime, 'minute') }}
-        {{ $t('MINUTE').toLowerCase() }}
-      </h1>
+      <div>
+        <board-configuration-time-component
+          :configuration="item"
+          time-type="liveTime"
+        />
+        <board-configuration-time-component
+          :configuration="item"
+          time-type="topTime"
+          class="my-2"
+        />
+        <board-configuration-time-component
+          :configuration="item"
+          time-type="pinTime"
+        />
+      </div>
       <div class="checkbox" :class="{ checked: selected }">
         <div class="checkbox-circle">
           <icon-check class="mt-1" />
@@ -65,6 +60,7 @@ const { item } = defineProps({
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
 .config-item {
+  width: 100%;
   &:deep(.ant-radio) {
     display: none;
   }
@@ -152,8 +148,7 @@ const { item } = defineProps({
   align-items: center;
   width: 100%;
   height: 100%;
-  //border: 1px solid $muted;
-
+  pointer-events: none;
   overflow: hidden;
   transition: opacity 0.3s;
   background-color: rgb($success, 0.05);

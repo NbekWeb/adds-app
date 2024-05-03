@@ -36,6 +36,17 @@ const rules = reactive({
       required: true,
       message: t('REQUIRED_FIELD'),
       trigger: 'blur'
+    },
+    {
+      required: true,
+      validator: async (_rules, value) => {
+        if (value.replace(/<.*?>|&nbsp;/g, '').length > 1024) {
+          return Promise.reject(t('POST_DESCRIPTION_LENGTH'))
+        } else {
+          return Promise.resolve()
+        }
+      },
+      trigger: 'blur'
     }
   ],
   buttons: [
@@ -54,17 +65,20 @@ const rules = reactive({
 })
 
 function submitForm() {
-  formRef.value.validate().then(() => {
-    if (route.params.id) {
-      postPinia.updatePost(route.params.id, form, () => {
-        router.back()
-      })
-    } else {
-      postPinia.createNewPost(form, () => {
-        router.back()
-      })
-    }
-  })
+  formRef.value
+    .validate()
+    .then(() => {
+      if (route.params.id) {
+        postPinia.updatePost(route.params.id, form, () => {
+          router.back()
+        })
+      } else {
+        postPinia.createNewPost(form, () => {
+          router.back()
+        })
+      }
+    })
+    .catch(() => {})
 }
 onMounted(() => {
   if (route.params.id) {

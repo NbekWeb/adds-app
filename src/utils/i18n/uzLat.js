@@ -4,8 +4,9 @@ const uzLat = {
   DashboardListView: 'Asosiy sahifa',
   DashboardBoardListView: 'Kanallar',
   DashboardMyBoardListView: 'Mening kanallarim',
-  DashboardKioskBoardListView: 'Kiosk boards',
+  DashboardKioskBoardListView: 'Kiosk boardlar',
   DashboardMyKioskBoardListView: 'My kiosk boards',
+  DashboardKioskBoardItemView: "Kiosk boardni ko'rish",
   DashboardPostListView: "E'lonlar",
   DashboardOrderListView: 'Xaridlar',
   ReportView: "E'lon bo'yicha hisobot",
@@ -38,6 +39,7 @@ const uzLat = {
   REQUIRED_CODE: 'Kodni kiriting',
   ENTER_THE_COMPLETE_CODE: "Kodni to'liq kiriting",
   VALUE_MUST_BE_GREATER_THEN_ZERO: "Qiymat noldan katta bo'lishi kerak",
+  POST_DESCRIPTION_LENGTH: 'Matin uzunligi 1024 ta belgidan oshmasligi kerak',
   // titles
   ADD_NEW_CONFIGURATION: "Yangi ta'rif qo'shish",
   ADD_NEW_TIME_CONFIGURATION: "Yangi vaqt qo'shish",
@@ -64,7 +66,11 @@ const uzLat = {
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   CREATE_AN_ORDER: "E'lon berish",
   //   labels
-
+  REACTIONS: 'Reaksiyalar',
+  PROCESS: 'Jarayon',
+  VIEWS: "Ko'rishlar",
+  NOT_CONFIGURATION: "Ta'rifsiz",
+  NOT_AVAILABLE: 'Mavjud emas',
   POST_A_ONE_TIME_ANNOUNCEMENT_TO_A_CHANNEL:
     "Kanalga bir martalik e'lon berish",
   POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL:
@@ -131,8 +137,10 @@ const uzLat = {
   SELECT_CHANNEL: 'Kanalni tanlang',
   SELECT_CONFIGURATION: "Ta'rifni tanlang",
   SELECT_DATE_AND_TIME: 'Sana va vaqtni tanlang',
+  LOCATION: 'Manzil',
 
   // statuses
+  EXPIRED: "Muddati o'tib ketgan",
   FAILED: 'Muvaffaqiyatsiz',
   INACTIVE: 'Faol emas',
   ACTIVE: 'Faol',
@@ -147,21 +155,26 @@ const uzLat = {
   APPROVE: 'Tasdiqlash',
   REJECTED: 'Rad qilingan',
   REJECT: 'Rad qilish',
-  
-  CATEGORY:'Kategoriyasi',
+
   BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
   AWAITING_BOARD_OWNER: 'Kanal egasi tasdiqlashi kutilmoqda',
   ACCEPTED: 'Qabul qilingan',
   // descriptions
+  THE_ORDER_HAS_EXPIRED_BECAUSE_IT_WAS_NOT_CONFIRMED_BY_THE_MODERATOR_OR_CHANNEL_OWNER:
+    'Moderator yoki kanal egasi tasdiqlamaganligi sabali buyurtma muddati tugadi!',
+  REJECTED_BY_BOARD_OWNER: 'Kanal egasi tomonidan rad qilingan',
+  REJECTED_BY_MODERATOR: 'Moderator tomonidan rad qilingan',
+  THE_ANNOUNCEMENT_IS_EXPECTED_TO_APPEAR_ON_THE_CHANNEL:
+    "E'lon kanalga chiqishi kutilmoqda",
+  AWAITING_BOARD_OWNER_APPROVAL: 'Kanal egasi tasdiqlashi kutilmoqda',
+  AWAITING_MODERATOR_APPROVAL: 'Moderator tasdiqlashi kutilmoqda',
   LOGIN_PAGE_DESCRIPTION:
     'Biznes uchun reklamalarni joylashtirish, boshqarish uchun platforma.',
   ENTER_YOUR_NUMBER_TO_LOGIN: 'Tizimga kirish uchun raqamingizni kiriting',
   REGISTER_TO_USE_THE_SYSTEM: "Tizimdan foydalanish uchun ro'yxatdan o'ting",
   AN_SMS_CODE_WAS_SENT_TO_NUMBER: 'raqamga sms kod yuborildi',
-  // An SMS code was sent to number 3
   //   notificitions
   NO_DATA: "Ma'lumot mavjud emas!",
-  // The uploaded file is invalid
   THE_UPLOADED_FILE_IS_INVALID: 'Yuklangan fayl yaroqsiz',
   SELECT_DATE_FREE_DATE_FOR_SEE:
     "E'lon berish uchun bo'sh vaqtlarni ko'rish uchun sanani tanlang",
@@ -182,17 +195,7 @@ const uzLat = {
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
-  ERROR: 'Xatolik!',
-
-  //
-  NAME:'Nomi',
-  Category:'Kategoriya',
-  LOCATION:'Manzil',
-
-  //KiosKBoard
-  KIOSKBOARD:"Kiosk board",
-  SingleKiosk:"Kiosk ma'lumotlari"
-  
+  ERROR: 'Xatolik!'
 }
 
 export default uzLat

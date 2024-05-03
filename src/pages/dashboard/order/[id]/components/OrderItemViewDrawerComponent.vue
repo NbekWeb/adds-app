@@ -4,6 +4,10 @@ import ConfigurationComponent from '@/pages/dashboard/order/[id]/components/Conf
 import ReactionsComponent from '@/pages/dashboard/order/[id]/components/ReactionsComponent.vue'
 import ConfigurationStatisticsComponent from '@/pages/dashboard/order/[id]/components/ConfigurationStatisticsComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
+import StatusTagComponent from '@/components/StatusTagComponent.vue'
+import { formatAmount } from '../../../../../composables/index.js'
+import ViewsComponent from '@/pages/dashboard/order/[id]/components/ViewsComponent.vue'
+import WarningComponent from '@/pages/dashboard/order/[id]/components/WarningComponent.vue'
 
 const props = defineProps({
   item: { type: Object, required: true }
@@ -20,39 +24,38 @@ const model = defineModel('open')
   >
     <template #title>
       <div class="flex align-center">
-        <a-avatar :src="`${fileBaseUrl}/file/${item?.board.logoHashId}`" />
+        <a-avatar
+          class="avatar"
+          :src="`${fileBaseUrl}/file/${item?.board.logoHashId}`"
+        />
         <h3 class="m-0 ml-2">
           {{ item.board.name }}
         </h3>
       </div>
     </template>
-    <scrollbar-component height="calc(100vh - 115px)">
+    <template #extra>
+      <status-tag-component :status="item.status" />
+    </template>
+    <scrollbar-component height="calc(100vh - 170px)">
       <template #content>
-        <template v-if="item?.configuration">
-          <configuration-component :configuration="item?.configuration" />
-        </template>
-        <template v-if="item?.taskResponse?.startDate">
-          <configuration-statistics-component
-            :statistics="item?.taskResponse"
-          />
-        </template>
-        <template v-if="item?.taskResponse?.reactions?.length">
-          <reactions-component :reactions="item?.taskResponse?.reactions" />
-        </template>
-        <template v-if="item?.taskResponse?.views">
-          <div class="views flex justify-between">
-            <h2>Ko'rishlar</h2>
-            <p class="m-0">
-              {{
-                item?.taskResponse?.views > 1000
-                  ? `${Math.floor(item?.taskResponse?.views / 1000)}k`
-                  : item?.taskResponse?.views
-              }}
-            </p>
-          </div>
-        </template>
+        <configuration-component
+          :configuration="item?.configuration"
+          :start-date="item?.startDate"
+        />
+        <configuration-statistics-component :statistics="item?.taskResponse" />
+        <reactions-component :reactions="item?.taskResponse?.reactions" />
+        <views-component :views="item?.taskResponse?.views" />
+        <warning-component :order="item" />
       </template>
     </scrollbar-component>
+    <template #footer>
+      <div class="flex justify-between align-center">
+        <h3 class="my-2">
+          {{ $t('AMOUNT') }}
+        </h3>
+        <p class="m-0">{{ formatAmount(item?.amount) }} {{ $t('SOUM') }}</p>
+      </div>
+    </template>
   </a-drawer>
 </template>
 
@@ -64,5 +67,7 @@ const model = defineModel('open')
       width: 100% !important;
     }
   }
+}
+.pending {
 }
 </style>
