@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
@@ -18,9 +18,6 @@ const corePinia = useCore()
 const boardPinia = useBoard()
 const categoryPinia = useCategories()
 
-const categoryId = computed(() => route.query.category)
-const searchName = computed(() => route.query.name)
-
 const { loadingUrl } = storeToRefs(corePinia)
 const { categories } = storeToRefs(categoryPinia)
 
@@ -38,12 +35,12 @@ function handleChangeFilter() {
     }
   })
   timeOut.value = setTimeout(() => {
-    boardPinia.getAllBoard(0, categoryId.value, searchName.value)
+    boardPinia.getAllBoard(0, category.value, name.value)
   }, 500)
 }
 
 onMounted(() => {
-  boardPinia.getAllBoard(0, categoryId.value, searchName.value)
+  boardPinia.getAllBoard(0, category.value, name.value)
   categoryPinia.getBoardCategories()
 })
 onBeforeUnmount(() => {
@@ -61,7 +58,7 @@ onBeforeUnmount(() => {
             :placeholder="$t('SEARCH')"
             v-model:value="name"
             allow-clear
-            @keyup="handleChangeFilter"
+            @change="handleChangeFilter"
           >
             <template #prefix>
               <icon-search />

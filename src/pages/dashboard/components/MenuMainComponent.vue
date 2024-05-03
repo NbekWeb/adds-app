@@ -12,7 +12,7 @@ const route = useRoute()
 const emits = defineEmits(['change'])
 const selected = ref([])
 
-const activeLink = computed(() => route.fullPath.split('/')[2])
+const activeLink = computed(() => route.fullPath.split('/')[2].split('?')[0])
 
 const setCollapse = ({ key }) => {
   router.push(`/dashboard/${key}`)
@@ -44,7 +44,6 @@ const menuList = shallowRef([
     name: 'DashboardOrderListView',
     icon: IconShoppingCard
   }
- 
 ])
 </script>
 
