@@ -66,6 +66,8 @@ const uzLat = {
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   CREATE_AN_ORDER: "E'lon berish",
   //   labels
+  LINKED_BUTTON_TEXt_INPUT_PLACEHOLDER: "Havola orqali o'ting",
+  LINKED_BUTTON_URL_INPUT_PLACEHOLDER: 'https://www.example.com',
   REACTIONS: 'Reaksiyalar',
   PROCESS: 'Jarayon',
   VIEWS: "Ko'rishlar",

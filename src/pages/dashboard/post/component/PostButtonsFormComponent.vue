@@ -2,7 +2,6 @@
 import { onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import useCore from '@/store/core.pinia.js'
-import { storeToRefs } from 'pinia'
 
 const { t } = useI18n()
 
@@ -10,7 +9,6 @@ const emits = defineEmits(['add', 'edit'])
 const model = defineModel('data')
 
 const corePinia = useCore()
-const { visibleDrawer } = storeToRefs(corePinia)
 
 const formRef = ref()
 const form = reactive({
@@ -50,10 +48,16 @@ onMounted(() => {
 <template>
   <a-form layout="vertical" :model="form" ref="formRef">
     <a-form-item :label="$t('LINKED_BUTTON_TEXT')" name="text" :rules="rule">
-      <a-input v-model:value="form.text" />
+      <a-input
+        v-model:value="form.text"
+        :placeholder="$t('LINKED_BUTTON_TEXt_INPUT_PLACEHOLDER')"
+      />
     </a-form-item>
     <a-form-item :label="$t('LINKED_BUTTON_URL')" name="text" :rules="rule">
-      <a-input v-model:value="form.url" />
+      <a-input
+        v-model:value="form.url"
+        :placeholder="$t('LINKED_BUTTON_URL_INPUT_PLACEHOLDER')"
+      />
     </a-form-item>
     <div class="flex justify-end">
       <a-space>

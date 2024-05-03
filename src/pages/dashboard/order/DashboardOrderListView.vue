@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
 import useOrder from '@/store/order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderListComponent from '@/pages/dashboard/order/components/order-form/OrderListComponent.vue'
@@ -12,9 +11,17 @@ const router = useRouter()
 const route = useRoute()
 const orderPinia = useOrder()
 
-const { orderInfo } = storeToRefs(orderPinia)
-
-const statuses = ref(['PENDING', 'APPROVED', 'REJECTED', 'CANCELED'])
+const statuses = ref([
+  'PENDING',
+  'AWAITING_BOARD_OWNER',
+  'APPROVED',
+  'STARTED',
+  'FINISHED',
+  'CANCELED',
+  'REJECTED_BY_MODERATOR',
+  'REJECTED_BY_BOARD_OWNER',
+  'FAILED'
+])
 
 const orderStatus = ref(route.query.status)
 const open = ref(false)
@@ -39,6 +46,7 @@ onMounted(() => {
       <a-space>
         <a-select
           class="order-status"
+          style="width: 270px"
           allow-clear
           :placeholder="$t('FILTER_BY_STATUS')"
           v-model:value="orderStatus"
