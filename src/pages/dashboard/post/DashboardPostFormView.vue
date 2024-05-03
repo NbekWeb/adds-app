@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
@@ -40,7 +40,7 @@ const rules = reactive({
     {
       required: true,
       validator: async (_rules, value) => {
-        if (value.replace(/<.*?>|&nbsp;/g, '').length > 1024) {
+        if (value.replace(/<.*?>/g, '').replace(/&nbsp;/g, ' ').length > 1024) {
           return Promise.reject(t('POST_DESCRIPTION_LENGTH'))
         } else {
           return Promise.resolve()
