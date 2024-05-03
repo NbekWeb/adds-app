@@ -21,36 +21,28 @@ const props = defineProps({
 
 const corePinia = useCore()
 const uploadPinia = useUpload()
-const { visibleDrawer, screenWidth, screenHeight } = storeToRefs(corePinia)
+const { visibleDrawer } = storeToRefs(corePinia)
 
-const fileTypes = ref(['image', 'video', 'application'])
 const fileType = ref()
 const uploadedFilename = ref(null)
 const fileProgress = ref(0)
 const snapshot = ref()
 
 const uploadLogo = (file) => {
-  if (fileTypes.value.includes(file.type.split('/')[0])) {
-    uploadPinia.uploadFile(
-      file,
-      'TELEGRAM',
-      (data) => {
-        hashId.value = data.hashId
-        snapshot.value = data.snapshotHashId
-        fileType.value = file.type.split('/')[0]
-        uploadedFilename.value = file.name
-        fileProgress.value = 0
-      },
-      (progress) => {
-        fileProgress.value = progress
-      }
-    )
-  } else {
-    corePinia.setToast({
-      type: 'warning',
-      locale: 'THE_UPLOADED_FILE_IS_INVALID'
-    })
-  }
+  uploadPinia.uploadFile(
+    file,
+    'TELEGRAM',
+    (data) => {
+      hashId.value = data.hashId
+      snapshot.value = data.snapshotHashId
+      fileType.value = file.type.split('/')[0]
+      uploadedFilename.value = file.name
+      fileProgress.value = 0
+    },
+    (progress) => {
+      fileProgress.value = progress
+    }
+  )
 
   return false
 }
@@ -80,6 +72,7 @@ function clearFile() {
         :multiple="false"
         :show-upload-list="false"
         :before-upload="uploadLogo"
+        accept="image/jpeg, image/jpg, image/png, application/*, text/*, video/mp4"
       >
         <span class="upload-drag-icon">
           <IconInbox />
@@ -129,7 +122,7 @@ function clearFile() {
         </div>
       </div>
     </template>
-    <template v-if="type === 'DOCUMENT' || fileType === 'application'">
+    <template v-else>
       <div class="document justify-between align-center p-2">
         <span class="flex align-center">
           <IconFile />

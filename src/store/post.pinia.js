@@ -6,7 +6,6 @@ import useCore from '@/store/core.pinia.js'
 const usePost = defineStore('post', {
   state: () => ({
     posts: [],
-    page: 0,
     totalElements: 0,
     totalPages: 0
   }),
@@ -19,15 +18,14 @@ const usePost = defineStore('post', {
     clearPostInfo() {
       this.postInfo = null
     },
-    getAllPosts(page) {
+    getAllPosts(page, size = 10) {
       const core = useCore()
       core.loadingUrl.add('get/post/all')
-      this.page = page
       api({
         url: 'post',
         params: {
           page: page,
-          size: 10
+          size: size
         }
       })
         .then(({ data }) => {
