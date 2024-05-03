@@ -16,7 +16,6 @@ const kioskBoardPinia = useKioskBoard()
 const corePinia = useCore()
 
 const itemInfo = ref()
-// const marker = [['41.311081', '69.240562']]
 const marker = ref(null)
 
 const { loadingUrl } = storeToRefs(corePinia)
@@ -77,13 +76,7 @@ onMounted(() => {
     </template>
   </a-empty>
 </template>
-<style lang="scss">
-/* .flexa {
-  border: 1px solid red;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
+<style lang="scss" scoped>
 .text-2xl {
   line-height: 100%;
 }
