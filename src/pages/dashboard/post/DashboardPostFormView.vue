@@ -40,7 +40,7 @@ const rules = reactive({
     {
       required: true,
       validator: async (_rules, value) => {
-        if (value.replace(/<.*?>|&nbsp;/g, '').length > 1024) {
+        if (value.replace(/<.*?>/g, '').replace(/&nbsp;/g, ' ').length > 1024) {
           return Promise.reject(t('POST_DESCRIPTION_LENGTH'))
         } else {
           return Promise.resolve()

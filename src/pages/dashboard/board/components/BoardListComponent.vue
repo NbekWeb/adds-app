@@ -52,7 +52,7 @@ const getBoardList = (page) => {
               :md="collapsed ? 12 : 24"
               :lg="collapsed ? 8 : 12"
               :xl="8"
-              :xxl="collapsed ? 4 : 6"
+              :xxl="6"
               v-for="item in boardList"
             >
               <board-item-component :item="item" />
