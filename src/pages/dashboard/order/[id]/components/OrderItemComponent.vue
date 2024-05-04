@@ -6,6 +6,14 @@ import { formatAmount } from '@/composables'
 import OrderItemViewDrawerComponent from '@/pages/dashboard/order/[id]/components/OrderItemViewDrawerComponent.vue'
 import { ref } from 'vue'
 
+import useOrder from '@/store/order.pinia.js'
+
+const orderPinia = useOrder()
+
+function cancelOrder() {
+  orderPinia.putCancelOrder(props.order?.orderId, [props.order?.id])
+}
+
 const props = defineProps({
   order: Object
 })
@@ -23,7 +31,7 @@ const open = ref(false)
         :md="12"
         :lg="4"
         :xl="4"
-        class="flex justify-start borderi"
+        class="flex justify-start"
       >
         <a-avatar
           :src="`${fileBaseUrl}/file/${order?.board.logoHashId}`"
@@ -46,19 +54,21 @@ const open = ref(false)
         :md="12"
         :lg="3"
         :xl="3"
-        class="item config-name border"
+        class="item config-name border end-item"
       >
-        <p class="m-0">
-          <template v-if="order?.configuration?.name">
-            {{ order?.configuration?.name }}
-          </template>
-          <template v-else>
-            {{ $t('NOT_AVAILABLE') }}
-          </template>
-        </p>
-        <span class="sub-title text-muted">
-          {{ $t('RATE') }}
-        </span>
+        <div>
+          <p class="m-0">
+            <template v-if="order?.configuration?.name">
+              {{ order?.configuration?.name }}
+            </template>
+            <template v-else>
+              {{ $t('NOT_AVAILABLE') }}
+            </template>
+          </p>
+          <span class="sub-title text-muted">
+            {{ $t('RATE') }}
+          </span>
+        </div>
       </a-col>
       <a-col
         :span="4"
@@ -83,17 +93,19 @@ const open = ref(false)
         :md="12"
         :lg="5"
         :xl="5"
-        class="item border"
+        class="item border end-item"
       >
-        <p class="m-0">
-          <template v-if="order?.endDate">
-            {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
-          </template>
-          <template v-else> {{ $t('NOT_AVAILABLE') }} </template>
-        </p>
-        <span class="sub-title text-muted">
-          {{ $t('POST_DELETED_DATE') }}
-        </span>
+        <div>
+          <p class="m-0">
+            <template v-if="order?.endDate">
+              {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
+            </template>
+            <template v-else> {{ $t('NOT_AVAILABLE') }} </template>
+          </p>
+          <span class="sub-title text-muted">
+            {{ $t('POST_DELETED_DATE') }}
+          </span>
+        </div>
       </a-col>
 
       <a-col
@@ -129,13 +141,13 @@ const open = ref(false)
         :lg="3"
         :xl="3"
         class="flex borderi cancel-btn"
+        v-if="order?.status == 'PENDING'"
       >
         <a-popconfirm
-          title="Are you sure delete this task?"
-          ok-text="Yes"
-          cancel-text="No"
-          @confirm="confirm"
-          @cancel="cancel"
+          :title="$t('CONFIRMCANCELORDER')"
+          :ok-text="$t('YES')"
+          :cancel-text="$t('NO')"
+          @confirm="cancelOrder"
         >
           <a-button danger @click.stop>{{ $t('CANCEL') }}</a-button>
         </a-popconfirm>
@@ -161,6 +173,13 @@ const open = ref(false)
     justify-content: end;
     @media (max-width: 992px) {
       justify-content: start;
+    }
+  }
+  .end-item {
+    display: flex;
+    justify-content: start;
+    @media (max-width: 992px) {
+      justify-content: end;
     }
   }
 }
