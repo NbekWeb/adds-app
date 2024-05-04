@@ -27,42 +27,37 @@ const icons = ref({
   <div class="flex align-center">
     <a-popover>
       <template #content> {{ $t(times[timeType]) }} </template>
-      <a-tag
-        color="processing"
-        class="configuration-time flex"
-        :bordered="false"
-      >
-        <span class="mr-1">{{ icons[timeType] }}</span>
-        <template v-if="formatTime(configuration[timeType], 'day')">
-          <span class="mr-1">
-            {{ formatTime(configuration[timeType], 'day') }}
-            {{ $t('DAY').toLowerCase()
-            }}<template
-              v-if="
-                formatTime(configuration[timeType], 'hour') ||
-                formatTime(configuration[timeType], 'minute')
-              "
-              >,
-            </template>
-          </span>
-        </template>
 
-        <template v-if="formatTime(configuration[timeType], 'hour')">
-          <span class="mr-1">
-            {{ formatTime(configuration[timeType], 'hour') }}
-            {{ $t('HOUR').toLowerCase()
-            }}<template v-if="formatTime(configuration[timeType], 'minute')"
-              >,
-            </template>
-          </span>
-        </template>
-        <template v-if="formatTime(configuration[timeType], 'minute')">
-          <span class="">
-            {{ formatTime(configuration[timeType], 'minute') }}
-            {{ $t('MINUTE').toLowerCase() }}
-          </span>
-        </template>
-      </a-tag>
+      <span class="mr-1">{{ icons[timeType] }}</span>
+      <template v-if="formatTime(configuration[timeType], 'day')">
+        <span class="mr-1">
+          {{ formatTime(configuration[timeType], 'day') }}
+          {{ $t('DAY').toLowerCase()
+          }}<template
+            v-if="
+              formatTime(configuration[timeType], 'hour') ||
+              formatTime(configuration[timeType], 'minute')
+            "
+            >,
+          </template>
+        </span>
+      </template>
+
+      <template v-if="formatTime(configuration[timeType], 'hour')">
+        <span class="mr-1">
+          {{ formatTime(configuration[timeType], 'hour') }}
+          {{ $t('HOUR').toLowerCase()
+          }}<template v-if="formatTime(configuration[timeType], 'minute')"
+            >,
+          </template>
+        </span>
+      </template>
+      <template v-if="formatTime(configuration[timeType], 'minute')">
+        <span class="">
+          {{ formatTime(configuration[timeType], 'minute') }}
+          {{ $t('MINUTE').toLowerCase() }}
+        </span>
+      </template>
     </a-popover>
   </div>
 </template>

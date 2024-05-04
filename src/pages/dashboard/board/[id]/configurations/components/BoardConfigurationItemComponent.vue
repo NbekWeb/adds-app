@@ -1,4 +1,6 @@
 <script setup>
+import BoardConfigurationTimeComponent from '@/components/BoardConfigurationTimeComponent.vue'
+
 import { useRouter } from 'vue-router'
 import formatAmount from '@/composables/amount.js'
 import { formatTime } from '@/composables'
@@ -26,14 +28,9 @@ const { item } = defineProps({
   >
     <div class="config-name-price">
       <h1 class="config-name text-center">{{ item.name }}</h1>
-      <h1 class="text-center mt-2">
-        <span class="config-amount">
-          {{ formatAmount(item.amount) }}
-          <span class="amount-label">UZS</span>
-        </span>
-      </h1>
+      
     </div>
-    <span class="time-label"> {{ $t('POST_LIVE_TIME') }} </span>
+    <!-- <span class="time-label"> {{ $t('POST_LIVE_TIME') }} </span>
     <h1 class="time-value">
       {{ formatTime(item.liveTime, 'day') }} {{ $t('DAY').toLowerCase() }},
       {{ formatTime(item.liveTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
@@ -50,21 +47,43 @@ const { item } = defineProps({
       {{ formatTime(item.topTime, 'day') }} {{ $t('DAY').toLowerCase() }},
       {{ formatTime(item.topTime, 'hour') }} {{ $t('HOUR').toLowerCase() }},
       {{ formatTime(item.topTime, 'minute') }} {{ $t('MINUTE').toLowerCase() }}
-    </h1>
+    </h1> -->
+    <div class="board-configuration-time">
+      <board-configuration-time-component
+        :configuration="item"
+        time-type="liveTime"
+        class="mb-3"
+      />
+      <board-configuration-time-component
+        :configuration="item"
+        time-type="topTime"
+        class="mb-3"
+      />
+      <board-configuration-time-component
+        :configuration="item"
+        time-type="pinTime"
+        class="mb-3"
+      />
+    </div>
 
-    <div>
+    <div class="flex mt-3 align-center justify-between">
       <a-button
         @click="router.push({ name: 'DashboardPostView' })"
-        class="w-full"
-        type="primary"
+        
       >
         {{ $t('CREATE_AN_ORDER') }}
       </a-button>
+      <h1 class="text-center mt-2">
+        <span class="config-amount">
+          {{ formatAmount(item.amount) }}
+          <span class="amount-label">UZS</span>
+        </span>
+      </h1>
     </div>
   </a-card>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped >
 @import '@/assets/styles/variable';
 .item-card {
   position: relative;

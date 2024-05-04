@@ -69,7 +69,7 @@ const props = defineProps({
     height: 150px;
 
     &:hover {
-      background-color: $lightGray;
+      background-color: $light;
     }
 
     .description {
