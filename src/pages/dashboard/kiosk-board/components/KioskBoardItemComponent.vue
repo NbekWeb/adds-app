@@ -24,10 +24,12 @@ const props = defineProps({
 </script>
 <template>
   <div class="kioskBoard-item-container mb-2">
-    <a-card class="kioskBoard-item text-xs" :loading="loading">
-      <div class="flex flex-column qa h-full">
+    <a-card class="kioskBoard-item" :loading="loading">
+      <div class="flex flex-column h-full">
         <div class="flex justify-between align-center mb-2">
-          <h1 class="kiosk-board-name mb-0 mr-3">{{ item?.name }}</h1>
+          <h1 class="kiosk-board-name mb-0 mr-3 board-name">
+            {{ item?.name }}
+          </h1>
 
           <p class="category-name m-0">{{ item?.category?.name }}</p>
         </div>
@@ -38,17 +40,16 @@ const props = defineProps({
           <div class="flex justify-between align-center flex-wrap gx-2">
             <a-space class="ml-auto">
               <kiosk-board-item-location-component
-                :locMap="[item.latitude, item.longitude]"
+                :locMap="[item?.latitude, item?.longitude]"
               />
               <a-button
-             
                 size="small"
                 class="flex justify-center align-center kiosk-board-item-btn"
               >
                 <IconShoppingCard />
               </a-button>
               <a-button
-              @click="router.push(`kiosk-board/item/${item.id}`)"
+                @click="router.push(`kiosk-board/item/${item?.id}`)"
                 size="small"
                 class="flex justify-center align-center board-item-btn"
               >
@@ -62,19 +63,20 @@ const props = defineProps({
   </div>
 </template>
 <style lang="scss">
+@import '@/assets/styles/variable';
 .kioskBoard-item-container {
   .kioskBoard-item {
     height: 150px;
 
     &:hover {
-      background-color: #f0f0f0;
+      background-color: $lightGray;
     }
 
     .description {
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
     }
 
     .kiosk-board-name {
@@ -82,8 +84,15 @@ const props = defineProps({
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
+      font-weight: bold;
+      line-height: 16px;
     }
-
+    .category-name {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+    }
     .kiosk-icons-wrapper {
       display: flex;
       flex-grow: 1;
