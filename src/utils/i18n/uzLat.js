@@ -139,6 +139,7 @@ const uzLat = {
   SELECT_CONFIGURATION: "Ta'rifni tanlang",
   SELECT_DATE_AND_TIME: 'Sana va vaqtni tanlang',
   LOCATION: 'Manzil',
+  CONFIRMCANCELORDER:'Buyurtmani bekor qilmoqchimisiz?',
 
   // statuses
   EXPIRED: "Muddati o'tib ketgan",
