@@ -40,7 +40,7 @@ const props = defineProps({
           <div class="flex justify-between align-center flex-wrap gx-2">
             <a-space class="ml-auto">
               <kiosk-board-item-location-component
-                :locMap="[item.latitude, item.longitude]"
+                :locMap="[item?.latitude, item?.longitude]"
               />
               <a-button
                 size="small"
@@ -49,7 +49,7 @@ const props = defineProps({
                 <IconShoppingCard />
               </a-button>
               <a-button
-                @click="router.push(`kiosk-board/item/${item.id}`)"
+                @click="router.push(`kiosk-board/item/${item?.id}`)"
                 size="small"
                 class="flex justify-center align-center board-item-btn"
               >
@@ -63,12 +63,13 @@ const props = defineProps({
   </div>
 </template>
 <style lang="scss">
+@import '@/assets/styles/variable';
 .kioskBoard-item-container {
   .kioskBoard-item {
     height: 150px;
 
     &:hover {
-      background-color: #f0f0f0;
+      background-color: $lightGray;
     }
 
     .description {

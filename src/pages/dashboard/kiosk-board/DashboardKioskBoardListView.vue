@@ -40,14 +40,14 @@ function handleChangeFilter() {
     }
   })
   timeOut.value = setTimeout(() => {
-    kioskBoardPinia.getAllKioskBoard(0, categoryId.value, searchName.value)
+    kioskBoardPinia.getAllKioskBoard(0, categoryId?.value, searchName?.value)
   }, 500)
 }
 
 
 
 onMounted(() => {
-  kioskBoardPinia.getAllKioskBoard(0, categoryId.value, searchName.value)
+  kioskBoardPinia.getAllKioskBoard(0, categoryId?.value, searchName?.value)
   categoryPinia.getBoardCategories()
   console.log(searchName.value)
 })
@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
               :placeholder="$t('SEARCH')"
               v-model:value="name"
               allow-clear
-              @keyup="handleChangeFilter"
+              @change="handleChangeFilter"
             >
               <template #prefix>
                 <icon-search />
