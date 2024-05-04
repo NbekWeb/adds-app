@@ -5,7 +5,6 @@ const uzLat = {
   DashboardBoardListView: 'Kanallar',
   DashboardMyBoardListView: 'Mening kanallarim',
   DashboardKioskBoardListView: 'Kiosk boardlar',
-  DashboardMyKioskBoardListView: 'My kiosk boards',
   DashboardKioskBoardItemView: "Kiosk boardni ko'rish",
   DashboardPostListView: "E'lonlar",
   DashboardOrderListView: 'Xaridlar',
