@@ -5,7 +5,6 @@ const uzLat = {
   DashboardBoardListView: 'Kanallar',
   DashboardMyBoardListView: 'Mening kanallarim',
   DashboardKioskBoardListView: 'Kiosk boardlar',
-  DashboardMyKioskBoardListView: 'My kiosk boards',
   DashboardKioskBoardItemView: "Kiosk boardni ko'rish",
   DashboardPostListView: "E'lonlar",
   DashboardOrderListView: 'Xaridlar',
@@ -101,7 +100,7 @@ const uzLat = {
   LINKED_BUTTON_TEXT: 'Tugma matni',
   LINKED_BUTTON_URL: 'Tugma havolasi',
   ENTER_URL: 'Havola kiriting',
-
+  SUBSCRIBER: 'obunachi',
   ATTACH_URL: 'Havola biriktirish',
   FILTER_BY_STATUS: "Holat bo'yicha filterlash",
   NAME: 'Nomi',

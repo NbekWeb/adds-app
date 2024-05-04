@@ -20,26 +20,26 @@ const router = useRouter()
         <div class="flex align-center">
           <a-avatar
             class="avatar"
-            :src="`${fileBaseUrl}/file/${item.logoHashId}`"
+            :src="`${fileBaseUrl}/file/${item?.logoHashId}`"
             size="large"
           />
           <div class="flex justify-center flex-column ml-2">
-            <h1 class="board-name mb-0">{{ item.name }}</h1>
+            <h1 class="board-name mb-0">{{ item?.name }}</h1>
 
             <p class="members-count text-bold m-0 text-muted">
               {{
-                item.channelMembersCount > 999
-                  ? `${Math.floor(item.channelMembersCount / 1000)}k`
-                  : item.channelMembersCount
+                item?.channelMembersCount > 999
+                  ? `${Math.floor(item?.channelMembersCount / 1000)}k`
+                  : item?.channelMembersCount
               }}
-              <span class="text-bold"> obunachi </span>
+              <span class="text-bold"> {{ $t('SUBSCRIBER') }} </span>
             </p>
           </div>
         </div>
-        <p class="category-name m-0">{{ item.category.name }}</p>
+        <p class="category-name m-0">{{ item?.category?.name }}</p>
       </div>
       <div>
-        <p class="description">{{ item.description }}</p>
+        <p class="description">{{ item?.description }}</p>
       </div>
       <div class="flex justify-between flex-column">
         <div class="flex justify-between align-center">
@@ -49,7 +49,7 @@ const router = useRouter()
                 router.push({
                   name: 'BoardConfigurationsView',
                   params: {
-                    id: item.id
+                    id: item?.id
                   }
                 })
               "
@@ -63,7 +63,7 @@ const router = useRouter()
                 router.push({
                   name: 'DashboardBoardItemInfoView',
                   params: {
-                    id: item.id
+                    id: item?.id
                   }
                 })
               "
