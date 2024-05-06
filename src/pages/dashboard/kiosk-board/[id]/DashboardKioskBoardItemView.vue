@@ -26,7 +26,7 @@ onMounted(() => {
     kioskBoardPinia.getOneKioskBoard(route.params.id, (data) => {
       itemInfo.value = data
       marker.value = [[`${data.latitude}`, `${data.longitude}`]]
-      kioskBoardPinia.changeMap(data.latitude, data.latitude, (data) => {
+      kioskBoardPinia.changeMap(data.latitude, data.longitude, (data) => {
         mapName.value = data?.display_name
       })
     })
