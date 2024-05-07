@@ -1,12 +1,12 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import useCore from '@/store/core.pinia.js'
 import useOrder from '@/store/order.pinia.js'
 import OrderItemComponent from '@/pages/dashboard/order/[id]/components/OrderItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
-import useCore from '@/store/core.pinia.js'
-import { storeToRefs } from 'pinia'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import IconRefresh from '@/components/icons/IconRefresh.vue'
 

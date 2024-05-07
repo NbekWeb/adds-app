@@ -4,6 +4,8 @@ import useUser from '@/store/user.pinia.js'
 import MobileMenuComponent from '@/pages/dashboard/components/MobileMenuComponent.vue'
 import { ref } from 'vue'
 import { formatAmount } from '../../../composables/index.js'
+import BalanceComponent from '@/pages/dashboard/components/BalanceComponent.vue'
+import NotificationMainComponent from '@/pages/dashboard/components/Notification/NotificationMainComponent.vue'
 
 const userPinia = useUser()
 const { user } = storeToRefs(userPinia)
@@ -14,22 +16,14 @@ function navigateToClient() {
 </script>
 
 <template>
-  <a-row :gutter="16" justify="end" align="middle">
+  <a-row :gutter="16" justify="space-between" align="middle">
     <a-col>
       <mobile-menu-component />
     </a-col>
-    <a-col class="ml-auto">
-      <a-button @click="navigateToClient" type="primary">
-        {{ $t('ADD_BOARD') }}
-      </a-button>
-    </a-col>
-    <a-col>
-      <div>
-        <b>ID: {{ user?.id }}</b>
-      </div>
-      <p class="m-0 small text-muted">
-        {{ $t('BALANCE') }}: {{ formatAmount(user?.balance) }} {{ $t('SOUM') }}
-      </p>
+
+    <a-col class="flex align-center">
+      <balance-component />
+      <notification-main-component class="ml-2" />
     </a-col>
   </a-row>
 </template>

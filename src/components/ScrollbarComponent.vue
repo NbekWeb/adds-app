@@ -11,6 +11,7 @@ const scroll = (e) => {
   const scrollTop = e.target.scrollTop
   const scrollH = e.target.scrollHeight
   const page = props.page + 1
+  console.log(page)
   if (
     Math.ceil(clientH + scrollTop + 1) >= scrollH &&
     page < props.totalPages &&
