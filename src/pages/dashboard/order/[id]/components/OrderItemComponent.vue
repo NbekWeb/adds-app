@@ -23,7 +23,7 @@ const open = ref(false)
 
 <template>
   <a-card class="order-item-card" @click="open = true">
-    <a-row>
+    <a-row justify="space-between">
       <a-col
         :span="6"
         :xs="12"
@@ -113,8 +113,8 @@ const open = ref(false)
         :xs="24"
         :sm="24"
         :md="24"
-        :lg="5"
-        :xl="5"
+        :lg="6"
+        :xl="6"
         class="item border"
       >
         <div class="amount-status">
@@ -131,26 +131,6 @@ const open = ref(false)
             <status-tag-component :status="order?.status" />
           </span>
         </div>
-      </a-col>
-
-      <a-col
-        :span="6"
-        :xs="12"
-        :sm="4"
-        :md="4"
-        :lg="3"
-        :xl="3"
-        class="flex borderi cancel-btn"
-        v-if="order?.status == 'PENDING'"
-      >
-        <a-popconfirm
-          :title="$t('CONFIRMCANCELORDER')"
-          :ok-text="$t('YES')"
-          :cancel-text="$t('NO')"
-          @confirm="cancelOrder"
-        >
-          <a-button danger @click.stop>{{ $t('CANCEL') }}</a-button>
-        </a-popconfirm>
       </a-col>
     </a-row>
     <order-item-view-drawer-component :item="order" v-model:open="open" />

@@ -45,6 +45,18 @@ const model = defineModel('open')
         <configuration-statistics-component :statistics="item?.taskResponse" />
         <reactions-component :reactions="item?.taskResponse?.reactions" />
         <views-component :views="item?.taskResponse?.views" />
+        <template v-if="item?.status === 'PENDING'">
+          <a-popconfirm
+            :title="$t('CONFIRMCANCELORDER')"
+            :ok-text="$t('YES')"
+            :cancel-text="$t('NO')"
+          >
+            <!--            @confirm="cancelOrder"-->
+            <a-button class="mb-2" danger @click.stop>{{
+              $t('CANCEL')
+            }}</a-button>
+          </a-popconfirm>
+        </template>
         <warning-component :order="item" />
       </template>
     </scrollbar-component>
