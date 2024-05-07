@@ -30,11 +30,7 @@ function handleReadNotification() {
 </script>
 
 <template>
-  <a-card
-    @click="handleReadNotification"
-    class="notification-card"
-    :class="{ unread: !notification?.read }"
-  >
+  <a-card @click="handleReadNotification" class="notification-card">
     <div class="flex">
       <div class="text-lg mr-1">
         <a-avatar class="flex align-center justify-center">
