@@ -22,7 +22,7 @@ function handleReadNotification() {
     router.push({
       name: 'DashboardOrderItemView',
       params: {
-        id: props.notification.id
+        id: props.notification?.itemId
       }
     })
   }
@@ -32,8 +32,11 @@ function handleReadNotification() {
 <template>
   <a-card @click="handleReadNotification" class="notification-card">
     <div class="flex">
-      <div class="text-lg mr-1">
-        <a-avatar class="flex align-center justify-center">
+      <div class="text-lg mr-3">
+        <a-avatar
+          :class="{ unread: !notification?.read }"
+          class="flex align-center justify-center"
+        >
           <template #icon>
             <icon-bell />
           </template>
@@ -44,11 +47,6 @@ function handleReadNotification() {
         <div class="flex justify-between align-center">
           <span class="notification-date text-muted text-xs">
             {{ dayjs(notification?.date).format('DD.MM.YYYY, HH:mm') }}
-          </span>
-          <span>
-            <template v-if="!notification.read">
-              <a-badge color="geekblue" />
-            </template>
           </span>
         </div>
       </div>
@@ -71,10 +69,11 @@ function handleReadNotification() {
   }
   &:deep(.ant-card-body) {
     padding: 12px !important;
+    padding-left: 0 !important;
   }
 }
 .unread {
-  border-color: $primary;
+  background-color: $primary;
 }
 .notification-message {
   p {

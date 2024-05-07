@@ -52,7 +52,7 @@ function getPegableNotifications(p) {
 
 onMounted(() => {
   // checked every five minutes
-  setInterval(checkNotifications, 2000)
+  setInterval(checkNotifications, 60000)
   notificationPinia.getNotifications(0, () => {})
 })
 </script>
@@ -65,7 +65,7 @@ onMounted(() => {
     v-model:open="open"
   >
     <template #content>
-      <div class="notification-content p-1">
+      <div class="notification-content">
         <scrollbar-component
           height="calc(100vh - 200px)"
           :page="page"
