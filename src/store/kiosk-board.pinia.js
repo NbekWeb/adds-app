@@ -59,7 +59,7 @@ const useKioskBoard = defineStore('kiosk-board', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/kiosk-board/owner/all')
+          core.loadingUrl.delete('kiosk-board/all')
         })
     },
     getOneKioskBoard(id, callback) {

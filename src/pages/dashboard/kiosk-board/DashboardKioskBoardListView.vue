@@ -9,8 +9,8 @@ import useKioskBoard from '@/store/kiosk-board.pinia.js'
 import useCore from '@/store/core.pinia.js'
 import { storeToRefs } from 'pinia'
 
-import { ref, onMounted,computed,onBeforeUnmount } from 'vue'
-import { useRoute,useRouter } from 'vue-router'
+import { ref, onMounted, computed, onBeforeUnmount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
@@ -40,13 +40,14 @@ function handleChangeFilter() {
     }
   })
   timeOut.value = setTimeout(() => {
-    kioskBoardPinia.getAllKioskBoard(0, categoryId.value, searchName.value)
+    kioskBoardPinia.getAllKioskBoard(0, categoryId?.value, searchName?.value)
   }, 500)
 }
 
 
+
 onMounted(() => {
-  kioskBoardPinia.getAllKioskBoard(0, categoryId.value, searchName.value)
+  kioskBoardPinia.getAllKioskBoard(0, categoryId?.value, searchName?.value)
   categoryPinia.getBoardCategories()
   console.log(searchName.value)
 })
@@ -56,18 +57,18 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div>
+  <div class="dashboard-kiosk-list-view">
     <page-header-component :title="$t('DashboardKioskBoardListView')">
       <template #actions>
         <kiosk-board-page-mobile-filter-component />
-        
+
         <div class="isDesktop">
           <a-space>
             <a-input
               :placeholder="$t('SEARCH')"
               v-model:value="name"
               allow-clear
-              @keyup="handleChangeFilter"
+              @change="handleChangeFilter"
             >
               <template #prefix>
                 <icon-search />
@@ -97,8 +98,7 @@ onBeforeUnmount(() => {
     </page-header-component>
 
     <kiosk-board-list-component />
-    <!-- <kiosk-board-item-component :item="item" /> -->
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style lang="scss" scoped></style>

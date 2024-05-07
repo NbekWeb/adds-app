@@ -113,6 +113,30 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('create/order/item')
         })
     },
+    putCancelOrder(orderId, itemIdList) {
+      const core = useCore()
+      core.loadingUrl.add('cancel/order')
+      api({
+        url: 'order-item',
+        method: 'PUT',
+        data: {
+          orderId: orderId,
+          itemIdList: itemIdList
+        }
+      })
+        .then(() => {
+          core.setToast({
+            type: 'success',
+            locale: 'Order Canceled Successfully'
+          })
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('cancel/order')
+        })
+    },
     updateOrder(id, form) {
       const core = useCore()
       core.loadingUrl.add('update/order')

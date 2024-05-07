@@ -6,6 +6,14 @@ import { formatAmount } from '@/composables'
 import OrderItemViewDrawerComponent from '@/pages/dashboard/order/[id]/components/OrderItemViewDrawerComponent.vue'
 import { ref } from 'vue'
 
+import useOrder from '@/store/order.pinia.js'
+
+const orderPinia = useOrder()
+
+function cancelOrder() {
+  orderPinia.putCancelOrder(props.order?.orderId, [props.order?.id])
+}
+
 const props = defineProps({
   order: Object
 })
@@ -15,14 +23,14 @@ const open = ref(false)
 
 <template>
   <a-card class="order-item-card" @click="open = true">
-    <a-row>
+    <a-row justify="space-between">
       <a-col
-        :span="5"
+        :span="6"
         :xs="12"
         :sm="12"
-        :md="5"
-        :lg="5"
-        :xl="5"
+        :md="12"
+        :lg="4"
+        :xl="4"
         class="flex justify-start"
       >
         <a-avatar
@@ -43,28 +51,30 @@ const open = ref(false)
         :span="4"
         :xs="12"
         :sm="12"
-        :md="2"
-        :lg="4"
-        :xl="4"
-        class="item config-name border"
+        :md="12"
+        :lg="3"
+        :xl="3"
+        class="item config-name border end-item"
       >
-        <p class="m-0">
-          <template v-if="order?.configuration?.name">
-            {{ order?.configuration?.name }}
-          </template>
-          <template v-else>
-            {{ $t('NOT_AVAILABLE') }}
-          </template>
-        </p>
-        <span class="sub-title text-muted">
-          {{ $t('RATE') }}
-        </span>
+        <div>
+          <p class="m-0">
+            <template v-if="order?.configuration?.name">
+              {{ order?.configuration?.name }}
+            </template>
+            <template v-else>
+              {{ $t('NOT_AVAILABLE') }}
+            </template>
+          </p>
+          <span class="sub-title text-muted">
+            {{ $t('RATE') }}
+          </span>
+        </div>
       </a-col>
       <a-col
         :span="4"
         :xs="12"
         :sm="12"
-        :md="5"
+        :md="12"
         :lg="4"
         :xl="4"
         class="item border"
@@ -77,26 +87,36 @@ const open = ref(false)
         </span>
       </a-col>
       <a-col
-        :span="5"
+        :span="6"
         :xs="12"
         :sm="12"
-        :md="6"
+        :md="12"
         :lg="5"
         :xl="5"
-        class="item border"
+        class="item border end-item"
       >
-        <p class="m-0">
-          <template v-if="order?.endDate">
-            {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
-          </template>
-          <template v-else> {{ $t('NOT_AVAILABLE') }}</template>
-        </p>
-        <span class="sub-title text-muted">
-          {{ $t('POST_DELETED_DATE') }}
-        </span>
+        <div>
+          <p class="m-0">
+            <template v-if="order?.endDate">
+              {{ dayjs(order?.endDate).format('DD.MM.YYYY, HH:mm') }}
+            </template>
+            <template v-else> {{ $t('NOT_AVAILABLE') }} </template>
+          </p>
+          <span class="sub-title text-muted">
+            {{ $t('POST_DELETED_DATE') }}
+          </span>
+        </div>
       </a-col>
 
-      <a-col :xs="24" :sm="24" :md="5" :lg="5" :xl="6" class="item border">
+      <a-col
+        :span="6"
+        :xs="24"
+        :sm="24"
+        :md="24"
+        :lg="6"
+        :xl="6"
+        class="item border"
+      >
         <div class="amount-status">
           <div>
             <p class="m-0">
@@ -127,6 +147,19 @@ const open = ref(false)
     cursor: pointer;
     &:hover {
       background-color: rgb($light, 0.3);
+    }
+  }
+  .cancel-btn {
+    justify-content: end;
+    @media (max-width: 992px) {
+      justify-content: start;
+    }
+  }
+  .end-item {
+    display: flex;
+    justify-content: start;
+    @media (max-width: 992px) {
+      justify-content: end;
     }
   }
 }
@@ -172,9 +205,5 @@ const open = ref(false)
       display: none;
     }
   }
-}
-.border {
-  //border-left: 1px solid $muted;
-  //padding-left: 10px;
 }
 </style>

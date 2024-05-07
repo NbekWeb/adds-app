@@ -21,13 +21,19 @@ const getKioskBoardList = (page) => {
 }
 </script>
 <template>
-  <div>
+  <a-spin
+    wrapper-class-name="kiosk-board-page-spin"
+    :spinning="loadingUrl.has('kiosk-board/all')"
+  >
+    <template #indicator>
+      <icon-loader />
+    </template>
+
     <scrollbar-component
-      :loading="loadingUrl.has('kiosk-board/all')"
       :count="9"
       :page="page"
       class="kiosk-board-list"
-      height="calc(100vh - 160px)"
+      height="calc(100vh - 196px)"
       :total-pages="totalPages"
       @get-data="getKioskBoardList"
     >
@@ -55,7 +61,7 @@ const getKioskBoardList = (page) => {
         </template>
       </template>
     </scrollbar-component>
-  </div>
+  </a-spin>
 </template>
 
 <style></style>
