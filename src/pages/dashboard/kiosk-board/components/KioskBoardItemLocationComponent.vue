@@ -52,7 +52,7 @@ const showDrawer = () => {
       </template>
     </a-spin>
     <template v-if="mapName" >
-      <p class="mx-4">{{ mapName }}</p>
+      <p class="mx-4">{{ mapName }}  </p>
     </template>
   </a-drawer>
 </template>
