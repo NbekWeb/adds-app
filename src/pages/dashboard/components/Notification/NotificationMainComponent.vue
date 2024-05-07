@@ -52,7 +52,7 @@ function getPegableNotifications(p) {
 
 onMounted(() => {
   // checked every five minutes
-  setInterval(checkNotifications, 2000)
+  setInterval(checkNotifications, 60000)
   notificationPinia.getNotifications(0, () => {})
 })
 </script>
