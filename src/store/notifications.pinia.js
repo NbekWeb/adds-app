@@ -26,7 +26,6 @@ const useNotifications = defineStore('notifications', {
           this.totalPages = data.totalPages
           this.notifications = [...this.notifications, ...data.content]
           this.notifications = uniqueItems(this.notifications, 'id')
-          console.log(this.notifications)
           callback()
         })
         .catch((error) => {
