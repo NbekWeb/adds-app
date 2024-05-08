@@ -17,9 +17,6 @@ const useOrder = defineStore('order', {
       this.totalElements = 0
       this.totalPages = 0
     },
-    clearOrderInfo() {
-      this.orderInfo = null
-    },
 
     getAllOrders(page, status) {
       const core = useCore()
