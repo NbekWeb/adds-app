@@ -4,7 +4,7 @@ import { onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
-import useKioskPost from '@/store/kiosk-post.pinia.js'
+import usePost from '@/store/post.pinia.js'
 import PostEditorComponent from '@/pages/dashboard/post/component/PostEditorComponent.vue'
 import PostFileComponent from '@/pages/dashboard/post/component/PostFileComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -17,7 +17,7 @@ const route = useRoute()
 const router = useRouter()
 
 const corePinia = useCore()
-const postPinia = useKioskPost()
+const postPinia = usePost()
 
 const { loadingUrl } = storeToRefs(corePinia)
 const formRef = ref()
