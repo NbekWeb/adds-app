@@ -60,7 +60,7 @@ function handleReadNotification() {
 .notification-card {
   cursor: pointer;
   border-color: transparent;
-  border-bottom-color: rgb($muted, 0.5);
+  border-bottom-color: rgb($muted, 0.2);
   border-radius: 0;
 
   //background-color: rgb($light, 0.5);
