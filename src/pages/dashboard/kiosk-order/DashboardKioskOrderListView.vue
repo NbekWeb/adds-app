@@ -1,15 +1,15 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import useOrder from '@/store/order.pinia.js'
+import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderListComponent from '@/pages/dashboard/order/components/order-form/OrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
-import PostListDrawerComponent from '@/pages/dashboard/order/components/PostListDrawerComponent.vue'
+import KioskPostListDrawerComponent from '@/pages/dashboard/kiosk-order/components/KioskPostListDrawerComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
-const orderPinia = useOrder()
+const orderPinia = useKioskOrder()
 
 const statuses = ref([
   'PENDING',
@@ -77,11 +77,11 @@ onMounted(() => {
   >
     <template #title>
       <div class="flex justify-between align-center">
-        <h3 class="title m-0">{{ $t('DashboardPostListView') }}</h3>
+        <h3 class="title m-0">{{ $t('DashboardKioskPostListView') }}</h3>
         <a-button
           type="primary"
           class="btn"
-          @click="router.push({ name: 'DashboardPostCreateFormView' })"
+          @click="router.push({ name: 'DashboardKioskPostCreateFormView' })"
         >
           <template #icon>
             <IconPlus />
@@ -90,7 +90,7 @@ onMounted(() => {
         </a-button>
       </div>
     </template>
-    <post-list-drawer-component />
+    <kiosk-post-list-drawer-component />
   </a-drawer>
   <order-list-component />
 </template>

@@ -49,7 +49,6 @@ function handleChangeFilter() {
 onMounted(() => {
   kioskBoardPinia.getAllKioskBoard(0, categoryId?.value, searchName?.value)
   categoryPinia.getBoardCategories()
-  console.log(searchName.value)
 })
 onBeforeUnmount(() => {
   kioskBoardPinia.clearBoardInfo()

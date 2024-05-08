@@ -40,8 +40,18 @@ const menuList = shallowRef([
     icon: IconMessageTextSquare
   },
   {
+    path: 'kiosk-post',
+    name: 'DashboardKioskPostListView',
+    icon: IconMessageTextSquare
+  },
+  {
     path: 'order',
     name: 'DashboardOrderListView',
+    icon: IconShoppingCard
+  },
+  {
+    path: 'kiosk-order',
+    name: 'DashboardKioskOrderListView',
     icon: IconShoppingCard
   }
 ])

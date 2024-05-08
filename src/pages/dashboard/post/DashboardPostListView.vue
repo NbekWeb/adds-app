@@ -31,12 +31,13 @@ onMounted(() => {
         @click="router.push({ name: 'DashboardPostCreateFormView' })"
       >
         <icon-plus />
-        {{ $t('ADD') }}
+        {{ $t('ADD') }} 
       </a-button>
     </template>
   </page-header-component>
 
   <post-list-component />
+  
 </template>
 
 <style lang="scss">

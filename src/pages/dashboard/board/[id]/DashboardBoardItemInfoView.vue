@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
                   "
                 >
                   {{ $t('CREATE_AN_ORDER') }}
-                </a-button>
+                </a-button> 
               </div>
             </div>
             <div class="board-sub-info flex justify-start">
