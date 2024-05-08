@@ -5,18 +5,22 @@ import { uniqueItems } from '@/composables/index.js'
 
 const useNotifications = defineStore('notifications', {
   state: () => ({
+    count: 0,
+    newNotifications: [],
     notifications: [],
-    totalPages: 0
+    totalPages: 0,
+    oldNotifications: new Set([])
   }),
   actions: {
-    getNotifications(page, callback) {
+    getNotifications(page) {
       const core = useCore()
       core.loadingUrl.add('get/all/notifications')
       api({
         url: 'notification',
         params: {
           page: page,
-          size: 6
+          size: 6,
+          type: 'CLIENT'
         }
       })
         .then(({ data }) => {
@@ -26,23 +30,32 @@ const useNotifications = defineStore('notifications', {
           this.totalPages = data.totalPages
           this.notifications = [...this.notifications, ...data.content]
           this.notifications = uniqueItems(this.notifications, 'id')
-          callback()
+          this.notifications.forEach((item) => {
+            if (!this.oldNotifications.has(item.id) && !item.read) {
+              this.newNotifications.push(item)
+              this.oldNotifications.add(item.id)
+            }
+          })
         })
         .catch((error) => {
+          console.log(error)
           core.switchStatus(error)
         })
         .finally(() => {
           core.loadingUrl.delete('get/all/notifications')
         })
     },
-    checkNotifications(callback) {
+    checkNotifications() {
       const core = useCore()
       // core.loadingUrl.add('user/me')
       api({
-        url: 'notification/count'
+        url: 'notification/count',
+        params: {
+          type: 'CLIENT'
+        }
       })
         .then(({ data }) => {
-          callback(data)
+          this.count = data
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -63,6 +76,7 @@ const useNotifications = defineStore('notifications', {
             if (item.id === id) item.read = true
             return item
           })
+          this.count--
         })
         .catch((error) => {
           core.switchStatus(error)

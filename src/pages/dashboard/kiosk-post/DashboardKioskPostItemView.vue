@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { fileBaseUrl } from '@/utils/conf.js'
 import useCore from '@/store/core.pinia.js'
-import usePost from '@/store/post.pinia.js'
+import useKioskPost from '@/store/kiosk-post.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import VideoPlayerComponent from '@/components/VideoPlayerComponent.vue'
@@ -15,7 +15,7 @@ const route = useRoute()
 const router = useRouter()
 
 const corePinia = useCore()
-const postPinia = usePost()
+const kioskPostPinia = useKioskPost()
 
 const { loadingUrl } = storeToRefs(corePinia)
 
@@ -23,7 +23,7 @@ const post = ref()
 
 onMounted(() => {
   if (route.params.id) {
-    postPinia.getOnePostById(route.params.id, (data) => {
+    kioskPostPinia.getOnePostById(route.params.id, (data) => {
       post.value = data
     })
   }
@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <a-spin :spinning="loadingUrl.has('get/post/one')">
+  <a-spin :spinning="loadingUrl.has('get/kiosk-post/one')">
     <template #indicator>
       <IconLoader />
     </template>

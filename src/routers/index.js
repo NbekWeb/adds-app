@@ -24,6 +24,15 @@ import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.
 import DashboardPostItemView from '@/pages/dashboard/post/DashboardPostItemView.vue'
 import DashboardOrderItemView from '@/pages/dashboard/order/[id]/DashboardOrderView.vue'
 import DashboardKioskBoardItemView from '@/pages/dashboard/kiosk-board/[id]/DashboardKioskBoardItemView.vue'
+import DashboardKioskPostView from '@/pages/dashboard/kiosk-post/DashboardKioskPostView.vue'
+import DashboardKioskPostListView from '@/pages/dashboard/kiosk-post/DashboardKioskPostListView.vue'
+import DashboardKioskPostFormView from '@/pages/dashboard/kiosk-post/DashboardKioskPostFormView.vue'
+import DashboardKioskPostItemView from '@/pages/dashboard/kiosk-post/DashboardKioskPostItemView.vue'
+import DashboardKioskOrderView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderView.vue'
+import DashboardKioskOrderListView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderListView.vue'
+import DashboardKioskOrderFormView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderFormView.vue'
+// import DashboardKioskOrderItemView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderItemView.vue'
+
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
 export const router = createRouter({
@@ -124,6 +133,34 @@ export const router = createRouter({
           ]
         },
         {
+          path:'kiosk-post',
+          name:"DashboardKioskPostView",
+          component:DashboardKioskPostView,
+          children:[
+            {
+              path:'',
+              name:"DashboardKioskPostListView",
+              component:DashboardKioskPostListView
+            },
+            {
+              path:'create',
+              name:'DashboardKioskPostCreateFormView',
+              component:DashboardKioskPostFormView
+
+            },
+            {
+              path:'edit/:id',
+              name:'DashboardKioskPostEditFormView',
+              component:DashboardKioskPostFormView
+            },
+            {
+              path: 'item/:id',
+              name: 'DashboardKioskPostItemView',
+              component: DashboardKioskPostItemView
+            }
+          ]
+        },
+        {
           path: 'order',
           name: 'DashboardOrderView',
           component: DashboardOrderView,
@@ -143,6 +180,28 @@ export const router = createRouter({
               name: 'DashboardOrderItemView',
               component: DashboardOrderItemView
             }
+          ]
+        },
+        {
+          path: 'kiosk-order',
+          name: 'DashboardKioskOrderView',
+          component: DashboardKioskOrderView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardKioskOrderListView',
+              component: DashboardKioskOrderListView
+            },
+            {
+              path: 'create/:postId',
+              name: 'DashboardKioskOrderFormView',
+              component: DashboardKioskOrderFormView
+            },
+            // {
+            //   path: 'item/:id',
+            //   name: 'DashboardKioskOrderItemView',
+            //   component: DashboardKioskOrderItemView
+            // }
           ]
         },
         {
