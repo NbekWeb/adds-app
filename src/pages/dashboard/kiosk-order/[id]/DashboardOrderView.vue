@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import useOrder from '@/store/order.pinia.js'
-import OrderItemComponent from '@/pages/dashboard/order/[id]/components/OrderItemComponent.vue'
+import OrderItemComponent from '@/pages/dashboard/kiosk-order/[id]/components/OrderItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import useCore from '@/store/core.pinia.js'

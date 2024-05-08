@@ -5,7 +5,7 @@ import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderListComponent from '@/pages/dashboard/order/components/order-form/OrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
-import PostListDrawerComponent from '@/pages/dashboard/kiosk-order/components/KioskPostListDrawerComponent.vue'
+import KioskPostListDrawerComponent from '@/pages/dashboard/kiosk-order/components/KioskPostListDrawerComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -81,16 +81,16 @@ onMounted(() => {
         <a-button
           type="primary"
           class="btn"
-          @click="router.push({ name: 'DashboardPostCreateFormView' })"
+          @click="router.push({ name: 'DashboardKioskPostCreateFormView' })"
         >
           <template #icon>
             <IconPlus />
           </template>
-          {{ $t('ADD') }}
+          {{ $t('ADD') }} 
         </a-button>
       </div>
     </template>
-    <post-list-drawer-component />
+    <kiosk-post-list-drawer-component />
   </a-drawer>
   <order-list-component />
 </template>

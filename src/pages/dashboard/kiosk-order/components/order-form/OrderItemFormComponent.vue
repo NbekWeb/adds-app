@@ -6,9 +6,9 @@ import { formatAmount } from '@/composables/index.js'
 import useCore from '@/store/core.pinia.js'
 import dayjs from 'dayjs'
 
-import OrderBoardSelectComponent from '@/pages/dashboard/order/components/order-form/OrderBoardSelectComponent.vue'
-import OrderConfigurationSelectComponent from '@/pages/dashboard/order/components/order-form/OrderConfigurationSelectComponent.vue'
-import OrderTimeConfigSelectComponent from '@/pages/dashboard/order/components/order-form/OrderTimeConfigSelectComponent.vue'
+import OrderBoardSelectComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderBoardSelectComponent.vue'
+import OrderConfigurationSelectComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderConfigurationSelectComponent.vue'
+import OrderTimeConfigSelectComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderTimeConfigSelectComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { useI18n } from 'vue-i18n'
 
@@ -27,9 +27,6 @@ const steps = ref([
     title: t('SELECT_CHANNEL')
   },
   {
-    title: t('SELECT_CONFIGURATION')
-  },
-  {
     title: t('SELECT_DATE_AND_TIME')
   }
 ])
@@ -46,8 +43,7 @@ const form = reactive({
 const isAccessNext = computed(
   () =>
     (!form.board && currentStep.value === 0) ||
-    (!form.configuration && currentStep.value === 1) ||
-    (!form.timeConfiguration && currentStep.value === 2)
+    (!form.timeConfiguration && currentStep.value === 1)
 )
 
 const selectedConfigAmount = ref(0)
@@ -56,7 +52,7 @@ const selectedTimeConfigAmount = ref(0)
 function handleNextStep() {
   if (!isAccessNext.value && currentStep.value < 2) {
     currentStep.value++
-  } else if (form.board && form.configuration && form.timeConfiguration) {
+  } else if (form.board && form.timeConfiguration) {
     emits('addOrder', form)
   }
 }
@@ -80,8 +76,7 @@ function handleBackStep() {
   <a-spin
     :spinning="
       loadingUrl.has('board/all') ||
-      loadingUrl.has('board/time-configurations') ||
-      loadingUrl.has('board/configurations')
+      loadingUrl.has('board/time-configurations')
     "
   >
     <template #indicator>
@@ -94,13 +89,6 @@ function handleBackStep() {
       />
     </template>
     <template v-if="currentStep === 1">
-      <order-configuration-select-component
-        v-model:value="form.configuration"
-        v-model:amount="selectedConfigAmount"
-        :board-id="form.board.id"
-      />
-    </template>
-    <template v-if="currentStep === 2">
       <order-time-config-select-component
         v-model:value="form.timeConfiguration"
         v-model:date="form.orderDate"

@@ -74,7 +74,7 @@ const { loadingUrl } = storeToRefs(corePinia)
         <a-button
           @click="
             router.push({
-              name: 'DashboardOrderFormView',
+              name: 'DashboardKioskOrderFormView',
               params: {
                 postId: item.id
               }

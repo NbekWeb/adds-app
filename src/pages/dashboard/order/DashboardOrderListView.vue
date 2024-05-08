@@ -64,7 +64,7 @@ onMounted(() => {
           <template #icon>
             <IconPlus />
           </template>
-          <span class="isDesktop">{{ $t('CREATE_AN_ORDER') }}</span>
+          <span class="isDesktop">{{ $t('CREATE_AN_ORDER') }} </span>
         </a-button>
       </a-space>
     </template>
@@ -86,7 +86,7 @@ onMounted(() => {
           <template #icon>
             <IconPlus />
           </template>
-          {{ $t('ADD') }}
+          {{ $t('ADD') }} 
         </a-button>
       </div>
     </template>

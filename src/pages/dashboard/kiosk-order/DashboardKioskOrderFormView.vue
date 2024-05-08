@@ -7,8 +7,8 @@ import useCore from '@/store/core.pinia.js'
 import useKioskOrder from '@/store/kiosk-order.pinia.js'
 
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import OrderItemFormComponent from '@/pages/dashboard/order/components/order-form/OrderItemFormComponent.vue'
-import OrderItemsListComponent from '@/pages/dashboard/order/components/order-form/OrderItemsListComponent.vue'
+import OrderItemFormComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderItemFormComponent.vue'
+import KioskOrderItemsListComponent from '@/pages/dashboard/kiosk-order/components/order-form/KioskOrderItemsListComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -58,18 +58,19 @@ onMounted(() => {
   </template>
 
   <template v-if="newOrderItem">
+
     <order-item-form-component
       :selected-boards="selectedBoards"
       @add-order="addNewOrderItem"
       @cancel="newOrderItem = false"
-    />
+    /> sa1
   </template>
   <template v-else>
-    <order-items-list-component
+    <kiosk-order-items-list-component
       :items="form.items"
       @add-item="newOrderItem = true"
       @close="closeOrderItem"
-    />
+    /> 
   </template>
   <template v-if="!newOrderItem">
     <div class="flex justify-between">
