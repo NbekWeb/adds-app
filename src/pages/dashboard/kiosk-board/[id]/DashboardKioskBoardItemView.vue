@@ -64,7 +64,7 @@ onMounted(() => {
               </div>
               <div class="">
                 <a-button type="primary" @click="router.push(``)">
-                  {{ $t('CREATE_AN_ORDER') }}
+                  {{ $t('CREATE_AN_ORDER') }} 
                 </a-button>
               </div>
             </div>

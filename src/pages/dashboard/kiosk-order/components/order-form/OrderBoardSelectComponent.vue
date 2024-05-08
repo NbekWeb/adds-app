@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 import useCore from '@/store/core.pinia.js'
 import useBoard from '@/store/boadr.pinia.js'
 
-import OrderBoardItemComponent from '@/pages/dashboard/order/components/order-form/OrderBoardItemComponent.vue'
+import OrderBoardItemComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderBoardItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 
 defineProps({
@@ -19,6 +19,7 @@ const { boardList } = storeToRefs(boardPinia)
 
 onMounted(() => {
   boardPinia.getAllBoard(0)
+  console.log(boardList)
 })
 </script>
 

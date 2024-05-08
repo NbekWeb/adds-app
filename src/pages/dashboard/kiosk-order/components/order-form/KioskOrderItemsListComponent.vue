@@ -1,5 +1,5 @@
 <script setup>
-import OrderItemComponent from '@/pages/dashboard/order/components/order-form/OrderItemComponent.vue'
+import OrderItemComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderItemComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 
@@ -32,7 +32,7 @@ const { items } = defineProps({
           <a-card class="order-add" @click="emits('addItem')">
             <div class="text-center">
               <icon-plus />
-              <p class="m-0">{{ $t('ADD_NEW_ORDER_ITEM') }}</p>
+              <p class="m-0">{{ $t('ADD_NEW_ORDER_ITEM') }}  </p>
             </div>
           </a-card>
         </a-col>
