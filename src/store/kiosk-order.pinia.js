@@ -33,7 +33,7 @@ const useKioskOrder = defineStore('kiosk-order', {
         params: {
           page: page,
           size: 10,
-          status: props.status
+          // status: props.status
         }
       })
         .then(({ data }) => {

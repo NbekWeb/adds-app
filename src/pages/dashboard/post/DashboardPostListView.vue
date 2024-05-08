@@ -28,7 +28,7 @@ onMounted(() => {
         class="add-btn"
         type="primary"
         size="middle"
-        @click="router.push({ name: 'DashboardPostCreateFormView' })"
+        @click="router.push({ name: 'DashboardKioskPostCreateFormView' })"
       >
         <icon-plus />
         {{ $t('ADD') }}
@@ -37,6 +37,7 @@ onMounted(() => {
   </page-header-component>
 
   <post-list-component />
+  
 </template>
 
 <style lang="scss">

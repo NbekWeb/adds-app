@@ -7,7 +7,9 @@ const uzLat = {
   DashboardKioskBoardListView: 'Kiosk boardlar',
   DashboardKioskBoardItemView: "Kiosk boardni ko'rish",
   DashboardPostListView: "E'lonlar",
+  DashboardKioskPostListView: "Kiosk E'lonlar",
   DashboardOrderListView: 'Xaridlar',
+  DashboardKioskOrderListView: 'Kiosk Xaridlar',
   ReportView: "E'lon bo'yicha hisobot",
   DashboardUserListView: 'Auditoriya',
   DashboardPaymentListView: "To'lovlar",
@@ -17,8 +19,10 @@ const uzLat = {
   DashboardOrderFormView: "E'lon berish",
   DashboardPostItemView: "Postni ko'rish",
   DashboardPostCreateFormView: "Post qo'shish",
+  DashboardKioskPostCreateFormView: "Kiosk Post qo'shish",
   DashboardPostEditFormView: 'Postni tahrirlash',
   DashboardOrderItemView: "Kanallar bo'yicha xaridlar",
+  DashboardKioskPostItemView:"Kiosk postni ko'rish",
 
   Help: 'Yordam',
   News: 'Xabar va yangilik',
@@ -199,7 +203,9 @@ const uzLat = {
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
-  ERROR: 'Xatolik!'
+  ERROR: 'Xatolik!',
+  FILE_SIZE_LESS_IMG: 'Fayl hajmi 10 Mb dan oshmasin!',
+  FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!'
 }
 
 export default uzLat
