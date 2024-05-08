@@ -28,10 +28,10 @@ onMounted(() => {
         class="add-btn"
         type="primary"
         size="middle"
-        @click="router.push({ name: 'DashboardKioskPostCreateFormView' })"
+        @click="router.push({ name: 'DashboardPostCreateFormView' })"
       >
         <icon-plus />
-        {{ $t('ADD') }}
+        {{ $t('ADD') }} 
       </a-button>
     </template>
   </page-header-component>
