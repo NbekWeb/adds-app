@@ -143,8 +143,10 @@ const uzLat = {
   SELECT_CONFIGURATION: "Ta'rifni tanlang",
   SELECT_DATE_AND_TIME: 'Sana va vaqtni tanlang',
   LOCATION: 'Manzil',
-  CONFIRMCANCELORDER: 'Buyurtmani bekor qilmoqchimisiz?',
-
+  CONFIRMCANCELORDER:'Buyurtmani bekor qilmoqchimisiz?',
+  YOUR_BALANCE: 'Sizning balansingiz',
+  NO_NOTIFICATIONS: 'Bildirishnomalar mavjud emas',
+  NOTIFICATIONS: 'Bildirishnomalar',
   // statuses
   EXPIRED: "Muddati o'tib ketgan",
   FAILED: 'Muvaffaqiyatsiz',
@@ -161,15 +163,15 @@ const uzLat = {
   APPROVE: 'Tasdiqlash',
   REJECTED: 'Rad qilingan',
   REJECT: 'Rad qilish',
-
   BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
   AWAITING_BOARD_OWNER: 'Kanal egasi tasdiqlashi kutilmoqda',
   ACCEPTED: 'Qabul qilingan',
+
   // descriptions
   THE_ORDER_HAS_EXPIRED_BECAUSE_IT_WAS_NOT_CONFIRMED_BY_THE_MODERATOR_OR_CHANNEL_OWNER:
     'Moderator yoki kanal egasi tasdiqlamaganligi sabali buyurtma muddati tugadi!',
-  REJECTED_BY_BOARD_OWNER: 'Kanal egasi tomonidan rad qilingan',
-  REJECTED_BY_MODERATOR: 'Moderator tomonidan rad qilingan',
+  REJECTED_BY_BOARD_OWNER: 'Kanal egasi rad qilgan',
+  REJECTED_BY_MODERATOR: 'Moderator rad qilgan',
   THE_ANNOUNCEMENT_IS_EXPECTED_TO_APPEAR_ON_THE_CHANNEL:
     "E'lon kanalga chiqishi kutilmoqda",
   AWAITING_BOARD_OWNER_APPROVAL: 'Kanal egasi tasdiqlashi kutilmoqda',

@@ -7,7 +7,6 @@ const useOrder = defineStore('order', {
   state: () => ({
     orderInfo: null,
     orders: [],
-    page: 0,
     totalElements: 0,
     totalPages: 0
   }),
@@ -18,13 +17,9 @@ const useOrder = defineStore('order', {
       this.totalElements = 0
       this.totalPages = 0
     },
-    clearOrderInfo() {
-      this.orderInfo = null
-    },
 
     getAllOrders(page, status) {
       const core = useCore()
-      this.page = page
       core.loadingUrl.add('get/order/all')
       api({
         url: 'order',

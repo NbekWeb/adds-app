@@ -11,10 +11,9 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 const corePinia = useCore()
 const postPinia = usePost()
 
-const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
+const { loadingUrl } = storeToRefs(corePinia)
 const { posts, totalPages } = storeToRefs(postPinia)
 
-const postId = ref(null)
 const pageValue = ref(0)
 
 function handleGetPostPagination(page) {
@@ -34,7 +33,6 @@ onMounted(() => {
     <scrollbar-component
       height="calc(100vh - 125px)"
       :loading="loadingUrl.has('get/post/all')"
-      :count="4"
       :total-pages="totalPages"
       :page="pageValue"
       @get-data="handleGetPostPagination"
