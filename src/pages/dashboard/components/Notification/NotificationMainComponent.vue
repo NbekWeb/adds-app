@@ -13,47 +13,43 @@ const { t } = useI18n()
 
 const corePinia = useCore()
 const notificationPinia = useNotifications()
-const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
-const { notifications, totalPages } = storeToRefs(notificationPinia)
+const { loadingUrl } = storeToRefs(corePinia)
+const { notifications, totalPages, count, newNotifications } =
+  storeToRefs(notificationPinia)
 
-const notificationsCount = ref(0)
-const openNotifications = ref(new Set([]))
-const page = ref(0)
+const currentPage = ref(0)
 const open = ref(false)
-const openNotification = (item) => {
-  notification.open({
-    message: t('NOTIFICATIONS'),
-    description: item.message,
-    placement: 'topRight',
-    duration: 10
+const openNotification = async () => {
+  newNotifications.value.forEach((item) => {
+    notification.open({
+      message: t('NOTIFICATIONS'),
+      description: item.message,
+      placement: 'topRight',
+      duration: 10
+    })
   })
 }
 function checkNotifications() {
-  notificationPinia.checkNotifications((count) => {
-    notificationsCount.value = count
-  })
+  notificationPinia.checkNotifications()
 }
-watch(notificationsCount, async () => {
-  if (notificationsCount.value) {
-    notificationPinia.getNotifications(0, () => {
-      notifications.value.forEach((item) => {
-        if (!openNotifications.value.has(item.id) && !item.read) {
-          openNotification(item)
-          openNotifications.value.add(item.id)
-        }
-      })
-    })
+watch(newNotifications, () => {
+  openNotification()
+})
+watch(count, async () => {
+  if (count.value) {
+    await notificationPinia.getNotifications(0)
+    await openNotification()
   }
 })
-function getPegableNotifications(p) {
-  notificationPinia.getNotifications(p, () => {})
-  page.value = p
+function getPegableNotifications(page) {
+  notificationPinia.getNotifications(page)
+  currentPage.value = page
 }
 
 onMounted(() => {
   // checked every five minutes
   setInterval(checkNotifications, 60000)
-  notificationPinia.getNotifications(0, () => {})
+  notificationPinia.getNotifications(0)
 })
 </script>
 
@@ -68,7 +64,7 @@ onMounted(() => {
       <div class="notification-content">
         <scrollbar-component
           height="calc(100vh - 200px)"
-          :page="page"
+          :page="currentPage"
           :total-pages="totalPages"
           :loading="loadingUrl.has('get/all/notifications')"
           @get-data="getPegableNotifications"
@@ -82,14 +78,16 @@ onMounted(() => {
                 v-model:open="open"
               />
             </template>
-            <template>
-              <a-empty :description="$t('NO_NOTIFICATIONS')" />
+            <template v-else>
+              <div class="h-full flex align-center justify-center">
+                <a-empty :description="$t('NO_NOTIFICATIONS')" />
+              </div>
             </template>
           </template>
         </scrollbar-component>
       </div>
     </template>
-    <a-badge class="badge-count" :count="notificationsCount">
+    <a-badge class="badge-count" :count="count">
       <a-button
         shape="circle"
         type="text"
