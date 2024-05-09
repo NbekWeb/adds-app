@@ -1,9 +1,9 @@
 <script setup>
-import { computed } from 'vue'
+import { computed,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
-import useOrder from '@/store/order.pinia.js'
+import useOrder from '@/store/kiosk-order.pinia.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import OrderListItemComponent from '@/pages/dashboard/order/[id]/components/OrderListItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -21,6 +21,10 @@ const orderStatus = computed(() => route.query.status)
 function getPaginationAllOrders(page) {
   orderPinia.getAllOrders(page, orderStatus.value)
 }
+
+onMounted(() => {
+      console.log(orderPinia.getAllOrders(0, orderStatus.value));
+    });
 </script>
 
 <template>
@@ -55,7 +59,8 @@ function getPaginationAllOrders(page) {
               :lg="12"
               :xl="8"
               :xxl="6"
-              v-for="item in orders"
+              v-for="(item,i) in orders"
+              :key="i"
             >
               <order-list-item-component :item="item" />
             </a-col>

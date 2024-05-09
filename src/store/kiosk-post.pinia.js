@@ -112,7 +112,6 @@ const useKioskPost = defineStore('kiosk-post', {
           })
           callback()
           this.getAllPosts(0)
-          console.log('form')
         })
         .catch((error) => {
           core.switchStatus(error)

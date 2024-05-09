@@ -10,7 +10,7 @@ const useKioskOrder = defineStore('kiosk-order', {
   actions: {
     getAllOrdersStatus() {
       const core = useCore()
-      core.loadingUrl.add('get/order/status/all')
+      core.loadingUrl.add('get/kiosk-order/status/all')
       api({
         url: 'kiosk-order/all-status'
       })
@@ -22,12 +22,12 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/order/status/all')
+          core.loadingUrl.delete('get/kiosk-order/status/all')
         })
     },
     getAllOrders({ page, props }) {
       const core = useCore()
-      core.loadingUrl.add('get/order/all')
+      core.loadingUrl.add('get/kiosk-order/all')
       api({
         url: 'kiosk-order',
         params: {
@@ -38,12 +38,13 @@ const useKioskOrder = defineStore('kiosk-order', {
       })
         .then(({ data }) => {
           this.user = data
+          console.log(data)
         })
         .catch((error) => {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/order/all')
+          core.loadingUrl.delete('get/kiosk-order/all')
         })
     },
     getOrderById(id) {
@@ -64,7 +65,7 @@ const useKioskOrder = defineStore('kiosk-order', {
     },
     createOrder(form) {
       const core = useCore()
-      core.loadingUrl.add('create/order')
+      core.loadingUrl.add('create/kiosk-order')
       api({
         url: 'kiosk-order',
         method: 'POST',
@@ -80,7 +81,7 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('create/order')
+          core.loadingUrl.delete('create/kiosk-order')
         })
     },
     createOrderItem(id, form) {

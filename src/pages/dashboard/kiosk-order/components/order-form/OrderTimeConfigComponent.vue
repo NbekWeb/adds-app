@@ -25,11 +25,11 @@ const { item } = defineProps({
       <div class="board-info flex justify-between align-center">
         <div class="time-amount flex align-center justify-between pr-2">
           <h1 class="board-time mb-0 ml-2 pr-2">
-            {{ item.startTime.slice(0, 5) }}
+            {{ item.startTime.slice(0, 5) }} 
           </h1>
 
           <div class="board-amount mb-0 ml-2 flex justify-end align-center">
-            <p class="m-0 amount-number">+{{ formatAmount(item.amount) }}</p>
+            <p class="m-0 amount-number">+{{ formatAmount(item.amount) }} </p>
             <p class="m-0">UZS</p>
             <div class="ml-1 flex align-center">
               <a-popover>

@@ -7,7 +7,6 @@ import useCore from '@/store/core.pinia.js'
 import dayjs from 'dayjs'
 
 import OrderBoardSelectComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderBoardSelectComponent.vue'
-import OrderConfigurationSelectComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderConfigurationSelectComponent.vue'
 import OrderTimeConfigSelectComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderTimeConfigSelectComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { useI18n } from 'vue-i18n'
@@ -50,7 +49,7 @@ const selectedConfigAmount = ref(0)
 const selectedTimeConfigAmount = ref(0)
 
 function handleNextStep() {
-  if (!isAccessNext.value && currentStep.value < 2) {
+  if (!isAccessNext.value && currentStep.value < 1) {
     currentStep.value++
   } else if (form.board && form.timeConfiguration) {
     emits('addOrder', form)
@@ -73,12 +72,7 @@ function handleBackStep() {
 
 <template>
   <a-steps :items="steps" :current="currentStep"> </a-steps>
-  <a-spin
-    :spinning="
-      loadingUrl.has('board/all') ||
-      loadingUrl.has('board/time-configurations')
-    "
-  >
+  <a-spin :spinning="loadingUrl.has('kiosk-board/all')">
     <template #indicator>
       <icon-loader />
     </template>
