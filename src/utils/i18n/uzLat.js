@@ -23,6 +23,7 @@ const uzLat = {
   DashboardKioskPostCreateFormView: "Kiosk Post qo'shish",
   DashboardPostEditFormView: 'Postni tahrirlash',
   DashboardOrderItemView: "Kanallar bo'yicha xaridlar",
+  DashboardKioskOrderItemView: "Kanallar bo'yicha xaridlar",
   DashboardKioskPostItemView: "Kiosk postni ko'rish",
 
   Help: 'Yordam',

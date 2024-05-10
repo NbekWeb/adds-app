@@ -31,7 +31,7 @@ import DashboardKioskPostItemView from '@/pages/dashboard/kiosk-post/DashboardKi
 import DashboardKioskOrderView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderView.vue'
 import DashboardKioskOrderListView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderListView.vue'
 import DashboardKioskOrderFormView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderFormView.vue'
-// import DashboardKioskOrderItemView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderItemView.vue'
+import DashboardKioskOrderItemView from '@/pages/dashboard/kiosk-order/[id]/DashboardOrderView.vue'
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -197,11 +197,11 @@ export const router = createRouter({
               name: 'DashboardKioskOrderFormView',
               component: DashboardKioskOrderFormView
             },
-            // {
-            //   path: 'item/:id',
-            //   name: 'DashboardKioskOrderItemView',
-            //   component: DashboardKioskOrderItemView
-            // }
+            {
+              path: 'item/:id',
+              name: 'DashboardKioskOrderItemView',
+              component: DashboardKioskOrderItemView
+            }
           ]
         },
         {

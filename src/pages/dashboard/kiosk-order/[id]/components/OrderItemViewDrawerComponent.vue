@@ -24,10 +24,6 @@ const model = defineModel('open')
   >
     <template #title>
       <div class="flex align-center">
-        <a-avatar
-          class="avatar"
-          :src="`${fileBaseUrl}/file/${item?.board.logoHashId}`"
-        />
         <h3 class="m-0 ml-2">
           {{ item.board.name }}
         </h3>
@@ -67,7 +63,5 @@ const model = defineModel('open')
       width: 100% !important;
     }
   }
-}
-.pending {
 }
 </style>

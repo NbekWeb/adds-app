@@ -5,7 +5,8 @@ import useCore from '@/store/core.pinia.js'
 const useKioskOrder = defineStore('kiosk-order', {
   state: () => ({
     orders: [],
-    orderStatuses: []
+    orderStatusus: [],
+    status: ''
   }),
   actions: {
     getAllOrdersStatus() {
@@ -16,7 +17,7 @@ const useKioskOrder = defineStore('kiosk-order', {
       })
         .then(({ data }) => {
           console.log(data)
-          this.orderStatuses = data
+          this.orderStatusus = data
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -25,7 +26,7 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.loadingUrl.delete('get/kiosk-order/status/all')
         })
     },
-    getAllOrders({ page, props }) {
+    getAllOrders(page, status) {
       const core = useCore()
       core.loadingUrl.add('get/kiosk-order/all')
       api({
@@ -33,12 +34,11 @@ const useKioskOrder = defineStore('kiosk-order', {
         params: {
           page: page,
           size: 10,
-          // status: props.status
+          status: status
         }
       })
         .then(({ data }) => {
-          this.user = data
-          console.log(data)
+          this.orders = data?.content
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -47,20 +47,20 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.loadingUrl.delete('get/kiosk-order/all')
         })
     },
-    getOrderById(id) {
+    getOrderById(id,callback) {
       const core = useCore()
-      core.loadingUrl.add('get/order/one')
+      core.loadingUrl.add('get/kiosk-order/one')
       api({
         url: `kiosk-order/${id}`
       })
         .then(({ data }) => {
-          console.log(data)
+          callback(data)
         })
         .catch((error) => {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/order/one')
+          core.loadingUrl.delete('get/kiosk-order/one')
         })
     },
     createOrder(form) {
@@ -86,7 +86,7 @@ const useKioskOrder = defineStore('kiosk-order', {
     },
     createOrderItem(id, form) {
       const core = useCore()
-      core.loadingUrl.add('create/order/item')
+      core.loadingUrl.add('create/kiosk-order/item')
       api({
         url: 'kiosk-order-item',
         method: 'POST',
@@ -105,12 +105,12 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('create/order/item')
+          core.loadingUrl.delete('create/kiosk-order/item')
         })
     },
     updateOrder(id, form) {
       const core = useCore()
-      core.loadingUrl.add('update/order')
+      core.loadingUrl.add('update/kiosk-order')
       api({
         url: `kiosk-order/${id}`,
         method: 'PUT',
@@ -126,12 +126,12 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('update/order')
+          core.loadingUrl.delete('update/kiosk-order')
         })
     },
     confirmOrder(id) {
       const core = useCore()
-      core.loadingUrl.add(`confirm/order/${id}`)
+      core.loadingUrl.add(`confirm/kiosk-order/${id}`)
       api({
         url: `kiosk-order/confirm/${id}`,
         method: 'POST'
@@ -146,12 +146,12 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete(`confirm/order/${id}`)
+          core.loadingUrl.delete(`confirm/kiosk-order/${id}`)
         })
     },
     deleteOrder(id) {
       const core = useCore()
-      core.loadingUrl.add('delete/order')
+      core.loadingUrl.add('delete/kiosk-order')
       api({
         url: `kiosk-order/${id}`,
         method: 'DELETE'
@@ -166,7 +166,7 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('delete/order')
+          core.loadingUrl.delete('delete/kiosk-order')
         })
     }
   }
