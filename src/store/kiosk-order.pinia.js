@@ -74,8 +74,9 @@ const useKioskOrder = defineStore('kiosk-order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: ''
+            locale: 'ORDER_CREATE'
           })
+          this.$router.push('/dashboard/kiosk-order/');
         })
         .catch((error) => {
           core.switchStatus(error)

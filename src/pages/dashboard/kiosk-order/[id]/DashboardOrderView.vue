@@ -24,14 +24,12 @@ function refreshOrder() {
     orderPinia.getOrderById(route.params.id, (data) => {
       order.value = data
     })
-    
   }
 }
 onMounted(() => {
   if (route.params.id) {
     orderPinia.getOrderById(route.params.id, (data) => {
       order.value = data
-      
     })
   }
 })
@@ -44,7 +42,7 @@ onMounted(() => {
         <template #icon>
           <IconRefresh class="mr-1" />
         </template>
-        {{ $t('UPDATE') }} 
+        {{ $t('UPDATE') }}
       </a-button>
     </template>
   </page-header-component>
@@ -55,8 +53,7 @@ onMounted(() => {
     <scrollbar-component height="calc(100vh - 220px)">
       <template #content>
         <a-row :gutter="[10, 10]">
-          <a-col :span="24" v-for="(item,i) in order?.items" :key="i">
-           
+          <a-col :span="24" v-for="(item, i) in order?.items" :key="i">
             <order-item-component :order="item" />
           </a-col>
         </a-row>
