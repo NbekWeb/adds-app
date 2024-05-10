@@ -6,10 +6,10 @@ const useKioskBoard = defineStore('kiosk-board', {
   state: () => ({
     kioskBoards: [],
     kioskBoard: {},
-    totalPages: 0,
+    totalPages: 0
   }),
   actions: {
-    changeMap(lat, lon,callback) {
+    changeMap(lat, lon, callback) {
       const core = useCore()
       core.loadingUrl.add('kiosk-board/map-info')
 
@@ -22,7 +22,7 @@ const useKioskBoard = defineStore('kiosk-board', {
           'accept-language': 'uz'
         }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           callback(data)
         })
         .catch((error) => {
@@ -36,7 +36,7 @@ const useKioskBoard = defineStore('kiosk-board', {
     clearBoardInfo() {
       this.kioskBoards = []
     },
-    getAllKioskBoard(page,categoryId = null,name = null) {
+    getAllKioskBoard(page, categoryId = null, name = null) {
       const core = useCore()
       core.loadingUrl.add('kiosk-board/all')
       api({

@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import useTimeConfiguration from '@/store/time-configuration.pinia.js'
 import useCore from '@/store/core.pinia.js'
 
-import OrderTimeConfigComponent from '@/pages/dashboard/order/components/order-form/OrderTimeConfigComponent.vue'
+import OrderTimeConfigComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderTimeConfigComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import OrderDateComponent from '@/pages/dashboard/order/components/order-form/OrderDateComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
@@ -37,11 +37,11 @@ function handleChangeSelect(e) {
 }
 function handleChangeDate(date) {
   orderDate.value = date
-  timeConfigurationPinia.getTimeConfigurationsByBoardId(
+  timeConfigurationPinia.getKioskTimeConfigurations(
+    0,
     boardId,
-    configurationId,
     dayjs(date).format('YYYY-MM-DD'),
-    0
+    
   )
 }
 onMounted(() => {
@@ -72,7 +72,7 @@ onBeforeUnmount(() => {
         >
           <a-empty class="empty">
             <template #description>
-              {{ $t('NO_DATA') }}
+              {{ $t('NO_DATA') }} 
             </template>
           </a-empty>
         </template>

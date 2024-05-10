@@ -3,15 +3,21 @@ import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import dayjs from 'dayjs'
 import { formatAmount } from '@/composables'
-import OrderItemViewDrawerComponent from '@/pages/dashboard/order/[id]/components/OrderItemViewDrawerComponent.vue'
+import OrderItemViewDrawerComponent from '@/pages/dashboard/kiosk-order/[id]/components/OrderItemViewDrawerComponent.vue'
 import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-import useOrder from '@/store/order.pinia.js'
+import useKioskOrder from '@/store/kiosk-order.pinia.js'
 
-const orderPinia = useOrder()
+const orderPinia = useKioskOrder()
+const route = useRoute()
+const router = useRouter()
 
 function cancelOrder() {
-  orderPinia.putCancelOrder(props.order?.orderId, [props.order?.id])
+  console.log('Cancelling order', route.params.id)
+  orderPinia.deleteOrder(route.params.id)
+  orderPinia.getAllOrders(0, route.query.status)
+  router.push('/dashboard/kiosk-order')
 }
 
 const props = defineProps({
@@ -33,11 +39,6 @@ const open = ref(false)
         :xl="4"
         class="flex justify-start"
       >
-        <a-avatar
-          :src="`${fileBaseUrl}/file/${order?.board.logoHashId}`"
-          size="large"
-          class="avatar"
-        />
         <div class="item ml-2">
           <p class="m-0">
             {{ order?.board.name }}
@@ -149,7 +150,7 @@ const open = ref(false)
           :cancel-text="$t('NO')"
           @confirm="cancelOrder"
         >
-          <a-button danger @click.stop>{{ $t('CANCEL') }}</a-button>
+          <a-button danger @click.stop>{{ $t('CANCEL') }} </a-button>
         </a-popconfirm>
       </a-col>
     </a-row>

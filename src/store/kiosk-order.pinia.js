@@ -5,66 +5,67 @@ import useCore from '@/store/core.pinia.js'
 const useKioskOrder = defineStore('kiosk-order', {
   state: () => ({
     orders: [],
-    orderStatuses: []
+    orderStatusus: [],
+    status: ''
   }),
   actions: {
     getAllOrdersStatus() {
       const core = useCore()
-      core.loadingUrl.add('get/order/status/all')
+      core.loadingUrl.add('get/kiosk-order/status/all')
       api({
         url: 'kiosk-order/all-status'
       })
         .then(({ data }) => {
           console.log(data)
-          this.orderStatuses = data
+          this.orderStatusus = data
         })
         .catch((error) => {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/order/status/all')
+          core.loadingUrl.delete('get/kiosk-order/status/all')
         })
     },
-    getAllOrders({ page, props }) {
+    getAllOrders(page, status) {
       const core = useCore()
-      core.loadingUrl.add('get/order/all')
+      core.loadingUrl.add('get/kiosk-order/all')
       api({
         url: 'kiosk-order',
         params: {
           page: page,
           size: 10,
-          // status: props.status
+          status: status
         }
       })
         .then(({ data }) => {
-          this.user = data
+          this.orders = data?.content
         })
         .catch((error) => {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/order/all')
+          core.loadingUrl.delete('get/kiosk-order/all')
         })
     },
-    getOrderById(id) {
+    getOrderById(id,callback) {
       const core = useCore()
-      core.loadingUrl.add('get/order/one')
+      core.loadingUrl.add('get/kiosk-order/one')
       api({
         url: `kiosk-order/${id}`
       })
         .then(({ data }) => {
-          console.log(data)
+          callback(data)
         })
         .catch((error) => {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/order/one')
+          core.loadingUrl.delete('get/kiosk-order/one')
         })
     },
     createOrder(form) {
       const core = useCore()
-      core.loadingUrl.add('create/order')
+      core.loadingUrl.add('create/kiosk-order')
       api({
         url: 'kiosk-order',
         method: 'POST',
@@ -80,12 +81,12 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('create/order')
+          core.loadingUrl.delete('create/kiosk-order')
         })
     },
     createOrderItem(id, form) {
       const core = useCore()
-      core.loadingUrl.add('create/order/item')
+      core.loadingUrl.add('create/kiosk-order/item')
       api({
         url: 'kiosk-order-item',
         method: 'POST',
@@ -104,12 +105,12 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('create/order/item')
+          core.loadingUrl.delete('create/kiosk-order/item')
         })
     },
     updateOrder(id, form) {
       const core = useCore()
-      core.loadingUrl.add('update/order')
+      core.loadingUrl.add('update/kiosk-order')
       api({
         url: `kiosk-order/${id}`,
         method: 'PUT',
@@ -125,12 +126,12 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('update/order')
+          core.loadingUrl.delete('update/kiosk-order')
         })
     },
     confirmOrder(id) {
       const core = useCore()
-      core.loadingUrl.add(`confirm/order/${id}`)
+      core.loadingUrl.add(`confirm/kiosk-order/${id}`)
       api({
         url: `kiosk-order/confirm/${id}`,
         method: 'POST'
@@ -145,12 +146,12 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete(`confirm/order/${id}`)
+          core.loadingUrl.delete(`confirm/kiosk-order/${id}`)
         })
     },
     deleteOrder(id) {
       const core = useCore()
-      core.loadingUrl.add('delete/order')
+      core.loadingUrl.add('delete/kiosk-order')
       api({
         url: `kiosk-order/${id}`,
         method: 'DELETE'
@@ -165,7 +166,7 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('delete/order')
+          core.loadingUrl.delete('delete/kiosk-order')
         })
     }
   }

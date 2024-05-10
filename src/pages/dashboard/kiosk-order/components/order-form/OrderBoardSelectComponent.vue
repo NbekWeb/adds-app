@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import useCore from '@/store/core.pinia.js'
-import useBoard from '@/store/boadr.pinia.js'
+import useKioskBoard from '@/store/kiosk-board.pinia.js'
 
 import OrderBoardItemComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderBoardItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -12,28 +12,30 @@ defineProps({
 })
 const model = defineModel('value')
 const corePinia = useCore()
-const boardPinia = useBoard()
+const boardPinia = useKioskBoard()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { boardList } = storeToRefs(boardPinia)
+const { kioskBoards } = storeToRefs(boardPinia)
 
 onMounted(() => {
-  boardPinia.getAllBoard(0)
-  console.log(boardList)
+  boardPinia.getAllKioskBoard(0)
 })
 </script>
 
 <template>
   <scrollbar-component height="calc(100vh - 250px)">
     <template #content>
-      <template v-if="!boardList?.length && !loadingUrl.has('board/all')">
+      <template
+        v-if="!kioskBoards?.length && !loadingUrl.has('kiosk-board/all')"
+      >
         <a-empty class="empty">
           <template #description>
             {{ $t('NO_DATA') }}
+            {{ kioskBoards?.length }}
           </template>
         </a-empty>
       </template>
-      <template v-if="boardList?.length">
+      <template v-if="kioskBoards?.length">
         <a-radio-group style="width: 100%" v-model:value="model" class="w-full">
           <a-row :gutter="[10, 7]">
             <a-col
@@ -43,13 +45,13 @@ onMounted(() => {
               :lg="12"
               :xl="8"
               :xxl="8"
-              v-for="(item, index) in boardList"
+              v-for="(item, i) in kioskBoards"
+              :key="i"
             >
               <order-board-item-component
                 :disabled="selectedBoards.includes(item?.id)"
                 :item="item"
                 :checked="model?.id === item?.id"
-                :key="index"
               />
             </a-col>
           </a-row>

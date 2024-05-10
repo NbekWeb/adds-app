@@ -60,7 +60,7 @@ onMounted(() => {
         <template v-if="!posts.length && !loadingUrl.has('get/kiosk-post/all')">
           <a-empty class="empty">
             <template #description>
-              {{ $t('NO_DATA') }}
+              {{ $t('NO_DATA') }} 
             </template>
           </a-empty>
         </template>

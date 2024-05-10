@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import OrderListComponent from '@/pages/dashboard/order/components/order-form/OrderListComponent.vue'
+import OrderListComponent from '@/pages/dashboard/kiosk-order/components/order-form/OrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import KioskPostListDrawerComponent from '@/pages/dashboard/kiosk-order/components/KioskPostListDrawerComponent.vue'
 
@@ -41,7 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <page-header-component :title="$t('DashboardOrderListView')">
+  <page-header-component :title="$t('DashboardKioskOrderListView')">
     <template #actions>
       <a-space>
         <a-select

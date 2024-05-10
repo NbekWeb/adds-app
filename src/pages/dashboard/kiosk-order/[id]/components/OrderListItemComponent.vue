@@ -19,27 +19,15 @@ const { item } = defineProps({
   <a-card
     class="order-item-card"
     @click="
-      router.push({ name: 'DashboardOrderItemView', params: { id: item.id } })
+      router.push({
+        name: 'DashboardKioskOrderItemView',
+        params: { id: item.id }
+      })
     "
   >
     <div class="status flex justify-between align-center">
-      <div>
-        <status-tag-component :status="item.status" />
-      </div>
-      <a-avatar-group
-        :max-count="3"
-        :max-style="{
-          color: '#9f9fa3',
-          backgroundColor: '#F1F2F4'
-        }"
-      >
-        <a-avatar
-          size="middle"
-          class="avatar"
-          v-for="orderItem in item.items"
-          :src="`${fileBaseUrl}/file/${orderItem.channelHashId}`"
-        />
-      </a-avatar-group>
+      <status-tag-component :status="item.status" class="" />
+      <p class="m-0 text-bold context">{{ item?.items?.[0]?.boardName }}</p>
     </div>
     <div class="order-amount flex justify-between mt-2">
       <span class="">{{ $t('ORDER_PRICE') }}:</span>
@@ -59,7 +47,11 @@ const { item } = defineProps({
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+
 .order-item-card {
+  .context {
+    font-size: 16px;
+  }
   transition: background-color 0.5s;
   cursor: pointer;
   &:hover {
