@@ -1,13 +1,13 @@
 <script setup>
 import { fileBaseUrl } from '@/utils/conf.js'
-import ConfigurationComponent from '@/pages/dashboard/order/[id]/components/ConfigurationComponent.vue'
-import ReactionsComponent from '@/pages/dashboard/order/[id]/components/ReactionsComponent.vue'
-import ConfigurationStatisticsComponent from '@/pages/dashboard/order/[id]/components/ConfigurationStatisticsComponent.vue'
+import ConfigurationComponent from '@/pages/dashboard/kiosk-order/[id]/components/ConfigurationComponent.vue'
+import ReactionsComponent from '@/pages/dashboard/kiosk-order/[id]/components/ReactionsComponent.vue'
+import ConfigurationStatisticsComponent from '@/pages/dashboard/kiosk-order/[id]/components/ConfigurationStatisticsComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import { formatAmount } from '../../../../../composables/index.js'
-import ViewsComponent from '@/pages/dashboard/order/[id]/components/ViewsComponent.vue'
-import WarningComponent from '@/pages/dashboard/order/[id]/components/WarningComponent.vue'
+import ViewsComponent from '@/pages/dashboard/kiosk-order/[id]/components/ViewsComponent.vue'
+import WarningComponent from '@/pages/dashboard/kiosk-order/[id]/components/WarningComponent.vue'
 
 const props = defineProps({
   item: { type: Object, required: true }

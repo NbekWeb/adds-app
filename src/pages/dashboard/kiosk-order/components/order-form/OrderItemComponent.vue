@@ -30,32 +30,6 @@ const { item } = defineProps({
         <template v-if="item?.configuration?.name"> </template>
         <h1 class="configuration-name m-0">{{ item?.configuration?.name }}</h1>
       </div>
-      <div class="flex flex-column justify-between my-2">
-        <template v-if="item?.configuration?.liveTime">
-          <board-configuration-time-component
-            icon="🕐"
-            :configuration="item?.configuration"
-            time-type="liveTime"
-          />
-          <board-configuration-time-component
-            icon="🔝"
-            :configuration="item?.configuration"
-            time-type="topTime"
-            class="my-2"
-          />
-          <board-configuration-time-component
-            icon="📌"
-            :configuration="item?.configuration"
-            time-type="pinTime"
-          />
-        </template>
-        <template v-else>
-          <h1>
-            {{ $t('POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL') }}
-          </h1>
-        </template>
-      </div>
-
       <div class="flex justify-between">
         <div class="date">
           <span>{{ $t('THE_TIME_OF_PUBLICATION') }}</span>

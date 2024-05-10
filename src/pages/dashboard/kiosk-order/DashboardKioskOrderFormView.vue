@@ -42,6 +42,7 @@ function newOrderCreate() {
         orderDate: dayjs(item.orderDate).format('YYYY-MM-DD')
       }))
     })
+    router.push('/dashboard/kiosk-order/')
   }
 }
 onMounted(() => {
@@ -80,7 +81,7 @@ onMounted(() => {
         :loading="loadingUrl.has('create/kiosk-order')"
         type="primary"
       >
-        Xarid qilish 
+        Xarid qilish  
       </a-button>
     </div>
   </template>

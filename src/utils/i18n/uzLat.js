@@ -207,7 +207,8 @@ const uzLat = {
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
   ERROR: 'Xatolik!',
   FILE_SIZE_LESS_IMG: 'Fayl hajmi 10 Mb dan oshmasin!',
-  FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!'
+  FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!',
+  ORDER_CREATE:'Buyurtma yaratildi'
 }
 
 export default uzLat
