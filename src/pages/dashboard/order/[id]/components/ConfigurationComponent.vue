@@ -15,11 +15,13 @@ const props = defineProps({
         <board-configuration-time-component
           :configuration="configuration"
           time-type="liveTime"
-        /><board-configuration-time-component
+        />
+        <board-configuration-time-component
           class="mx-4"
           :configuration="configuration"
           time-type="topTime"
-        /><board-configuration-time-component
+        />
+        <board-configuration-time-component
           :configuration="configuration"
           time-type="pinTime"
         />
