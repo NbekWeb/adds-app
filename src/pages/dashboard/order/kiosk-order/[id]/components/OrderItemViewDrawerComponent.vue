@@ -1,5 +1,4 @@
 <script setup>
-import { fileBaseUrl } from '@/utils/conf.js'
 import ConfigurationComponent from '@/pages/dashboard/order/kiosk-order/[id]/components/ConfigurationComponent.vue'
 import ReactionsComponent from '@/pages/dashboard/order/kiosk-order/[id]/components/ReactionsComponent.vue'
 import ConfigurationStatisticsComponent from '@/pages/dashboard/order/kiosk-order/[id]/components/ConfigurationStatisticsComponent.vue'

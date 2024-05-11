@@ -1,6 +1,4 @@
 <script setup>
-import { fileBaseUrl } from '@/utils/conf.js'
-
 const { item } = defineProps({
   item: {
     type: Object,

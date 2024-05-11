@@ -24,7 +24,6 @@ const uzLat = {
   DashboardKioskPostCreateFormView: "Kiosk Post qo'shish",
   DashboardPostEditFormView: 'Postni tahrirlash',
   DashboardOrderItemView: "Kanallar bo'yicha xaridlar",
-  DashboardKioskPostItemView: "Kiosk postni ko'rish",
   DashboardKioskOrderItemView: "Kanallar bo'yicha xaridlar",
   DashboardKioskPostItemView: "Kiosk postni ko'rish",
 
@@ -210,7 +209,7 @@ const uzLat = {
   ERROR: 'Xatolik!',
   FILE_SIZE_LESS_IMG: 'Fayl hajmi 10 Mb dan oshmasin!',
   FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!',
-  ORDER_CREATE:'Buyurtma yaratildi'
+  ORDER_CREATE: 'Buyurtma yaratildi'
 }
 
 export default uzLat

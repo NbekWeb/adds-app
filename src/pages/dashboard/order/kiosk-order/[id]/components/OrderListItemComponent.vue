@@ -1,7 +1,6 @@
 <script setup>
 import dayjs from 'dayjs'
 import { formatAmount } from '@/composables'
-import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import { useRouter } from 'vue-router'
 

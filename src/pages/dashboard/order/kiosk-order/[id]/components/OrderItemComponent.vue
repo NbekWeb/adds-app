@@ -1,5 +1,4 @@
 <script setup>
-import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import dayjs from 'dayjs'
 import { formatAmount } from '@/composables'
