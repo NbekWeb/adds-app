@@ -2,9 +2,10 @@ const uzLat = {
   // menus
   AuthView: 'Tizimga kirish',
   DashboardListView: 'Asosiy sahifa',
-  DashboardBoardListView: 'Kanallar',
+  DashboardCurrentsView: 'Oqimlar',
+  DashboardBoardListView: 'Telegram kanallar',
   DashboardMyBoardListView: 'Mening kanallarim',
-  DashboardKioskBoardListView: 'Kiosk boardlar',
+  DashboardKioskBoardListView: 'Kiosk',
   DashboardKioskBoardItemView: "Kiosk boardni ko'rish",
   DashboardPostListView: "E'lonlar",
   DashboardKioskPostListView: "Kiosk E'lonlar",
@@ -23,6 +24,7 @@ const uzLat = {
   DashboardKioskPostCreateFormView: "Kiosk Post qo'shish",
   DashboardPostEditFormView: 'Postni tahrirlash',
   DashboardOrderItemView: "Kanallar bo'yicha xaridlar",
+  DashboardKioskPostItemView: "Kiosk postni ko'rish",
   DashboardKioskOrderItemView: "Kanallar bo'yicha xaridlar",
   DashboardKioskPostItemView: "Kiosk postni ko'rish",
 
