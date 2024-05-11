@@ -175,6 +175,8 @@ const uzLat = {
     'Moderator yoki kanal egasi tasdiqlamaganligi sabali buyurtma muddati tugadi!',
   REJECTED_BY_BOARD_OWNER: 'Kanal egasi rad qilgan',
   REJECTED_BY_MODERATOR: 'Moderator rad qilgan',
+  THE_AD_WAS_NOT_POSTED_TO_THE_CHANNEL_DUE_TO_AN_UNKNOWN_SYSTEM_ERROR:
+    "Tizimdagi noma'lum xatolik sababli e'lon kanalga chiqarilmadi!",
   THE_ANNOUNCEMENT_IS_EXPECTED_TO_APPEAR_ON_THE_CHANNEL:
     "E'lon kanalga chiqishi kutilmoqda",
   AWAITING_BOARD_OWNER_APPROVAL: 'Kanal egasi tasdiqlashi kutilmoqda',
