@@ -1,9 +1,7 @@
 <script setup>
-import { formatTextLength, formatAmount } from '@/composables/index.js'
+import { formatAmount, formatTextLength } from '@/composables/index.js'
 import dayjs from 'dayjs'
 import IconX from '@/components/icons/IconX.vue'
-import { fileBaseUrl } from '@/utils/conf.js'
-import BoardConfigurationTimeComponent from '@/components/BoardConfigurationTimeComponent.vue'
 
 const emits = defineEmits(['close'])
 

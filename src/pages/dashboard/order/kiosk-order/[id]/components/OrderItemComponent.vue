@@ -141,7 +141,7 @@ const open = ref(false)
         :lg="3"
         :xl="3"
         class="flex borderi cancel-btn"
-        v-if="order?.status == 'PENDING'"
+        v-if="order?.status === 'PENDING'"
       >
         <a-popconfirm
           :title="$t('CONFIRMCANCELORDER')"
