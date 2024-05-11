@@ -20,13 +20,15 @@ const { notifications, totalPages, count, newNotifications } =
 const currentPage = ref(0)
 const open = ref(false)
 const openNotification = async () => {
-  newNotifications.value.forEach((item) => {
-    notification.open({
-      message: t('NOTIFICATIONS'),
-      description: item.message,
-      placement: 'topRight',
-      duration: 10
-    })
+  newNotifications.value.forEach((item, index) => {
+    setTimeout(() => {
+      notification.open({
+        message: t('NOTIFICATIONS'),
+        description: item.message,
+        placement: 'topRight',
+        duration: 10
+      })
+    }, index * 1000)
   })
 }
 function checkNotifications() {
@@ -48,8 +50,9 @@ function getPegableNotifications(page) {
 
 onMounted(() => {
   // checked every five minutes
-  setInterval(checkNotifications, 60000)
+  checkNotifications()
   notificationPinia.getNotifications(0)
+  setInterval(checkNotifications, 60000)
 })
 </script>
 

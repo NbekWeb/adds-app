@@ -15,23 +15,23 @@ import DashboardKioskBoardView from '@/pages/dashboard/kiosk-board/DashboardKios
 import DashboardKioskBoardListView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardListView.vue'
 import DashboardPaymentListView from '@/pages/dashboard/payment/DashboardPaymentListView.vue'
 import DashboardPaymentView from '@/pages/dashboard/payment/DashboardPaymentView.vue'
-import DashboardOrderView from '@/pages/dashboard/order/DashboardOrderView.vue'
-import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListView.vue'
+import DashboardOrderView from '@/pages/dashboard/order/telegram-order/DashboardOrderView.vue'
+import DashboardOrderListView from '@/pages/dashboard/order/telegram-order/DashboardOrderListView.vue'
 import DashboardBoardItemInfoView from '@/pages/dashboard/board/[id]/DashboardBoardItemInfoView.vue'
-import DashboardOrderFormView from '@/pages/dashboard/order/DashboardOrderFormView.vue'
+import DashboardOrderFormView from '@/pages/dashboard/order/telegram-order/DashboardOrderFormView.vue'
 import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
 import DashboardPostItemView from '@/pages/dashboard/post/DashboardPostItemView.vue'
-import DashboardOrderItemView from '@/pages/dashboard/order/[id]/DashboardOrderView.vue'
+import DashboardOrderItemView from '@/pages/dashboard/order/telegram-order/[id]/DashboardOrderView.vue'
 import DashboardKioskBoardItemView from '@/pages/dashboard/kiosk-board/[id]/DashboardKioskBoardItemView.vue'
 import DashboardKioskPostView from '@/pages/dashboard/kiosk-post/DashboardKioskPostView.vue'
 import DashboardKioskPostListView from '@/pages/dashboard/kiosk-post/DashboardKioskPostListView.vue'
 import DashboardKioskPostFormView from '@/pages/dashboard/kiosk-post/DashboardKioskPostFormView.vue'
 import DashboardKioskPostItemView from '@/pages/dashboard/kiosk-post/DashboardKioskPostItemView.vue'
-import DashboardKioskOrderView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderView.vue'
-import DashboardKioskOrderListView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderListView.vue'
-import DashboardKioskOrderFormView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderFormView.vue'
-// import DashboardKioskOrderItemView from '@/pages/dashboard/kiosk-order/DashboardKioskOrderItemView.vue'
+import DashboardKioskOrderView from '@/pages/dashboard/order/kiosk-order/DashboardKioskOrderView.vue'
+import DashboardKioskOrderListView from '@/pages/dashboard/order/kiosk-order/DashboardKioskOrderListView.vue'
+import DashboardKioskOrderFormView from '@/pages/dashboard/order/kiosk-order/DashboardKioskOrderFormView.vue'
+import DashboardKioskOrderItemView from '@/pages/dashboard/order/kiosk-order/[id]/DashboardOrderView.vue'
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -133,25 +133,24 @@ export const router = createRouter({
           ]
         },
         {
-          path:'kiosk-post',
-          name:"DashboardKioskPostView",
-          component:DashboardKioskPostView,
-          children:[
+          path: 'kiosk-post',
+          name: 'DashboardKioskPostView',
+          component: DashboardKioskPostView,
+          children: [
             {
-              path:'',
-              name:"DashboardKioskPostListView",
-              component:DashboardKioskPostListView
+              path: '',
+              name: 'DashboardKioskPostListView',
+              component: DashboardKioskPostListView
             },
             {
-              path:'create',
-              name:'DashboardKioskPostCreateFormView',
-              component:DashboardKioskPostFormView
-
+              path: 'create',
+              name: 'DashboardKioskPostCreateFormView',
+              component: DashboardKioskPostFormView
             },
             {
-              path:'edit/:id',
-              name:'DashboardKioskPostEditFormView',
-              component:DashboardKioskPostFormView
+              path: 'edit/:id',
+              name: 'DashboardKioskPostEditFormView',
+              component: DashboardKioskPostFormView
             },
             {
               path: 'item/:id',
@@ -197,11 +196,11 @@ export const router = createRouter({
               name: 'DashboardKioskOrderFormView',
               component: DashboardKioskOrderFormView
             },
-            // {
-            //   path: 'item/:id',
-            //   name: 'DashboardKioskOrderItemView',
-            //   component: DashboardKioskOrderItemView
-            // }
+            {
+              path: 'item/:id',
+              name: 'DashboardKioskOrderItemView',
+              component: DashboardKioskOrderItemView
+            }
           ]
         },
         {

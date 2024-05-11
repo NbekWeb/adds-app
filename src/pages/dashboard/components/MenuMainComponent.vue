@@ -1,12 +1,15 @@
 <script setup>
-import { computed, ref, shallowRef } from 'vue'
+import { computed, h, ref, shallowRef } from 'vue'
 import IconHome from '@/components/icons/IconHome.vue'
 import IconAnnouncement from '@/components/icons/IconAnnouncement.vue'
 import IconMessageTextSquare from '@/components/icons/IconMessageTextSquare.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconMonitor from '@/components/icons/IconMonitor.vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import IconMenu2 from '@/components/icons/IconMenu2.vue'
 
+const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const emits = defineEmits(['change'])
@@ -18,41 +21,50 @@ const setCollapse = ({ key }) => {
   router.push(`/dashboard/${key}`)
   emits('change')
 }
+
 const menuList = shallowRef([
   {
-    path: 'main',
-    name: 'DashboardListView',
-    icon: IconHome
+    key: 'main',
+    icon: () => h(IconHome),
+    label: t('DashboardListView')
   },
   {
-    path: 'board',
-    name: 'DashboardBoardListView',
-    icon: IconAnnouncement
+    key: 'board',
+    icon: () => h(IconMenu2),
+    label: t('DashboardCurrentsView'),
+    children: [
+      {
+        key: 'board',
+        icon: () => h(IconAnnouncement),
+        label: t('DashboardBoardListView')
+      },
+      {
+        key: 'kiosk-board',
+        icon: () => h(IconMonitor),
+        label: t('DashboardKioskBoardListView')
+      }
+    ]
   },
   {
-    path: 'kiosk-board',
-    name: 'DashboardKioskBoardListView',
-    icon: IconMonitor
+    key: 'kiosk-post',
+    icon: () => h(IconMessageTextSquare),
+    label: t('DashboardKioskPostListView')
   },
   {
-    path: 'post',
-    name: 'DashboardPostListView',
-    icon: IconMessageTextSquare
+    key: 'kiosk-order',
+    icon: () => h(IconShoppingCard),
+    label: t('DashboardKioskOrderListView')
   },
   {
-    path: 'kiosk-post',
-    name: 'DashboardKioskPostListView',
-    icon: IconMessageTextSquare
+    key: 'post',
+    icon: () => h(IconMessageTextSquare),
+    label: t('DashboardPostListView')
   },
+
   {
-    path: 'order',
-    name: 'DashboardOrderListView',
-    icon: IconShoppingCard
-  },
-  {
-    path: 'kiosk-order',
-    name: 'DashboardKioskOrderListView',
-    icon: IconShoppingCard
+    key: 'order',
+    icon: () => h(IconShoppingCard),
+    label: t('DashboardOrderListView')
   }
 ])
 </script>
@@ -64,13 +76,8 @@ const menuList = shallowRef([
     :selectedKeys="[activeLink]"
     mode="inline"
     class="menu"
+    :items="menuList"
   >
-    <a-menu-item v-for="menu in menuList" :key="menu.path">
-      <template #icon>
-        <component :is="menu.icon" />
-      </template>
-      {{ $t(menu.name) }}
-    </a-menu-item>
   </a-menu>
 </template>
 

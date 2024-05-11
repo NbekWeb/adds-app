@@ -30,6 +30,8 @@ const useNotifications = defineStore('notifications', {
           this.totalPages = data.totalPages
           this.notifications = [...this.notifications, ...data.content]
           this.notifications = uniqueItems(this.notifications, 'id')
+
+          this.newNotifications = []
           this.notifications.forEach((item) => {
             if (!this.oldNotifications.has(item.id) && !item.read) {
               this.newNotifications.push(item)
