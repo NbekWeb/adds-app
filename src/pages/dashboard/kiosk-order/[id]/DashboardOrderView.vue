@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
-import useOrder from '@/store/order.pinia.js'
+import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import OrderItemComponent from '@/pages/dashboard/kiosk-order/[id]/components/OrderItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
@@ -14,7 +14,7 @@ const route = useRoute()
 const router = useRouter()
 
 const corePinia = useCore()
-const orderPinia = useOrder()
+const orderPinia = useKioskOrder()
 
 const { loadingUrl } = storeToRefs(corePinia)
 
@@ -36,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <page-header-component :title="$t('DashboardOrderItemView')">
+  <page-header-component :title="$t('DashboardKioskOrderItemView')">
     <template #actions>
       <a-button class="btn" @click="refreshOrder">
         <template #icon>
@@ -46,14 +46,14 @@ onMounted(() => {
       </a-button>
     </template>
   </page-header-component>
-  <a-spin :spinning="loadingUrl.has('get/order/one')">
+  <a-spin :spinning="loadingUrl.has('get/kiosk-order/one')">
     <template #indicator>
       <IconLoader />
     </template>
     <scrollbar-component height="calc(100vh - 220px)">
       <template #content>
         <a-row :gutter="[10, 10]">
-          <a-col :span="24" v-for="item in order?.items">
+          <a-col :span="24" v-for="(item, i) in order?.items" :key="i">
             <order-item-component :order="item" />
           </a-col>
         </a-row>

@@ -17,12 +17,14 @@ const uzLat = {
   DashboardSettingsView: 'Sozlamalar',
   BoardConfigurationsView: "Ta'riflar",
   DashboardOrderFormView: "E'lon berish",
+  DashboardKioskOrderFormView: "Kiosk e'lon berish",
   DashboardPostItemView: "Postni ko'rish",
   DashboardPostCreateFormView: "Post qo'shish",
   DashboardKioskPostCreateFormView: "Kiosk Post qo'shish",
   DashboardPostEditFormView: 'Postni tahrirlash',
   DashboardOrderItemView: "Kanallar bo'yicha xaridlar",
-  DashboardKioskPostItemView:"Kiosk postni ko'rish",
+  DashboardKioskOrderItemView: "Kanallar bo'yicha xaridlar",
+  DashboardKioskPostItemView: "Kiosk postni ko'rish",
 
   Help: 'Yordam',
   News: 'Xabar va yangilik',
@@ -143,7 +145,7 @@ const uzLat = {
   SELECT_CONFIGURATION: "Ta'rifni tanlang",
   SELECT_DATE_AND_TIME: 'Sana va vaqtni tanlang',
   LOCATION: 'Manzil',
-  CONFIRMCANCELORDER:'Buyurtmani bekor qilmoqchimisiz?',
+  CONFIRMCANCELORDER: 'Buyurtmani bekor qilmoqchimisiz?',
   YOUR_BALANCE: 'Sizning balansingiz',
   NO_NOTIFICATIONS: 'Bildirishnomalar mavjud emas',
   NOTIFICATIONS: 'Bildirishnomalar',
@@ -205,7 +207,8 @@ const uzLat = {
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
   ERROR: 'Xatolik!',
   FILE_SIZE_LESS_IMG: 'Fayl hajmi 10 Mb dan oshmasin!',
-  FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!'
+  FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!',
+  ORDER_CREATE:'Buyurtma yaratildi'
 }
 
 export default uzLat

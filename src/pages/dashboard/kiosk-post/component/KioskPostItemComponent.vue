@@ -101,7 +101,7 @@ function editPost(id) {
         <a-button
           @click="
             router.push({
-              name: 'DashboardOrderFormView',
+              name: 'DashboardKioskOrderFormView',
               params: {
                 postId: item.id
               }

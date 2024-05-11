@@ -26,12 +26,6 @@ const { item } = defineProps({
     >
       <div class="board-info flex justify-between align-center">
         <div class="flex align-center">
-          <a-avatar
-            :src="`${fileBaseUrl}/file/${item.logoHashId}`"
-            size="large"
-            class="avatar"
-          />
-
           <h1 class="board-name mb-0 ml-2">
             {{ item.name }}
           </h1>

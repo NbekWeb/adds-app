@@ -38,11 +38,11 @@ function newOrderCreate() {
       postId: form.postId,
       items: form.items.map((item) => ({
         boardId: item.board.id,
-        configurationId: item.configuration.id,
         timeConfigurationId: item.timeConfiguration.id,
         orderDate: dayjs(item.orderDate).format('YYYY-MM-DD')
       }))
     })
+    router.push('/dashboard/kiosk-order/')
   }
 }
 onMounted(() => {
@@ -58,19 +58,19 @@ onMounted(() => {
   </template>
 
   <template v-if="newOrderItem">
-
     <order-item-form-component
       :selected-boards="selectedBoards"
       @add-order="addNewOrderItem"
       @cancel="newOrderItem = false"
-    /> sa1
+    />
+    
   </template>
   <template v-else>
     <kiosk-order-items-list-component
       :items="form.items"
       @add-item="newOrderItem = true"
       @close="closeOrderItem"
-    /> 
+    />
   </template>
   <template v-if="!newOrderItem">
     <div class="flex justify-between">
@@ -78,10 +78,10 @@ onMounted(() => {
       <a-button
         @click="newOrderCreate"
         :disabled="!Boolean(form.items.length)"
-        :loading="loadingUrl.has('create/order')"
+        :loading="loadingUrl.has('create/kiosk-order')"
         type="primary"
       >
-        Xarid qilish
+        Xarid qilish  
       </a-button>
     </div>
   </template>
