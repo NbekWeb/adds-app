@@ -143,6 +143,23 @@ const useKioskPost = defineStore('kiosk-post', {
         .finally(() => {
           core.loadingUrl.delete(`delete/kiosk-post/${id}`)
         })
+    },
+    getDurationLimit(callback) {
+      const core = useCore()
+      core.loadingUrl.add('get/duration/limit')
+      api({
+        url: 'get/duration/limit',
+        method: 'GET'
+      })
+          .then((data) => {
+            callback(data)
+          })
+          .catch((error) => {
+            core.switchStatus(error)
+          })
+          .finally(() => {
+            core.loadingUrl.delete('get/duration/limit')
+          })
     }
   }
 })
