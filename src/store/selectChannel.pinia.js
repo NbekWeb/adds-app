@@ -3,26 +3,22 @@ import { useRouter } from 'vue-router'
 
 const useSelectChannel = defineStore('categories', {
   state: () => ({
-    selectChannel: ''
+    selectChannel: useRouter().currentRoute.value.query.channel || 'telegram'
   }),
   actions: {
-    initialize() {
-      const router = useRouter()
-      const channel = router.currentRoute.value.query.channel
-
-      if (channel === 'telegram') {
-        this.selectChannel = ''
-      } else {
-        this.selectChannel = 'kiosk-'
-      }
-    },
     updateChannel(val) {
       this.selectChannel = val
     }
   },
-  hooks: {
-    beforeMount() {
-      this.initialize()
+  getters: {
+    getSelectChannel() {
+      if (this.selectChannel === 'telegram') {
+        return ''
+      } else if (this.selectChannel.startsWith('kiosk-')) {
+        return this.selectChannel
+      } else {
+        return 'kiosk-'
+      }
     }
   }
 })

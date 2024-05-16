@@ -36,6 +36,7 @@ onMounted(() => {
       post.value = data
     })
   }
+  router.push({ query: { channel: selectChannel.value } })
 })
 </script>
 
@@ -100,7 +101,7 @@ onMounted(() => {
             <a-popover>
               <template #title>
                 <div class="flex justify-between">
-                  <h4 class="m-0">{{ $t('URL') }} </h4>
+                  <h4 class="m-0">{{ $t('URL') }}</h4>
                 </div>
               </template>
               <template #content>
@@ -111,7 +112,7 @@ onMounted(() => {
                     rel="opener"
                     class="button-url"
                   >
-                    {{ button.url }} 
+                    {{ button.url }}
                   </a>
                 </div>
               </template>

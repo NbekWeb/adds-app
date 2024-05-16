@@ -63,7 +63,7 @@ onMounted(() => {
 
 <template>
   <template v-if="!newOrderItem">
-    <page-header-component title="E'lon berish sa1" />
+    <page-header-component title="E'lon berish " />
   </template>
 
   <template v-if="newOrderItem">

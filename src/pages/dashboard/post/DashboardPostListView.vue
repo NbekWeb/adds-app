@@ -26,6 +26,9 @@ watch(selectChannel, (newChannel, oldChannel) => {
 })
 onMounted(() => {
   postPinia.getAllPosts(0)
+  if (!router.currentRoute.value.query.channel) {
+    router.push({ query: { channel: 'telegram' } })
+  }
 })
 </script>
 
@@ -36,7 +39,11 @@ onMounted(() => {
         class="add-btn"
         type="primary"
         size="middle"
-        @click="router.push({ name: 'DashboardPostCreateFormView' })"
+        @click="
+          router.push({
+            name: 'DashboardPostCreateFormView'
+          })
+        "
       >
         <icon-plus />
         {{ $t('ADD') }}
@@ -44,7 +51,7 @@ onMounted(() => {
     </template>
   </page-header-component>
 
-  <post-list-component /> 
+  <post-list-component  />
 </template>
 
 <style lang="scss">

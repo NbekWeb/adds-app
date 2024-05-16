@@ -123,7 +123,7 @@ onMounted(() => {
         <a-form-item
           :label="$t('POST_BUTTONS')"
           name="buttons"
-          v-if="selectChannel == ''"
+          v-if="selectChannel == 'telegram'"
         >
           <post-inline-buttons-component v-model:buttons="form.buttons" />
         </a-form-item>
