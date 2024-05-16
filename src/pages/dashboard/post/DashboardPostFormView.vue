@@ -73,7 +73,7 @@ function submitForm() {
     .then(() => {
       if (route.params.id) {
         postPinia.updatePost(route.params.id, form, () => {
-          router.back()
+          router.push({name:'DashboardPostView'})
         })
       } else {
         postPinia.createNewPost(form, () => {
@@ -101,6 +101,7 @@ onMounted(() => {
       fileName.value = data?.fileDto.fileName
     })
   }
+  router.push({ query: { channel: selectChannel.value } })
 })
 </script>
 
