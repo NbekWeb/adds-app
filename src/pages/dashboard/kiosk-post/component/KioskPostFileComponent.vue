@@ -60,7 +60,7 @@ const uploadCheck = async (file) => {
     const res = await findVideoDuration(file)
     if (res > videoDurationLimit.value) {
       corePinia.setToast({
-        locale: `Vedio davomiyligi ${videoDurationLimit.value} dan oshmasin!`,
+        locale: `Vedio davomiyligi ${videoDurationLimit.value} Millisekund'dan oshmasin!`,
         type: 'warning'
       })
       return false

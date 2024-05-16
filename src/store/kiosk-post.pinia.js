@@ -146,19 +146,19 @@ const useKioskPost = defineStore('kiosk-post', {
     },
     getDurationLimit(callback) {
       const core = useCore()
-      core.loadingUrl.add('get/duration/limit')
+      core.loadingUrl.add('get/duration-limit')
       api({
-        url: 'get/duration/limit',
+        url: 'duration-limit',
         method: 'GET'
       })
-          .then((data) => {
+          .then(({ data }) => {
             callback(data)
           })
           .catch((error) => {
             core.switchStatus(error)
           })
           .finally(() => {
-            core.loadingUrl.delete('get/duration/limit')
+            core.loadingUrl.delete('get/duration-limit')
           })
     }
   }
