@@ -1,15 +1,21 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useOrder from '@/store/order.pinia.js'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderListComponent from '@/pages/dashboard/order/telegram-order/components/OrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import PostListDrawerComponent from '@/pages/dashboard/order/telegram-order/components/PostListDrawerComponent.vue'
+import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 const route = useRoute()
+
 const orderPinia = useOrder()
+const selectChannelPinia = useSelectChannel()
+
+const { selectChannel } = storeToRefs(selectChannelPinia)
 
 const statuses = ref([
   'PENDING',
@@ -34,6 +40,12 @@ function handleChange() {
   })
   orderPinia.getAllOrders(0, orderStatus.value)
 }
+
+watch(selectChannel, (newChannel, oldChannel) => {
+  if (newChannel !== oldChannel) {
+    orderPinia.getAllOrders(0, orderStatus.value)
+  }
+})
 
 onMounted(() => {
   orderPinia.getAllOrders(0, orderStatus.value)

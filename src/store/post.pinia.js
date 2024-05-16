@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { uniqueItems } from '@/composables/index.js'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 
 const usePost = defineStore('post', {
   state: () => ({
@@ -20,9 +21,10 @@ const usePost = defineStore('post', {
     },
     getAllPosts(page, size = 10) {
       const core = useCore()
+      const selectChannelPinia = useSelectChannel()
       core.loadingUrl.add('get/post/all')
       api({
-        url: 'post',
+        url: `${selectChannelPinia.selectChannel}post`,
         params: {
           page: page,
           size: size
@@ -45,10 +47,11 @@ const usePost = defineStore('post', {
         })
     },
     getOnePostById(id, callback) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('get/post/one')
       api({
-        url: `post`,
+        url: `${selectChannelPinia.selectChannel}post`,
         pk: id
       })
         .then(({ data }) => {
@@ -65,7 +68,7 @@ const usePost = defineStore('post', {
       const core = useCore()
       core.loadingUrl.add('create/post')
       api({
-        url: 'post',
+        url: `${selectChannelPinia.selectChannel}post`,
         method: 'POST',
         data: {
           text: form.text,
@@ -97,7 +100,7 @@ const usePost = defineStore('post', {
       const core = useCore()
       core.loadingUrl.add('create/post')
       api({
-        url: 'post',
+        url: `${selectChannelPinia.selectChannel}post`,
         pk: id,
         method: 'PUT',
         data: {
@@ -130,7 +133,7 @@ const usePost = defineStore('post', {
       const core = useCore()
       core.loadingUrl.add(`delete/post/${id}`)
       api({
-        url: `post`,
+        url: `${selectChannelPinia.selectChannel}post`,
         pk: id,
         method: 'DELETE'
       })

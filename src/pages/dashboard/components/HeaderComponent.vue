@@ -6,12 +6,20 @@ import { ref } from 'vue'
 import { formatAmount } from '../../../composables/index.js'
 import BalanceComponent from '@/pages/dashboard/components/BalanceComponent.vue'
 import NotificationMainComponent from '@/pages/dashboard/components/Notification/NotificationMainComponent.vue'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 
 const userPinia = useUser()
+const selectChannelPinia = useSelectChannel()
+
 const { user } = storeToRefs(userPinia)
+const { selectChannel } = storeToRefs(selectChannelPinia)
 
 function navigateToClient() {
   window.location.replace('https://admin.adspro.uz')
+}
+
+const handleChange = (value) => {
+  selectChannelPinia.updateChannel(value)
 }
 </script>
 
@@ -20,8 +28,15 @@ function navigateToClient() {
     <a-col>
       <mobile-menu-component />
     </a-col>
-
     <a-col class="flex align-center">
+      <a-select
+        style="width: 120px"
+        v-model:value=selectChannel
+        @change="handleChange"
+      >
+        <a-select-option value="">Telegram</a-select-option>
+        <a-select-option value="kiosk-">Kiosk</a-select-option>
+      </a-select>
       <balance-component />
       <notification-main-component class="ml-2" />
     </a-col>
