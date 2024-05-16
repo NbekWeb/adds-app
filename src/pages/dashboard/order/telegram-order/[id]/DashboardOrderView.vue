@@ -1,9 +1,12 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { computed, onMounted, ref, watch } from 'vue'
+
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import useOrder from '@/store/order.pinia.js'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
+
 import OrderItemComponent from '@/pages/dashboard/order/telegram-order/[id]/components/OrderItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
@@ -15,8 +18,11 @@ const router = useRouter()
 
 const corePinia = useCore()
 const orderPinia = useOrder()
+const selectChannelPinia = useSelectChannel()
 
 const { loadingUrl } = storeToRefs(corePinia)
+const { selectChannel } = storeToRefs(selectChannelPinia)
+
 const order = ref()
 const orderId = computed(() => route.params.id)
 
@@ -32,6 +38,12 @@ watch(orderId, () => {
     order.value = data
   })
 })
+watch(selectChannel, (newChannel, oldChannel) => {
+  if (newChannel !== oldChannel) {
+    router.push({ name: 'DashboardOrderListView' })
+  }
+})
+
 onMounted(() => {
   if (route.params.id) {
     orderPinia.getOrderById(route.params.id, (data) => {

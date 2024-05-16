@@ -2,9 +2,10 @@
 import { useRoute, useRouter } from 'vue-router'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import usePost from '@/store/post.pinia.js'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 import PostListComponent from '@/pages/dashboard/post/component/PostListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 
@@ -13,31 +14,61 @@ const route = useRoute()
 
 const corePinia = useCore()
 const postPinia = usePost()
+const selectChannelPinia = useSelectChannel()
 
 const { loadingUrl } = storeToRefs(corePinia)
+const { selectChannel } = storeToRefs(selectChannelPinia)
 
+watch(selectChannel, (newChannel, oldChannel) => {
+  if (newChannel !== oldChannel) {
+    postPinia.getAllPosts(0)
+  }
+})
+
+const handleChange = (value) => {
+  selectChannelPinia.updateChannel(value)
+
+  router.push({ query: { channel: value } })
+}
 onMounted(() => {
   postPinia.getAllPosts(0)
+  if (!router.currentRoute.value.query.channel) {
+    router.push({ query: { channel: 'telegram' } })
+  }
 })
 </script>
 
 <template>
   <page-header-component :title="$t('DashboardPostListView')">
     <template #actions>
-      <a-button
-        class="add-btn"
-        type="primary"
-        size="middle"
-        @click="router.push({ name: 'DashboardPostCreateFormView' })"
-      >
-        <icon-plus />
-        {{ $t('ADD') }} 
-      </a-button>
+      <div class="flex ">
+        <a-select
+          style="width: 120px"
+          v-model:value="selectChannel"
+          @change="handleChange"
+        >
+          <a-select-option value="telegram">Telegram</a-select-option>
+          <a-select-option value="kiosk">Kiosk</a-select-option>
+        </a-select>
+
+        <a-button
+          class="add-btn ml-4"
+          type="primary"
+          size="middle"
+          @click="
+            router.push({
+              name: 'DashboardPostCreateFormView'
+            })
+          "
+        >
+          <icon-plus />
+          {{ $t('ADD') }}
+        </a-button>
+      </div>
     </template>
   </page-header-component>
 
   <post-list-component />
-  
 </template>
 
 <style lang="scss">

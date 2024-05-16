@@ -1,10 +1,11 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 import PostEditorComponent from '@/pages/dashboard/post/component/PostEditorComponent.vue'
 import PostFileComponent from '@/pages/dashboard/post/component/PostFileComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -18,8 +19,10 @@ const router = useRouter()
 
 const corePinia = useCore()
 const postPinia = usePost()
+const selectChannelPinia = useSelectChannel()
 
 const { loadingUrl } = storeToRefs(corePinia)
+const { selectChannel } = storeToRefs(selectChannelPinia)
 const formRef = ref()
 const form = reactive({
   fileHashId: '',
@@ -70,7 +73,7 @@ function submitForm() {
     .then(() => {
       if (route.params.id) {
         postPinia.updatePost(route.params.id, form, () => {
-          router.back()
+          router.push({name:'DashboardPostView'})
         })
       } else {
         postPinia.createNewPost(form, () => {
@@ -80,6 +83,13 @@ function submitForm() {
     })
     .catch(() => {})
 }
+
+watch(selectChannel, (newChannel, oldChannel) => {
+  if (newChannel !== oldChannel) {
+    router.push({ name: 'DashboardPostView' })
+  }
+})
+
 onMounted(() => {
   if (route.params.id) {
     postPinia.getOnePostById(route.params.id, (data) => {
@@ -91,6 +101,7 @@ onMounted(() => {
       fileName.value = data?.fileDto.fileName
     })
   }
+  router.push({ query: { channel: selectChannel.value } })
 })
 </script>
 
@@ -110,13 +121,17 @@ onMounted(() => {
         <a-form-item :label="$t('POST_DESCRIPTION')" name="text">
           <post-editor-component v-model:value="form.text" :max-count="1024" />
         </a-form-item>
-        <a-form-item :label="$t('POST_BUTTONS')" name="buttons">
+        <a-form-item
+          :label="$t('POST_BUTTONS')"
+          name="buttons"
+          v-if="selectChannel == 'telegram'"
+        >
           <post-inline-buttons-component v-model:buttons="form.buttons" />
         </a-form-item>
         <div class="flex justify-end">
           <a-space>
             <a-button @click="router.back()">
-              {{ $t('BACK') }} 
+              {{ $t('BACK') }}
             </a-button>
             <a-button
               :loading="loadingUrl.has('create/post')"

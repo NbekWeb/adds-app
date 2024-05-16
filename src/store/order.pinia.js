@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 import { uniqueItems } from '@/composables/index.js'
 
 const useOrder = defineStore('order', {
@@ -19,10 +20,11 @@ const useOrder = defineStore('order', {
     },
 
     getAllOrders(page, status) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('get/order/all')
       api({
-        url: 'order',
+        url: `${selectChannelPinia.selectChannel}order`,
         params: {
           page: page,
           size: 12,
@@ -46,10 +48,11 @@ const useOrder = defineStore('order', {
         })
     },
     getOrderById(id, callback) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('get/order/one')
       api({
-        url: `order`,
+        url: `${selectChannelPinia.selectChannel}order`,
         pk: id
       })
         .then(({ data }) => {
@@ -63,10 +66,11 @@ const useOrder = defineStore('order', {
         })
     },
     createOrder(form) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('create/order')
       api({
-        url: 'order',
+        url: `${selectChannelPinia.selectChannel}order`,
         method: 'POST',
         data: form
       })
@@ -85,10 +89,11 @@ const useOrder = defineStore('order', {
         })
     },
     createOrderItem(id, form) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('create/order/item')
       api({
-        url: 'order-item',
+        url: `${selectChannelPinia.selectChannel}order-item`,
         method: 'POST',
         params: {
           orderId: id
@@ -109,10 +114,11 @@ const useOrder = defineStore('order', {
         })
     },
     putCancelOrder(orderId, itemIdList) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('cancel/order')
       api({
-        url: 'order-item',
+        url: `${selectChannelPinia.selectChannel}order-item`,
         method: 'PUT',
         data: {
           orderId: orderId,
@@ -133,10 +139,11 @@ const useOrder = defineStore('order', {
         })
     },
     updateOrder(id, form) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('update/order')
       api({
-        url: `order`,
+        url: `${selectChannelPinia.selectChannel}order`,
         pk: id,
         method: 'PUT',
         data: form
@@ -155,10 +162,11 @@ const useOrder = defineStore('order', {
         })
     },
     confirmOrder(id) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add(`confirm/order/${id}`)
       api({
-        url: `order/confirm`,
+        url: `${selectChannelPinia.selectChannel}order/confirm`,
         pk: id,
         method: 'POST'
       })
@@ -176,10 +184,11 @@ const useOrder = defineStore('order', {
         })
     },
     deleteOrder(id) {
+      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('delete/order')
       api({
-        url: `order`,
+        url: `${selectChannelPinia.selectChannel}order`,
         pk: id,
         method: 'DELETE'
       })

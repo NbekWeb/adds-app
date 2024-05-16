@@ -7,7 +7,11 @@ import { formatAmount } from '../../../composables/index.js'
 import BalanceComponent from '@/pages/dashboard/components/BalanceComponent.vue'
 import NotificationMainComponent from '@/pages/dashboard/components/Notification/NotificationMainComponent.vue'
 
+import { useRouter } from 'vue-router'
+
 const userPinia = useUser()
+
+const router = useRouter()
 const { user } = storeToRefs(userPinia)
 
 function navigateToClient() {
@@ -20,7 +24,6 @@ function navigateToClient() {
     <a-col>
       <mobile-menu-component />
     </a-col>
-
     <a-col class="flex align-center">
       <balance-component />
       <notification-main-component class="ml-2" />

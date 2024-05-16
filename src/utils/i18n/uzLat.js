@@ -26,6 +26,7 @@ const uzLat = {
   DashboardOrderItemView: "Kanallar bo'yicha xaridlar",
   DashboardKioskOrderItemView: "Kanallar bo'yicha xaridlar",
   DashboardKioskPostItemView: "Kiosk postni ko'rish",
+  DashboardOrderView: "Orderlarni ko'rish",
 
   Help: 'Yordam',
   News: 'Xabar va yangilik',
