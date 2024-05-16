@@ -24,6 +24,12 @@ watch(selectChannel, (newChannel, oldChannel) => {
     postPinia.getAllPosts(0)
   }
 })
+
+const handleChange = (value) => {
+  selectChannelPinia.updateChannel(value)
+
+  router.push({ query: { channel: value } })
+}
 onMounted(() => {
   postPinia.getAllPosts(0)
   if (!router.currentRoute.value.query.channel) {
@@ -35,23 +41,34 @@ onMounted(() => {
 <template>
   <page-header-component :title="$t('DashboardPostListView')">
     <template #actions>
-      <a-button
-        class="add-btn"
-        type="primary"
-        size="middle"
-        @click="
-          router.push({
-            name: 'DashboardPostCreateFormView'
-          })
-        "
-      >
-        <icon-plus />
-        {{ $t('ADD') }}
-      </a-button>
+      <div class="flex ">
+        <a-select
+          style="width: 120px"
+          v-model:value="selectChannel"
+          @change="handleChange"
+        >
+          <a-select-option value="telegram">Telegram</a-select-option>
+          <a-select-option value="kiosk">Kiosk</a-select-option>
+        </a-select>
+
+        <a-button
+          class="add-btn ml-4"
+          type="primary"
+          size="middle"
+          @click="
+            router.push({
+              name: 'DashboardPostCreateFormView'
+            })
+          "
+        >
+          <icon-plus />
+          {{ $t('ADD') }}
+        </a-button>
+      </div>
     </template>
   </page-header-component>
 
-  <post-list-component  />
+  <post-list-component />
 </template>
 
 <style lang="scss">

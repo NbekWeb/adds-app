@@ -129,7 +129,6 @@ const usePost = defineStore('post', {
 
     updatePost(id, form, callback) {
       const selectChannelPinia = useSelectChannel()
-      console.log(selectChannelPinia.getSelectChannel)
       const core = useCore()
       core.loadingUrl.add('create/post')
 

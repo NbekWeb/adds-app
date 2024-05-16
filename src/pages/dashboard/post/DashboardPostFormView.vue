@@ -73,7 +73,7 @@ function submitForm() {
     .then(() => {
       if (route.params.id) {
         postPinia.updatePost(route.params.id, form, () => {
-          router.back()
+          router.push({name:'DashboardPostView'})
         })
       } else {
         postPinia.createNewPost(form, () => {
