@@ -2,9 +2,10 @@
 import { useRoute, useRouter } from 'vue-router'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import usePost from '@/store/post.pinia.js'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 import PostListComponent from '@/pages/dashboard/post/component/PostListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 
@@ -13,11 +14,21 @@ const route = useRoute()
 
 const corePinia = useCore()
 const postPinia = usePost()
+const selectChannelPinia = useSelectChannel()
 
 const { loadingUrl } = storeToRefs(corePinia)
+const { selectChannel } = storeToRefs(selectChannelPinia)
 
+watch(selectChannel, (newChannel, oldChannel) => {
+  if (newChannel !== oldChannel) {
+    postPinia.getAllPosts(0)
+  }
+})
 onMounted(() => {
   postPinia.getAllPosts(0)
+  if (!router.currentRoute.value.query.channel) {
+    router.push({ query: { channel: 'telegram' } })
+  }
 })
 </script>
 
@@ -28,16 +39,19 @@ onMounted(() => {
         class="add-btn"
         type="primary"
         size="middle"
-        @click="router.push({ name: 'DashboardPostCreateFormView' })"
+        @click="
+          router.push({
+            name: 'DashboardPostCreateFormView'
+          })
+        "
       >
         <icon-plus />
-        {{ $t('ADD') }} 
+        {{ $t('ADD') }}
       </a-button>
     </template>
   </page-header-component>
 
-  <post-list-component />
-  
+  <post-list-component  />
 </template>
 
 <style lang="scss">

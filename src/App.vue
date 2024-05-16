@@ -39,6 +39,7 @@ watch(toastContent, () => {
     }
   }
 })
+localStorage.setItem('selectChannel', '')
 </script>
 
 <template>

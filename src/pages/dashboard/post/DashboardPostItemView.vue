@@ -1,10 +1,11 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { fileBaseUrl } from '@/utils/conf.js'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import VideoPlayerComponent from '@/components/VideoPlayerComponent.vue'
@@ -16,10 +17,18 @@ const router = useRouter()
 
 const corePinia = useCore()
 const postPinia = usePost()
+const selectChannelPinia = useSelectChannel()
 
 const { loadingUrl } = storeToRefs(corePinia)
+const { selectChannel } = storeToRefs(selectChannelPinia)
 
 const post = ref()
+
+watch(selectChannel, (newChannel, oldChannel) => {
+  if (newChannel !== oldChannel) {
+    router.push({ name: 'DashboardPostView' })
+  }
+})
 
 onMounted(() => {
   if (route.params.id) {
@@ -27,6 +36,7 @@ onMounted(() => {
       post.value = data
     })
   }
+  router.push({ query: { channel: selectChannel.value } })
 })
 </script>
 
@@ -85,7 +95,7 @@ onMounted(() => {
             :md="12"
             :lg="8"
             :xl="6"
-            v-for="(button,i) in post?.buttons"
+            v-for="(button, i) in post?.buttons"
             :key="i"
           >
             <a-popover>
