@@ -10,7 +10,7 @@ import PostImageAndVideoViewComponent from '@/pages/dashboard/post/component/Pos
 import IconEye from '@/components/icons/IconEye.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconFile from '@/components/icons/IconFile.vue'
-
+import useSelectChannel from '@/store/selectChannel.pinia.js'
 const hashId = defineModel('hashId')
 
 const props = defineProps({
@@ -20,8 +20,10 @@ const props = defineProps({
 })
 
 const corePinia = useCore()
+const selectChannelPinia = useSelectChannel()
 const uploadPinia = useUpload()
 const { visibleDrawer } = storeToRefs(corePinia)
+const { selectChannel } = storeToRefs(selectChannelPinia)
 
 const fileType = ref()
 const uploadedFilename = ref(null)
@@ -31,7 +33,7 @@ const snapshot = ref()
 const uploadLogo = (file) => {
   uploadPinia.uploadFile(
     file,
-    'TELEGRAM',
+    selectChannel =="telegram"? 'TELEGRAM':'KIOSK',
     (data) => {
       hashId.value = data.hashId
       snapshot.value = data.snapshotHashId
