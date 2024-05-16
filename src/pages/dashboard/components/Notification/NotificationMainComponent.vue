@@ -38,10 +38,10 @@ function checkNotifications() {
 watch(newNotifications, () => {
   openNotification()
 })
-watch(count, async () => {
+watch(count, () => {
   if (count.value) {
-    await notificationPinia.getNotifications(0)
-    await openNotification()
+    notificationPinia.getNotifications(0)
+    notificationPinia.getUnreadNotifications()
   }
 })
 function getPegableNotifications(page) {
@@ -50,7 +50,6 @@ function getPegableNotifications(page) {
 }
 
 onMounted(() => {
-  // checked every five minutes
   notificationPinia.getUnreadNotifications()
   notificationPinia.getNotifications(0)
   checkNotifications()
