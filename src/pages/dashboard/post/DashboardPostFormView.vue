@@ -101,6 +101,7 @@ onMounted(() => {
       fileName.value = data?.fileDto.fileName
     })
   }
+  router.push({ query: { channel: selectChannel.value } })
 })
 </script>
 
