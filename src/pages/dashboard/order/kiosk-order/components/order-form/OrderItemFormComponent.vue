@@ -37,7 +37,8 @@ const form = reactive({
   board: null,
   configuration: null,
   timeConfiguration: null,
-  orderDate: dayjs()
+  orderDate: dayjs(),
+  orderSeconds: null
 })
 const isAccessNext = computed(
   () =>

@@ -131,6 +131,8 @@ const uzLat = {
   START_TIME: 'Boshlanish muddati',
   END_TIME: 'Tugash muddati',
   AMOUNT: 'Narxi',
+  TOTAL_AMOUNT: 'Umimiy narxi',
+  AMOUNT_BY_SECOND: 'Soniyasiga narxi',
   CATEGORY: 'Kategoriya',
   SELECT_CATEGORY: 'Kategoriyani tanlang',
   DESCRIPTION: 'Tavsif',
@@ -169,6 +171,7 @@ const uzLat = {
   BOARD_OWNER_APPROVED: 'Kanal egasi tasdiqlagan',
   AWAITING_BOARD_OWNER: 'Kanal egasi tasdiqlashi kutilmoqda',
   ACCEPTED: 'Qabul qilingan',
+  DURATION: 'Davomiyligi',
 
   // descriptions
   THE_ORDER_HAS_EXPIRED_BECAUSE_IT_WAS_NOT_CONFIRMED_BY_THE_MODERATOR_OR_CHANNEL_OWNER:
@@ -211,7 +214,8 @@ const uzLat = {
   ERROR: 'Xatolik!',
   FILE_SIZE_LESS_IMG: 'Fayl hajmi 10 Mb dan oshmasin!',
   FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!',
-  ORDER_CREATE: 'Buyurtma yaratildi'
+  ORDER_CREATE: 'Buyurtma yaratildi',
+  ORDER_CANCELED: 'Buyurtma bekor qilindi',
 }
 
 export default uzLat

@@ -13,7 +13,6 @@ const route = useRoute()
 const router = useRouter()
 
 function cancelOrder() {
-  console.log('Cancelling order', route.params.id)
   orderPinia.deleteOrder(route.params.id)
   orderPinia.getAllOrders(0, route.query.status)
   router.push('/dashboard/kiosk-order')
@@ -149,7 +148,7 @@ const open = ref(false)
           :cancel-text="$t('NO')"
           @confirm="cancelOrder"
         >
-          <a-button danger @click.stop>{{ $t('CANCEL') }} </a-button>
+          <a-button danger @click.stop>{{ $t('CANCEL') }}</a-button>
         </a-popconfirm>
       </a-col>
     </a-row>
