@@ -2,7 +2,7 @@
 import dayjs from 'dayjs'
 const props = defineProps({
   configuration: [Object, null],
-  startDate: Date
+  startDate:  [Date, String]
 })
 </script>
 

@@ -143,7 +143,41 @@ const useKioskPost = defineStore('kiosk-post', {
         .finally(() => {
           core.loadingUrl.delete(`delete/kiosk-post/${id}`)
         })
-    }
+    },
+    getDurationLimit(callback) {
+      const core = useCore()
+      core.loadingUrl.add('get/duration-limit')
+      api({
+        url: 'duration-limit',
+        method: 'GET'
+      })
+          .then(({ data }) => {
+            callback(data)
+          })
+          .catch((error) => {
+            core.switchStatus(error)
+          })
+          .finally(() => {
+            core.loadingUrl.delete('get/duration-limit')
+          })
+    },
+    getPostDetails(id, callback) {
+      const core = useCore()
+      core.loadingUrl.add('get/kiosk-post/details')
+      api({
+        url: `kiosk-post/details/${id}`,
+        method: 'GET'
+      })
+          .then(({ data }) => {
+            callback(data)
+          })
+          .catch((error) => {
+            core.switchStatus(error)
+          })
+          .finally(() => {
+            core.loadingUrl.delete('get/kiosk-post/details')
+          })
+    },
   }
 })
 export default useKioskPost

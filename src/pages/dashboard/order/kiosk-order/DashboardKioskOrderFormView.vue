@@ -2,19 +2,20 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import dayjs from 'dayjs'
 import useCore from '@/store/core.pinia.js'
 import useKioskOrder from '@/store/kiosk-order.pinia.js'
 
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderItemFormComponent from '@/pages/dashboard/order/kiosk-order/components/order-form/OrderItemFormComponent.vue'
 import KioskOrderItemsListComponent from '@/pages/dashboard/order/kiosk-order/components/order-form/KioskOrderItemsListComponent.vue'
+import useKioskPost from "@/store/kiosk-post.pinia.js";
 
 const router = useRouter()
 const route = useRoute()
 
 const corePinia = useCore()
 const kioskOrderPinia = useKioskOrder()
+const kioskPostPinia = useKioskPost()
 
 const { loadingUrl } = storeToRefs(corePinia)
 const form = reactive({
@@ -23,10 +24,15 @@ const form = reactive({
 })
 
 const newOrderItem = ref(false)
+const postSeconds = ref(0)
 
 const selectedBoards = computed(() => form.items.map((item) => item.board.id))
 function addNewOrderItem(item) {
-  form.items.push(item)
+  form.items.push({
+    ...item,
+    orderSeconds: postSeconds.value,
+    postSeconds: postSeconds.value
+  })
   newOrderItem.value = false
 }
 function closeOrderItem(index) {
@@ -39,7 +45,7 @@ function newOrderCreate() {
       items: form.items.map((item) => ({
         boardId: item.board.id,
         timeConfigurationId: item.timeConfiguration.id,
-        orderDate: dayjs(item.orderDate).format('YYYY-MM-DD')
+        orderSeconds: item.orderSeconds
       }))
     })
     router.push('/dashboard/kiosk-order/')
@@ -48,6 +54,10 @@ function newOrderCreate() {
 onMounted(() => {
   if (route.params.postId) {
     form.postId = route.params.postId
+
+    kioskPostPinia.getPostDetails(form?.postId, (data) => {
+      postSeconds.value = data?.amount
+    })
   }
 })
 </script>
