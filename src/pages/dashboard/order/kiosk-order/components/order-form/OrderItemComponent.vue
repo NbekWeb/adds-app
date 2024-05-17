@@ -64,12 +64,6 @@ onMounted(() => {
           </p>
         </div>
         <div class="amount">
-          <span> {{ $t('DURATION') }} </span>
-          <p class="m-0">
-            {{ item.orderSeconds }} soniya
-          </p>
-        </div>
-        <div class="amount">
           <span> {{ $t('AMOUNT_BY_SECOND') }} </span>
           <p class="m-0 text-end">
             {{
@@ -84,6 +78,13 @@ onMounted(() => {
           <span> {{ $t('TOTAL_AMOUNT') }} </span>
           <p class="m-0">
             {{ formatAmount(item.orderSeconds * item?.timeConfiguration?.amount) }} sum
+          </p>
+        </div>
+
+        <div class="amount">
+          <span> {{ $t('DURATION') }} </span>
+          <p class="m-0">
+            {{ item.orderSeconds }} soniya
           </p>
         </div>
 
