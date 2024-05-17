@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import useUpload from '@/store/upload.pinia.js'
 import useCore from '@/store/core.pinia.js'
+import useKioskPost from "@/store/kiosk-post.pinia.js";
 import IconInbox from '@/components/icons/IconInbox.vue'
 import ProgressComponent from '@/components/ProgressComponent.vue'
 import { storeToRefs } from 'pinia'
@@ -10,7 +11,6 @@ import KioskPostImageAndVideoViewComponent from '@/pages/dashboard/kiosk-post/co
 import IconEye from '@/components/icons/IconEye.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconFile from '@/components/icons/IconFile.vue'
-import { useI18n } from 'vue-i18n'
 
 const hashId = defineModel('hashId')
 const props = defineProps({
@@ -21,14 +21,26 @@ const props = defineProps({
 
 const corePinia = useCore()
 const uploadPinia = useUpload()
+const kioskPostPinia = useKioskPost()
 const { visibleDrawer } = storeToRefs(corePinia)
+const videoDurationLimit = ref(0)
 
 const fileType = ref()
 const uploadedFilename = ref(null)
 const fileProgress = ref(0)
 const snapshot = ref()
 
-const uploadCheck = (file) => {
+function findVideoDuration(file) {
+  return new Promise((resolve,reject)=>{
+    let url = URL.createObjectURL(file);
+    let audioElement = new Audio(url);
+    audioElement.addEventListener("loadedmetadata", (_event)=> {
+      resolve(parseInt(audioElement.duration))
+    });
+  })
+}
+
+const uploadCheck = async (file) => {
   if (file.type.includes('image') && file.size / (1024 * 1024) > 10) {
     corePinia.setToast({
       locale: 'FILE_SIZE_LESS_IMG',
@@ -42,6 +54,17 @@ const uploadCheck = (file) => {
       type: 'error'
     })
     return false
+  }
+
+  if (file.type.includes('video')) {
+    const res = await findVideoDuration(file)
+    if (res > videoDurationLimit.value) {
+      corePinia.setToast({
+        locale: `Vedio davomiyligi ${videoDurationLimit.value} Millisekund'dan oshmasin!`,
+        type: 'warning'
+      })
+      return false
+    }
   }
 
   uploadPinia.uploadFile(
@@ -72,6 +95,12 @@ function clearFile() {
   uploadedFilename.value = null
   fileProgress.value = 0
 }
+
+onMounted(() => {
+  kioskPostPinia.getDurationLimit((data) => {
+    videoDurationLimit.value = data.limitSeconds
+  })
+})
 </script>
 
 <template>

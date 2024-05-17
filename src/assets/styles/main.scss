@@ -45,6 +45,9 @@ body {
 .align-center {
   align-items: center !important;
 }
+.align-end {
+  align-items: end !important;
+}
 .justify-end {
   justify-content: flex-end !important;
 }
@@ -91,6 +94,9 @@ a {
 }
 .text-center {
   text-align: center;
+}
+.text-end {
+  text-align: end;
 }
 .btn {
   display: flex;
