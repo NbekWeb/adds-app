@@ -1,5 +1,5 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import usePost from '@/store/post.pinia.js'
 import useCore from '@/store/core.pinia.js'
@@ -12,6 +12,7 @@ import { fileBaseUrl } from '@/utils/conf.js'
 import IconFile from '@/components/icons/IconFile.vue'
 
 const router = useRouter()
+const route = useRoute()
 
 const emits = defineEmits(['edit'])
 const { item } = defineProps({
@@ -29,6 +30,20 @@ const deletePost = () => {
   postPinia.deletePostById(item.id)
 }
 
+const pushToOrder = (postId) => {
+  if (route.query.channel == 'telegram') {
+    router.push({
+      name: 'DashboardOrderFormView',
+      params: { postId }
+    })
+  } else {
+    router.push({
+      name: 'DashboardKioskOrderFormView',
+      params: { postId }
+    })
+  }
+}
+
 function editPost(id) {
   emits('edit', id)
 }
@@ -40,6 +55,7 @@ function editPost(id) {
       <icon-loader />
     </template>
     <a-card class="card">
+      {{ route.query.channel }}
       <template #cover v-if="item.messageType !== 'TEXT'">
         <div class="cover">
           <template
@@ -96,17 +112,7 @@ function editPost(id) {
           </a-button>
         </template>
 
-        <a-button
-          @click="
-            router.push({
-              name: 'DashboardOrderFormView',
-              params: {
-                postId: item.id
-              }
-            })
-          "
-          size="small"
-        >
+        <a-button @click="pushToOrder(item.id)" size="small">
           <icon-shopping-card class="mt-1" />
         </a-button>
         <a-button size="small" danger @click="deletePost">
