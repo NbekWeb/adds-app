@@ -13,7 +13,6 @@ const route = useRoute()
 
 const orderPinia = useOrder()
 
-
 const statuses = ref([
   'PENDING',
   'AWAITING_BOARD_OWNER',
@@ -26,22 +25,37 @@ const statuses = ref([
   'FAILED'
 ])
 
+const selectedChannel = ref('')
+
 const orderStatus = ref(route.query.status)
 const open = ref(false)
 
-function handleChange() {
-  router.push({
-    query: {
-      status: orderStatus.value
-    }
-  })
-  orderPinia.getAllOrders(0, orderStatus.value)
+const handleChange = (val) => {
+  router.push({ query: { channel: val } })
+  if (selectedChannel.value == 'telegram') {
+    orderPinia.getAllTelegramOrders(0, orderStatus.value)
+  } else {
+    orderPinia.getAllKioskOrders(0, orderStatus.value)
+  }
 }
 
-
+watch(selectedChannel, (newChannel, oldChannel) => {
+  if (newChannel !== oldChannel) {
+    router.push({ query: { channel: newChannel } })
+  }
+})
 
 onMounted(() => {
-  orderPinia.getAllOrders(0, orderStatus.value)
+  if (!route.query.channel) {
+    router.push({ query: { channel: 'telegram' } })
+    orderPinia.getAllTelegramOrders(0, orderStatus.value)
+  }
+  selectedChannel.value = route.query.channel || 'telegram'
+  if (selectedChannel.value == 'telegram') {
+    orderPinia.getAllTelegramOrders(0, orderStatus.value)
+  } else {
+    orderPinia.getAllKioskOrders(0, orderStatus.value)
+  }
 })
 </script>
 
@@ -49,6 +63,16 @@ onMounted(() => {
   <page-header-component :title="$t('DashboardOrderListView')">
     <template #actions>
       <a-space>
+        {{ selectedChannel }}
+        <a-select
+          style="width: 120px"
+          v-model:value="selectedChannel"
+          @change="handleChange"
+        >
+          <a-select-option value="telegram">Telegram</a-select-option>
+          <a-select-option value="kiosk">Kiosk</a-select-option>
+        </a-select>
+
         <a-select
           class="order-status"
           style="width: 270px"

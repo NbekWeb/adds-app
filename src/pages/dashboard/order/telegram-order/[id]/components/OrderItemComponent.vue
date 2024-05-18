@@ -5,14 +5,14 @@ import dayjs from 'dayjs'
 import { formatAmount } from '@/composables/index.js'
 import OrderItemViewDrawerComponent from '@/pages/dashboard/order/telegram-order/[id]/components/OrderItemViewDrawerComponent.vue'
 import { ref } from 'vue'
-
+import { useRoute } from 'vue-router'
 import useOrder from '@/store/order.pinia.js'
 
 const orderPinia = useOrder()
 
-function cancelOrder() {
-  orderPinia.putCancelOrder(props.order?.orderId, [props.order?.id])
-}
+const route = useRoute()
+
+
 
 const props = defineProps({
   order: Object
@@ -34,6 +34,7 @@ const open = ref(false)
         class="flex justify-start"
       >
         <a-avatar
+          v-if="route.query.channel == 'telegram'"
           :src="`${fileBaseUrl}/file/${order?.board.logoHashId}`"
           size="large"
           class="avatar"
@@ -48,6 +49,7 @@ const open = ref(false)
         </div>
       </a-col>
       <a-col
+        v-if="route.query.channel == 'telegram'"
         :span="4"
         :xs="12"
         :sm="12"

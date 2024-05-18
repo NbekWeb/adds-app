@@ -17,11 +17,11 @@ const { posts, totalPages } = storeToRefs(postPinia)
 const pageValue = ref(0)
 
 function handleGetPostPagination(page) {
-  postPinia.getAllPosts(page, 4)
+  postPinia.getAllTelegramPosts(page, 4)
   pageValue.value = page
 }
 onMounted(() => {
-  postPinia.getAllPosts(0, 4)
+  postPinia.getAllTelegramPosts(0, 4)
 })
 </script>
 

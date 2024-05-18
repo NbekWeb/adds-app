@@ -18,7 +18,7 @@ const usePost = defineStore('post', {
     clearPostInfo() {
       this.postInfo = null
     },
-    getAllPosts(page, size = 10) {
+    getAllTelegramPosts(page, size = 10) {
       const core = useCore()
 
       core.loadingUrl.add('get/post/all')
@@ -45,11 +45,55 @@ const usePost = defineStore('post', {
           core.loadingUrl.delete('get/post/all')
         })
     },
-    getOnePostById(id, callback) {
+    getAllKioskPosts(page, size = 10) {
+      const core = useCore()
+
+      core.loadingUrl.add('get/post/all')
+      api({
+        url: `kiosk-post`,
+        params: {
+          page: page,
+          size: size
+        }
+      })
+        .then(({ data }) => {
+          if (page === 0) {
+            this.clearPost()
+          }
+          this.posts.push(...data.content)
+          this.posts = uniqueItems(this.posts, 'id')
+          this.totalElements = data.totalElements
+          this.totalPages = data.totalPages
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('get/post/all')
+        })
+    },
+    getOneTelegramPostById(id, callback) {
       const core = useCore()
       core.loadingUrl.add('get/post/one')
       api({
         url: `post`,
+        pk: id
+      })
+        .then(({ data }) => {
+          callback(data)
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('get/post/one')
+        })
+    },
+    getOneKioskPostById(id, callback) {
+      const core = useCore()
+      core.loadingUrl.add('get/post/one')
+      api({
+        url: `kiosk-post`,
         pk: id
       })
         .then(({ data }) => {
