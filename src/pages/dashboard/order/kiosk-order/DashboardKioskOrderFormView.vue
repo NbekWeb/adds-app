@@ -63,7 +63,7 @@ onMounted(() => {
 
 <template>
   <template v-if="!newOrderItem">
-    <page-header-component title="E'lon berish" />
+    <page-header-component title="E'lon berish " />
   </template>
 
   <template v-if="newOrderItem">
@@ -90,8 +90,8 @@ onMounted(() => {
         :loading="loadingUrl.has('create/kiosk-order')"
         type="primary"
       >
-        Xarid qilish
-      </a-button>
+        Xarid qilish 
+      </a-button> 
     </div>
   </template>
 </template>

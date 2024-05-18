@@ -71,7 +71,7 @@ const { item } = defineProps({
         @click="router.push({ name: 'DashboardPostView' })"
         
       >
-        {{ $t('CREATE_AN_ORDER') }}
+        {{ $t('CREATE_AN_ORDER') }} 
       </a-button>
       <h1 class="text-center mt-2">
         <span class="config-amount">

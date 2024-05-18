@@ -32,7 +32,7 @@ const { items } = defineProps({
           <a-card class="order-add" @click="emits('addItem')">
             <div class="text-center">
               <icon-plus />
-              <p class="m-0">{{ $t('ADD_NEW_ORDER_ITEM') }} sa1</p>
+              <p class="m-0">{{ $t('ADD_NEW_ORDER_ITEM') }}</p>
             </div>
           </a-card>
         </a-col>

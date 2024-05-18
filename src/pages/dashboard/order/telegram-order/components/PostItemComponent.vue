@@ -19,6 +19,15 @@ const { item } = defineProps({
   }
 })
 const corePinia = useCore()
+const orderPush = () => {
+  router.push({
+    name: 'DashboardOrderFormView',
+    params: {
+      postId: item.id
+    },
+    query: { channel: route.query.channel }
+  })
+}
 
 const { loadingUrl } = storeToRefs(corePinia)
 </script>
@@ -72,18 +81,7 @@ const { loadingUrl } = storeToRefs(corePinia)
           <icon-eye class="mt-1" />
         </a-button>
 
-        <a-button
-          @click="
-            router.push({
-              name: 'DashboardOrderFormView',
-              params: {
-                postId: item.id
-              },
-              query: { channel: route.query.channel }
-            })
-          "
-          size="small"
-        >
+        <a-button @click="orderPush()" size="small">
           <icon-shopping-card class="mt-1" />
         </a-button>
       </template>

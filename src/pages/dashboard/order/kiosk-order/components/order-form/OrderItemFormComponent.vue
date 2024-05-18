@@ -55,7 +55,7 @@ function handleNextStep() {
   </a-spin>
 
   <div class="flex justify-between">
-    <a-button @click="router.back()"> {{ $t('CANCEL') }} </a-button>
+    <a-button @click="router.back()"> {{ $t('CANCEL') }}</a-button>
     <a-space>
       <a-button
         @click="handleNextStep"

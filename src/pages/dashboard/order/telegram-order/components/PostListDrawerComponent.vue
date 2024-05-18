@@ -4,6 +4,8 @@ import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
 
+import { useRoute } from 'vue-router'
+
 import PostItemComponent from '@/pages/dashboard/order/telegram-order/components/PostItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
@@ -11,17 +13,27 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 const corePinia = useCore()
 const postPinia = usePost()
 
+const route = useRoute()
+
 const { loadingUrl } = storeToRefs(corePinia)
 const { posts, totalPages } = storeToRefs(postPinia)
 
 const pageValue = ref(0)
 
 function handleGetPostPagination(page) {
-  postPinia.getAllTelegramPosts(page, 4)
+  if (route.query.channel == 'telegram') {
+    postPinia.getAllTelegramPosts(page, 4)
+  } else {
+    postPinia.getAllKioskPosts(page, 4)
+  }
   pageValue.value = page
 }
 onMounted(() => {
-  postPinia.getAllTelegramPosts(0, 4)
+  if (route.query.channel == 'telegram') {
+    postPinia.getAllTelegramPosts(0, 4)
+  } else {
+    postPinia.getAllKioskPosts(0, 4)
+  }
 })
 </script>
 
