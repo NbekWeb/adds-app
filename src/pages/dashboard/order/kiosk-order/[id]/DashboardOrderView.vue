@@ -21,14 +21,14 @@ const { loadingUrl } = storeToRefs(corePinia)
 const order = ref()
 function refreshOrder() {
   if (route.params.id) {
-    orderPinia.getTelegramOrderById(route.params.id, (data) => {
+    orderPinia.getOrderById(route.params.id, (data) => {
       order.value = data
     })
   }
 }
 onMounted(() => {
   if (route.params.id) {
-    orderPinia.getTelegramOrderById(route.params.id, (data) => {
+    orderPinia.getOrderById(route.params.id, (data) => {
       order.value = data
     })
   }

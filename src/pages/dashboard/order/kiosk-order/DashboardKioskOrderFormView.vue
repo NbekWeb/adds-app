@@ -44,7 +44,6 @@ function newOrderCreate() {
       postId: form.postId,
       items: form.items.map((item) => ({
         boardId: item.board.id,
-        timeConfigurationId: item.timeConfiguration.id,
         orderSeconds: item.orderSeconds
       }))
     })
