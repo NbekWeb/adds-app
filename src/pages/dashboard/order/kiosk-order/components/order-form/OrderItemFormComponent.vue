@@ -2,12 +2,10 @@
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { formatAmount } from '@/composables/index.js'
 import useCore from '@/store/core.pinia.js'
 import dayjs from 'dayjs'
 
 import OrderBoardSelectComponent from '@/pages/dashboard/order/kiosk-order/components/order-form/OrderBoardSelectComponent.vue'
-import OrderTimeConfigSelectComponent from '@/pages/dashboard/order/kiosk-order/components/order-form/OrderTimeConfigSelectComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { useI18n } from 'vue-i18n'
 
@@ -21,14 +19,6 @@ const corePinia = useCore()
 
 const { loadingUrl } = storeToRefs(corePinia)
 
-const steps = ref([
-  {
-    title: t('SELECT_CHANNEL')
-  },
-  {
-    title: t('SELECT_DATE_AND_TIME')
-  }
-])
 const currentStep = ref(0)
 
 const configurations = ref([])
@@ -46,67 +36,27 @@ const isAccessNext = computed(
     (!form.timeConfiguration && currentStep.value === 1)
 )
 
-const selectedConfigAmount = ref(0)
-const selectedTimeConfigAmount = ref(0)
-
 function handleNextStep() {
-  if (!isAccessNext.value && currentStep.value < 1) {
-    currentStep.value++
-  } else if (form.board && form.timeConfiguration) {
+  if (form.board) {
     emits('addOrder', form)
   }
-}
-function handleBackStep() {
-  if (currentStep.value === 2) {
-    form.timeConfiguration = null
-    selectedTimeConfigAmount.value = 0
-  } else if (currentStep.value === 1) {
-    form.configuration = null
-    selectedConfigAmount.value = 0
-  } else if (currentStep.value === 0) {
-    form.boardId = null
-    emits('cancel')
-  }
-  if (currentStep.value > 0) currentStep.value--
 }
 </script>
 
 <template>
-  <a-steps :items="steps" :current="currentStep"> </a-steps>
   <a-spin :spinning="loadingUrl.has('kiosk-board/all')">
     <template #indicator>
       <icon-loader />
     </template>
-    <template v-if="currentStep === 0">
-      <order-board-select-component
-        v-model:value="form.board"
-        :selected-boards="selectedBoards"
-      />
-    </template>
-    <template v-if="currentStep === 1">
-      <order-time-config-select-component
-        v-model:value="form.timeConfiguration"
-        v-model:date="form.orderDate"
-        v-model:amount="selectedTimeConfigAmount"
-        :board-id="form.board.id"
-        :configuration-id="form?.configuration?.id"
-      />
-    </template>
+    <order-board-select-component
+      v-model:value="form.board"
+      :selected-boards="selectedBoards"
+    />
   </a-spin>
 
-  <div class="flex justify-end">
-    <h3>
-      {{ $t('TOTAL') }}:
-      {{ formatAmount(selectedConfigAmount + selectedTimeConfigAmount) }}
-      <span class="">UZS</span>
-    </h3>
-  </div>
   <div class="flex justify-between">
     <a-button @click="router.back()"> {{ $t('CANCEL') }} </a-button>
     <a-space>
-      <a-button @click="handleBackStep">
-        {{ $t('BACK') }}
-      </a-button>
       <a-button
         @click="handleNextStep"
         :disabled="isAccessNext"
