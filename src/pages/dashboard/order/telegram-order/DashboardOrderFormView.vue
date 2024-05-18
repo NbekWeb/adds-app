@@ -29,12 +29,12 @@ function addNewOrderItem(item) {
   form.items.push(item)
   newOrderItem.value = false
 }
-function closeOrderItem(index) {
+function closeTelegramOrderItem(index) {
   form.items.splice(index, 1)
 }
 function newOrderCreate() {
   if (form.items.length) {
-    orderPinia.createOrder({
+    orderPinia.createTelegramOrder({
       postId: form.postId,
       items: form.items.map((item) => ({
         boardId: item.board.id,

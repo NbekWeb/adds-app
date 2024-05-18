@@ -8,11 +8,29 @@ import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import { formatAmount } from '../../../../../../composables/index.js'
 import ViewsComponent from '@/pages/dashboard/order/telegram-order/[id]/components/ViewsComponent.vue'
 import WarningComponent from '@/pages/dashboard/order/telegram-order/[id]/components/WarningComponent.vue'
+import { useRoute,useRouter } from 'vue-router'
+import useOrder from '@/store/order.pinia.js'
+
+const orderPinia = useOrder()
+
+const route = useRoute()
+const router = useRouter()
 
 const props = defineProps({
   item: { type: Object, required: true }
 })
 const model = defineModel('open')
+
+function cancelOrder() {
+  if (route.query.channel == 'telegram') {
+    orderPinia.putTelegramCancelOrder(props.item?.orderId, [props.item?.id])
+  } else {
+    orderPinia.putKioskCancelOrder(props.item?.orderId, [props.item?.id])
+  }
+  console.log(props.item)
+
+  router.push({ name: 'DashboardOrderView' })
+}
 </script>
 
 <template>
@@ -25,6 +43,7 @@ const model = defineModel('open')
     <template #title>
       <div class="flex align-center">
         <a-avatar
+          v-if="route.query.channel == 'telegram'"
           class="avatar"
           :src="`${fileBaseUrl}/file/${item?.board.logoHashId}`"
         />
@@ -41,6 +60,7 @@ const model = defineModel('open')
         <configuration-component
           :configuration="item?.configuration"
           :start-date="item?.startDate"
+          v-if="route.query.channel == 'telegram'"
         />
         <configuration-statistics-component :statistics="item?.taskResponse" />
         <reactions-component :reactions="item?.taskResponse?.reactions" />
@@ -50,8 +70,8 @@ const model = defineModel('open')
             :title="$t('CONFIRMCANCELORDER')"
             :ok-text="$t('YES')"
             :cancel-text="$t('NO')"
+            @confirm="cancelOrder"
           >
-            <!--            @confirm="cancelOrder"-->
             <a-button class="mb-2" danger @click.stop>{{
               $t('CANCEL')
             }}</a-button>
@@ -80,6 +100,5 @@ const model = defineModel('open')
     }
   }
 }
-.pending {
-}
+
 </style>

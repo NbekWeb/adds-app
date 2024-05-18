@@ -25,22 +25,28 @@ const orderId = computed(() => route.params.id)
 
 function refreshOrder() {
   if (route.params.id) {
-    orderPinia.getOrderById(route.params.id, (data) => {
+    orderPinia.getTelegramOrderById(route.params.id, (data) => {
       order.value = data
     })
   }
 }
 watch(orderId, () => {
-  orderPinia.getOrderById(orderId.value, (data) => {
+  orderPinia.getTelegramOrderById(orderId.value, (data) => {
     order.value = data
   })
 })
 
 onMounted(() => {
   if (route.params.id) {
-    orderPinia.getOrderById(route.params.id, (data) => {
-      order.value = data
-    })
+    if (route.query.channel == 'telegram') {
+      orderPinia.getTelegramOrderById(route.params.id, (data) => {
+        order.value = data
+      })
+    } else {
+      orderPinia.getKioskOrderById(route.params.id, (data) => {
+        order.value = data
+      })
+    }
   }
 })
 </script>
