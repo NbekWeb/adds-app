@@ -5,7 +5,6 @@ import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
-import useSelectChannel from '@/store/selectChannel.pinia.js'
 import PostEditorComponent from '@/pages/dashboard/post/component/PostEditorComponent.vue'
 import PostFileComponent from '@/pages/dashboard/post/component/PostFileComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -19,10 +18,8 @@ const router = useRouter()
 
 const corePinia = useCore()
 const postPinia = usePost()
-const selectChannelPinia = useSelectChannel()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { selectChannel } = storeToRefs(selectChannelPinia)
 const formRef = ref()
 const form = reactive({
   fileHashId: '',
@@ -84,11 +81,7 @@ function submitForm() {
     .catch(() => {})
 }
 
-watch(selectChannel, (newChannel, oldChannel) => {
-  if (newChannel !== oldChannel) {
-    router.push({ name: 'DashboardPostView' })
-  }
-})
+
 
 onMounted(() => {
   if (route.params.id) {
@@ -101,7 +94,6 @@ onMounted(() => {
       fileName.value = data?.fileDto.fileName
     })
   }
-  router.push({ query: { channel: selectChannel.value } })
 })
 </script>
 
@@ -124,7 +116,6 @@ onMounted(() => {
         <a-form-item
           :label="$t('POST_BUTTONS')"
           name="buttons"
-          v-if="selectChannel == 'telegram'"
         >
           <post-inline-buttons-component v-model:buttons="form.buttons" />
         </a-form-item>

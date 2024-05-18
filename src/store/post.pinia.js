@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { uniqueItems } from '@/composables/index.js'
 import { api } from '@/utils/api/index.js'
 import useCore from '@/store/core.pinia.js'
-import useSelectChannel from '@/store/selectChannel.pinia.js'
 
 const usePost = defineStore('post', {
   state: () => ({
@@ -21,10 +20,10 @@ const usePost = defineStore('post', {
     },
     getAllPosts(page, size = 10) {
       const core = useCore()
-      const selectChannelPinia = useSelectChannel()
+
       core.loadingUrl.add('get/post/all')
       api({
-        url: `${selectChannelPinia.getSelectChannel}post`,
+        url: `post`,
         params: {
           page: page,
           size: size
@@ -47,11 +46,10 @@ const usePost = defineStore('post', {
         })
     },
     getOnePostById(id, callback) {
-      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('get/post/one')
       api({
-        url: `${selectChannelPinia.getSelectChannel}post`,
+        url: `post`,
         pk: id
       })
         .then(({ data }) => {
@@ -65,7 +63,6 @@ const usePost = defineStore('post', {
         })
     },
     createNewPost(form, callback) {
-      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('create/post')
 
@@ -77,7 +74,7 @@ const usePost = defineStore('post', {
       // Check if selectChannel is 'kiosk-'
       if (selectChannelPinia.getSelectChannel === 'kiosk-') {
         api({
-          url: `${selectChannelPinia.getSelectChannel}post`,
+          url: `post`,
           method: 'POST',
           data: data
         })
@@ -105,7 +102,7 @@ const usePost = defineStore('post', {
         }))
 
         api({
-          url: `${selectChannelPinia.getSelectChannel}post`,
+          url: `post`,
           method: 'POST',
           data: data
         })
@@ -128,7 +125,6 @@ const usePost = defineStore('post', {
     },
 
     updatePost(id, form, callback) {
-      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add('create/post')
 
@@ -138,7 +134,7 @@ const usePost = defineStore('post', {
       }
       if (selectChannelPinia.getSelectChannel == 'kiosk-') {
         api({
-          url: `${selectChannelPinia.getSelectChannel}post`,
+          url: `post`,
           pk: id,
           method: 'PUT',
           data: data
@@ -166,7 +162,7 @@ const usePost = defineStore('post', {
         }))
 
         api({
-          url: `${selectChannelPinia.getSelectChannel}post`,
+          url: `post`,
           pk: id,
           method: 'PUT',
           data: data
@@ -189,11 +185,10 @@ const usePost = defineStore('post', {
     },
 
     deletePostById(id) {
-      const selectChannelPinia = useSelectChannel()
       const core = useCore()
       core.loadingUrl.add(`delete/post/${id}`)
       api({
-        url: `${selectChannelPinia.getSelectChannel}post`,
+        url: `post`,
         pk: id,
         method: 'DELETE'
       })

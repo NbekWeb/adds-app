@@ -5,7 +5,6 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import useOrder from '@/store/order.pinia.js'
-import useSelectChannel from '@/store/selectChannel.pinia.js'
 
 import OrderItemComponent from '@/pages/dashboard/order/telegram-order/[id]/components/OrderItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -18,10 +17,8 @@ const router = useRouter()
 
 const corePinia = useCore()
 const orderPinia = useOrder()
-const selectChannelPinia = useSelectChannel()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { selectChannel } = storeToRefs(selectChannelPinia)
 
 const order = ref()
 const orderId = computed(() => route.params.id)
@@ -37,11 +34,6 @@ watch(orderId, () => {
   orderPinia.getOrderById(orderId.value, (data) => {
     order.value = data
   })
-})
-watch(selectChannel, (newChannel, oldChannel) => {
-  if (newChannel !== oldChannel) {
-    router.push({ name: 'DashboardOrderListView' })
-  }
 })
 
 onMounted(() => {
@@ -71,7 +63,7 @@ onMounted(() => {
     <scrollbar-component height="calc(100vh - 220px)">
       <template #content>
         <a-row :gutter="[10, 10]">
-          <a-col :span="24" v-for="item in order?.items">
+          <a-col :span="24" v-for="(item, i) in order?.items" :key="i">
             <order-item-component :order="item" />
           </a-col>
         </a-row>

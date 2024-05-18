@@ -1,26 +1,22 @@
 <script setup>
-import { computed, onMounted, reactive, ref,watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import dayjs from 'dayjs'
 import useCore from '@/store/core.pinia.js'
 import useOrder from '@/store/order.pinia.js'
-import useSelectChannel from '@/store/selectChannel.pinia.js'
 
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderItemFormComponent from '@/pages/dashboard/order/telegram-order/components/order-form/OrderItemFormComponent.vue'
 import OrderItemsListComponent from '@/pages/dashboard/order/telegram-order/[id]/components/OrderItemsListComponent.vue'
-import KioskOrderItemFormComponent from '@/pages/dashboard/order/kiosk-order/components/order-form/OrderItemFormComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
 
 const corePinia = useCore()
 const orderPinia = useOrder()
-const useSelectChannelPinia=useSelectChannel()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { selectChannel } = storeToRefs(useSelectChannelPinia)
 const form = reactive({
   postId: null,
   items: []
@@ -49,11 +45,6 @@ function newOrderCreate() {
     })
   }
 }
-watch(selectChannel,(newChannel,oldChannel)=>{
-  if(newChannel !== oldChannel) {
-    router.push({name:'DashboardOrderListView'})
-  }
-})
 onMounted(() => {
   if (route.params.postId) {
     form.postId = route.params.postId
@@ -63,7 +54,7 @@ onMounted(() => {
 
 <template>
   <template v-if="!newOrderItem">
-    <page-header-component title="E'lon berish " />
+    <page-header-component title="E'lon berish" />
   </template>
 
   <template v-if="newOrderItem">
@@ -71,15 +62,7 @@ onMounted(() => {
       :selected-boards="selectedBoards"
       @add-order="addNewOrderItem"
       @cancel="newOrderItem = false"
-      v-if="useSelectChannelPinia=''"
     />
-    <kiosk-order-item-form-component
-    v-else
-      :selected-boards="selectedBoards"
-      @add-order="addNewOrderItem"
-      @cancel="newOrderItem = false"
-    />
-    
   </template>
   <template v-else>
     <order-items-list-component
