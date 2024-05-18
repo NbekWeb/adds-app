@@ -1,5 +1,5 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import { fileBaseUrl } from '@/utils/conf.js'
@@ -9,6 +9,7 @@ import IconEye from '@/components/icons/IconEye.vue'
 import IconFile from '@/components/icons/IconFile.vue'
 
 const router = useRouter()
+const route = useRoute()
 
 const emits = defineEmits(['edit'])
 const { item } = defineProps({
@@ -18,6 +19,15 @@ const { item } = defineProps({
   }
 })
 const corePinia = useCore()
+const orderPush = () => {
+  router.push({
+    name: 'DashboardOrderFormView',
+    params: {
+      postId: item.id
+    },
+    query: { channel: route.query.channel }
+  })
+}
 
 const { loadingUrl } = storeToRefs(corePinia)
 </script>
@@ -71,17 +81,7 @@ const { loadingUrl } = storeToRefs(corePinia)
           <icon-eye class="mt-1" />
         </a-button>
 
-        <a-button
-          @click="
-            router.push({
-              name: 'DashboardOrderFormView',
-              params: {
-                postId: item.id
-              }
-            })
-          "
-          size="small"
-        >
+        <a-button @click="orderPush()" size="small">
           <icon-shopping-card class="mt-1" />
         </a-button>
       </template>

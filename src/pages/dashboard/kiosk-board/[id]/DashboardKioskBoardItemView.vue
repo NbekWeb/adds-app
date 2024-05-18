@@ -48,7 +48,7 @@ onMounted(() => {
                 <div class="mt-4 pb-3">
                   <a-button
                     @click="router.push({ name: 'DashboardKioskBoardView' })"
-                    >{{ $t('DashboardKioskBoardListView') }}</a-button
+                    >{{ $t('DashboardKioskBoardListView') }} </a-button
                   >
                 </div>
               </template>
@@ -64,7 +64,7 @@ onMounted(() => {
               </div>
               <div class="">
                 <a-button type="primary" @click="router.push(``)">
-                  {{ $t('CREATE_AN_ORDER') }} 
+                  {{ $t('CREATE_AN_ORDER') }}  
                 </a-button>
               </div>
             </div>

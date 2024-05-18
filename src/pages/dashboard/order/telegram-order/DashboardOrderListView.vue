@@ -63,7 +63,6 @@ onMounted(() => {
   <page-header-component :title="$t('DashboardOrderListView')">
     <template #actions>
       <a-space>
-        {{ selectedChannel }}
         <a-select
           style="width: 120px"
           v-model:value="selectedChannel"
@@ -110,7 +109,12 @@ onMounted(() => {
         <a-button
           type="primary"
           class="btn"
-          @click="router.push({ name: 'DashboardPostCreateFormView' })"
+          @click="
+            router.push({
+              name: 'DashboardPostCreateFormView',
+              query: { channel: route.query.channel }
+            })
+          "
         >
           <template #icon>
             <IconPlus />
