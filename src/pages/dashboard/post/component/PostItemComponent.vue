@@ -89,7 +89,8 @@ function editPost(id) {
             @click="
               router.push({
                 name: 'DashboardPostEditFormView',
-                params: { id: item.id }
+                params: { id: item.id },
+                query: { channel: route.query.channel }
               })
             "
             size="small"
@@ -104,7 +105,8 @@ function editPost(id) {
               name: 'DashboardOrderFormView',
               params: {
                 postId: item.id
-              }
+              },
+              query: { channel: route.query.channel }
             })
           "
           size="small"

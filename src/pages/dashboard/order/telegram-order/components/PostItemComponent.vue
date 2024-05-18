@@ -1,5 +1,5 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import { fileBaseUrl } from '@/utils/conf.js'
@@ -9,6 +9,7 @@ import IconEye from '@/components/icons/IconEye.vue'
 import IconFile from '@/components/icons/IconFile.vue'
 
 const router = useRouter()
+const route = useRoute()
 
 const emits = defineEmits(['edit'])
 const { item } = defineProps({
@@ -77,7 +78,8 @@ const { loadingUrl } = storeToRefs(corePinia)
               name: 'DashboardOrderFormView',
               params: {
                 postId: item.id
-              }
+              },
+              query: { channel: route.query.channel }
             })
           "
           size="small"

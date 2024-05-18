@@ -8,6 +8,7 @@ import useOrder from '@/store/order.pinia.js'
 
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderItemFormComponent from '@/pages/dashboard/order/telegram-order/components/order-form/OrderItemFormComponent.vue'
+import KioskOrderItemFormComponent from '@/pages/dashboard/order/kiosk-order/components/order-form/OrderItemFormComponent.vue'
 import OrderItemsListComponent from '@/pages/dashboard/order/telegram-order/[id]/components/OrderItemsListComponent.vue'
 
 const router = useRouter()
@@ -62,6 +63,14 @@ onMounted(() => {
       :selected-boards="selectedBoards"
       @add-order="addNewOrderItem"
       @cancel="newOrderItem = false"
+      v-if="route.query.channel == 'telegram'"
+    />
+    <kiosk-order-item-form-component
+      :selected-boards="selectedBoards"
+      @add-order="addNewOrderItem"
+      @cancel="newOrderItem = false"
+      v-else
+    />
     />
   </template>
   <template v-else>

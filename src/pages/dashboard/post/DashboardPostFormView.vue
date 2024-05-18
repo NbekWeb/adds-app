@@ -122,7 +122,7 @@ onMounted(() => {
         <div class="flex justify-end">
           <a-space>
             <a-button @click="router.back()">
-              {{ $t('BACK') }}
+              {{ $t('BACK') }} s
             </a-button>
             <a-button
               :loading="loadingUrl.has('create/post')"
