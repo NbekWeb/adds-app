@@ -21,13 +21,18 @@ const { loadingUrl } = storeToRefs(corePinia)
 
 const post = ref()
 
-
-
 onMounted(() => {
   if (route.params.id) {
-    postPinia.getOnePostById(route.params.id, (data) => {
-      post.value = data
-    })
+    console.log('dabba',route.query.channel)
+    if (route.query.channel == 'telegram') {
+      postPinia.getOneTelegramPostById(route.params.id, (data) => {
+        post.value = data
+      })
+    } else {
+      postPinia.getOneKioskPostById(route.params.id, (data) => {
+        post.value = data
+      })
+    }
   }
 })
 </script>

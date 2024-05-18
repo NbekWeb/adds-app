@@ -3,9 +3,10 @@ import dayjs from 'dayjs'
 import { formatAmount } from '@/composables/index.js'
 import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 
 const { item } = defineProps({
   item: {
@@ -19,7 +20,11 @@ const { item } = defineProps({
   <a-card
     class="order-item-card"
     @click="
-      router.push({ name: 'DashboardOrderItemView', params: { id: item.id } })
+      router.push({
+        name: 'DashboardOrderItemView',
+        params: { id: item.id },
+        query: { channel: route.query.channel }
+      })
     "
   >
     <div class="status flex justify-between align-center">
@@ -27,6 +32,7 @@ const { item } = defineProps({
         <status-tag-component :status="item.status" />
       </div>
       <a-avatar-group
+        v-if="route.query.channel == 'telegram'"
         :max-count="3"
         :max-style="{
           color: '#9f9fa3',
@@ -36,7 +42,8 @@ const { item } = defineProps({
         <a-avatar
           size="middle"
           class="avatar"
-          v-for="orderItem in item.items"
+          v-for="(orderItem, i) in item.items"
+          :key="i"
           :src="`${fileBaseUrl}/file/${orderItem.channelHashId}`"
         />
       </a-avatar-group>
