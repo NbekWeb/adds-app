@@ -153,6 +153,7 @@ const uzLat = {
   YOUR_BALANCE: 'Sizning balansingiz',
   NO_NOTIFICATIONS: 'Bildirishnomalar mavjud emas',
   NOTIFICATIONS: 'Bildirishnomalar',
+  COUNT_OUTPUTS: 'Chiqishlar soni',
   // statuses
   EXPIRED: "Muddati o'tib ketgan",
   FAILED: 'Muvaffaqiyatsiz',

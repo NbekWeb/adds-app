@@ -1,10 +1,13 @@
 <script setup>
+import useKioskBoard from "@/store/kiosk-board.pinia.js";
+
 import { formatAmount, formatTextLength } from '@/composables/index.js'
-import dayjs from 'dayjs'
 import IconX from '@/components/icons/IconX.vue'
 import {onMounted, ref} from "vue";
 import IconPlus from "@/components/icons/IconPlus.vue";
 import IconMinus from "@/components/icons/IconMinus.vue";
+
+const kioskBoardStore = useKioskBoard()
 
 const emits = defineEmits(['close'])
 
@@ -18,12 +21,7 @@ const props = defineProps({
 const item = props.item
 
 const orderCount = ref(1)
-
-const handleChangeOrderCount = (e) => {
-  orderCount.value = e.target.value.replace(/[^0-9]/g, '')
-  if (!e.target.value) orderCount.value = 1
-  handleClickOrderCount()
-}
+const boardPrice = ref(0)
 
 const handleClickOrderCount = (e) => {
   if (e === '+') {
@@ -37,6 +35,11 @@ const handleClickOrderCount = (e) => {
 
 onMounted(() => {
   orderCount.value = Math.floor(props.item.orderSeconds / props.item.postSeconds)
+
+  const boardId = props?.item?.board?.id
+  kioskBoardStore.getKioskPrice(boardId, (data) => {
+    boardPrice.value = data?.price
+  })
 })
 </script>
 
@@ -56,19 +59,10 @@ onMounted(() => {
         <h1 class="configuration-name m-0">{{ item?.configuration?.name }}</h1>
       </div>
       <div class="flex justify-between my-2">
-        <div class="date">
-          <span>{{ $t('THE_TIME_OF_PUBLICATION') }}</span>
-          <p class="m-0">
-            {{ dayjs(item.orderDate).format('DD.MM.YYYY') }},
-            {{ item.timeConfiguration?.startTime.slice(0, 5) }}
-          </p>
-        </div>
-        <div class="amount">
+        <div class="amount flex align-center justify-between w-full">
           <span> {{ $t('AMOUNT_BY_SECOND') }} </span>
           <p class="m-0 text-end">
-            {{
-              formatAmount(item?.timeConfiguration?.amount)
-            }}
+            {{ formatAmount(boardPrice) }} <span>so'm</span>
           </p>
         </div>
       </div>
@@ -77,34 +71,30 @@ onMounted(() => {
         <div class="amount">
           <span> {{ $t('TOTAL_AMOUNT') }} </span>
           <p class="m-0">
-            {{ formatAmount(item.orderSeconds * item?.timeConfiguration?.amount) }} sum
+            {{ formatAmount(boardPrice * item.orderSeconds) }} <span>so'm</span>
           </p>
         </div>
 
         <div class="amount">
           <span> {{ $t('DURATION') }} </span>
           <p class="m-0">
-            {{ item.orderSeconds }} soniya
+            {{ item.orderSeconds || 0 }} soniya
           </p>
         </div>
 
-        <div class="flex align-center">
-          <a-input-group compact>
-            <a-button size="small" danger type="primary" @click="handleClickOrderCount('-')">
+        <div class="amount flex flex-column">
+          <span> {{ $t('COUNT_OUTPUTS') }} </span>
+          <div class="flex align-center">
+            <a-button size="small" @click="handleClickOrderCount('-')">
               <IconMinus />
             </a-button>
-            <a-input
-              @change="handleChangeOrderCount"
-              size="small"
-              v-model:value="orderCount"
-              style="width: 50px;
-              text-align: center"
-              :maxlength="3"
-            />
-            <a-button size="small" type="primary" @click="handleClickOrderCount('+')">
+
+            <p class="mx-2">{{ orderCount }} ta</p>
+
+            <a-button size="small" @click="handleClickOrderCount('+')">
               <IconPlus />
             </a-button>
-          </a-input-group>
+          </div>
         </div>
       </div>
     </div>
@@ -155,5 +145,6 @@ onMounted(() => {
   font-size: 14px;
   font-weight: bolder;
   color: $body;
+  margin: 0;
 }
 </style>
