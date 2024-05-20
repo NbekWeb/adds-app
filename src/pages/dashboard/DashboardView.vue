@@ -21,7 +21,6 @@ const { collapsed, loadingUrl } = storeToRefs(corePinia)
 // user me check token
 onMounted(() => {
   userPinia.getUserMe()
-  // console.log(localStorage.getItem('selectChannel'))
 })
 </script>
 

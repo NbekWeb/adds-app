@@ -82,7 +82,7 @@ const open = ref(false)
           {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }},
         </p>
         <span class="sub-title text-muted">
-          {{ $t('THE_TIME_OF_PUBLICATION') }}
+          {{ $t('THE_TIME_OF_PUBLICATION') }} 
         </span>
       </a-col>
       <a-col

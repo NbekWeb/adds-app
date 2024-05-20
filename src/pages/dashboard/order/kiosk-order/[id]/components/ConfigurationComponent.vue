@@ -11,7 +11,7 @@ const props = defineProps({
     <template v-if="configuration">
       <h2>{{ configuration?.name }}</h2>
       <div class="mt-2 flex justify-between align-center">
-        <h4 class="m-0">{{ $t('THE_TIME_OF_PUBLICATION') }}</h4>
+        <h4 class="m-0">{{ $t('THE_TIME_OF_PUBLICATION') }} </h4>
         <p class="m-0">{{ dayjs(startDate).format('DD.MM.YYYY, HH:mm') }}</p>
       </div>
     </template>

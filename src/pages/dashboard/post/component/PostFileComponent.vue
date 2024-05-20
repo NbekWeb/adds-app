@@ -10,6 +10,9 @@ import PostImageAndVideoViewComponent from '@/pages/dashboard/post/component/Pos
 import IconEye from '@/components/icons/IconEye.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconFile from '@/components/icons/IconFile.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 const hashId = defineModel('hashId')
 
 const props = defineProps({
@@ -28,19 +31,35 @@ const fileProgress = ref(0)
 const snapshot = ref()
 
 const uploadLogo = (file) => {
-  uploadPinia.uploadFile(
-    file,
-    (data) => {
-      hashId.value = data.hashId
-      snapshot.value = data.snapshotHashId
-      fileType.value = file.type.split('/')[0]
-      uploadedFilename.value = file.name
-      fileProgress.value = 0
-    },
-    (progress) => {
-      fileProgress.value = progress
-    }
-  )
+  if (route.query.channel == 'telegram') {
+    uploadPinia.uploadFileTelegram(
+      file,
+      (data) => {
+        hashId.value = data.hashId
+        snapshot.value = data.snapshotHashId
+        fileType.value = file.type.split('/')[0]
+        uploadedFilename.value = file.name
+        fileProgress.value = 0
+      },
+      (progress) => {
+        fileProgress.value = progress
+      }
+    )
+  } else {
+    uploadPinia.uploadFileKiosk(
+      file,
+      (data) => {
+        hashId.value = data.hashId
+        snapshot.value = data.snapshotHashId
+        fileType.value = file.type.split('/')[0]
+        uploadedFilename.value = file.name
+        fileProgress.value = 0
+      },
+      (progress) => {
+        fileProgress.value = progress
+      }
+    )
+  }
 
   return false
 }

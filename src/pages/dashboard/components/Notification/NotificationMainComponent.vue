@@ -33,15 +33,19 @@ const openNotification = async () => {
   })
 }
 function checkNotifications() {
-  notificationPinia.checkNotifications()
+  if (localStorage.getItem('access_token')) {
+    notificationPinia.checkNotifications()
+  }
 }
 watch(newNotifications, () => {
   openNotification()
 })
 watch(count, () => {
-  if (count.value) {
-    notificationPinia.getNotifications(0)
-    notificationPinia.getUnreadNotifications()
+  if (localStorage.getItem('access_token')) {
+    if (count.value) {
+      notificationPinia.getNotifications(0)
+      notificationPinia.getUnreadNotifications()
+    }
   }
 })
 function getPegableNotifications(page) {
@@ -50,10 +54,13 @@ function getPegableNotifications(page) {
 }
 
 onMounted(() => {
-  notificationPinia.getUnreadNotifications()
-  notificationPinia.getNotifications(0)
-  checkNotifications()
-  setInterval(checkNotifications, 60000)
+  const token = localStorage.getItem('access_token')
+  if (token) {
+    notificationPinia.getUnreadNotifications()
+    notificationPinia.getNotifications(0)
+    checkNotifications()
+    setInterval(checkNotifications, 60000)
+  }
 })
 </script>
 

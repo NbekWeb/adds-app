@@ -14,9 +14,9 @@ const route = useRoute()
 const corePinia = useCore()
 const postPinia = usePost()
 
-const { loadingUrl } = storeToRefs(corePinia)
-
 const selectedChannel = ref('')
+
+const { loadingUrl } = storeToRefs(corePinia)
 
 const handleChange = (val) => {
   router.push({ query: { channel: val } })
@@ -36,7 +36,9 @@ watch(selectedChannel, (newChannel, oldChannel) => {
 onMounted(() => {
   if (!route.query.channel) {
     router.push({ query: { channel: 'telegram' } })
+    postPinia.getAllTelegramPosts(0)
   }
+
   selectedChannel.value = route.query.channel || 'telegram'
 
   if (selectedChannel.value == 'telegram') {
@@ -65,7 +67,8 @@ onMounted(() => {
           size="middle"
           @click="
             router.push({
-              name: 'DashboardPostCreateFormView'
+              name: 'DashboardPostCreateFormView',
+              query: { channel: route.query.channel }
             })
           "
         >

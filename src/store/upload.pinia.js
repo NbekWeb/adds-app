@@ -4,13 +4,13 @@ import useCore from '@/store/core.pinia.js'
 
 const useUpload = defineStore('upload', {
   actions: {
-    uploadFile(file, type = 'TELEGRAM', callback, progress) {
+    uploadFileTelegram(file, callback, progress) {
       const core = useCore()
       const form_data = new FormData()
       form_data.append('file', file)
       core.loadingUrl.add('file/upload')
       api({
-        url: `file/${type === 'TELEGRAM' ? 'telegram' : type === 'KIOSK' ? 'kiosk' : ''}`,
+        url: `file/telegram`,
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -28,6 +28,38 @@ const useUpload = defineStore('upload', {
           callback(data)
         })
         .catch((error) => {
+          console.log(type)
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('file/upload')
+        })
+    },
+    uploadFileKiosk(file, callback, progress) {
+      const core = useCore()
+      const form_data = new FormData()
+      form_data.append('file', file)
+      core.loadingUrl.add('file/upload')
+      api({
+        url: `file/kiosk`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        data: form_data,
+        onUploadProgress: (progressEvent) => {
+          progress(
+            parseInt(
+              Math.round((progressEvent.loaded / progressEvent.total) * 100)
+            )
+          )
+        }
+      })
+        .then(({ data }) => {
+          callback(data)
+        })
+        .catch((error) => {
+          console.log(type)
           core.switchStatus(error)
         })
         .finally(() => {

@@ -53,7 +53,7 @@ const rules = reactive({
     {
       required: true,
       validator: async (_rules, value) => {
-        if (value.length > 0) {
+        if (value.length > 0 || route.query.channel == 'kiosk') {
           return Promise.resolve()
         } else {
           return Promise.reject(t('REQUIRED_FIELD'))
@@ -69,30 +69,62 @@ function submitForm() {
     .validate()
     .then(() => {
       if (route.params.id) {
-        postPinia.updatePost(route.params.id, form, () => {
-          router.push({name:'DashboardPostView'})
-        })
+        if (route.query.channel == 'telegram') {
+          postPinia.updateTelegramPost(route.params.id, form, () => {
+            router.push({
+              name: 'DashboardPostListView',
+              query: {channel:route.query.channel}
+            })
+          })
+        } else {
+          postPinia.updateKioskPost(route.params.id, form, () => {
+            router.push({
+              name: 'DashboardPostListView',
+              query: {channel:route.query.channel}
+            })
+          })
+        }
       } else {
-        postPinia.createNewPost(form, () => {
-          router.back()
-        })
+        if (route.query.channel == 'telegram') {
+          postPinia.createTelegramNewPost(form, () => {
+            router.push({
+              name: 'DashboardPostListView',
+              query: {channel:route.query.channel}
+            })
+          })
+        } else {
+          postPinia.createKioskNewPost(form, () => {
+            router.push({
+              name: 'DashboardPostListView',
+              query: {channel:route.query.channel}
+            })
+          })
+        }
       }
     })
     .catch(() => {})
 }
 
-
-
 onMounted(() => {
   if (route.params.id) {
-    postPinia.getOnePostById(route.params.id, (data) => {
-      form.fileHashId = data?.fileDto.fileHashId
-      form.text = data.text
-      form.buttons = data.buttons
-      snapshotHashId.value = data.snapshotHashId
-      messageType.value = data.messageType
-      fileName.value = data?.fileDto.fileName
-    })
+    if (route.query.channel == 'telegram') {
+      postPinia.getOneTelegramPostById(route.params.id, (data) => {
+        form.fileHashId = data?.fileDto.fileHashId
+        form.text = data.text
+        form.buttons = data.buttons
+        snapshotHashId.value = data.snapshotHashId
+        messageType.value = data.messageType
+        fileName.value = data?.fileDto.fileName
+      })
+    } else {
+      postPinia.getOneKioskPostById(route.params.id, (data) => {
+        form.fileHashId = data?.fileDto.fileHashId
+        form.text = data.text
+        snapshotHashId.value = data.snapshotHashId
+        messageType.value = data.messageType
+        fileName.value = data?.fileDto.fileName
+      })
+    }
   }
 })
 </script>
@@ -101,7 +133,13 @@ onMounted(() => {
   <page-header-component :title="$t('DashboardPostFormView')" />
   <scrollbar-component height="93%">
     <template #content>
-      <a-form ref="formRef" layout="vertical" :model="form" :rules="rules">
+      <a-form
+        ref="formRef"
+        layout="vertical"
+        :model="form"
+        :rules="rules"
+        class="h-full flex flex-column"
+      >
         <a-form-item :label="$t('ADD_FILE_TO_FILE')" name="fileHashId">
           <post-file-component
             v-model:hash-id="form.fileHashId"
@@ -113,23 +151,20 @@ onMounted(() => {
         <a-form-item :label="$t('POST_DESCRIPTION')" name="text">
           <post-editor-component v-model:value="form.text" :max-count="1024" />
         </a-form-item>
-        <a-form-item
-          :label="$t('POST_BUTTONS')"
-          name="buttons"
-        >
-          <post-inline-buttons-component v-model:buttons="form.buttons" />
-        </a-form-item>
-        <div class="flex justify-end">
+        <div v-if="route.query.channel == 'telegram'">
+          <a-form-item :label="$t('POST_BUTTONS')" name="buttons">
+            <post-inline-buttons-component v-model:buttons="form.buttons" />
+          </a-form-item>
+        </div>
+        <div class="flex justify-end h-full align-end">
           <a-space>
-            <a-button @click="router.back()">
-              {{ $t('BACK') }} s
-            </a-button>
+            <a-button @click="router.back()"> {{ $t('BACK') }} sa1 </a-button>
             <a-button
               :loading="loadingUrl.has('create/post')"
               @click="submitForm"
               type="primary"
             >
-              {{ $t('SAVE') }}
+              {{ $t('SAVE') }} sa1
             </a-button>
           </a-space>
         </div>
