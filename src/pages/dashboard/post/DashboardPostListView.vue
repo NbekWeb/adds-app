@@ -20,21 +20,28 @@ const { loadingUrl } = storeToRefs(corePinia)
 
 const handleChange = (val) => {
   router.push({ query: { channel: val } })
-  if (route.query.channel == 'telegram') {
+  if (selectedChannel.value == 'telegram') {
     postPinia.getAllTelegramPosts(0)
   } else {
     postPinia.getAllKioskPosts(0)
   }
 }
 
+watch(selectedChannel, (newChannel, oldChannel) => {
+  if (newChannel !== oldChannel) {
+    router.push({ query: { channel: newChannel } })
+  }
+})
+
 onMounted(() => {
   if (!route.query.channel) {
     router.push({ query: { channel: 'telegram' } })
+    postPinia.getAllTelegramPosts(0)
   }
 
   selectedChannel.value = route.query.channel || 'telegram'
 
-  if (route.query.channel == 'telegram') {
+  if (selectedChannel.value == 'telegram') {
     postPinia.getAllTelegramPosts(0)
   } else {
     postPinia.getAllKioskPosts(0)

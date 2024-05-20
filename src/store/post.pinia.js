@@ -127,7 +127,6 @@ const usePost = defineStore('post', {
             locale: 'POST_ADDED_SUCCESSFULLY'
           })
           callback()
-          this.getAllTelegramPosts(0)
         })
         .catch((error) => {
           console.log(error)

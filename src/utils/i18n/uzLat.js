@@ -96,6 +96,7 @@ const uzLat = {
   ADD_NEW_ORDER_ITEM: "Yangi xarid qo'shish",
   THE_TIME_OF_PUBLICATION: "E'lonni chiqish vaqti",
   POST_DELETED_DATE: "E'lonni olib tashlash vaqti",
+  THE_TIME_OF_DURATION:"E'lonni chiqish davomiyligi",
   TOTAL_PRICE: "Jami to'lov",
   ORDER_PRICE: 'Buyurtma narxi',
   SEARCH: 'Qidirish',

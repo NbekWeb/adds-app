@@ -79,7 +79,7 @@ onMounted(() => {
 
   <div>
     <a-button @click="router.back()">
-      {{ $t('BACK') }}
+      {{ $t('BACK') }} sa1
     </a-button>
   </div>
 </template>

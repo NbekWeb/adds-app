@@ -8,7 +8,7 @@ import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import { formatAmount } from '../../../../../../composables/index.js'
 import ViewsComponent from '@/pages/dashboard/order/telegram-order/[id]/components/ViewsComponent.vue'
 import WarningComponent from '@/pages/dashboard/order/telegram-order/[id]/components/WarningComponent.vue'
-import { useRoute,useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import useOrder from '@/store/order.pinia.js'
 
 const orderPinia = useOrder()
@@ -27,7 +27,6 @@ function cancelOrder() {
   } else {
     orderPinia.putKioskCancelOrder(props.item?.orderId, [props.item?.id])
   }
-  console.log(props.item)
 
   router.push({ name: 'DashboardOrderView' })
 }
@@ -100,5 +99,4 @@ function cancelOrder() {
     }
   }
 }
-
 </style>

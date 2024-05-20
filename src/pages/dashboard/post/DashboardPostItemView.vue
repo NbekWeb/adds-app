@@ -23,7 +23,6 @@ const post = ref()
 
 onMounted(() => {
   if (route.params.id) {
-    console.log('dabba',route.query.channel)
     if (route.query.channel == 'telegram') {
       postPinia.getOneTelegramPostById(route.params.id, (data) => {
         post.value = data

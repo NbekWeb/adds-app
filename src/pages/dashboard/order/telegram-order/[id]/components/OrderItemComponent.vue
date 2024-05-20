@@ -16,12 +16,12 @@ const props = defineProps({
   order: Object
 })
 
+
 const open = ref(false)
 </script>
 
 <template>
   <a-card class="order-item-card" @click="open = true">
-    {{ order }}
     <a-row justify="space-between">
       <a-col
         :span="6"
@@ -98,11 +98,9 @@ const open = ref(false)
         class="item border"
         v-else
       >
-        <p class="m-0">
-          {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }} sa1,
-        </p>
+        <p class="m-0">{{ order?.orderSeconds }} sekund</p>
         <span class="sub-title text-muted">
-          {{ $t('THE_TIME_OF_PUBLICATION') }}
+          {{ $t('THE_TIME_OF_DURATION') }}
         </span>
       </a-col>
       <a-col
@@ -113,6 +111,7 @@ const open = ref(false)
         :lg="5"
         :xl="5"
         class="item border end-item"
+        v-if="route.query.channel == 'telegram'"
       >
         <div>
           <p class="m-0">
