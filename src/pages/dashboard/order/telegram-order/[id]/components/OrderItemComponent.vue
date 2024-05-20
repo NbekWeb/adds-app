@@ -12,8 +12,6 @@ const orderPinia = useOrder()
 
 const route = useRoute()
 
-
-
 const props = defineProps({
   order: Object
 })
@@ -23,6 +21,7 @@ const open = ref(false)
 
 <template>
   <a-card class="order-item-card" @click="open = true">
+    {{ order }}
     <a-row justify="space-between">
       <a-col
         :span="6"
@@ -80,9 +79,27 @@ const open = ref(false)
         :lg="4"
         :xl="4"
         class="item border"
+        v-if="route.query.channel == 'telegram'"
       >
         <p class="m-0">
           {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }},
+        </p>
+        <span class="sub-title text-muted">
+          {{ $t('THE_TIME_OF_PUBLICATION') }}
+        </span>
+      </a-col>
+      <a-col
+        :span="4"
+        :xs="12"
+        :sm="12"
+        :md="12"
+        :lg="4"
+        :xl="4"
+        class="item border"
+        v-else
+      >
+        <p class="m-0">
+          {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }} sa1,
         </p>
         <span class="sub-title text-muted">
           {{ $t('THE_TIME_OF_PUBLICATION') }}

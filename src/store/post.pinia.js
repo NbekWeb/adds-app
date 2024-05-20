@@ -106,7 +106,68 @@ const usePost = defineStore('post', {
           core.loadingUrl.delete('get/post/one')
         })
     },
-    createNewPost(form, callback) {
+    createTelegramNewPost(form, callback) {
+      const core = useCore()
+      core.loadingUrl.add('create/post')
+
+      const data = {
+        text: form.text,
+        fileHashId: form?.fileHashId,
+        buttons: form.buttons
+      }
+
+      api({
+        url: `post`,
+        method: 'POST',
+        data: data
+      })
+        .then(() => {
+          core.setToast({
+            type: 'success',
+            locale: 'POST_ADDED_SUCCESSFULLY'
+          })
+          callback()
+          this.getAllTelegramPosts(0)
+        })
+        .catch((error) => {
+          console.log(error)
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('create/post')
+        })
+    },
+    createKioskNewPost(form, callback) {
+      const core = useCore()
+      core.loadingUrl.add('create/post')
+
+      const data = {
+        text: form.text,
+        fileHashId: form?.fileHashId,
+        buttons: form.buttons
+      }
+
+      api({
+        url: `kiosk-post`,
+        method: 'POST',
+        data: data
+      })
+        .then(() => {
+          core.setToast({
+            type: 'success',
+            locale: 'POST_ADDED_SUCCESSFULLY'
+          })
+          callback()
+        })
+        .catch((error) => {
+          console.log(error)
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('create/post')
+        })
+    },
+    updateTelegramPost(id, form, callback) {
       const core = useCore()
       core.loadingUrl.add('create/post')
 
@@ -114,52 +175,50 @@ const usePost = defineStore('post', {
         text: form.text,
         fileHashId: form.fileHashId
       }
-
-      // Check if selectChannel is 'kiosk-'
-      if (selectChannelPinia.getSelectChannel === 'kiosk-') {
+      if (selectChannelPinia.getSelectChannel == 'kiosk-') {
         api({
           url: `post`,
-          method: 'POST',
+          pk: id,
+          method: 'PUT',
           data: data
         })
           .then(() => {
             core.setToast({
               type: 'success',
-              locale: 'POST_ADDED_SUCCESSFULLY'
+              locale: 'POST_UPDATED_SUCCESSFULLY'
             })
             callback()
             this.getAllPosts(0)
           })
           .catch((error) => {
-            console.log(error)
             core.switchStatus(error)
           })
           .finally(() => {
             core.loadingUrl.delete('create/post')
           })
       } else {
-        // Include buttons in data
         data.buttons = form.buttons.map((item) => ({
           orderNumber: item.orderNumber,
           text: item.text,
-          url: item.url
+          url: item.url,
+          id: item.id
         }))
 
         api({
           url: `post`,
-          method: 'POST',
+          pk: id,
+          method: 'PUT',
           data: data
         })
           .then(() => {
             core.setToast({
               type: 'success',
-              locale: 'POST_ADDED_SUCCESSFULLY'
+              locale: 'POST_UPDATED_SUCCESSFULLY'
             })
             callback()
             this.getAllPosts(0)
           })
           .catch((error) => {
-            console.log(error)
             core.switchStatus(error)
           })
           .finally(() => {
@@ -167,8 +226,7 @@ const usePost = defineStore('post', {
           })
       }
     },
-
-    updatePost(id, form, callback) {
+    updateKioskPost(id, form, callback) {
       const core = useCore()
       core.loadingUrl.add('create/post')
 
