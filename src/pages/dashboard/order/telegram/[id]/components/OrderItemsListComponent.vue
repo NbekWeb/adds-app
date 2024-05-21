@@ -15,6 +15,7 @@ const { items } = defineProps({
 <template>
   <scrollbar-component height="calc(100vh - 220px)">
     <template #content>
+      
       <a-row :gutter="[10, 10]">
         <a-col
           :xs="24"
@@ -26,7 +27,8 @@ const { items } = defineProps({
           v-for="(item, i) in items"
           :key="i"
         >
-          <order-item-component :item="item" @close="emits('close', i)" />
+        <order-item-component :item="item" @close="emits('close', i)" />
+        
         </a-col>
         <a-col :xs="24" :ms="24" :md="24" :lg="12" :xl="8" :xxl="8">
           <a-card class="order-add" @click="emits('addItem')">

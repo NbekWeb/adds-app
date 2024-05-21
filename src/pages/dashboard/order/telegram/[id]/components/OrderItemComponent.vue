@@ -37,7 +37,7 @@ const open = ref(false)
           <p class="m-0">
             {{ order?.board.name }}
           </p>
-          <span class="sub-title text-muted"> {{ $t('NAME') }}  </span>
+          <span class="sub-title text-muted"> {{ $t('NAME') }} </span>
         </div>
       </a-col>
       <a-col

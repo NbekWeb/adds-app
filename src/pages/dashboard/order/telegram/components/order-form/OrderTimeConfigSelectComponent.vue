@@ -37,9 +37,9 @@ function handleChangeSelect(e) {
 }
 function handleChangeDate(date) {
   orderDate.value = date
-  timeConfigurationPinia.getTelegramTimeConfigurations(
-    0,
+  timeConfigurationPinia.getTimeConfigurationsByBoardId(
     boardId,
+    configurationId,
     dayjs(date).format('YYYY-MM-DD')
   )
 }

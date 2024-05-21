@@ -40,12 +40,11 @@ function cancelOrder() {
     <template #title>
       <div class="flex align-center">
         <a-avatar
-          v-if="route.query.channel == 'telegram'"
           class="avatar"
           :src="`${fileBaseUrl}/file/${item?.board.logoHashId}`"
         />
         <h3 class="m-0 ml-2">
-          {{ item.board.name }}
+          {{ item.board.name }} 
         </h3>
       </div>
     </template>
@@ -57,7 +56,6 @@ function cancelOrder() {
         <configuration-component
           :configuration="item?.configuration"
           :start-date="item?.startDate"
-          v-if="route.query.channel == 'telegram'"
         />
         <configuration-statistics-component :statistics="item?.taskResponse" />
         <reactions-component :reactions="item?.taskResponse?.reactions" />

@@ -1,7 +1,5 @@
 <script setup>
 import { fileBaseUrl } from '@/utils/conf.js'
-import ConfigurationComponent from '@/pages/dashboard/order/kiosk/[id]/components/ConfigurationComponent.vue'
-import ConfigurationStatisticsComponent from '@/pages/dashboard/order/kiosk/[id]/components/ConfigurationStatisticsComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import { formatAmount } from '../../../../../../composables/index.js'
@@ -35,11 +33,6 @@ function cancelOrder() {
   >
     <template #title>
       <div class="flex align-center">
-        <a-avatar
-          v-if="route.query.channel == 'telegram'"
-          class="avatar"
-          :src="`${fileBaseUrl}/file/${item?.board.logoHashId}`"
-        />
         <h3 class="m-0 ml-2">
           {{ item.board.name }}
         </h3>
@@ -50,12 +43,6 @@ function cancelOrder() {
     </template>
     <scrollbar-component height="calc(100vh - 170px)">
       <template #content>
-        <configuration-component
-          :configuration="item?.configuration"
-          :start-date="item?.startDate"
-          v-if="route.query.channel == 'telegram'"
-        />
-        <configuration-statistics-component :statistics="item?.taskResponse" />
         <views-component :views="item?.taskResponse?.views" />
         <template v-if="item?.status === 'PENDING'">
           <a-popconfirm
@@ -65,7 +52,7 @@ function cancelOrder() {
             @confirm="cancelOrder"
           >
             <a-button class="mb-2" danger @click.stop
-              >{{ $t('CANCEL') }} 
+              >{{ $t('CANCEL') }}
             </a-button>
           </a-popconfirm>
         </template>

@@ -39,7 +39,9 @@ function newOrderCreate() {
       items: form.items.map((item) => ({
         boardId: item.board.id,
         timeConfigurationId: item.timeConfiguration.id,
+        configurationId:item.configuration.id,
         orderDate: dayjs(item.orderDate).format('YYYY-MM-DD')
+   
       }))
     })
   }

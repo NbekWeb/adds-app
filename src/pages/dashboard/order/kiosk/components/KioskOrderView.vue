@@ -93,7 +93,7 @@ onMounted(() => {
         :loading="loadingUrl.has('create/kiosk-order')"
         type="primary"
       >
-        Xarid qilish 
+        Xarid qilish  sa1
       </a-button>
     </div>
   </template>
