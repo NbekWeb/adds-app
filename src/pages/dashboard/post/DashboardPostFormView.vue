@@ -10,6 +10,7 @@ import PostFileComponent from '@/pages/dashboard/post/component/PostFileComponen
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import PostInlineButtonsComponent from '@/pages/dashboard/post/component/PostInlineButtonsComponent.vue'
+import LoaderComponent from "@/components/LoaderComponent.vue";
 
 const { t } = useI18n()
 
@@ -131,46 +132,48 @@ onMounted(() => {
 
 <template>
   <page-header-component :title="$t('DashboardPostFormView')" />
-  <scrollbar-component height="93%">
-    <template #content>
-      <a-form
-        ref="formRef"
-        layout="vertical"
-        :model="form"
-        :rules="rules"
-        class="h-full flex flex-column"
-      >
-        <a-form-item :label="$t('ADD_FILE_TO_FILE')" name="fileHashId">
-          <post-file-component
-            v-model:hash-id="form.fileHashId"
-            :snapshot-hash-id="snapshotHashId"
-            :file-name="fileName"
-            :type="messageType"
-          />
-        </a-form-item>
-        <a-form-item :label="$t('POST_DESCRIPTION')" name="text">
-          <post-editor-component v-model:value="form.text" :max-count="1024" />
-        </a-form-item>
-        <div v-if="route.query.channel == 'telegram'">
-          <a-form-item :label="$t('POST_BUTTONS')" name="buttons">
-            <post-inline-buttons-component v-model:buttons="form.buttons" />
+  <loader-component loading-url="get/post/one" style="border: 1px solid blue">
+    <scrollbar-component height="calc(100vh - 200px)">
+      <template #content>
+        <a-form
+            ref="formRef"
+            layout="vertical"
+            :model="form"
+            :rules="rules"
+            class="h-full flex flex-column"
+        >
+          <a-form-item :label="$t('ADD_FILE_TO_FILE')" name="fileHashId">
+            <post-file-component
+                v-model:hash-id="form.fileHashId"
+                :snapshot-hash-id="snapshotHashId"
+                :file-name="fileName"
+                :type="messageType"
+            />
           </a-form-item>
-        </div>
-        <div class="flex justify-end h-full align-end">
-          <a-space>
-            <a-button @click="router.back()"> {{ $t('BACK') }} sa1 </a-button>
-            <a-button
-              :loading="loadingUrl.has('create/post')"
-              @click="submitForm"
-              type="primary"
-            >
-              {{ $t('SAVE') }} sa1
-            </a-button>
-          </a-space>
-        </div>
-      </a-form>
-    </template>
-  </scrollbar-component>
+          <a-form-item :label="$t('POST_DESCRIPTION')" name="text">
+            <post-editor-component v-model:value="form.text" :max-count="1024" />
+          </a-form-item>
+          <div v-if="route.query.channel == 'telegram'">
+            <a-form-item :label="$t('POST_BUTTONS')" name="buttons">
+              <post-inline-buttons-component v-model:buttons="form.buttons" />
+            </a-form-item>
+          </div>
+          <div class="flex justify-end h-full align-end">
+            <a-space>
+              <a-button @click="router.back()"> {{ $t('BACK') }} sa1 </a-button>
+              <a-button
+                  :loading="loadingUrl.has('create/post')"
+                  @click="submitForm"
+                  type="primary"
+              >
+                {{ $t('SAVE') }} sa1
+              </a-button>
+            </a-space>
+          </div>
+        </a-form>
+      </template>
+    </scrollbar-component>
+  </loader-component>
 </template>
 
 <style scoped lang="scss"></style>
