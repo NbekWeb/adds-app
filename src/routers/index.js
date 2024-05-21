@@ -15,23 +15,22 @@ import DashboardKioskBoardView from '@/pages/dashboard/kiosk-board/DashboardKios
 import DashboardKioskBoardListView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardListView.vue'
 import DashboardPaymentListView from '@/pages/dashboard/payment/DashboardPaymentListView.vue'
 import DashboardPaymentView from '@/pages/dashboard/payment/DashboardPaymentView.vue'
-import DashboardOrderView from '@/pages/dashboard/order/telegram-order/DashboardOrderView.vue'
-import DashboardOrderListView from '@/pages/dashboard/order/telegram-order/DashboardOrderListView.vue'
+import DashboardOrderView from '@/pages/dashboard/order/DashboardOrderView.vue'
+import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListView.vue'
+import TelegramOrderView from '@/pages/dashboard/order/telegram/TelegramOrderView.vue'
+import KioskOrderView from '@/pages/dashboard/order/kiosk/components/KioskOrderView.vue'
 import DashboardBoardItemInfoView from '@/pages/dashboard/board/[id]/DashboardBoardItemInfoView.vue'
-import DashboardOrderFormView from '@/pages/dashboard/order/telegram-order/DashboardOrderFormView.vue'
 import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
 import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
 import DashboardPostItemView from '@/pages/dashboard/post/DashboardPostItemView.vue'
-import DashboardOrderItemView from '@/pages/dashboard/order/telegram-order/[id]/DashboardOrderView.vue'
+import TelegramOrderItemView from '@/pages/dashboard/order/telegram/[id]/DashboardOrderView.vue'
+import KioskOrderItemView from '@/pages/dashboard/order/kiosk/[id]/DashboardOrderView.vue'
 import DashboardKioskBoardItemView from '@/pages/dashboard/kiosk-board/[id]/DashboardKioskBoardItemView.vue'
 import DashboardKioskPostView from '@/pages/dashboard/kiosk-post/DashboardKioskPostView.vue'
 import DashboardKioskPostListView from '@/pages/dashboard/kiosk-post/DashboardKioskPostListView.vue'
 import DashboardKioskPostFormView from '@/pages/dashboard/kiosk-post/DashboardKioskPostFormView.vue'
 import DashboardKioskPostItemView from '@/pages/dashboard/kiosk-post/DashboardKioskPostItemView.vue'
-import DashboardKioskOrderView from '@/pages/dashboard/order/kiosk-order/DashboardKioskOrderView.vue'
-import DashboardKioskOrderListView from '@/pages/dashboard/order/kiosk-order/DashboardKioskOrderListView.vue'
-import DashboardKioskOrderFormView from '@/pages/dashboard/order/kiosk-order/DashboardKioskOrderFormView.vue'
-import DashboardKioskOrderItemView from '@/pages/dashboard/order/kiosk-order/[id]/DashboardOrderView.vue'
+
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -171,35 +170,23 @@ export const router = createRouter({
             },
             {
               path: 'create/:postId',
-              name: 'DashboardOrderFormView',
-              component: DashboardOrderFormView
+              name: 'TelegramOrderView',
+              component: TelegramOrderView
+            },
+            {
+              path: 'kiosk-create/:postId',
+              name: 'KioskOrderView',
+              component: KioskOrderView
             },
             {
               path: 'item/:id',
-              name: 'DashboardOrderItemView',
-              component: DashboardOrderItemView
-            }
-          ]
-        },
-        {
-          path: 'kiosk-order',
-          name: 'DashboardKioskOrderView',
-          component: DashboardKioskOrderView,
-          children: [
-            {
-              path: '',
-              name: 'DashboardKioskOrderListView',
-              component: DashboardKioskOrderListView
+              name: 'TelegramOrderItemView',
+              component: TelegramOrderItemView
             },
             {
-              path: 'create/:postId',
-              name: 'DashboardKioskOrderFormView',
-              component: DashboardKioskOrderFormView
-            },
-            {
-              path: 'item/:id',
-              name: 'DashboardKioskOrderItemView',
-              component: DashboardKioskOrderItemView
+              path: 'kiosk-item/:id',
+              name: 'KioskOrderItemView',
+              component: KioskOrderItemView
             }
           ]
         },

@@ -212,7 +212,7 @@ const useOrder = defineStore('order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: 'Order Canceled Successfully'
+            locale: 'ORDER_CANCELED'
           })
         })
         .catch((error) => {
@@ -236,7 +236,7 @@ const useOrder = defineStore('order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: 'Order Canceled Successfully'
+            locale: 'ORDER_CANCELED'
           })
         })
         .catch((error) => {

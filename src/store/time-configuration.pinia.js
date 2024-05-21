@@ -65,7 +65,31 @@ const useTimeConfiguration = defineStore('time-configuration', {
         .finally(() => {
           core.loadingUrl.delete('get/kiosk-board/time-configuration/all')
         })
-    }
+    },
+    getTelegramTimeConfigurations(page, boardId, orderDate) {
+      const core = corePinia()
+      core.loadingUrl.add('get/telegram-board/time-configuration/all')
+      api({
+        url: 'board-time-configuration',
+        params: {
+          page: page,
+          size: 10,
+          boardId: boardId,
+          orderDate: orderDate
+        }
+      })
+        .then(({data}) => {
+          this.timeConfigurations = data.content
+          this.totalElements = data.totalElements
+          this.totalPages = data.totalPage
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('get/kiosk-board/time-configuration/all')
+        })
+    },
   }
 })
 
