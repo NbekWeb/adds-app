@@ -55,11 +55,6 @@ const menuList = shallowRef([
     icon: () => h(IconMessageTextSquare),
     label: t('DashboardPostListView')
   },
-  {
-    key: 'kiosk-order',
-    icon: () => h(IconShoppingCard),
-    label: t('DashboardKioskOrderListView')
-  },
 
   {
     key: 'order',

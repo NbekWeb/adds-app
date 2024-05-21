@@ -158,13 +158,13 @@ onMounted(() => {
         </div>
         <div class="flex justify-end h-full align-end">
           <a-space>
-            <a-button @click="router.back()"> {{ $t('BACK') }} sa1 </a-button>
+            <a-button @click="router.back()"> {{ $t('BACK') }}  </a-button>
             <a-button
               :loading="loadingUrl.has('create/post')"
               @click="submitForm"
               type="primary"
             >
-              {{ $t('SAVE') }} sa1
+              {{ $t('SAVE') }} 
             </a-button>
           </a-space>
         </div>
