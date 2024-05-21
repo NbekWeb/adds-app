@@ -131,11 +131,12 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
 .post-item-file {
   background: $light;
   height: max-content;
   img {
-    height: 100%;
+    flex: 1;
     max-height: 340px;
     object-fit: contain;
   }
