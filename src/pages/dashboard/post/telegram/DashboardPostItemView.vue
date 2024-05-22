@@ -37,7 +37,7 @@ onMounted(() => {
     </template>
     <scrollbar-component height="calc(100vh - 190px)">
       <template #content>
-        <div class="post-item-file">
+        <div class="post-item-file flex justify-center">
           <template v-if="post?.messageType === 'IMAGE'">
             <img
               :src="`${fileBaseUrl}/file/${post?.fileDto?.fileHashId}`"
@@ -125,9 +125,14 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
+@import '@/assets/styles/responsive';
 .post-item-file {
+  background: $light;
+  height: max-content;
   img {
-    width: 100%;
+    flex: 1;
+    max-height: 340px;
+    object-fit: contain;
   }
 }
 .plyr-video {

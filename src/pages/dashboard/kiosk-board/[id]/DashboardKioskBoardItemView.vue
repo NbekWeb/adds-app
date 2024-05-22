@@ -55,32 +55,45 @@ onMounted(() => {
             </a-empty>
           </template>
           <template v-else>
-            <div class="flex justify-between">
-              <div>
-                <p class="text-muted text-sm">{{ $t('NAME') }}</p>
-                <h2 class="text-2xl text-bold">
-                  {{ itemInfo?.name }}
-                </h2>
-              </div>
-              <div class="">
-                <a-button type="primary" @click="router.push(``)">
-                  {{ $t('CREATE_AN_ORDER') }}  
-                </a-button>
-              </div>
-            </div>
-            <div class="mt-4">
-              <div class="">
-                <p class="text-muted text-xs">{{ $t('CATEGORY') }}</p>
-                <h2 class="text-xl text-bold">
-                  {{ itemInfo?.category?.name }}
-                </h2>
-              </div>
-              <div class="mt-4 mb-5">
-                <p class="text-muted text-xs">{{ $t('DESCRIPTION') }}</p>
-                <p class="text-xl text-bold">{{ itemInfo?.description }}</p>
-              </div>
-            </div>
-            <MapComponent :markers="marker" class="px-4"> </MapComponent>
+            <a-row :gutter="[10,20]">
+              <a-col :xs="24" :lg="10" :xl="12">
+                <a-row :gutter="[10,20]">
+                  <a-col span="24">
+                    <template v-if="mapName">
+                      <p class="text-muted text-xs">{{ $t('LOCATION') }}</p>
+                      <p class="text-sm text-bold">{{ mapName }}</p>
+                    </template>
+                  </a-col>
+                  <a-col span="12">
+                    <div>
+                      <p class="text-muted text-xs">{{ $t('NAME') }}</p>
+                      <h2 class="text-lg text-bold">
+                        {{ itemInfo?.name }}
+                      </h2>
+                    </div>
+                  </a-col>
+                  <a-col span="12">
+                    <p class="text-muted text-xs">{{ $t('CATEGORY') }}</p>
+                    <h2 class="text-lg text-bold">
+                      {{ itemInfo?.category?.name }}
+                    </h2>
+                  </a-col>
+                  <a-col span="24">
+                      <p class="text-muted text-xs">{{ $t('DESCRIPTION') }}</p>
+                      <p class="text-sm text-bold">{{ itemInfo?.description }}</p>
+                  </a-col>
+                  <a-col span="24" class="mt-4">
+                    <a-button type="primary" @click="router.push(``)">
+                      {{ $t('CREATE_AN_ORDER') }}
+                    </a-button>
+                  </a-col>
+                </a-row>
+              </a-col>
+              <a-col :xs="24" :lg="14" :xl="12">
+                <map-component :markers="marker" class="px-4" style="height: calc(100vh - 160px)"/>
+              </a-col>
+            </a-row>
+
             <a-spin
               wrapper-class-name="kiosk-board-map-spin"
               class="w-full mx-auto"
@@ -90,9 +103,7 @@ onMounted(() => {
                 <icon-loader />
               </template>
             </a-spin>
-            <template v-if="mapName">
-              <p class="px-4 mt-2">{{ mapName }}</p>
-            </template>
+
             <div class="mt-4 pb-3">
               <a-button @click="router.back()">{{ $t('BACK') }}</a-button>
             </div>
