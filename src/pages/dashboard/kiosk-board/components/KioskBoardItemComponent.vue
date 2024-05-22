@@ -35,7 +35,12 @@ const props = defineProps({
                 :locMap="[item?.latitude, item?.longitude]"
               />
               <a-button
-                @click="$router.push(`kiosk-board/order/${item?.id}`)"
+                @click="$router.push({
+                  path:'post',
+                  query: {
+                    channel: 'kiosk',
+                  }
+                })"
                 size="small"
                 class="flex justify-center align-center kiosk-board-item-btn"
               >

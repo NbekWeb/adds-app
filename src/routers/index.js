@@ -32,7 +32,6 @@ import DashboardKioskPostView from '@/pages/dashboard/kiosk-post/DashboardKioskP
 import DashboardKioskPostListView from '@/pages/dashboard/kiosk-post/DashboardKioskPostListView.vue'
 import DashboardKioskPostFormView from '@/pages/dashboard/kiosk-post/DashboardKioskPostFormView.vue'
 import DashboardKioskPostItemView from '@/pages/dashboard/kiosk-post/DashboardKioskPostItemView.vue'
-import KioskBoardOrderComponent from "@/pages/dashboard/kiosk-board/[id]/KioskBoardOrderComponent.vue";
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -101,11 +100,6 @@ export const router = createRouter({
               path: 'item/:id',
               name: 'DashboardKioskBoardItemView',
               component: DashboardKioskBoardItemView
-            },
-            {
-              path: 'order/:id',
-              name: 'KioskBoardOrderComponent',
-              component: KioskBoardOrderComponent
             }
           ]
         },
