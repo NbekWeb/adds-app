@@ -66,7 +66,6 @@ onMounted(() => {
      
     />
   
-    />
   </template>
   <template v-else>
     <order-items-list-component

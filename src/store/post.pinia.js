@@ -168,7 +168,7 @@ const usePost = defineStore('post', {
     },
     updateTelegramPost(id, form, callback) {
       const core = useCore()
-      core.loadingUrl.add('create/post')
+      core.loadingUrl.add('update/post')
 
       const data = {
         text: form.text,
@@ -192,76 +192,44 @@ const usePost = defineStore('post', {
             locale: 'POST_UPDATED_SUCCESSFULLY'
           })
           callback()
-          this.getAllPosts(0)
         })
         .catch((error) => {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('create/post')
+          core.loadingUrl.delete('update/post')
         })
     },
     updateKioskPost(id, form, callback) {
       const core = useCore()
-      core.loadingUrl.add('create/post')
+      core.loadingUrl.add('update/post')
 
       const data = {
         text: form.text,
         fileHashId: form.fileHashId
       }
-      if (selectChannelPinia.getSelectChannel == 'kiosk-') {
-        api({
-          url: `post`,
-          pk: id,
-          method: 'PUT',
-          data: data
+      api({
+        url: `kiosk-post`,
+        pk: id,
+        method: 'PUT',
+        data: data
+      })
+        .then(() => {
+          core.setToast({
+            type: 'success',
+            locale: 'POST_UPDATED_SUCCESSFULLY'
+          })
+          callback()
         })
-          .then(() => {
-            core.setToast({
-              type: 'success',
-              locale: 'POST_UPDATED_SUCCESSFULLY'
-            })
-            callback()
-            this.getAllPosts(0)
-          })
-          .catch((error) => {
-            core.switchStatus(error)
-          })
-          .finally(() => {
-            core.loadingUrl.delete('create/post')
-          })
-      } else {
-        data.buttons = form.buttons.map((item) => ({
-          orderNumber: item.orderNumber,
-          text: item.text,
-          url: item.url,
-          id: item.id
-        }))
-
-        api({
-          url: `post`,
-          pk: id,
-          method: 'PUT',
-          data: data
+        .catch((error) => {
+          core.switchStatus(error)
         })
-          .then(() => {
-            core.setToast({
-              type: 'success',
-              locale: 'POST_UPDATED_SUCCESSFULLY'
-            })
-            callback()
-            this.getAllPosts(0)
-          })
-          .catch((error) => {
-            core.switchStatus(error)
-          })
-          .finally(() => {
-            core.loadingUrl.delete('create/post')
-          })
-      }
+        .finally(() => {
+          core.loadingUrl.delete('update/post')
+        })
     },
 
-    deletePostById(id) {
+    deleteTelegramPostById(id) {
       const core = useCore()
       core.loadingUrl.add(`delete/post/${id}`)
       api({
@@ -275,7 +243,30 @@ const usePost = defineStore('post', {
             locale: 'POST_DELETED_SUCCESSFULLY'
           })
           this.clearPost()
-          this.getAllPosts(0)
+          this.getAllTelegramPosts(0)
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete(`delete/post/${id}`)
+        })
+    },
+    deleteKioskPostById(id) {
+      const core = useCore()
+      core.loadingUrl.add(`delete/post/${id}`)
+      api({
+        url: `kiosk-post`,
+        pk: id,
+        method: 'DELETE'
+      })
+        .then(() => {
+          core.setToast({
+            type: 'success',
+            locale: 'POST_DELETED_SUCCESSFULLY'
+          })
+          this.clearPost()
+          this.getAllKioskPosts(0)
         })
         .catch((error) => {
           core.switchStatus(error)

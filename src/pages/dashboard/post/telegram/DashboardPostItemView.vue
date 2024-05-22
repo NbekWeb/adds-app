@@ -23,15 +23,9 @@ const post = ref()
 
 onMounted(() => {
   if (route.params.id) {
-    if (route.query.channel == 'telegram') {
-      postPinia.getOneTelegramPostById(route.params.id, (data) => {
-        post.value = data
-      })
-    } else {
-      postPinia.getOneKioskPostById(route.params.id, (data) => {
-        post.value = data
-      })
-    }
+    postPinia.getOneTelegramPostById(route.params.id, (data) => {
+      post.value = data
+    })
   }
 })
 </script>

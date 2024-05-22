@@ -20,9 +20,11 @@ import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListVi
 import TelegramOrderView from '@/pages/dashboard/order/telegram/TelegramOrderView.vue'
 import KioskOrderView from '@/pages/dashboard/order/kiosk/components/KioskOrderView.vue'
 import DashboardBoardItemInfoView from '@/pages/dashboard/board/[id]/DashboardBoardItemInfoView.vue'
+import TelegramPostEditView from '@/pages/dashboard/post/telegram/DashboardPostFormView.vue'
+import KioskPostEditView from '@/pages/dashboard/post/kiosk/DashboardPostFormView.vue'
 import BoardConfigurationsView from '@/pages/dashboard/board/[id]/configurations/BoardConfigurationsView.vue'
-import DashboardPostFormView from '@/pages/dashboard/post/DashboardPostFormView.vue'
-import DashboardPostItemView from '@/pages/dashboard/post/DashboardPostItemView.vue'
+import TelegramPostItemView from '@/pages/dashboard/post/telegram/DashboardPostItemView.vue'
+import KioskPostItemView from '@/pages/dashboard/post/kiosk/DashboardPostItemView.vue'
 import TelegramOrderItemView from '@/pages/dashboard/order/telegram/[id]/DashboardOrderView.vue'
 import KioskOrderItemView from '@/pages/dashboard/order/kiosk/[id]/DashboardOrderView.vue'
 import DashboardKioskBoardItemView from '@/pages/dashboard/kiosk-board/[id]/DashboardKioskBoardItemView.vue'
@@ -31,7 +33,6 @@ import DashboardKioskPostListView from '@/pages/dashboard/kiosk-post/DashboardKi
 import DashboardKioskPostFormView from '@/pages/dashboard/kiosk-post/DashboardKioskPostFormView.vue'
 import DashboardKioskPostItemView from '@/pages/dashboard/kiosk-post/DashboardKioskPostItemView.vue'
 import KioskBoardOrderComponent from "@/pages/dashboard/kiosk-board/[id]/KioskBoardOrderComponent.vue";
-
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -122,18 +123,33 @@ export const router = createRouter({
             },
             {
               path: 'create',
-              name: 'DashboardPostCreateFormView',
-              component: DashboardPostFormView
+              name: 'TelegramPostCreateView',
+              component: TelegramPostEditView
+            },
+            {
+              path: 'kiosk-create',
+              name: 'KioskPostCreateView',
+              component: KioskPostEditView
             },
             {
               path: 'edit/:id',
-              name: 'DashboardPostEditFormView',
-              component: DashboardPostFormView
+              name: 'TelegramPostEditView',
+              component: TelegramPostEditView
+            },
+            {
+              path: 'kiosk-edit/:id',
+              name: 'KioskPostEditView',
+              component: KioskPostEditView
             },
             {
               path: 'item/:id',
-              name: 'DashboardPostItemView',
-              component: DashboardPostItemView
+              name: 'TelegramPostItemView',
+              component: TelegramPostItemView
+            },
+            {
+              path: 'kiosk-item/:id',
+              name: 'KioskPostItemView',
+              component: KioskPostItemView
             }
           ]
         },
