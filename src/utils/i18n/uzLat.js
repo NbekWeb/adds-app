@@ -27,6 +27,10 @@ const uzLat = {
   DashboardKioskOrderItemView: "Kanallar bo'yicha xaridlar",
   DashboardKioskPostItemView: "Kiosk postni ko'rish",
   DashboardOrderView: "Orderlarni ko'rish",
+  TelegramOrderView: "Reklama Xarid qilish",
+  KioskOrderView: "Kiosk Reklama Xarid qilish",
+  KioskOrderItemView: "Kiosk xaridi",
+  TelegramOrderItemView: "Telegram xaridi",
 
   Help: 'Yordam',
   News: 'Xabar va yangilik',

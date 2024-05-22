@@ -128,28 +128,6 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('create/order')
         })
     },
-    createKioskOrder(form) {
-      const core = useCore()
-      core.loadingUrl.add('create/order')
-      api({
-        url: `kiosk-order`,
-        method: 'POST',
-        data: form
-      })
-        .then(() => {
-          core.setToast({
-            type: 'success',
-            locale: 'SUCCESS'
-          })
-          core.redirect('/dashboard/order')
-        })
-        .catch((error) => {
-          core.switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('create/order')
-        })
-    },
     createTelegramOrderItem(id, form) {
       const core = useCore()
       core.loadingUrl.add('create/order/item')
@@ -212,7 +190,7 @@ const useOrder = defineStore('order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: 'Order Canceled Successfully'
+            locale: 'ORDER_CANCELED'
           })
         })
         .catch((error) => {
@@ -236,7 +214,7 @@ const useOrder = defineStore('order', {
         .then(() => {
           core.setToast({
             type: 'success',
-            locale: 'Order Canceled Successfully'
+            locale: 'ORDER_CANCELED'
           })
         })
         .catch((error) => {

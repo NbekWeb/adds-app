@@ -138,7 +138,7 @@ const usePost = defineStore('post', {
     },
     createKioskNewPost(form, callback) {
       const core = useCore()
-      core.loadingUrl.add('create/post')
+      core.loadingUrl.add('kiosk-create/post')
 
       const data = {
         text: form.text,
@@ -172,58 +172,34 @@ const usePost = defineStore('post', {
 
       const data = {
         text: form.text,
-        fileHashId: form.fileHashId
-      }
-      if (selectChannelPinia.getSelectChannel == 'kiosk-') {
-        api({
-          url: `post`,
-          pk: id,
-          method: 'PUT',
-          data: data
-        })
-          .then(() => {
-            core.setToast({
-              type: 'success',
-              locale: 'POST_UPDATED_SUCCESSFULLY'
-            })
-            callback()
-            this.getAllPosts(0)
-          })
-          .catch((error) => {
-            core.switchStatus(error)
-          })
-          .finally(() => {
-            core.loadingUrl.delete('create/post')
-          })
-      } else {
-        data.buttons = form.buttons.map((item) => ({
+        fileHashId: form.fileHashId,
+        buttons: form.buttons.map((item) => ({
           orderNumber: item.orderNumber,
           text: item.text,
           url: item.url,
           id: item.id
         }))
-
-        api({
-          url: `post`,
-          pk: id,
-          method: 'PUT',
-          data: data
-        })
-          .then(() => {
-            core.setToast({
-              type: 'success',
-              locale: 'POST_UPDATED_SUCCESSFULLY'
-            })
-            callback()
-            this.getAllPosts(0)
-          })
-          .catch((error) => {
-            core.switchStatus(error)
-          })
-          .finally(() => {
-            core.loadingUrl.delete('create/post')
-          })
       }
+      api({
+        url: `post`,
+        pk: id,
+        method: 'PUT',
+        data: data
+      })
+        .then(() => {
+          core.setToast({
+            type: 'success',
+            locale: 'POST_UPDATED_SUCCESSFULLY'
+          })
+          callback()
+          this.getAllPosts(0)
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('create/post')
+        })
     },
     updateKioskPost(id, form, callback) {
       const core = useCore()

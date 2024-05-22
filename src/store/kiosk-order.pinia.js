@@ -16,7 +16,6 @@ const useKioskOrder = defineStore('kiosk-order', {
         url: 'kiosk-order/all-status'
       })
         .then(({ data }) => {
-          console.log(data)
           this.orderStatusus = data
         })
         .catch((error) => {

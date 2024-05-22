@@ -42,30 +42,6 @@ const useTimeConfiguration = defineStore('time-configuration', {
           core.loadingUrl.delete('board/time-configurations')
         })
     },
-    getKioskTimeConfigurations(page, boardId, orderDate) {
-      const core = corePinia()
-      core.loadingUrl.add('get/kiosk-board/time-configuration/all')
-      api({
-        url: 'kiosk-time-configuration',
-        params: {
-          page: page,
-          size: 10,
-          boardId: boardId,
-          orderDate: orderDate
-        }
-      })
-        .then(({data}) => {
-          this.timeConfigurations = data.content
-          this.totalElements = data.totalElements
-          this.totalPages = data.totalPage
-        })
-        .catch((error) => {
-          core.switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('get/kiosk-board/time-configuration/all')
-        })
-    }
   }
 })
 
