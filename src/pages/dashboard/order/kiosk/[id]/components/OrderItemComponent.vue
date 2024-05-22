@@ -3,22 +3,34 @@ import { fileBaseUrl } from '@/utils/conf.js'
 import StatusTagComponent from '@/components/StatusTagComponent.vue'
 import dayjs from 'dayjs'
 import { formatAmount } from '@/composables/index.js'
-import OrderItemViewDrawerComponent from '@/pages/dashboard/order/kiosk/[id]/components/OrderItemViewDrawerComponent.vue'
 
 import { ref } from 'vue'
+
 import useOrder from '@/store/order.pinia.js'
 
 const orderPinia = useOrder()
+
+const emit = defineEmits(['canceledOrder'])
 
 const props = defineProps({
   order: Object
 })
 
+function cancelOrder() {
+  orderPinia.putKioskCancelOrder(
+    props.order?.orderId,
+    [props.order?.id],
+    () => {
+      emit('canceledOrder')
+    }
+  )
+}
+
 const open = ref(false)
 </script>
 
 <template>
-  <a-card class="order-item-card" @click="open = true">
+  <a-card class="order-item-card">
     <a-row justify="space-between">
       <a-col
         :span="6"
@@ -68,17 +80,36 @@ const open = ref(false)
               {{ formatAmount(order?.amount) }} <span>{{ $t('SOUM') }}</span>
             </p>
             <span class="sub-title amount text-muted">
-              {{ $t('AMOUNT') }} 
+              {{ $t('AMOUNT') }}
             </span>
           </div>
 
           <span>
             <status-tag-component :status="order?.status" />
           </span>
+          <span>
+            <template v-if="order?.status === 'PENDING'">
+              <a-popconfirm
+                :title="$t('CONFIRMCANCELORDER')"
+                :ok-text="$t('YES')"
+                :cancel-text="$t('NO')"
+                @confirm="cancelOrder"
+              >
+                <a-button class="mb-2" danger @click.stop
+                  >{{ $t('CANCEL') }}
+                </a-button>
+              </a-popconfirm>
+            </template>
+
+            <template v-else>
+              <a-button class="mb-2" danger disabled
+                >{{ $t('CANCEL') }}
+              </a-button>
+            </template>
+          </span>
         </div>
       </a-col>
     </a-row>
-    <order-item-view-drawer-component :item="order" v-model:open="open" />
   </a-card>
 </template>
 

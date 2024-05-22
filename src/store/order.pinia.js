@@ -200,7 +200,7 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('cancel/order')
         })
     },
-    putKioskCancelOrder(orderId, itemIdList) {
+    putKioskCancelOrder(orderId, itemIdList, callback) {
       const core = useCore()
       core.loadingUrl.add('cancel/order')
       api({
@@ -216,6 +216,7 @@ const useOrder = defineStore('order', {
             type: 'success',
             locale: 'ORDER_CANCELED'
           })
+          callback()
         })
         .catch((error) => {
           core.switchStatus(error)

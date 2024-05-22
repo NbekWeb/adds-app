@@ -20,6 +20,7 @@ const { notifications, totalPages, count, newNotifications } =
 const currentPage = ref(0)
 const open = ref(false)
 const timeOut = ref()
+
 const openNotification = async () => {
   newNotifications.value.forEach((item, index) => {
     timeOut.value = setTimeout(() => {
@@ -88,6 +89,11 @@ onMounted(() => {
                 :key="index"
                 v-model:open="open"
               />
+              <a-skeleton
+                :paragraph="{ rows: 2, width: '100%' }"
+                active
+                :loading="loadingUrl.has('get/all/notifications')"
+              />
             </template>
             <template v-else>
               <div class="h-full flex align-center justify-center">
@@ -113,7 +119,7 @@ onMounted(() => {
   </a-popover>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .notification-content {
   min-width: 400px;
   max-width: 300px;
@@ -123,5 +129,9 @@ onMounted(() => {
   &:deep(.ant-badge-count) {
     background-color: #0020c2;
   }
+}
+
+.ant-skeleton-title {
+  display: none !important;
 }
 </style>

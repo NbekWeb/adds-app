@@ -26,6 +26,7 @@ function refreshOrder() {
     })
   }
 }
+
 onMounted(() => {
   if (route.params.id) {
     orderPinia.getKioskOrderById(route.params.id, (data) => {
@@ -54,7 +55,7 @@ onMounted(() => {
       <template #content>
         <a-row :gutter="[10, 10]">
           <a-col :span="24" v-for="(item, i) in order?.items" :key="i">
-            <order-item-component :order="item" />
+            <order-item-component :order="item" @canceledOrder="refreshOrder" />
           </a-col>
         </a-row>
       </template>
@@ -63,7 +64,7 @@ onMounted(() => {
 
   <div>
     <a-button @click="router.back()">
-      {{ $t('BACK') }} 
+      {{ $t('BACK') }}
     </a-button>
   </div>
 </template>
