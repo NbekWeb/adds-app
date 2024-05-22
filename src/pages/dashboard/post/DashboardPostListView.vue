@@ -27,6 +27,18 @@ const handleChange = (val) => {
   }
 }
 
+const pushToCreate = () => {
+  if (route.query.channel == 'telegram') {
+    router.push({
+      name: 'TelegramPostCreateView'
+    })
+  } else {
+    router.push({
+      name: 'KioskPostCreateView'
+    })
+  }
+}
+
 watch(selectedChannel, (newChannel, oldChannel) => {
   if (newChannel !== oldChannel) {
     router.push({ query: { channel: newChannel } })
@@ -65,14 +77,13 @@ onMounted(() => {
           class="add-btn ml-4"
           type="primary"
           size="middle"
-          @click="
-            router.push({
-              name: 'DashboardPostCreateFormView',
-              query: { channel: route.query.channel }
-            })
-          "
+          @click="pushToCreate"
         >
           <icon-plus />
+          <!-- router.push({
+          name: 'DashboardPostCreateFormView',
+          query: { channel: route.query.channel }
+        }) -->
           {{ $t('ADD') }}
         </a-button>
       </div>

@@ -27,10 +27,16 @@ const uzLat = {
   DashboardKioskOrderItemView: "Kanallar bo'yicha xaridlar",
   DashboardKioskPostItemView: "Kiosk postni ko'rish",
   DashboardOrderView: "Orderlarni ko'rish",
-  TelegramOrderView: "Reklama Xarid qilish",
-  KioskOrderView: "Kiosk Reklama Xarid qilish",
-  KioskOrderItemView: "Kiosk xaridi",
-  TelegramOrderItemView: "Telegram xaridi",
+  TelegramOrderView: 'Reklama Xarid qilish',
+  KioskOrderView: 'Kiosk Reklama Xarid qilish',
+  KioskOrderItemView: 'Kiosk xaridi',
+  TelegramOrderItemView: 'Telegram xaridi',
+  TelegramPostItemView: 'Telegram postlari',
+  KioskPostItemView: 'Kiosk postlari',
+  KioskPostEditView: 'Kiosk postni tahrirlash',
+  TelegramPostEditView: 'Telegram postni tahrirlash',
+  TelegramPostCreateView: 'Telegram post yaratish',
+  KioskPostCreateView: 'Telegram post yaratish',
 
   Help: 'Yordam',
   News: 'Xabar va yangilik',
@@ -100,7 +106,7 @@ const uzLat = {
   ADD_NEW_ORDER_ITEM: "Yangi xarid qo'shish",
   THE_TIME_OF_PUBLICATION: "E'lonni chiqish vaqti",
   POST_DELETED_DATE: "E'lonni olib tashlash vaqti",
-  THE_TIME_OF_DURATION:"E'lonni chiqish davomiyligi",
+  THE_TIME_OF_DURATION: "E'lonni chiqish davomiyligi",
   TOTAL_PRICE: "Jami to'lov",
   ORDER_PRICE: 'Buyurtma narxi',
   SEARCH: 'Qidirish',
@@ -222,7 +228,7 @@ const uzLat = {
   FILE_SIZE_LESS_IMG: 'Fayl hajmi 10 Mb dan oshmasin!',
   FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!',
   ORDER_CREATE: 'Buyurtma yaratildi',
-  ORDER_CANCELED: 'Buyurtma bekor qilindi',
+  ORDER_CANCELED: 'Buyurtma bekor qilindi'
 }
 
 export default uzLat

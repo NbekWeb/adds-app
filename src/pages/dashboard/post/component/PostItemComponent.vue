@@ -27,7 +27,57 @@ const postPinia = usePost()
 const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 
 const deletePost = () => {
-  postPinia.deletePostById(item.id)
+  if (route.query.channel == 'telegram') {
+    postPinia.deleteTelegramPostById(item.id)
+  } else {
+    postPinia.deleteKioskPostById(item.id)
+  }
+}
+
+const pushToPost = () => {
+  if (route.query.channel == 'telegram') {
+    router.push({
+      name: 'TelegramPostItemView',
+      params: { id: item.id }
+    })
+  } else {
+    router.push({
+      name: 'KioskPostItemView',
+      params: { id: item.id }
+    })
+  }
+}
+
+const pushToEdit = () => {
+  if (route.query.channel == 'telegram') {
+    router.push({
+      name: 'TelegramPostEditView',
+      params: { id: item.id }
+    })
+  } else {
+    router.push({
+      name: 'KioskPostEditView',
+      params: { id: item.id }
+    })
+  }
+}
+
+const pushToShop = () => {
+  if (route.query.channel == 'telegram') {
+    router.push({
+      name: 'TelegramOrderView',
+      params: {
+        postId: item.id
+      }
+    })
+  } else {
+    router.push({
+      name: 'KioskOrderView',
+      params: {
+        postId: item.id
+      }
+    })
+  }
 }
 
 function editPost(id) {
@@ -72,45 +122,16 @@ function editPost(id) {
         </template>
       </a-card-meta>
       <template #actions>
-        <a-button
-          @click="
-            router.push({
-              name: 'DashboardPostItemView',
-              params: { id: item.id },
-              query: { channel: route.query.channel }
-            })
-          "
-          size="small"
-        >
+        <a-button @click="pushToPost" size="small">
           <icon-eye class="mt-1" />
         </a-button>
         <template v-if="item?.editable">
-          <a-button
-            @click="
-              router.push({
-                name: 'DashboardPostEditFormView',
-                params: { id: item.id },
-                query: { channel: route.query.channel }
-              })
-            "
-            size="small"
-          >
+          <a-button @click="pushToEdit" size="small">
             <IconEdit class="mt-1" />
           </a-button>
         </template>
 
-        <a-button
-          @click="
-            router.push({
-              name: 'DashboardOrderFormView',
-              params: {
-                postId: item.id
-              },
-              query: { channel: route.query.channel }
-            })
-          "
-          size="small"
-        >
+        <a-button @click="pushToShop" size="small">
           <icon-shopping-card class="mt-1" />
         </a-button>
         <a-button size="small" danger @click="deletePost">

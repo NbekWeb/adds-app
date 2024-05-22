@@ -48,6 +48,18 @@ const handleSelect = (val) => {
   }
 }
 
+const pushToCreate = () => {
+  if (route.query.channel == 'telegram') {
+    router.push({
+      name: 'TelegramPostEditView'
+    })
+  } else {
+    router.push({
+      name: 'KioskPostEditView'
+    })
+  }
+}
+
 watch(selectedChannel, (newChannel, oldChannel) => {
   if (newChannel !== oldChannel) {
     router.push({ query: { channel: newChannel } })
@@ -115,20 +127,11 @@ onMounted(() => {
     <template #title>
       <div class="flex justify-between align-center">
         <h3 class="title m-0">{{ $t('DashboardPostListView') }}</h3>
-        <a-button
-          type="primary"
-          class="btn"
-          @click="
-            router.push({
-              name: 'DashboardPostCreateFormView',
-              query: { channel: route.query.channel }
-            })
-          "
-        >
+        <a-button type="primary" class="btn" @click="pushToCreate">
           <template #icon>
             <IconPlus />
           </template>
-          {{ $t('ADD') }}
+          {{ $t('ADD') }} 
         </a-button>
       </div>
     </template>
