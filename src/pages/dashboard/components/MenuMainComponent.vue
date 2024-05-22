@@ -45,11 +45,11 @@ const menuList = shallowRef([
       }
     ]
   },
-  {
-    key: 'kiosk-post',
-    icon: () => h(IconMessageTextSquare),
-    label: t('DashboardKioskPostListView')
-  },
+  // {
+  //   key: 'kiosk-post',
+  //   icon: () => h(IconMessageTextSquare),
+  //   label: t('DashboardKioskPostListView')
+  // },
   {
     key: 'post',
     icon: () => h(IconMessageTextSquare),
