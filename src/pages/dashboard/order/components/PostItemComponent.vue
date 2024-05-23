@@ -2,11 +2,11 @@
 import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
-import { fileBaseUrl } from '@/utils/conf.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconFile from '@/components/icons/IconFile.vue'
+import ImageComponent from "@/components/ImageComponent.vue";
 
 const router = useRouter()
 const route = useRoute()
@@ -51,10 +51,9 @@ const { loadingUrl } = storeToRefs(corePinia)
           <template
             v-if="item.messageType === 'IMAGE' || item.messageType === 'VIDEO'"
           >
-            <img
+            <image-component
               class="post-cover"
-              :src="`${fileBaseUrl}/file/${item.messageType === 'IMAGE' ? item?.fileDto?.fileHashId : item.snapshotHashId}`"
-              alt=""
+              :hash-id="item.messageType === 'IMAGE' ? item?.fileDto?.fileHashId : item.snapshotHashId"
             />
           </template>
           <template v-if="item.messageType === 'DOCUMENT'">
