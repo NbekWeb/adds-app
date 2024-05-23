@@ -103,7 +103,7 @@ onMounted(() => {
 <template>
   <page-header-component :title="$t('DashboardPostFormView')" />
   <loader-component loading-url="get/post/one">
-    <scrollbar-component height="calc(100vh - 200px)">
+    <scrollbar-component height="calc(100vh - 230px)" class="mb-2">
       <template #content>
         <a-form
           ref="formRef"
@@ -126,21 +126,21 @@ onMounted(() => {
               :max-count="1024"
             />
           </a-form-item>
-          <div class="flex justify-end h-full align-end">
-            <a-space>
-              <a-button @click="router.back()"> {{ $t('BACK') }} </a-button>
-              <a-button
-                :loading="loadingUrl.has('create/post')"
-                @click="submitForm"
-                type="primary"
-              >
-                {{ $t('SAVE') }}
-              </a-button>
-            </a-space>
-          </div>
         </a-form>
       </template>
     </scrollbar-component>
+    <div class="flex justify-end h-full align-end">
+      <a-space>
+        <a-button @click="router.back()"> {{ $t('BACK') }} </a-button>
+        <a-button
+            :loading="loadingUrl.has('create/post')"
+            @click="submitForm"
+            type="primary"
+        >
+          {{ $t('SAVE') }}
+        </a-button>
+      </a-space>
+    </div>
   </loader-component>
 </template>
 

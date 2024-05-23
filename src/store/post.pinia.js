@@ -7,10 +7,12 @@ const usePost = defineStore('post', {
   state: () => ({
     posts: [],
     totalElements: 0,
-    totalPages: 0
+    totalPages: 0,
+    page: 0
   }),
   actions: {
     clearPost() {
+      this.page = 0
       this.posts = []
       this.totalElements = 0
       this.totalPages = 0
@@ -20,7 +22,7 @@ const usePost = defineStore('post', {
     },
     getAllTelegramPosts(page, size = 10) {
       const core = useCore()
-
+      this.page = page
       core.loadingUrl.add('get/post/all')
       api({
         url: `post`,
@@ -47,7 +49,7 @@ const usePost = defineStore('post', {
     },
     getAllKioskPosts(page, size = 10) {
       const core = useCore()
-
+      this.page = page
       core.loadingUrl.add('get/post/all')
       api({
         url: `kiosk-post`,

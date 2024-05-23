@@ -7,7 +7,7 @@ import BoardConfigurationTimeComponent from '@/components/BoardConfigurationTime
 
 const emits = defineEmits(['close'])
 
-const { item } = defineProps({
+const props = defineProps({
   item: {
     type: Object,
     required: true

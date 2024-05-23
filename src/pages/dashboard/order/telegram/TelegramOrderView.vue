@@ -71,6 +71,7 @@ onMounted(() => {
     <order-items-list-component
       :items="form.items"
       @add-item="newOrderItem = true"
+      @close="closeTelegramOrderItem"
     />
   </template>
   <template v-if="!newOrderItem">
