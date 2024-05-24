@@ -80,10 +80,6 @@ onMounted(() => {
           @click="pushToCreate"
         >
           <icon-plus />
-          <!-- router.push({
-          name: 'DashboardPostCreateFormView',
-          query: { channel: route.query.channel }
-        }) -->
           {{ $t('ADD') }} 
         </a-button>
       </div>

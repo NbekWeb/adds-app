@@ -1,9 +1,7 @@
 <script setup>
-import IconSearch from '@/components/icons/IconSearch.vue'
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
-import useCore from '@/store/core.pinia.js'
 import IconFilterFunnel from '@/components/icons/IconFilterFunnel.vue'
 import useOrder from '@/store/order.pinia.js'
 
@@ -12,10 +10,8 @@ const route = useRoute()
 
 const emits = defineEmits(['openPost'])
 
-const corePinia = useCore()
 const orderPinia = useOrder()
 
-const { loadingUrl } = storeToRefs(corePinia)
 const open = ref(false)
 const props = defineProps({
   statuses: {
@@ -99,7 +95,6 @@ function handleFilterInMobile() {
           :placeholder="$t('FILTER_BY_STATUS')"
           v-model:value="orderStatus"
         >
-          <!-- @change="handleSelect" -->
           <a-select-option
             v-for="status in props.statuses"
             :value="status"
@@ -117,19 +112,9 @@ function handleFilterInMobile() {
           <span>{{ $t('CREATE_AN_ORDER') }} </span>
         </a-button>
         <a-button type="primary" @click="handleFilterInMobile">
-          <!-- @click="handleFilterInMobile" -->
           {{ $t('READY') }}
         </a-button>
       </div>
     </a-row>
   </a-drawer>
 </template>
-
-<style scoped lang="scss">
-.board-category-filter {
-  min-width: 200px;
-}
-.board-type-filter {
-  width: 200px;
-}
-</style>
