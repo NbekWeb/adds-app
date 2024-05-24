@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import {useRoute} from "vue-router";
+
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
 
@@ -8,13 +10,15 @@ import PostItemComponent from '@/pages/dashboard/post/component/PostItemComponen
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 
+const route = useRoute()
 const corePinia = useCore()
 const postPinia = usePost()
 
 const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
-const { posts } = storeToRefs(postPinia)
+const { posts, page, totalPages } = storeToRefs(postPinia)
 
 const postId = ref(null)
+const postType = ref(route.query.channel)
 
 function editPost(id) {
   postId.value = id
@@ -24,6 +28,14 @@ function close() {
   corePinia.visibleDrawer.add('post/form/modal')
   postId.value = null
 }
+
+function getPaginationAllPosts(page) {
+  if (postType.value === 'telegram') {
+    postPinia.getAllTelegramPosts(page)
+  } else if (postType.value === 'kiosk') {
+    postPinia.getAllKioskPosts(page)
+  }
+}
 </script>
 
 <template>
@@ -31,7 +43,13 @@ function close() {
     <template #indicator>
       <icon-loader />
     </template>
-    <scrollbar-component height="calc(100vh - 190px)">
+    <scrollbar-component
+      :total-pages="totalPages"
+      :page="page"
+      :loading="loadingUrl.has('get/order/all')"
+      @get-data="getPaginationAllPosts"
+      height="calc(100vh - 190px)"
+    >
       <template #content>
         <template v-if="posts.length">
           <a-row :gutter="[10, 10]">

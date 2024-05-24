@@ -4,7 +4,7 @@ import IconPlus from '@/components/icons/IconPlus.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 
 const emits = defineEmits(['addItem', 'close'])
-const { items } = defineProps({
+const props = defineProps({
   items: {
     type: Array,
     required: true

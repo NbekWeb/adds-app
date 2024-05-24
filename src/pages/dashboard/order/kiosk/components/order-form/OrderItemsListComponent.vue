@@ -6,7 +6,7 @@ import LoaderComponent from '@/components/LoaderComponent.vue'
 import { ref } from 'vue'
 import useKioskBoard from '@/store/kiosk-board.pinia.js'
 const emits = defineEmits(['addItem', 'close'])
-const { items } = defineProps({
+const props = defineProps({
   items: {
     type: Array,
     required: true

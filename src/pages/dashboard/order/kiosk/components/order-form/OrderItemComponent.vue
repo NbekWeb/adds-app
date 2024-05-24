@@ -20,8 +20,6 @@ const props = defineProps({
   }
 })
 
-const item = props.item
-
 const orderCount = ref(1)
 const boardPrice = ref(0)
 

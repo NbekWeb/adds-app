@@ -16,10 +16,15 @@ const orderPinia = useOrder()
 const { loadingUrl, collapsed } = storeToRefs(corePinia)
 const { orders, page, totalElements, totalPages } = storeToRefs(orderPinia)
 
-const orderStatus = computed(() => route.query.status)
+const orderStatus = computed(() => route.query.select)
+const orderType = computed(() => route.query.channel)
 
 function getPaginationAllOrders(page) {
-  orderPinia.getAllOrders(page, orderStatus.value)
+  if (orderType.value === 'telegram') {
+    orderPinia.getAllTelegramOrders(page, orderStatus.value)
+  } else if (orderType.value === 'kiosk') {
+    orderPinia.getAllKioskOrders(page, orderStatus.value)
+  }
 }
 </script>
 

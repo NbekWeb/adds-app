@@ -8,7 +8,8 @@ const useOrder = defineStore('order', {
     orderInfo: null,
     orders: [],
     totalElements: 0,
-    totalPages: 0
+    totalPages: 0,
+    page:0
   }),
   actions: {
     clearOrders() {
@@ -21,6 +22,7 @@ const useOrder = defineStore('order', {
     getAllTelegramOrders(page, status) {
       const core = useCore()
       core.loadingUrl.add('get/order/all')
+      this.page = page
       api({
         url: `order`,
         params: {
