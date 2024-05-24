@@ -119,19 +119,19 @@ onMounted(() => {
   </a-popover>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .notification-content {
   min-width: 400px;
   max-width: 300px;
   min-height: 200px;
+
+  &:deep(.ant-skeleton-title) {
+    display: none !important;
+  }
 }
 .badge-count {
   &:deep(.ant-badge-count) {
     background-color: #0020c2;
   }
-}
-
-.ant-skeleton-title {
-  display: none !important;
 }
 </style>
