@@ -6,6 +6,7 @@ import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderListComponent from '@/pages/dashboard/order/components/OrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import PostListDrawerComponent from '@/pages/dashboard/order/components/PostListDrawerComponent.vue'
+import OrderPageMobileFilterComponent from '@/pages/dashboard/order/components/OrderPageMobileFilterComponent.vue'
 import { storeToRefs } from 'pinia'
 
 const router = useRouter()
@@ -83,39 +84,47 @@ onMounted(() => {
 <template>
   <page-header-component :title="$t('DashboardOrderListView')">
     <template #actions>
-      <a-space>
-        <a-select
-          style="width: 120px"
-          v-model:value="selectedChannel"
-          @change="handleChange"
-        >
-          <a-select-option value="telegram">Telegram</a-select-option>
-          <a-select-option value="kiosk">Kiosk</a-select-option>
-        </a-select>
-
-        <a-select
-          class="order-status"
-          style="width: 270px"
-          allow-clear
-          :placeholder="$t('FILTER_BY_STATUS')"
-          v-model:value="orderStatus"
-          @change="handleSelect"
-        >
-          <a-select-option
-            v-for="status in statuses"
-            :value="status"
-            :key="status"
+      <order-page-mobile-filter-component
+        :selectChannel="selectedChannel"
+        :statuses="statuses"
+        :orderStatus="orderStatus"
+        @openPost="open = true"
+      />
+      <div class="isDesktop">
+        <a-space>
+          <a-select
+            style="width: 120px"
+            v-model:value="selectedChannel"
+            @change="handleChange"
           >
-            {{ $t(status) }}
-          </a-select-option>
-        </a-select>
-        <a-button class="btn" type="primary" @click="open = true">
-          <template #icon>
-            <IconPlus />
-          </template>
-          <span class="isDesktop">{{ $t('CREATE_AN_ORDER') }} </span>
-        </a-button>
-      </a-space>
+            <a-select-option value="telegram">Telegram</a-select-option>
+            <a-select-option value="kiosk">Kiosk</a-select-option>
+          </a-select>
+
+          <a-select
+            class="order-status"
+            style="width: 270px"
+            allow-clear
+            :placeholder="$t('FILTER_BY_STATUS')"
+            v-model:value="orderStatus"
+            @change="handleSelect"
+          >
+            <a-select-option
+              v-for="status in statuses"
+              :value="status"
+              :key="status"
+            >
+              {{ $t(status) }}
+            </a-select-option>
+          </a-select>
+          <a-button class="btn" type="primary" @click="open = true">
+            <template #icon>
+              <IconPlus />
+            </template>
+            <span>{{ $t('CREATE_AN_ORDER') }} </span>
+          </a-button>
+        </a-space>
+      </div>
     </template>
   </page-header-component>
   <a-drawer
@@ -131,7 +140,7 @@ onMounted(() => {
           <template #icon>
             <IconPlus />
           </template>
-          {{ $t('ADD') }} 
+          {{ $t('ADD') }}
         </a-button>
       </div>
     </template>
