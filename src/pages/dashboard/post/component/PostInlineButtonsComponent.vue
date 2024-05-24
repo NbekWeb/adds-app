@@ -51,6 +51,7 @@ function findButton(i) {
       :lg="8"
       :xl="6"
       v-for="(button, index) in buttons"
+      :key="index"
     >
       <a-popover>
         <template #title>
