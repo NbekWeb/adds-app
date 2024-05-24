@@ -133,9 +133,11 @@ onMounted(() => {
       <a-space>
         <a-button @click="router.back()"> {{ $t('BACK') }} </a-button>
         <a-button
-            :loading="loadingUrl.has('create/post')"
-            @click="submitForm"
-            type="primary"
+          :loading="
+            loadingUrl.has('update/post') || loadingUrl.has('kiosk-create/post')
+          "
+          @click="submitForm"
+          type="primary"
         >
           {{ $t('SAVE') }}
         </a-button>

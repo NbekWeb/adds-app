@@ -133,7 +133,7 @@ const useKioskBoard = defineStore('kiosk-board', {
     },
     getKioskPrice(id, callback) {
       const core = useCore()
-      core.loadingUrl.add(`get/kiosk-price/${id}`)
+      core.loadingUrl.add(`get/kiosk-price`)
       api({
         url: `kiosk-board/price/${id}`,
         method: 'GET'
@@ -145,7 +145,7 @@ const useKioskBoard = defineStore('kiosk-board', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete(`get/kiosk-price/${id}`)
+          core.loadingUrl.delete(`get/kiosk-price`)
         })
     }
   }

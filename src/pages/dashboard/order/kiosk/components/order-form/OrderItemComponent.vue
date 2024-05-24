@@ -1,13 +1,15 @@
 <script setup>
-import useKioskBoard from "@/store/kiosk-board.pinia.js";
-
+import useKioskBoard from '@/store/kiosk-board.pinia.js'
+import { storeToRefs } from 'pinia'
 import { formatAmount, formatTextLength } from '@/composables/index.js'
 import IconX from '@/components/icons/IconX.vue'
-import {onMounted, ref} from "vue";
-import IconPlus from "@/components/icons/IconPlus.vue";
-import IconMinus from "@/components/icons/IconMinus.vue";
+import { onMounted, ref } from 'vue'
+import IconPlus from '@/components/icons/IconPlus.vue'
+import IconMinus from '@/components/icons/IconMinus.vue'
 
 const kioskBoardStore = useKioskBoard()
+
+let { totalPrice } = storeToRefs(kioskBoardStore)
 
 const emits = defineEmits(['close'])
 
@@ -28,19 +30,22 @@ const handleClickOrderCount = (e) => {
     orderCount.value--
   }
 
-  props.item.orderSeconds = (orderCount.value * props.item.postSeconds)
+  props.item.orderSeconds = orderCount.value * props.item.postSeconds
+  totalPrice += props.item.orderSeconds
 }
 
 onMounted(() => {
-  orderCount.value = Math.floor(props.item.orderSeconds / props.item.postSeconds)
+  orderCount.value = Math.floor(
+    props.item.orderSeconds / props.item.postSeconds
+  )
 
   const boardId = props?.item?.board?.id
   kioskBoardStore.getKioskPrice(boardId, (data) => {
     boardPrice.value = data?.price
+    props.item.boardPrice = boardPrice.value
   })
 })
 </script>
-
 <template>
   <a-card class="order-item-card">
     <a-button @click="emits('close')" class="close-btn" type="link">
@@ -50,11 +55,13 @@ onMounted(() => {
       <div>
         <div>
           <h1 class="channel-name m-0">
-            {{ formatTextLength(item.board?.name, 25) }}
+            {{ formatTextLength(item.board?.name, 25) }} 
           </h1>
         </div>
         <template v-if="item?.configuration?.name"> </template>
-        <h1 class="configuration-name m-0">{{ item?.configuration?.name }}</h1>
+        <h1 class="configuration-name m-0">
+          {{ item?.configuration?.name }}
+        </h1>
       </div>
       <div class="flex justify-between my-2">
         <div class="amount flex align-center justify-between w-full">
@@ -69,15 +76,14 @@ onMounted(() => {
         <div class="amount">
           <span> {{ $t('TOTAL_AMOUNT') }} </span>
           <p class="m-0">
-            {{ formatAmount(boardPrice * item.orderSeconds) }} <span>so'm</span>
+            {{ formatAmount(boardPrice * item.orderSeconds) }}
+            <span>so'm</span>
           </p>
         </div>
 
         <div class="amount">
           <span> {{ $t('DURATION') }} </span>
-          <p class="m-0">
-            {{ item.orderSeconds || 0 }} soniya
-          </p>
+          <p class="m-0">{{ item.orderSeconds || 0 }} soniya</p>
         </div>
 
         <div class="amount flex flex-column">

@@ -8,7 +8,9 @@ import useOrder from '@/store/order.pinia.js'
 
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderItemFormComponent from '@/pages/dashboard/order/telegram/components/order-form/OrderItemFormComponent.vue'
-import OrderItemsListComponent from '@/pages/dashboard/order/telegram/[id]/components/OrderItemsListComponent.vue'
+import OrderItemsListComponent from '@/pages/dashboard/order/telegram/components/order-form/OrderItemsListComponent.vue'
+
+import { formatAmount } from '@/composables/index.js'
 
 const router = useRouter()
 const route = useRoute()
@@ -20,6 +22,12 @@ const { loadingUrl } = storeToRefs(corePinia)
 const form = reactive({
   postId: null,
   items: []
+})
+
+const totalPrice = computed(() => {
+  return form.items.reduce((total, item) => {
+    return total + item.timeConfiguration.amount
+  }, 0)
 })
 
 const newOrderItem = ref(false)
@@ -38,8 +46,8 @@ function newOrderCreate() {
       postId: form.postId,
       items: form.items.map((item) => ({
         boardId: item.board.id,
-        configurationId: item.configuration.id,
         timeConfigurationId: item.timeConfiguration.id,
+        configurationId: item.configuration.id,
         orderDate: dayjs(item.orderDate).format('YYYY-MM-DD')
       }))
     })
@@ -54,7 +62,7 @@ onMounted(() => {
 
 <template>
   <template v-if="!newOrderItem">
-    <page-header-component title="E'lon berish" />
+    <page-header-component title="E'lon berish " />
   </template>
 
   <template v-if="newOrderItem">
@@ -62,8 +70,6 @@ onMounted(() => {
       :selected-boards="selectedBoards"
       @add-order="addNewOrderItem"
       @cancel="newOrderItem = false"
-    />
-
     />
   </template>
   <template v-else>
@@ -73,16 +79,22 @@ onMounted(() => {
     />
   </template>
   <template v-if="!newOrderItem">
-    <div class="flex justify-between">
+    <div class="flex justify-between mt-3">
       <a-button @click="router.back()"> Bekor qilish </a-button>
-      <a-button
-        @click="newOrderCreate"
-        :disabled="!Boolean(form.items.length)"
-        :loading="loadingUrl.has('create/order')"
-        type="primary"
-      >
-        Xarid qilish
-      </a-button>
+
+      <div class="flex alighn-center">
+        <span class="mr-5" v-if="totalPrice !== 0"
+          >Jami:{{ formatAmount(totalPrice) }}
+        </span>
+        <a-button
+          @click="newOrderCreate"
+          :disabled="!Boolean(form.items.length)"
+          :loading="loadingUrl.has('create/order')"
+          type="primary"
+        >
+          Xarid qilish
+        </a-button>
+      </div>
     </div>
   </template>
 </template>

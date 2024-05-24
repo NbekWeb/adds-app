@@ -134,9 +134,16 @@ function editPost(id) {
         <a-button @click="pushToShop" size="small">
           <icon-shopping-card class="mt-1" />
         </a-button>
-        <a-button size="small" danger @click="deletePost">
-          <icon-trash class="mt-1" />
-        </a-button>
+        <a-popconfirm
+          :title="$t('DOU_YOU_WANT_TO_LOG_OUT')"
+          :ok-text="$t('YES')"
+          :cancel-text="$t('NO')"
+          @confirm="deletePost"
+        >
+          <a-button size="small" danger >
+            <icon-trash class="mt-1" />
+          </a-button>
+        </a-popconfirm>
       </template>
     </a-card>
   </a-spin>

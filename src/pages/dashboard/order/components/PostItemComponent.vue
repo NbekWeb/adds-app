@@ -37,6 +37,24 @@ const orderPush = () => {
   }
 }
 
+const viewPush = () => {
+  if (route.query.channel == 'telegram') {
+    router.push({
+      name: 'TelegramPostItemView',
+      params: {
+        id: item.id
+      }
+    })
+  } else {
+    router.push({
+      name: 'KioskPostItemView',
+      params: {
+        id: item.id
+      }
+    })
+  }
+}
+
 const { loadingUrl } = storeToRefs(corePinia)
 </script>
 
@@ -76,19 +94,11 @@ const { loadingUrl } = storeToRefs(corePinia)
         </template>
       </a-card-meta>
       <template #actions>
-        <a-button
-          @click="
-            router.push({
-              name: 'DashboardPostItemView',
-              params: { id: item.id }
-            })
-          "
-          size="small"
-        >
-          <icon-eye class="mt-1" />
+        <a-button @click="viewPush" size="small">
+          <icon-eye class="mt-1" /> 
         </a-button>
 
-        <a-button @click="orderPush()" size="small">
+        <a-button @click="orderPush" size="small">
           <icon-shopping-card class="mt-1" />
         </a-button>
       </template>
