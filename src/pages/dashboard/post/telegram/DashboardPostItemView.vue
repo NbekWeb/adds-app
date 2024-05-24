@@ -116,7 +116,7 @@ onMounted(() => {
     </scrollbar-component>
   </a-spin>
 
-  <div class="mt-2">
+  <div class="mt-1">
     <a-button @click="router.back()">
       {{ $t('BACK') }}
     </a-button>

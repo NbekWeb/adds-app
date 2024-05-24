@@ -51,6 +51,7 @@ function findButton(i) {
       :lg="8"
       :xl="6"
       v-for="(button, index) in buttons"
+      :key="index"
     >
       <a-popover>
         <template #title>
@@ -101,7 +102,7 @@ function findButton(i) {
     <a-col :xs="24" :sm="24" :md="12" :lg="8" :xl="6">
       <a-button @click="visibleDrawer.add('button/form')" class="btn w-full">
         <IconPlus />
-        {{ $t('ADD_NEW_LINKED_BUTTON') }}
+        {{ $t('ADD_NEW_LINKED_BUTTON') }} 
       </a-button>
     </a-col>
   </a-row>
