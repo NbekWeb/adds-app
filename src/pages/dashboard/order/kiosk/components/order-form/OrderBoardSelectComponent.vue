@@ -30,8 +30,7 @@ onMounted(() => {
       >
         <a-empty class="empty">
           <template #description>
-            {{ $t('NO_DATA') }}
-            {{ kioskBoards?.length }}
+            {{ $t('NO_DATA') }} 
           </template>
         </a-empty>
       </template>

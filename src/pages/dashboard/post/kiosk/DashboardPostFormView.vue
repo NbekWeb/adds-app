@@ -11,6 +11,8 @@ import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import PostInlineButtonsComponent from '@/pages/dashboard/post/component/PostInlineButtonsComponent.vue'
 import LoaderComponent from '@/components/LoaderComponent.vue'
+
+
 const { t } = useI18n()
 
 const route = useRoute()
@@ -130,11 +132,13 @@ onMounted(() => {
             <a-space>
               <a-button @click="router.back()"> {{ $t('BACK') }} </a-button>
               <a-button
-                :loading="loadingUrl.has('create/post')"
+                :loading="
+                  loadingUrl.has('update/post') || loadingUrl.has('kiosk-create/post')
+                "
                 @click="submitForm"
                 type="primary"
               >
-                {{ $t('SAVE') }}
+                {{ $t('SAVE') }} 
               </a-button>
             </a-space>
           </div>

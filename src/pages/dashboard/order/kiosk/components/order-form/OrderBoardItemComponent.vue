@@ -1,5 +1,5 @@
 <script setup>
-const { item } = defineProps({
+const props = defineProps({
   item: {
     type: Object,
     required: true
@@ -16,16 +16,17 @@ const { item } = defineProps({
 </script>
 
 <template>
-  <a-radio :value="item" :disabled="disabled" class="board-item w-full">
+  <a-radio :value="props.item" :disabled="disabled" class="board-item w-full">
     <a-card
       :body-style="{ padding: '12px' }"
       class="board-card"
       :class="[{ 'checked-board': checked }, { disabled }]"
     >
+    
       <div class="board-info flex justify-between align-center">
         <div class="flex align-center">
           <h1 class="board-name mb-0 ml-2">
-            {{ item.name }}
+            {{ props.item.name }}
           </h1>
         </div>
         <div class="checkbox" :class="{ checked: checked }">

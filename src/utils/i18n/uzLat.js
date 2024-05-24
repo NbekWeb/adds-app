@@ -222,6 +222,8 @@ const uzLat = {
   POST_ADDED_SUCCESSFULLY: "Post muvafaqiyatli qo'shildi",
   POST_DELETED_SUCCESSFULLY: "Post muvafaqiyatli o'chirildi",
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
+  DOU_YOU_WANT_TO_DELETE_POST: "Postni o'chirmoqchimisiz?",
+
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
   ERROR: 'Xatolik!',
