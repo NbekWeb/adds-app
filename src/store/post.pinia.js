@@ -163,7 +163,7 @@ const usePost = defineStore('post', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('create/post')
+          core.loadingUrl.delete('kiosk-create/post')
         })
     },
     updateTelegramPost(id, form, callback) {

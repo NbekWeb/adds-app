@@ -6,7 +6,8 @@ const useKioskOrder = defineStore('kiosk-order', {
   state: () => ({
     orders: [],
     orderStatusus: [],
-    status: ''
+    status: '',
+    
   }),
   actions: {
     getAllOrdersStatus() {

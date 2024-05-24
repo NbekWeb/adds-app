@@ -17,7 +17,7 @@ import DashboardPaymentListView from '@/pages/dashboard/payment/DashboardPayment
 import DashboardPaymentView from '@/pages/dashboard/payment/DashboardPaymentView.vue'
 import DashboardOrderView from '@/pages/dashboard/order/DashboardOrderView.vue'
 import DashboardOrderListView from '@/pages/dashboard/order/DashboardOrderListView.vue'
-import TelegramOrderView from '@/pages/dashboard/order/telegram/TelegramOrderView.vue'
+import TelegramOrderView from '@/pages/dashboard/order/telegram/components/TelegramOrderView.vue'
 import KioskOrderView from '@/pages/dashboard/order/kiosk/components/KioskOrderView.vue'
 import DashboardBoardItemInfoView from '@/pages/dashboard/board/[id]/DashboardBoardItemInfoView.vue'
 import TelegramPostEditView from '@/pages/dashboard/post/telegram/DashboardPostFormView.vue'

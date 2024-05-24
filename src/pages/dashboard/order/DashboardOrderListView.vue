@@ -51,11 +51,11 @@ const handleSelect = (val) => {
 const pushToCreate = () => {
   if (route.query.channel == 'telegram') {
     router.push({
-      name: 'TelegramPostEditView'
+      name: 'TelegramPostCreateView'
     })
   } else {
     router.push({
-      name: 'KioskPostEditView'
+      name: 'KioskPostCreateView'
     })
   }
 }

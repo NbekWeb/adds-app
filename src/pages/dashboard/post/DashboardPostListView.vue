@@ -84,7 +84,7 @@ onMounted(() => {
           name: 'DashboardPostCreateFormView',
           query: { channel: route.query.channel }
         }) -->
-          {{ $t('ADD') }}
+          {{ $t('ADD') }} 
         </a-button>
       </div>
     </template>

@@ -141,7 +141,9 @@ onMounted(() => {
             <a-space>
               <a-button @click="router.back()"> {{ $t('BACK') }} </a-button>
               <a-button
-                :loading="loadingUrl.has('create/post')"
+                :loading="
+                  loadingUrl.has('update/post') || loadingUrl.has('create/post')
+                "
                 @click="submitForm"
                 type="primary"
               >

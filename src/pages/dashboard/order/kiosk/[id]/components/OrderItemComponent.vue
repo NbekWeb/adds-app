@@ -33,7 +33,7 @@ const open = ref(false)
   <a-card class="order-item-card">
     <a-row justify="space-between">
       <a-col
-        :span="6"
+        :span="4"
         :xs="12"
         :sm="12"
         :md="12"
@@ -41,8 +41,8 @@ const open = ref(false)
         :xl="4"
         class="flex justify-start"
       >
-        <div class="item ml-2">
-          <p class="m-0">
+        <div class="item pl-2 ">
+          <p class="m-0 ">
             {{ order?.board.name }}
           </p>
           <span class="sub-title text-muted">
@@ -51,12 +51,12 @@ const open = ref(false)
         </div>
       </a-col>
       <a-col
-        :span="4"
+        :span="6"
         :xs="12"
         :sm="12"
         :md="12"
-        :lg="4"
-        :xl="4"
+        :lg="6"
+        :xl="6"
         class="item border"
       >
         <p class="m-0">{{ order?.orderSeconds }} sekund</p>
@@ -72,41 +72,44 @@ const open = ref(false)
         :md="24"
         :lg="6"
         :xl="6"
+        class="item border pl-2 my-2"
+      >
+        <p class="m-0">
+          {{ formatAmount(order?.amount) }} <span>{{ $t('SOUM') }}</span>
+        </p>
+        <span class="sub-title amount text-muted">
+          {{ $t('AMOUNT') }}
+        </span>
+      </a-col>
+
+      <a-col
+        :span="8"
+        :xs="24"
+        :sm="24"
+        :md="24"
+        :lg="8"
+        :xl="8"
         class="item border"
       >
-        <div class="amount-status">
-          <div>
-            <p class="m-0">
-              {{ formatAmount(order?.amount) }} <span>{{ $t('SOUM') }}</span>
-            </p>
-            <span class="sub-title amount text-muted">
-              {{ $t('AMOUNT') }}
-            </span>
-          </div>
+        <div class="pl-2 flex  align-center ">
+          <status-tag-component
+            :status="order?.status"
+            class="flex align-center mr-4"
+          />
+          <template v-if="order?.status === 'PENDING'">
+            <a-popconfirm
+              :title="$t('CONFIRMCANCELORDER')"
+              :ok-text="$t('YES')"
+              :cancel-text="$t('NO')"
+              @confirm="cancelOrder"
+            >
+              <a-button danger @click.stop>{{ $t('CANCEL') }} as1</a-button>
+            </a-popconfirm>
+          </template>
 
-          <span>
-            <status-tag-component :status="order?.status" />
-          </span>
-          <span>
-            <template v-if="order?.status === 'PENDING'">
-              <a-popconfirm
-                :title="$t('CONFIRMCANCELORDER')"
-                :ok-text="$t('YES')"
-                :cancel-text="$t('NO')"
-                @confirm="cancelOrder"
-              >
-                <a-button class="mb-2" danger @click.stop
-                  >{{ $t('CANCEL') }}
-                </a-button>
-              </a-popconfirm>
-            </template>
-
-            <template v-else>
-              <a-button class="mb-2" danger disabled
-                >{{ $t('CANCEL') }}
-              </a-button>
-            </template>
-          </span>
+          <template v-else>
+            <a-button danger disabled>{{ $t('CANCEL') }} </a-button>
+          </template>
         </div>
       </a-col>
     </a-row>
@@ -116,6 +119,8 @@ const open = ref(false)
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
 @import '@/assets/styles/responsive';
+
+
 
 .order-item-card {
   &:deep(.ant-card-body) {
@@ -166,9 +171,10 @@ const open = ref(false)
   }
 }
 
-.amount-status {
+/* .amount-status {
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
 
   @include responsive-md {
     flex-direction: row-reverse;
@@ -181,5 +187,5 @@ const open = ref(false)
       display: none;
     }
   }
-}
+} */
 </style>
