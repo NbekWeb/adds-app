@@ -103,7 +103,7 @@ const open = ref(false)
               :cancel-text="$t('NO')"
               @confirm="cancelOrder"
             >
-              <a-button danger @click.stop>{{ $t('CANCEL') }} as1</a-button>
+              <a-button danger @click.stop>{{ $t('CANCEL') }} </a-button>
             </a-popconfirm>
           </template>
 
