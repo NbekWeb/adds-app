@@ -8,8 +8,8 @@ import IconTrash from '@/components/icons/IconTrash.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
-import { fileBaseUrl } from '@/utils/conf.js'
 import IconFile from '@/components/icons/IconFile.vue'
+import ImageComponent from "@/components/ImageComponent.vue";
 
 const router = useRouter()
 const route = useRoute()
@@ -96,10 +96,10 @@ function editPost(id) {
           <template
             v-if="item.messageType === 'IMAGE' || item.messageType === 'VIDEO'"
           >
-            <img
+            <image-component
               class="post-cover"
-              :src="`${fileBaseUrl}/file/${item.messageType === 'IMAGE' ? item?.fileDto?.fileHashId : item.snapshotHashId}`"
-              alt=""
+              :hash-id="item.messageType === 'IMAGE' ? item?.fileDto?.fileHashId : item.snapshotHashId"
+              alt="Post rasmi"
             />
           </template>
           <template v-if="item.messageType === 'DOCUMENT'">
@@ -162,6 +162,7 @@ function editPost(id) {
 .cover {
   width: 100%;
   height: 200px;
+  padding: 8px;
 }
 .post-cover {
   width: 100%;

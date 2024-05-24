@@ -3,6 +3,7 @@ import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import KioskBoardListComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardListComponent.vue'
 import KioskBoardItemComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardItemComponent.vue'
 import KioskBoardPageMobileFilterComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardPageMobileFilterComponent.vue'
+import IconSearch from "@/components/icons/IconSearch.vue";
 
 import useCategories from '@/store/category.pinia.js'
 import useKioskBoard from '@/store/kiosk-board.pinia.js'
@@ -70,7 +71,7 @@ onBeforeUnmount(() => {
               @change="handleChangeFilter"
             >
               <template #prefix>
-                <icon-search />
+                <IconSearch />
               </template>
             </a-input>
             <a-tree-select

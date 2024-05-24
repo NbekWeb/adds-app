@@ -3,14 +3,6 @@ import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import KioskBoardItemLocationComponent from '@/pages/dashboard/kiosk-board/components/KioskBoardItemLocationComponent.vue'
 
-import useKioskBoard from '@/store/kiosk-board.pinia.js'
-
-import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
-
-const router = useRouter()
-const mapName = ref('')
-const { changeMap } = useKioskBoard()
 const props = defineProps({
   item: {
     type: Object,
@@ -43,13 +35,19 @@ const props = defineProps({
                 :locMap="[item?.latitude, item?.longitude]"
               />
               <a-button
+                @click="$router.push({
+                  path:'post',
+                  query: {
+                    channel: 'kiosk',
+                  }
+                })"
                 size="small"
                 class="flex justify-center align-center kiosk-board-item-btn"
               >
                 <IconShoppingCard />
               </a-button>
               <a-button
-                @click="router.push(`kiosk-board/item/${item?.id}`)"
+                @click="$router.push(`kiosk-board/item/${item?.id}`)"
                 size="small"
                 class="flex justify-center align-center board-item-btn"
               >

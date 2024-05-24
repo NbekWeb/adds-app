@@ -1,8 +1,8 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { fileBaseUrl } from '@/utils/conf.js'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconEye from '@/components/icons/IconEye.vue'
+import ImageComponent from "@/components/ImageComponent.vue";
 
 const { item } = defineProps({
   item: {
@@ -18,10 +18,11 @@ const router = useRouter()
     <div class="flex flex-column justify-between h-full">
       <div class="flex justify-between">
         <div class="flex align-center">
-          <a-avatar
-            class="avatar"
-            :src="`${fileBaseUrl}/file/${item?.logoHashId}`"
-            size="large"
+          <image-component
+            class="avatar flex justify-center align-center"
+            :rounded="true"
+            :hash-id="item?.logoHashId"
+            style="width: 40px; height: 40px; border-radius: 50%"
           />
           <div class="flex justify-center flex-column ml-2">
             <h1 class="board-name mb-0">{{ item?.name }}</h1>
