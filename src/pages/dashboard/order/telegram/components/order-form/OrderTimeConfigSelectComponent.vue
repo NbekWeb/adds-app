@@ -58,11 +58,11 @@ onBeforeUnmount(() => {
       <icon-loader />
     </template>
 
-    <div class="header-order-date flex justify-between my-2">
-      <order-date-component @on-change="handleChangeDate" />
-    </div>
-    <scrollbar-component height="calc(100vh - 300px)">
+    <scrollbar-component height="calc(100vh - 260px)" >
       <template #content>
+        <div class="header-order-date flex justify-between my-2">
+          <order-date-component @on-change="handleChangeDate" />
+        </div>
         <template
           v-if="
             !timeConfigurations?.length &&

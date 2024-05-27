@@ -103,12 +103,12 @@ const open = ref(false)
               :cancel-text="$t('NO')"
               @confirm="cancelOrder"
             >
-              <a-button danger @click.stop>{{ $t('CANCEL') }} </a-button>
+              <a-button danger @click.stop>{{ $t('MAKE_ORDER') }} </a-button>
             </a-popconfirm>
           </template>
 
           <template v-else>
-            <a-button danger disabled>{{ $t('CANCEL') }} </a-button>
+            <a-button danger disabled>{{ $t('MAKE_ORDER') }} </a-button>
           </template>
         </div>
       </a-col>

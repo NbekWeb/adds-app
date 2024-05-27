@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <scrollbar-component height="calc(100vh - 250px)">
+  <scrollbar-component height="calc(100vh - 260px)">
     <template #content>
       <template v-if="!boardList?.length && !loadingUrl.has('board/all')">
         <a-empty class="empty">

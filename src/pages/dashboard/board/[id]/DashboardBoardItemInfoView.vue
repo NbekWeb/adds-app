@@ -35,7 +35,7 @@ onBeforeUnmount(() => {
     <template #indicator>
       <icon-loader />
     </template>
-    <scrollbar-component height="calc(100vh - 145px)">
+    <scrollbar-component height="calc(100vh - 155px)">
       <template #content v-if="boardInfo">
         <div class="flex flex-column justify-between h-full">
           <div>
@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
             </div>
           </div>
           <div>
-            <a-button @click="router.back()">{{ $t('BACK') }}</a-button>
+            <a-button @click="router.back()">{{ $t('BACK') }} </a-button>
           </div>
         </div>
       </template>
