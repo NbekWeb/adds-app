@@ -46,7 +46,7 @@ function closeTelegramOrderItem(index) {
 }
 function newOrderCreate() {
   if (form.items.length) {
-    orderPinia.createTelegramOrder({
+    orderPinia.createOrder({
       postId: form.postId,
       items: form.items.map((item) => ({
         boardId: item.board.id,

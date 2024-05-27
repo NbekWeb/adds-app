@@ -104,14 +104,8 @@ function handleFilterInMobile() {
           </a-select-option>
         </a-select>
       </a-col>
-      <div class="w-full flex justify-between align-center">
-        <a-button class="btn" type="primary" @click="handleOpenPost">
-          <template #icon>
-            <IconPlus />
-          </template>
-          <span>{{ $t('CREATE_AN_ORDER') }} </span>
-        </a-button>
-        <a-button type="primary" @click="handleFilterInMobile">
+      <div class="w-full flex justify-end align-center">
+        <a-button type="primary" @click="handleFilterInMobile" class="">
           {{ $t('READY') }}
         </a-button>
       </div>

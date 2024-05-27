@@ -9,7 +9,7 @@ const useOrder = defineStore('order', {
     orders: [],
     totalElements: 0,
     totalPages: 0,
-    page:0
+    page: 0
   }),
   actions: {
     clearOrders() {
@@ -110,7 +110,7 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('get/order/one')
         })
     },
-    createTelegramOrder(form) {
+    createOrder(form) {
       const core = useCore()
       core.loadingUrl.add('create/order')
       api({
@@ -132,35 +132,11 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('create/order')
         })
     },
-    createTelegramOrderItem(id, form) {
+    createOrderItem(id, form) {
       const core = useCore()
       core.loadingUrl.add('create/order/item')
       api({
         url: `order-item`,
-        method: 'POST',
-        params: {
-          orderId: id
-        },
-        data: form
-      })
-        .then(() => {
-          core.setToast({
-            type: 'success',
-            locale: ''
-          })
-        })
-        .catch((error) => {
-          core.switchStatus(error)
-        })
-        .finally(() => {
-          core.loadingUrl.delete('create/order/item')
-        })
-    },
-    createKioskOrderItem(id, form) {
-      const core = useCore()
-      core.loadingUrl.add('create/order/item')
-      api({
-        url: `kiosk-order-item`,
         method: 'POST',
         params: {
           orderId: id
@@ -196,6 +172,7 @@ const useOrder = defineStore('order', {
             type: 'success',
             locale: 'ORDER_CANCELED'
           })
+          callback()
         })
         .catch((error) => {
           core.switchStatus(error)

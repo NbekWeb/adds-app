@@ -36,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <page-header-component :title="$t('DashboardKioskOrderItemView')">
+  <page-header-component :title="$t('DashboardTelegramOrderItemView')">
     <template #actions>
       <a-button class="btn" @click="refreshOrder">
         <template #icon>
@@ -54,7 +54,7 @@ onMounted(() => {
       <template #content>
         <a-row :gutter="[10, 10]">
           <a-col :span="24" v-for="(item, i) in order?.items" :key="i">
-            <order-item-component :order="item" />
+            <order-item-component :order="item" @cancelOrder="refreshOrder" />
           </a-col>
         </a-row>
       </template>

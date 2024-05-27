@@ -6,6 +6,7 @@ import { formatAmount } from '@/composables/index.js'
 
 import useCore from '@/store/core.pinia.js'
 import useKioskOrder from '@/store/kiosk-order.pinia.js'
+import useUser from '@/store/user.pinia.js'
 
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderItemFormComponent from '@/pages/dashboard/order/kiosk/components/order-form/OrderItemFormComponent.vue'
@@ -19,6 +20,7 @@ const route = useRoute()
 const corePinia = useCore()
 const kioskOrderPinia = useKioskOrder()
 const kioskPostPinia = useKioskPost()
+const userPinia = useUser()
 
 const { loadingUrl } = storeToRefs(corePinia)
 const form = reactive({
@@ -51,18 +53,23 @@ function closeOrderItem(index) {
 }
 function newOrderCreate() {
   if (form.items.length) {
-    kioskOrderPinia.createOrder({
-      postId: form.postId,
-      items: form.items.map((item) => ({
-        boardId: item.board.id,
-        orderSeconds: item.orderSeconds
-      }))
-    }, () => {
-      router.push({
-        name: 'DashboardOrderListView',
-        query: { channel: 'kiosk' }
-      })
-    })
+    kioskOrderPinia.createOrder(
+      {
+        postId: form.postId,
+        items: form.items.map((item) => ({
+          boardId: item.board.id,
+          orderSeconds: item.orderSeconds
+        }))
+      },
+      () => {
+        router.push({
+          name: 'DashboardOrderListView',
+          query: { channel: 'kiosk' }
+        })
+      }
+    )
+
+    userPinia.getUserMe() 
   }
 }
 onMounted(() => {
@@ -100,7 +107,9 @@ onMounted(() => {
       <a-button @click="router.back()">{{ $t('CANCEL') }} </a-button>
       <div class="flex align-center">
         <div class="mr-4" v-if="totalPrice !== 0">
-          {{ $t('TOTAL') }}:<span class="px-1">{{ formatAmount(totalPrice) }}</span>
+          {{ $t('TOTAL') }}:<span class="px-1">{{
+            formatAmount(totalPrice)
+          }}</span>
           {{ $t('SOUM') }}
         </div>
         <a-button

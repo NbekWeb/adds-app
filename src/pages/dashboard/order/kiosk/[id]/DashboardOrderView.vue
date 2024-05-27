@@ -51,11 +51,11 @@ onMounted(() => {
     <template #indicator>
       <IconLoader />
     </template>
-    <scrollbar-component height="calc(100vh - 220px)">
+    <scrollbar-component height="calc(100vh - 230px)">
       <template #content>
         <a-row :gutter="[10, 10]">
           <a-col :span="24" v-for="(item, i) in order?.items" :key="i">
-            <order-item-component :order="item" @canceledOrder="refreshOrder" />
+            <order-item-component :order="item" @cancelOrder="refreshOrder" />
           </a-col>
         </a-row>
       </template>
@@ -63,7 +63,7 @@ onMounted(() => {
   </a-spin>
 
   <div>
-    <a-button @click="router.back()">
+    <a-button @click="router.back()" class="">
       {{ $t('BACK') }}
     </a-button>
   </div>

@@ -9,7 +9,7 @@ import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconFile from '@/components/icons/IconFile.vue'
-import ImageComponent from "@/components/ImageComponent.vue";
+import ImageComponent from '@/components/ImageComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -27,52 +27,52 @@ const postPinia = usePost()
 const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 
 const deletePost = () => {
-  if (route.query.channel == 'telegram') {
-    postPinia.deleteTelegramPostById(item.id)
-  } else {
+  if (route.query.channel == 'kiosk') {
     postPinia.deleteKioskPostById(item.id)
+  } else {
+    postPinia.deleteTelegramPostById(item.id)
   }
 }
 
 const pushToPost = () => {
-  if (route.query.channel == 'telegram') {
+  if (route.query.channel == 'kiosk') {
     router.push({
-      name: 'TelegramPostItemView',
+      name: 'KioskPostItemView',
       params: { id: item.id }
     })
   } else {
     router.push({
-      name: 'KioskPostItemView',
+      name: 'TelegramPostItemView',
       params: { id: item.id }
     })
   }
 }
 
 const pushToEdit = () => {
-  if (route.query.channel == 'telegram') {
+  if (route.query.channel == 'kiosk') {
     router.push({
-      name: 'TelegramPostEditView',
+      name: 'KioskPostEditView',
       params: { id: item.id }
     })
   } else {
     router.push({
-      name: 'KioskPostEditView',
+      name: 'TelegramPostEditView',
       params: { id: item.id }
     })
   }
 }
 
 const pushToShop = () => {
-  if (route.query.channel == 'telegram') {
+  if (route.query.channel == 'kiosk') {
     router.push({
-      name: 'TelegramOrderView',
+      name: 'KioskOrderView',
       params: {
         postId: item.id
       }
     })
   } else {
     router.push({
-      name: 'KioskOrderView',
+      name: 'TelegramOrderView',
       params: {
         postId: item.id
       }
@@ -98,7 +98,11 @@ function editPost(id) {
           >
             <image-component
               class="post-cover"
-              :hash-id="item.messageType === 'IMAGE' ? item?.fileDto?.fileHashId : item.snapshotHashId"
+              :hash-id="
+                item.messageType === 'IMAGE'
+                  ? item?.fileDto?.fileHashId
+                  : item.snapshotHashId
+              "
               alt="Post rasmi"
             />
           </template>
@@ -140,7 +144,7 @@ function editPost(id) {
           :cancel-text="$t('NO')"
           @confirm="deletePost"
         >
-          <a-button size="small" danger >
+          <a-button size="small" danger>
             <icon-trash class="mt-1" />
           </a-button>
         </a-popconfirm>

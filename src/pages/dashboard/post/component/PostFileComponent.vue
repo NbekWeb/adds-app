@@ -31,8 +31,8 @@ const fileProgress = ref(0)
 const snapshot = ref()
 
 const uploadLogo = (file) => {
-  if (route.query.channel == 'telegram') {
-    uploadPinia.uploadFileTelegram(
+  if (route.query.channel == 'kiosk') {
+    uploadPinia.uploadFileKiosk(
       file,
       (data) => {
         hashId.value = data.hashId
@@ -46,7 +46,7 @@ const uploadLogo = (file) => {
       }
     )
   } else {
-    uploadPinia.uploadFileKiosk(
+    uploadPinia.uploadFileTelegram(
       file,
       (data) => {
         hashId.value = data.hashId

@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, ref} from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useOrder from '@/store/order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
@@ -51,22 +51,22 @@ const handleChangeStatus = (val) => {
 }
 
 const pushToCreate = () => {
-  if (route.query.channel === 'telegram') {
+  if (route.query.channel === 'kiosk') {
     router.push({
-      name: 'TelegramPostCreateView'
+      name: 'KioskPostCreateView'
     })
   } else {
     router.push({
-      name: 'KioskPostCreateView'
+      name: 'TelegramPostCreateView'
     })
   }
 }
 
 onMounted(() => {
-  if (selectedChannel.value === 'telegram') {
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
-  } else {
+  if (selectedChannel.value === 'kiosk') {
     orderPinia.getAllKioskOrders(0, orderStatus.value)
+  } else {
+    orderPinia.getAllTelegramOrders(0, orderStatus.value)
   }
 })
 </script>
@@ -74,18 +74,13 @@ onMounted(() => {
 <template>
   <page-header-component :title="$t('DashboardOrderListView')">
     <template #actions>
-      <order-page-mobile-filter-component
-        :selectChannel="selectedChannel"
-        :statuses="statuses"
-        :orderStatus="orderStatus"
-        @openPost="open = true"
-      />
-      <div class="isDesktop">
-        <a-space>
+      <a-space class="flex">
+        <div class="isDesktop">
           <a-select
             style="width: 120px"
             :value="selectedChannel"
             @change="handleChangeType"
+            class="mr-2"
           >
             <a-select-option value="telegram">Telegram</a-select-option>
             <a-select-option value="kiosk">Kiosk</a-select-option>
@@ -107,14 +102,20 @@ onMounted(() => {
               {{ $t(status) }}
             </a-select-option>
           </a-select>
-          <a-button class="btn" type="primary" @click="open = true">
-            <template #icon>
-              <IconPlus />
-            </template>
-            <span>{{ $t('CREATE_AN_ORDER') }} </span>
-          </a-button>
-        </a-space>
-      </div>
+        </div>
+        <order-page-mobile-filter-component
+          :selectChannel="selectedChannel"
+          :statuses="statuses"
+          :orderStatus="orderStatus"
+          @openPost="open = true"
+        />
+        <a-button class="btn" type="primary" @click="open = true">
+          <template #icon>
+            <IconPlus />
+          </template>
+          <span>{{ $t('CREATE_AN_ORDER') }} </span>
+        </a-button>
+      </a-space>
     </template>
   </page-header-component>
   <a-drawer
