@@ -1,6 +1,6 @@
 <script setup>
 import IconBell from '@/components/icons/IconBell.vue'
-import { onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import useNotifications from '@/store/notifications.pinia.js'
 import { storeToRefs } from 'pinia'
 import { notification } from 'ant-design-vue'
@@ -20,6 +20,7 @@ const { notifications, totalPages, count, newNotifications } =
 const currentPage = ref(0)
 const open = ref(false)
 const timeOut = ref()
+const notificationInterval = ref()
 
 const openNotification = async () => {
   newNotifications.value.forEach((item, index) => {
@@ -34,9 +35,7 @@ const openNotification = async () => {
   })
 }
 function checkNotifications() {
-  if (localStorage.getItem('access_token')) {
     notificationPinia.checkNotifications()
-  }
 }
 watch(newNotifications, () => {
   openNotification()
@@ -55,13 +54,14 @@ function getPegableNotifications(page) {
 }
 
 onMounted(() => {
-  const token = localStorage.getItem('access_token')
-  if (token) {
     notificationPinia.getUnreadNotifications()
     notificationPinia.getNotifications(0)
     checkNotifications()
-    setInterval(checkNotifications, 60000)
-  }
+  notificationInterval.value = setInterval(checkNotifications, 60000)
+})
+
+onBeforeUnmount(()=> {
+  clearInterval(notificationInterval.value)
 })
 </script>
 
