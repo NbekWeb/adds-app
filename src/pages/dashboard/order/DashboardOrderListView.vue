@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useOrder from '@/store/order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
@@ -7,7 +7,6 @@ import OrderListComponent from '@/pages/dashboard/order/components/OrderListComp
 import IconPlus from '@/components/icons/IconPlus.vue'
 import PostListDrawerComponent from '@/pages/dashboard/order/components/PostListDrawerComponent.vue'
 import OrderPageMobileFilterComponent from '@/pages/dashboard/order/components/OrderPageMobileFilterComponent.vue'
-import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 const route = useRoute()
@@ -26,23 +25,25 @@ const statuses = ref([
   'FAILED'
 ])
 
-const selectedChannel = ref('')
+const selectedChannel = computed(() => route.query.channel || 'telegram')
 
 const orderStatus = ref(route.query.status)
 const open = ref(false)
 
-const handleChange = (val) => {
+const handleChangeType = (val) => {
   router.push({ query: { ...route.query, channel: val } })
-  if (selectedChannel.value == 'telegram') {
+
+  orderPinia.clearOrders()
+  if (val === 'telegram') {
     orderPinia.getAllTelegramOrders(0, orderStatus.value)
   } else {
     orderPinia.getAllKioskOrders(0, orderStatus.value)
   }
 }
 
-const handleSelect = (val) => {
+const handleChangeStatus = (val) => {
   router.push({ query: { ...route.query, select: val } })
-  if (selectedChannel.value == 'telegram') {
+  if (selectedChannel.value === 'telegram') {
     orderPinia.getAllTelegramOrders(0, orderStatus.value)
   } else {
     orderPinia.getAllKioskOrders(0, orderStatus.value)
@@ -50,7 +51,7 @@ const handleSelect = (val) => {
 }
 
 const pushToCreate = () => {
-  if (route.query.channel == 'telegram') {
+  if (route.query.channel === 'telegram') {
     router.push({
       name: 'TelegramPostCreateView'
     })
@@ -61,15 +62,8 @@ const pushToCreate = () => {
   }
 }
 
-watch(selectedChannel, (newChannel, oldChannel) => {
-  if (newChannel !== oldChannel) {
-    router.push({ query: { channel: newChannel } })
-  }
-})
-
 onMounted(() => {
-  selectedChannel.value = route.query.channel || 'telegram'
-  if (selectedChannel.value == 'telegram') {
+  if (selectedChannel.value === 'telegram') {
     orderPinia.getAllTelegramOrders(0, orderStatus.value)
   } else {
     orderPinia.getAllKioskOrders(0, orderStatus.value)
@@ -98,7 +92,7 @@ onMounted(() => {
             allow-clear
             :placeholder="$t('FILTER_BY_STATUS')"
             v-model:value="orderStatus"
-            @change="handleSelect"
+            @change="handleChangeStatus"
           >
             <a-select-option
               v-for="status in statuses"

@@ -50,6 +50,8 @@ const useOrder = defineStore('order', {
     getAllKioskOrders(page, status) {
       const core = useCore()
       core.loadingUrl.add('get/order/all')
+
+      this.page = page
       api({
         url: `kiosk-order`,
         params: {

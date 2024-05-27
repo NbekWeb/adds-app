@@ -1,8 +1,8 @@
 <script setup>
+import {onMounted, computed} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import usePost from '@/store/post.pinia.js'
-import { onMounted, watch, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import PostListComponent from '@/pages/dashboard/post/component/PostListComponent.vue'
@@ -14,13 +14,15 @@ const route = useRoute()
 const corePinia = useCore()
 const postPinia = usePost()
 
-const selectedChannel = ref('')
+const selectedChannel = computed(() => route.query.channel || 'telegram')
 
 const { loadingUrl } = storeToRefs(corePinia)
 
-const handleChange = (val) => {
+const handleChangeType = (val) => {
   router.push({ query: { channel: val } })
-  if (selectedChannel.value == 'telegram') {
+
+  postPinia.clearPost()
+  if (val === 'telegram') {
     postPinia.getAllTelegramPosts(0)
   } else {
     postPinia.getAllKioskPosts(0)
@@ -28,7 +30,7 @@ const handleChange = (val) => {
 }
 
 const pushToCreate = () => {
-  if (route.query.channel == 'telegram') {
+  if (route.query.channel === 'telegram') {
     router.push({
       name: 'TelegramPostCreateView'
     })
@@ -39,16 +41,8 @@ const pushToCreate = () => {
   }
 }
 
-watch(selectedChannel, (newChannel, oldChannel) => {
-  if (newChannel !== oldChannel) {
-    router.push({ query: { channel: newChannel } })
-  }
-})
-
 onMounted(() => {
-  selectedChannel.value = route.query.channel || 'telegram'
-
-  if (selectedChannel.value == 'telegram') {
+  if (selectedChannel.value === 'telegram') {
     postPinia.getAllTelegramPosts(0)
   } else {
     postPinia.getAllKioskPosts(0)
@@ -62,8 +56,8 @@ onMounted(() => {
       <div class="flex">
         <a-select
           style="width: 120px"
-          v-model:value="selectedChannel"
-          @change="handleChange"
+          :value="selectedChannel"
+          @change="handleChangeType"
         >
           <a-select-option value="telegram">Telegram</a-select-option>
           <a-select-option value="kiosk">Kiosk</a-select-option>
