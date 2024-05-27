@@ -51,6 +51,7 @@ onMounted(() => {
       <a-input
         v-model:value="form.text"
         :placeholder="$t('LINKED_BUTTON_TEXt_INPUT_PLACEHOLDER')"
+        :maxlength="35"
       />
     </a-form-item>
     <a-form-item :label="$t('LINKED_BUTTON_URL')" name="text" :rules="rule">

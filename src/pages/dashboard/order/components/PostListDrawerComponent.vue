@@ -59,7 +59,6 @@ onMounted(() => {
               :md="24"
               :lg="12"
               :xl="12"
-              :xxl="8"
               :key="item.id"
               v-for="item in posts"
             >

@@ -68,7 +68,7 @@ function handleBackStep() {
     form.configuration = null
     selectedConfigAmount.value = 0
   } else if (currentStep.value === 0) {
-    form.boardId = null
+    form.board = null
     emits('cancel')
   }
   if (currentStep.value > 0) currentStep.value--
@@ -77,6 +77,7 @@ function handleBackStep() {
 
 <template>
   <a-steps :items="steps" :current="currentStep"> </a-steps>
+
   <a-spin
     :spinning="
       loadingUrl.has('board/all') ||
@@ -110,12 +111,11 @@ function handleBackStep() {
       />
     </template>
   </a-spin>
-
   <div class="flex justify-end">
     <h3>
       {{ $t('TOTAL') }}:
       {{ formatAmount(selectedConfigAmount + selectedTimeConfigAmount) }}
-      <span class="">UZS</span>
+      <span>UZS</span>
     </h3>
   </div>
   <div class="flex justify-between">

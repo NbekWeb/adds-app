@@ -1,7 +1,7 @@
 <script setup>
 import {computed, ref} from 'vue'
 import { storeToRefs } from 'pinia'
-import {useRoute} from "vue-router";
+import { useRoute } from 'vue-router'
 
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'

@@ -69,7 +69,7 @@ onMounted(() => {
           @click="pushToCreate"
         >
           <icon-plus />
-          {{ $t('ADD') }} 
+          {{ $t('ADD') }}
         </a-button>
       </div>
     </template>

@@ -26,7 +26,11 @@ const form = reactive({
 
 const totalPrice = computed(() => {
   return form.items.reduce((total, item) => {
-    return total + item.timeConfiguration.amount
+    return (
+      total +
+      (item.timeConfiguration?.amount ?? 0) +
+      (item.configuration?.amount ?? 0)
+    )
   }, 0)
 })
 
@@ -62,7 +66,7 @@ onMounted(() => {
 
 <template>
   <template v-if="!newOrderItem">
-    <page-header-component title="E'lon berish " />
+    <page-header-component :title="$t('CREATE_AN_ORDER')" />
   </template>
 
   <template v-if="newOrderItem">
@@ -79,20 +83,24 @@ onMounted(() => {
     />
   </template>
   <template v-if="!newOrderItem">
-    <div class="flex justify-between mt-3">
-      <a-button @click="router.back()"> Bekor qilish </a-button>
+    <div class="flex justify-between mt-1">
+      <a-button @click="router.back()"> {{ $t('CANCEL') }}</a-button>
 
-      <div class="flex alighn-center">
-        <span class="mr-5" v-if="totalPrice !== 0"
-          >Jami:{{ formatAmount(totalPrice) }}
-        </span>
+      <div class="flex align-center h-full">
+        <div class="mr-4" v-if="totalPrice !== 0">
+          {{ $t('TOTAL') }}:<span class="px-1">{{
+            formatAmount(totalPrice)
+          }}</span>
+          {{ $t('SOUM') }}
+        </div>
+
         <a-button
           @click="newOrderCreate"
           :disabled="!Boolean(form.items.length)"
           :loading="loadingUrl.has('create/order')"
           type="primary"
         >
-          Xarid qilish
+          {{ $t('MAKE_ORDER') }}
         </a-button>
       </div>
     </div>
