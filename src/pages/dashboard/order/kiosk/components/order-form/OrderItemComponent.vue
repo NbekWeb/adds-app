@@ -55,7 +55,7 @@ onMounted(() => {
       <div>
         <div>
           <h1 class="channel-name m-0">
-            {{ formatTextLength(item.board?.name, 25) }} 
+            {{ formatTextLength(item.board?.name, 25) }}
           </h1>
         </div>
         <template v-if="item?.configuration?.name"> </template>

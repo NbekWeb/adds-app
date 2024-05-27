@@ -7,9 +7,10 @@ import { formatAmount } from '@/composables/index.js'
 import { ref } from 'vue'
 
 import useOrder from '@/store/order.pinia.js'
+import useUser from '@/store/user.pinia.js'
 
 const orderPinia = useOrder()
-
+const userPinia = useUser()
 const emit = defineEmits(['canceledOrder'])
 
 const props = defineProps({
@@ -22,6 +23,7 @@ function cancelOrder() {
     [props.order?.id],
     () => {
       emit('canceledOrder')
+      userPinia.getUserMe()
     }
   )
 }
@@ -41,8 +43,8 @@ const open = ref(false)
         :xl="4"
         class="flex justify-start"
       >
-        <div class="item pl-2 ">
-          <p class="m-0 ">
+        <div class="item pl-2">
+          <p class="m-0">
             {{ order?.board.name }}
           </p>
           <span class="sub-title text-muted">
@@ -91,7 +93,7 @@ const open = ref(false)
         :xl="8"
         class="item border"
       >
-        <div class="pl-2 flex  align-center ">
+        <div class="pl-2 flex align-center">
           <status-tag-component
             :status="order?.status"
             class="flex align-center mr-4"
@@ -119,8 +121,6 @@ const open = ref(false)
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
 @import '@/assets/styles/responsive';
-
-
 
 .order-item-card {
   &:deep(.ant-card-body) {

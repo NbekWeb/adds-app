@@ -6,7 +6,7 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 import IconShoppingCard from '@/components/icons/IconShoppingCard.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconFile from '@/components/icons/IconFile.vue'
-import ImageComponent from "@/components/ImageComponent.vue";
+import ImageComponent from '@/components/ImageComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -20,16 +20,16 @@ const { item } = defineProps({
 })
 const corePinia = useCore()
 const orderPush = () => {
-  if (route.query.channel == 'telegram') {
+  if (route.query.channel == 'kiosk') {
     router.push({
-      name: 'TelegramOrderView',
+      name: 'KioskOrderView',
       params: {
         postId: item.id
       }
     })
   } else {
     router.push({
-      name: 'KioskOrderView',
+      name: 'TelegramOrderView',
       params: {
         postId: item.id
       }
@@ -38,16 +38,16 @@ const orderPush = () => {
 }
 
 const viewPush = () => {
-  if (route.query.channel == 'telegram') {
+  if (route.query.channel == 'kiosk') {
     router.push({
-      name: 'TelegramPostItemView',
+      name: 'KioskPostItemView',
       params: {
         id: item.id
       }
     })
   } else {
     router.push({
-      name: 'KioskPostItemView',
+      name: 'TelegramPostItemView',
       params: {
         id: item.id
       }
@@ -71,7 +71,11 @@ const { loadingUrl } = storeToRefs(corePinia)
           >
             <image-component
               class="post-cover"
-              :hash-id="item.messageType === 'IMAGE' ? item?.fileDto?.fileHashId : item.snapshotHashId"
+              :hash-id="
+                item.messageType === 'IMAGE'
+                  ? item?.fileDto?.fileHashId
+                  : item.snapshotHashId
+              "
             />
           </template>
           <template v-if="item.messageType === 'DOCUMENT'">
@@ -95,7 +99,7 @@ const { loadingUrl } = storeToRefs(corePinia)
       </a-card-meta>
       <template #actions>
         <a-button @click="viewPush" size="small">
-          <icon-eye class="mt-1" /> 
+          <icon-eye class="mt-1" />
         </a-button>
 
         <a-button @click="orderPush" size="small">

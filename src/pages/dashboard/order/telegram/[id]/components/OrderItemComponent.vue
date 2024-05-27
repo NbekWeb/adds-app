@@ -9,6 +9,10 @@ import useOrder from '@/store/order.pinia.js'
 
 const orderPinia = useOrder()
 
+const handleCanceledOrder = () => {
+  console.log('Canceled Order')
+}
+
 const props = defineProps({
   order: Object
 })
@@ -126,7 +130,11 @@ const open = ref(false)
         </div>
       </a-col>
     </a-row>
-    <order-item-view-drawer-component :item="order" v-model:open="open" />
+    <order-item-view-drawer-component
+      :item="order"
+      v-model:open="open"
+      @canceledOrder="$emit('cancelOrder')"
+    />
   </a-card>
 </template>
 

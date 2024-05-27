@@ -9,9 +9,14 @@ import { formatAmount } from '../../../../../../composables/index.js'
 import ViewsComponent from '@/pages/dashboard/order/telegram/[id]/components/ViewsComponent.vue'
 import WarningComponent from '@/pages/dashboard/order/telegram/[id]/components/WarningComponent.vue'
 import { useRoute, useRouter } from 'vue-router'
+
 import useOrder from '@/store/order.pinia.js'
+import useUser from '@/store/user.pinia.js'
 
 const orderPinia = useOrder()
+const userPinia = useUser()
+
+const emit = defineEmits(['canceledOrder'])
 
 const route = useRoute()
 const router = useRouter()
@@ -22,11 +27,15 @@ const props = defineProps({
 const model = defineModel('open')
 
 function cancelOrder() {
-  orderPinia.putTelegramCancelOrder(props.item?.orderId, [props.item?.id])
-  router.push({
-    name: 'DashboardOrderListView',
-    query: { channel: 'telegram' }
-  })
+  orderPinia.putTelegramCancelOrder(
+    props.item?.orderId,
+    [props.item?.id],
+    () => {
+      emit('canceledOrder')
+      userPinia.getUserMe()
+    }
+  )
+  model.value = false
 }
 </script>
 
@@ -44,7 +53,7 @@ function cancelOrder() {
           :src="`${fileBaseUrl}/file/${item?.board.logoHashId}`"
         />
         <h3 class="m-0 ml-2">
-          {{ item.board.name }} 
+          {{ item.board.name }}
         </h3>
       </div>
     </template>
@@ -68,7 +77,7 @@ function cancelOrder() {
             @confirm="cancelOrder"
           >
             <a-button class="mb-2" danger @click.stop
-              >{{ $t('CANCEL') }} 
+              >{{ $t('CANCEL') }}
             </a-button>
           </a-popconfirm>
         </template>

@@ -5,11 +5,11 @@ import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
-import PostEditorComponent from '@/pages/dashboard/post/component/PostEditorComponent.vue'
+import PostEditorComponent from '@/pages/dashboard/post/telegram/component/PostEditorComponent.vue'
 import PostFileComponent from '@/pages/dashboard/post/telegram/component/PostFileComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import PostInlineButtonsComponent from '@/pages/dashboard/post/component/PostInlineButtonsComponent.vue'
+import PostInlineButtonsComponent from '@/pages/dashboard/post/telegram/component/PostInlineButtonsComponent.vue'
 import LoaderComponent from '@/components/LoaderComponent.vue'
 
 const { t } = useI18n()
@@ -107,7 +107,7 @@ onMounted(() => {
     :title="$t('TelegramPostEditView')"
     v-if="route.params.id"
   />
-  <page-header-component :title="$t('DashboardPostFormView')" v-else />
+  <page-header-component :title="$t('DashboardTelegramPostFormView')" v-else />
   <loader-component loading-url="get/post/one">
     <scrollbar-component height="calc(100vh - 230px)" class="mb-2">
       <template #content>
@@ -144,11 +144,11 @@ onMounted(() => {
       <a-space>
         <a-button @click="router.back()"> {{ $t('BACK') }} </a-button>
         <a-button
-            :loading="
-              loadingUrl.has('update/post') || loadingUrl.has('create/post')
-            "
-            @click="submitForm"
-            type="primary"
+          :loading="
+            loadingUrl.has('update/post') || loadingUrl.has('create/post')
+          "
+          @click="submitForm"
+          type="primary"
         >
           {{ $t('SAVE') }}
         </a-button>

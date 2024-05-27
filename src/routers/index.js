@@ -27,11 +27,6 @@ import TelegramPostItemView from '@/pages/dashboard/post/telegram/DashboardPostI
 import KioskPostItemView from '@/pages/dashboard/post/kiosk/DashboardPostItemView.vue'
 import TelegramOrderItemView from '@/pages/dashboard/order/telegram/[id]/DashboardOrderView.vue'
 import KioskOrderItemView from '@/pages/dashboard/order/kiosk/[id]/DashboardOrderView.vue'
-import DashboardKioskBoardItemView from '@/pages/dashboard/kiosk-board/[id]/DashboardKioskBoardItemView.vue'
-import DashboardKioskPostView from '@/pages/dashboard/kiosk-post/DashboardKioskPostView.vue'
-import DashboardKioskPostListView from '@/pages/dashboard/kiosk-post/DashboardKioskPostListView.vue'
-import DashboardKioskPostFormView from '@/pages/dashboard/kiosk-post/DashboardKioskPostFormView.vue'
-import DashboardKioskPostItemView from '@/pages/dashboard/kiosk-post/DashboardKioskPostItemView.vue'
 
 const AuthView = () => import('@/pages/auth/AuthView.vue')
 
@@ -86,25 +81,6 @@ export const router = createRouter({
         },
 
         {
-          path: 'kiosk-board',
-          name: 'DashboardKioskBoardView',
-          component: DashboardKioskBoardView,
-          redirect: { name: 'DashboardKioskBoardListView' },
-          children: [
-            {
-              path: '',
-              name: 'DashboardKioskBoardListView',
-              component: DashboardKioskBoardListView
-            },
-            {
-              path: 'item/:id',
-              name: 'DashboardKioskBoardItemView',
-              component: DashboardKioskBoardItemView
-            }
-          ]
-        },
-
-        {
           path: 'post',
           name: 'DashboardPostView',
           component: DashboardPostView,
@@ -144,33 +120,6 @@ export const router = createRouter({
               path: 'kiosk-item/:id',
               name: 'KioskPostItemView',
               component: KioskPostItemView
-            }
-          ]
-        },
-        {
-          path: 'kiosk-post',
-          name: 'DashboardKioskPostView',
-          component: DashboardKioskPostView,
-          children: [
-            {
-              path: '',
-              name: 'DashboardKioskPostListView',
-              component: DashboardKioskPostListView
-            },
-            {
-              path: 'create',
-              name: 'DashboardKioskPostCreateFormView',
-              component: DashboardKioskPostFormView
-            },
-            {
-              path: 'edit/:id',
-              name: 'DashboardKioskPostEditFormView',
-              component: DashboardKioskPostFormView
-            },
-            {
-              path: 'item/:id',
-              name: 'DashboardKioskPostItemView',
-              component: DashboardKioskPostItemView
             }
           ]
         },

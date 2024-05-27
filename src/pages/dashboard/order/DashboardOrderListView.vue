@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, ref} from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useOrder from '@/store/order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
@@ -51,22 +51,22 @@ const handleChangeStatus = (val) => {
 }
 
 const pushToCreate = () => {
-  if (route.query.channel === 'telegram') {
+  if (route.query.channel === 'kiosk') {
     router.push({
-      name: 'TelegramPostCreateView'
+      name: 'KioskPostCreateView'
     })
   } else {
     router.push({
-      name: 'KioskPostCreateView'
+      name: 'TelegramPostCreateView'
     })
   }
 }
 
 onMounted(() => {
-  if (selectedChannel.value === 'telegram') {
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
-  } else {
+  if (selectedChannel.value === 'kiosk') {
     orderPinia.getAllKioskOrders(0, orderStatus.value)
+  } else {
+    orderPinia.getAllTelegramOrders(0, orderStatus.value)
   }
 })
 </script>
@@ -78,8 +78,8 @@ onMounted(() => {
         <div class="isDesktop">
           <a-select
             style="width: 120px"
-            v-model:value="selectedChannel"
-            @change="handleChange"
+            :value="selectedChannel"
+            @change="handleChangeType"
             class="mr-2"
           >
             <a-select-option value="telegram">Telegram</a-select-option>

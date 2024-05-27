@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, computed} from 'vue'
+import { onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import usePost from '@/store/post.pinia.js'
@@ -30,22 +30,22 @@ const handleChangeType = (val) => {
 }
 
 const pushToCreate = () => {
-  if (route.query.channel === 'telegram') {
+  if (route.query.channel === 'kiosk') {
     router.push({
-      name: 'TelegramPostCreateView'
+      name: 'KioskPostCreateView'
     })
   } else {
     router.push({
-      name: 'KioskPostCreateView'
+      name: 'TelegramPostCreateView'
     })
   }
 }
 
 onMounted(() => {
-  if (selectedChannel.value === 'telegram') {
-    postPinia.getAllTelegramPosts(0)
-  } else {
+  if (selectedChannel.value === 'kioks') {
     postPinia.getAllKioskPosts(0)
+  } else {
+    postPinia.getAllTelegramPosts(0)
   }
 })
 </script>

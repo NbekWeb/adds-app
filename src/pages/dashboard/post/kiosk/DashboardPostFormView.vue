@@ -5,11 +5,10 @@ import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
-import PostEditorComponent from '@/pages/dashboard/post/component/PostEditorComponent.vue'
-import PostFileComponent from '@/pages/dashboard/post/component/PostFileComponent.vue'
+import PostEditorComponent from '@/pages/dashboard/post/kiosk/component/PostEditorComponent.vue'
+import PostFileComponent from '@/pages/dashboard/post/kiosk/component/PostFileComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import PostInlineButtonsComponent from '@/pages/dashboard/post/component/PostInlineButtonsComponent.vue'
 import LoaderComponent from '@/components/LoaderComponent.vue'
 const { t } = useI18n()
 
@@ -53,7 +52,7 @@ const rules = reactive({
     {
       required: true,
       validator: async (_rules, value) => {
-        if (value.length > 0 || route.query.channel == 'kiosk') {
+        if (value.length > 0) {
           return Promise.resolve()
         } else {
           return Promise.reject(t('REQUIRED_FIELD'))
@@ -101,7 +100,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <page-header-component :title="$t('DashboardPostFormView')" />
+  <page-header-component :title="$t('DashboardKioskPostFormView')" />
   <loader-component loading-url="get/post/one">
     <scrollbar-component height="calc(100vh - 230px)" class="mb-2">
       <template #content>

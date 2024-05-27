@@ -16,14 +16,14 @@ const props = defineProps({
 })
 
 const pushItem = () => {
-  if (route.query.channel == 'telegram') {
+  if (route.query.channel == 'kiosk') {
     router.push({
-      name: 'TelegramOrderItemView',
+      name: 'KioskOrderItemView',
       params: { id: props.item.id }
     })
   } else {
     router.push({
-      name: 'KioskOrderItemView',
+      name: 'TelegramOrderItemView',
       params: { id: props.item.id }
     })
   }
@@ -37,7 +37,7 @@ const pushItem = () => {
         <status-tag-component :status="item.status" />
       </div>
       <a-avatar-group
-        v-if="route.query.channel == 'telegram'"
+        v-if="route.query.channel !== 'kiosk'"
         :max-count="3"
         :max-style="{
           color: '#9f9fa3',
