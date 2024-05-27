@@ -11,7 +11,7 @@ const { item } = defineProps({
 
 <template>
   <a-radio
-    class="config-item w-full"
+    class="config-item w-full h-order-card"
     :class="{ selected: selected }"
     value="default"
   >

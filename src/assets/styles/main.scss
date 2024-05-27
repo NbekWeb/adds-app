@@ -39,9 +39,6 @@ body {
 .justify-between {
   justify-content: space-between !important;
 }
-.bor{
-  border: 1px solid red;
-}
 .flex-column {
   flex-direction: column !important;
 }
@@ -62,6 +59,9 @@ body {
 }
 .h-full {
   height: 100% !important;
+}
+.h-order-card {
+  height: 260px !important;
 }
 //Image
 .img-fluid {
