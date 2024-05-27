@@ -1,5 +1,6 @@
 <script setup>
 import { fileBaseUrl } from '@/utils/conf.js'
+import VideoPlayerComponent from '@/components/VideoPlayerComponent.vue'
 
 const props = defineProps({
   hashId: String,
