@@ -17,8 +17,17 @@ const selected = ref([])
 
 const activeLink = computed(() => route.fullPath.split('/')[2].split('?')[0])
 
-const setCollapse = ({ key }) => {
-  router.push(`/dashboard/${key}`)
+const setCollapse = ({ key, item }) => {
+  if (item.name === route.name) {
+    router.push({
+      path: `/dashboard/${key}`,
+      query: {
+        ...route.query
+      }
+    })
+  } else {
+    router.push(`/dashboard/${key}`)
+  }
   emits('change')
 }
 
@@ -26,7 +35,8 @@ const menuList = shallowRef([
   {
     key: 'main',
     icon: () => h(IconHome),
-    label: t('DashboardListView')
+    label: t('DashboardListView'),
+    name: 'DashboardListView'
   },
   {
     key: 'board',
@@ -36,12 +46,14 @@ const menuList = shallowRef([
       {
         key: 'board',
         icon: () => h(IconAnnouncement),
-        label: t('DashboardBoardListView')
+        label: t('DashboardBoardListView'),
+        name: 'DashboardBoardListView',
       },
       {
         key: 'kiosk-board',
         icon: () => h(IconMonitor),
-        label: t('DashboardKioskBoardListView')
+        label: t('DashboardKioskBoardListView'),
+        name: 'DashboardKioskBoardListView'
       }
     ]
   },
@@ -53,13 +65,15 @@ const menuList = shallowRef([
   {
     key: 'post',
     icon: () => h(IconMessageTextSquare),
-    label: t('DashboardPostListView')
+    label: t('DashboardPostListView'),
+    name: 'DashboardPostListView'
   },
 
   {
     key: 'order',
     icon: () => h(IconShoppingCard),
-    label: t('DashboardOrderListView')
+    label: t('DashboardOrderListView'),
+    name: 'DashboardOrderListView'
   }
 ])
 </script>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import {computed, ref} from 'vue'
 import { storeToRefs } from 'pinia'
 import {useRoute} from "vue-router";
 
@@ -18,7 +18,7 @@ const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 const { posts, page, totalPages } = storeToRefs(postPinia)
 
 const postId = ref(null)
-const postType = ref(route.query.channel)
+const postType = computed(() => route.query.channel)
 
 function editPost(id) {
   postId.value = id

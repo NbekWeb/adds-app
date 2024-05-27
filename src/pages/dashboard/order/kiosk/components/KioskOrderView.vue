@@ -47,15 +47,7 @@ function addNewOrderItem(item) {
   newOrderItem.value = false
 }
 function closeOrderItem(index) {
-  // console.log(
-  //   form.items.find((item, i) => i === index),
-  //   index
-  // )
   form.items.splice(index, 1)
-  // console.log('removed: ', removed)
-
-  // form.items = [...form.items.slice(0, index), ...form.items.slice(index + 1)]
-  // form.items = form.items.filter((_, i) => i !== index)
 }
 function newOrderCreate() {
   if (form.items.length) {
@@ -65,10 +57,11 @@ function newOrderCreate() {
         boardId: item.board.id,
         orderSeconds: item.orderSeconds
       }))
-    })
-    router.push({
-      name: 'DashboardOrderListView',
-      query: { channel: 'kiosk' }
+    }, () => {
+      router.push({
+        name: 'DashboardOrderListView',
+        query: { channel: 'kiosk' }
+      })
     })
   }
 }

@@ -63,7 +63,7 @@ const useKioskOrder = defineStore('kiosk-order', {
           core.loadingUrl.delete('get/kiosk-order/one')
         })
     },
-    createOrder(form) {
+    createOrder(form, callback) {
       const core = useCore()
       core.loadingUrl.add('create/kiosk-order')
       api({
@@ -76,6 +76,7 @@ const useKioskOrder = defineStore('kiosk-order', {
             type: 'success',
             locale: 'ORDER_CREATE'
           })
+          callback()
         })
         .catch((error) => {
           core.switchStatus(error)
