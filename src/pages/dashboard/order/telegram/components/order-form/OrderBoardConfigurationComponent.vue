@@ -19,7 +19,7 @@ const { item } = defineProps({
 <template>
   <a-radio class="config-item" :class="{ selected: selected }" :value="item">
     <a-card
-      class="item-card w-full"
+      class="item-card w-full h-order-card"
       :body-style="{
         padding: '24px'
       }"
@@ -59,8 +59,12 @@ const { item } = defineProps({
 
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
-.config-item {
+.item-card .ant-card-body{
+  color: red !important;
+}
+ .config-item {
   width: 100%;
+  height: 300px;
   &:deep(.ant-radio) {
     display: none;
   }
@@ -74,8 +78,10 @@ const { item } = defineProps({
     position: relative;
     width: 100%;
     margin: 0;
+    height: 300px;
   }
 }
+
 .item-card {
   position: relative;
   width: 100%;
