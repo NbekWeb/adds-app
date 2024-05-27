@@ -68,7 +68,7 @@ function cancelOrder() {
             @confirm="cancelOrder"
           >
             <a-button class="mb-2" danger @click.stop
-              >{{ $t('CANCEL') }}
+              >{{ $t('CANCEL') }} 
             </a-button>
           </a-popconfirm>
         </template>

@@ -42,7 +42,7 @@ onMounted(() => {
         <template #icon>
           <IconRefresh class="mr-1" />
         </template>
-        {{ $t('UPDATE') }} 
+        {{ $t('UPDATE') }}
       </a-button>
     </template>
   </page-header-component>
@@ -50,12 +50,11 @@ onMounted(() => {
     <template #indicator>
       <IconLoader />
     </template>
-    <scrollbar-component height="calc(100vh - 220px)">
+    <scrollbar-component height="calc(100vh - 230px)">
       <template #content>
         <a-row :gutter="[10, 10]">
           <a-col :span="24" v-for="(item, i) in order?.items" :key="i">
             <order-item-component :order="item" />
-           
           </a-col>
         </a-row>
       </template>

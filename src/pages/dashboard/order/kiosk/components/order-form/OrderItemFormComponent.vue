@@ -64,7 +64,7 @@ function handleNextStep() {
           type="primary"
           size="middle"
         >
-          {{ $t('CONTINUE') }}  
+          {{ $t('CONTINUE') }}   
         </a-button>
       </a-space>
     </div>

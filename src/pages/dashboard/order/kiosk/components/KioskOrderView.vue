@@ -104,10 +104,10 @@ onMounted(() => {
   </template>
   <template v-if="!newOrderItem">
     <div class="flex justify-between mt-3">
-      <a-button @click="router.back()"> Bekor qilish </a-button>
+      <a-button @click="router.back()">{{$t('CANCEL')}}  </a-button>
       <div class="flex align-center">
         <span class="mr-5" v-if="totalPrice !== 0"
-          >Jami:{{ formatAmount(totalPrice) }}
+          >{{ $t('TOTAL') }}:{{ formatAmount(totalPrice) }} 
         </span>
         <a-button
           @click="newOrderCreate"
@@ -115,7 +115,7 @@ onMounted(() => {
           :loading="loadingUrl.has('create/kiosk-order')"
           type="primary"
         >
-          Xarid qilish
+        {{ $t('CANCEL') }} 
         </a-button>
       </div>
     </div>

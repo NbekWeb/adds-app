@@ -68,10 +68,6 @@ watch(selectedChannel, (newChannel, oldChannel) => {
 })
 
 onMounted(() => {
-  if (!route.query.channel) {
-    router.push({ query: { channel: 'telegram' } })
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
-  }
   selectedChannel.value = route.query.channel || 'telegram'
   if (selectedChannel.value == 'telegram') {
     orderPinia.getAllTelegramOrders(0, orderStatus.value)

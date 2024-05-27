@@ -26,7 +26,11 @@ const form = reactive({
 
 const totalPrice = computed(() => {
   return form.items.reduce((total, item) => {
-    return total + item.timeConfiguration.amount
+    return (
+      total +
+      (item.timeConfiguration?.amount ?? 0) +
+      (item.configuration?.amount ?? 0)
+    )
   }, 0)
 })
 
@@ -79,12 +83,12 @@ onMounted(() => {
     />
   </template>
   <template v-if="!newOrderItem">
-    <div class="flex justify-between mt-3">
-      <a-button @click="router.back()"> Bekor qilish </a-button>
+    <div class="flex justify-between mt-1">
+      <a-button @click="router.back()"> {{ $t('CANCEL') }}</a-button>
 
-      <div class="flex alighn-center">
+      <div class="flex align-center h-full">
         <span class="mr-5" v-if="totalPrice !== 0"
-          >Jami:{{ formatAmount(totalPrice) }}
+          >{{ $t('TOTAL') }} :{{ formatAmount(totalPrice) }}
         </span>
         <a-button
           @click="newOrderCreate"
@@ -92,7 +96,7 @@ onMounted(() => {
           :loading="loadingUrl.has('create/order')"
           type="primary"
         >
-          Xarid qilish
+          {{ $t('CONTINUE') }}
         </a-button>
       </div>
     </div>

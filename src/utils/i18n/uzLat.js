@@ -82,6 +82,7 @@ const uzLat = {
   REGISTER: "Ro'yxatdan o'tish",
   ADD_NEW_LINKED_BUTTON: "Yangi tugma qo'shish",
   CREATE_AN_ORDER: "E'lon berish",
+  MAKE_ORDER: 'Xarid qilish',
   //   labels
   LINKED_BUTTON_TEXt_INPUT_PLACEHOLDER: "Havola orqali o'ting",
   LINKED_BUTTON_URL_INPUT_PLACEHOLDER: 'https://www.example.com',

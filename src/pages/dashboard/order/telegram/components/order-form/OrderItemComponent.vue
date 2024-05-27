@@ -74,9 +74,8 @@ const props = defineProps({
           <p class="m-0">
             {{
               formatAmount(
-                item?.configuration?.amount
-                  ? item?.configuration?.amount
-                  : 0 + item?.timeConfiguration?.amount
+                (item.configuration?.amount ?? 0) +
+                  (item.timeConfiguration?.amount ?? 0)
               )
             }}
           </p>

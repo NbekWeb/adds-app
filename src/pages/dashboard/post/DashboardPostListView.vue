@@ -46,11 +46,6 @@ watch(selectedChannel, (newChannel, oldChannel) => {
 })
 
 onMounted(() => {
-  if (!route.query.channel) {
-    router.push({ query: { channel: 'telegram' } })
-    postPinia.getAllTelegramPosts(0)
-  }
-
   selectedChannel.value = route.query.channel || 'telegram'
 
   if (selectedChannel.value == 'telegram') {
@@ -80,7 +75,7 @@ onMounted(() => {
           @click="pushToCreate"
         >
           <icon-plus />
-          {{ $t('ADD') }} 
+          {{ $t('ADD') }}
         </a-button>
       </div>
     </template>
