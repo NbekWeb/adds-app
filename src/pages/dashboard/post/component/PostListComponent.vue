@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import {computed, ref} from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 
@@ -18,7 +18,7 @@ const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 const { posts, page, totalPages } = storeToRefs(postPinia)
 
 const postId = ref(null)
-const postType = ref(route.query.channel)
+const postType = computed(() => route.query.channel)
 
 function editPost(id) {
   postId.value = id
@@ -29,13 +29,13 @@ function close() {
   postId.value = null
 }
 
-const getPaginationAllPosts = computed(() => {
+function getPaginationAllPosts(page) {
   if (postType.value === 'telegram') {
-    postPinia.getAllTelegramPosts(page.value)
+    postPinia.getAllTelegramPosts(page)
   } else if (postType.value === 'kiosk') {
-    postPinia.getAllKioskPosts(page.value)
+    postPinia.getAllKioskPosts(page)
   }
-})
+}
 </script>
 
 <template>
