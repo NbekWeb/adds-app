@@ -66,7 +66,7 @@ onMounted(() => {
 
 <template>
   <template v-if="!newOrderItem">
-    <page-header-component title="E'lon berish " />
+    <page-header-component :title="$t('CREATE_AN_ORDER')" />
   </template>
 
   <template v-if="newOrderItem">
@@ -87,16 +87,20 @@ onMounted(() => {
       <a-button @click="router.back()"> {{ $t('CANCEL') }}</a-button>
 
       <div class="flex align-center h-full">
-        <span class="mr-5" v-if="totalPrice !== 0"
-          >{{ $t('TOTAL') }} :{{ formatAmount(totalPrice) }}
-        </span>
+        <div class="mr-4" v-if="totalPrice !== 0">
+          {{ $t('TOTAL') }}:<span class="px-1">{{
+            formatAmount(totalPrice)
+          }}</span>
+          {{ $t('SOUM') }}
+        </div>
+
         <a-button
           @click="newOrderCreate"
           :disabled="!Boolean(form.items.length)"
           :loading="loadingUrl.has('create/order')"
           type="primary"
         >
-          {{ $t('CONTINUE') }}
+          {{ $t('MAKE_ORDER') }}
         </a-button>
       </div>
     </div>

@@ -85,7 +85,7 @@ onMounted(() => {
 
 <template>
   <template v-if="!newOrderItem">
-    <page-header-component title="E'lon berish " />
+    <page-header-component :title="$t('CREATE_AN_ORDER')" />
   </template>
 
   <template v-if="newOrderItem">
@@ -104,18 +104,19 @@ onMounted(() => {
   </template>
   <template v-if="!newOrderItem">
     <div class="flex justify-between mt-3">
-      <a-button @click="router.back()">{{$t('CANCEL')}}  </a-button>
+      <a-button @click="router.back()">{{ $t('CANCEL') }} </a-button>
       <div class="flex align-center">
-        <span class="mr-5" v-if="totalPrice !== 0"
-          >{{ $t('TOTAL') }}:{{ formatAmount(totalPrice) }} 
-        </span>
+        <div class="mr-4" v-if="totalPrice !== 0">
+          {{ $t('TOTAL') }}:<span class="px-1">{{ formatAmount(totalPrice) }}</span>
+          {{ $t('SOUM') }}
+        </div>
         <a-button
           @click="newOrderCreate"
           :disabled="!Boolean(form.items.length)"
           :loading="loadingUrl.has('create/kiosk-order')"
           type="primary"
         >
-        {{ $t('CANCEL') }} 
+          {{ $t('MAKE_ORDER') }}
         </a-button>
       </div>
     </div>
