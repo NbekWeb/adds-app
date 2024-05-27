@@ -21,7 +21,7 @@ const useBoard = defineStore('board', {
     clearBoardInfo() {
       this.boardInfo = null
     },
-    getAllBoard(page, categoryId, name = '') {
+    getAllBoard(page, categoryId, name = null) {
       const core = useCore()
       core.loadingUrl.add('board/all')
       this.page = page
@@ -30,7 +30,7 @@ const useBoard = defineStore('board', {
         params: {
           size: 9,
           page: page,
-          name: name,
+          name: name || null,
           categoryId: categoryId
         }
       })
