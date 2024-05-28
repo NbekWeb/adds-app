@@ -3,9 +3,11 @@ import { onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import usePost from '@/store/post.pinia.js'
+import useKioskPost from '@/store/kiosk-post.pinia.js'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
-import PostListComponent from '@/pages/dashboard/post/component/PostListComponent.vue'
+import TelegramPostListComponent from '@/pages/dashboard/post/component/TelegramPostListComponent.vue'
+import KioskPostListComponent from '@/pages/dashboard/post/component/KioskPostListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 
 const router = useRouter()
@@ -13,6 +15,7 @@ const route = useRoute()
 
 const corePinia = useCore()
 const postPinia = usePost()
+const kioskPostPinia = useKioskPost()
 
 const selectedChannel = computed(() => route.query.channel || 'telegram')
 
@@ -22,10 +25,11 @@ const handleChangeType = (val) => {
   router.push({ query: { channel: val } })
 
   postPinia.clearPost()
+  kioskPostPinia.clearPost()
   if (val === 'kiosk') {
-    postPinia.getAllKioskPosts(0)
+    kioskPostPinia.getAllPosts(0)
   } else {
-    postPinia.getAllTelegramPosts(0)
+    postPinia.getAllPosts(0)
   }
 }
 
@@ -43,9 +47,9 @@ const pushToCreate = () => {
 
 onMounted(() => {
   if (selectedChannel.value === 'kiosk') {
-    postPinia.getAllKioskPosts(0)
+    kioskPostPinia.getAllPosts(0)
   } else {
-    postPinia.getAllTelegramPosts(0)
+    postPinia.getAllPosts(0)
   }
 })
 </script>
@@ -74,8 +78,12 @@ onMounted(() => {
       </div>
     </template>
   </page-header-component>
-
-  <post-list-component />
+  <template v-if="selectedChannel === 'kiosk'">
+    <kiosk-post-list-component />
+  </template>
+  <template v-else>
+    <telegram-post-list-component />
+  </template>
 </template>
 
 <style lang="scss">

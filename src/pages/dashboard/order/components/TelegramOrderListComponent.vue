@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
 import useOrder from '@/store/order.pinia.js'
+import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import OrderListItemComponent from '@/pages/dashboard/order/components/OrderListItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -17,14 +18,9 @@ const { loadingUrl, collapsed } = storeToRefs(corePinia)
 const { orders, page, totalElements, totalPages } = storeToRefs(orderPinia)
 
 const orderStatus = computed(() => route.query.select)
-const orderType = computed(() => route.query.channel)
 
 function getPaginationAllOrders(page) {
-  if (orderType.value === 'kiosk') {
-    orderPinia.getAllKioskOrders(page, orderStatus.value)
-  } else {
-    orderPinia.getAllTelegramOrders(page, orderStatus.value)
-  }
+  orderPinia.getAllOrders(page, orderStatus.value)
 }
 </script>
 

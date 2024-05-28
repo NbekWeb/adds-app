@@ -27,7 +27,7 @@ const props = defineProps({
 const model = defineModel('open')
 
 function cancelOrder() {
-  orderPinia.putTelegramCancelOrder(
+  orderPinia.putCancelOrder(
     props.item?.orderId,
     [props.item?.id],
     () => {

@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import IconFilterFunnel from '@/components/icons/IconFilterFunnel.vue'
 import useOrder from '@/store/order.pinia.js'
+import useKioskOrder from '@/store/kiosk-order.pinia.js'
 
 const router = useRouter()
 const route = useRoute()
@@ -11,6 +12,7 @@ const route = useRoute()
 const emits = defineEmits(['openPost'])
 
 const orderPinia = useOrder()
+const kioskOrderPinia = useKioskOrder()
 
 const open = ref(false)
 const props = defineProps({
@@ -53,9 +55,9 @@ function handleFilterInMobile() {
     }
   })
   if (selectedChannel.value === 'kiosk') {
-    orderPinia.getAllKioskOrders(0, orderStatus.value)
+    kioskOrderPinia.getAllOrders(0, orderStatus.value)
   } else {
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
+    orderPinia.getAllOrders(0, orderStatus.value)
   }
 
   open.value = false

@@ -20,9 +20,10 @@ const useKioskPost = defineStore('kiosk-post', {
     },
     getAllPosts(page, size = 10) {
       const core = useCore()
-      core.loadingUrl.add('get/kiosk-post/all')
+      this.page = page
+      core.loadingUrl.add('get/post/all')
       api({
-        url: 'kiosk-post',
+        url: `kiosk-post`,
         params: {
           page: page,
           size: size
@@ -41,12 +42,12 @@ const useKioskPost = defineStore('kiosk-post', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/kiosk-post/all')
+          core.loadingUrl.delete('get/post/all')
         })
     },
     getOnePostById(id, callback) {
       const core = useCore()
-      core.loadingUrl.add('get/kiosk-post/one')
+      core.loadingUrl.add('get/post/one')
       api({
         url: `kiosk-post`,
         pk: id
@@ -58,24 +59,22 @@ const useKioskPost = defineStore('kiosk-post', {
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('get/kiosk-post/one')
+          core.loadingUrl.delete('get/post/one')
         })
     },
     createNewPost(form, callback) {
       const core = useCore()
-      core.loadingUrl.add('create/kiosk-post')
+      core.loadingUrl.add('kiosk-create/post')
+
+      const data = {
+        text: form.text,
+        fileHashId: form?.fileHashId
+      }
+
       api({
-        url: 'kiosk-post',
+        url: `kiosk-post`,
         method: 'POST',
-        data: {
-          text: form.text,
-          fileHashId: form.fileHashId !== '' ? form.fileHashId : null,
-          buttons: form.buttons.map((item) => ({
-            orderNumber: item.orderNumber,
-            text: item.text,
-            url: item.url
-          }))
-        }
+        data: data
       })
         .then(() => {
           core.setToast({
@@ -83,19 +82,18 @@ const useKioskPost = defineStore('kiosk-post', {
             locale: 'POST_ADDED_SUCCESSFULLY'
           })
           callback()
-          this.getAllPosts(0)
         })
         .catch((error) => {
           console.log(error)
           core.switchStatus(error)
         })
         .finally(() => {
-          core.loadingUrl.delete('create/kiosk-post')
+          core.loadingUrl.delete('kiosk-create/post')
         })
     },
     updatePost(id, form, callback) {
       const core = useCore()
-      core.loadingUrl.add('create/kiosk-post')
+      core.loadingUrl.add('update/kiosk-post')
       api({
         url: 'kiosk-post',
         pk: id,
@@ -151,15 +149,15 @@ const useKioskPost = defineStore('kiosk-post', {
         url: 'duration-limit',
         method: 'GET'
       })
-          .then(({ data }) => {
-            callback(data)
-          })
-          .catch((error) => {
-            core.switchStatus(error)
-          })
-          .finally(() => {
-            core.loadingUrl.delete('get/duration-limit')
-          })
+        .then(({ data }) => {
+          callback(data)
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('get/duration-limit')
+        })
     },
     getPostDetails(id, callback) {
       const core = useCore()
@@ -168,16 +166,16 @@ const useKioskPost = defineStore('kiosk-post', {
         url: `kiosk-post/details/${id}`,
         method: 'GET'
       })
-          .then(({ data }) => {
-            callback(data)
-          })
-          .catch((error) => {
-            core.switchStatus(error)
-          })
-          .finally(() => {
-            core.loadingUrl.delete('get/kiosk-post/details')
-          })
-    },
+        .then(({ data }) => {
+          callback(data)
+        })
+        .catch((error) => {
+          core.switchStatus(error)
+        })
+        .finally(() => {
+          core.loadingUrl.delete('get/kiosk-post/details')
+        })
+    }
   }
 })
 export default useKioskPost

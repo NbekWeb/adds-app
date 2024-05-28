@@ -6,10 +6,10 @@ import { formatAmount } from '@/composables/index.js'
 
 import { ref } from 'vue'
 
-import useOrder from '@/store/order.pinia.js'
+import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import useUser from '@/store/user.pinia.js'
 
-const orderPinia = useOrder()
+const orderPinia = useKioskOrder()
 const userPinia = useUser()
 const emit = defineEmits(['canceledOrder'])
 
@@ -18,7 +18,7 @@ const props = defineProps({
 })
 
 function cancelOrder() {
-  orderPinia.putKioskCancelOrder(
+  orderPinia.putCancelOrder(
     props.order?.orderId,
     [props.order?.id],
     () => {

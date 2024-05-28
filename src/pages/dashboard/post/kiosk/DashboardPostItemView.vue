@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { fileBaseUrl } from '@/utils/conf.js'
 import useCore from '@/store/core.pinia.js'
-import usePost from '@/store/post.pinia.js'
+import useKioskPost from '@/store/kiosk-post.pinia.js'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import VideoPlayerComponent from '@/components/VideoPlayerComponent.vue'
@@ -15,7 +15,7 @@ const route = useRoute()
 const router = useRouter()
 
 const corePinia = useCore()
-const postPinia = usePost()
+const postPinia = useKioskPost()
 
 const { loadingUrl } = storeToRefs(corePinia)
 
@@ -23,7 +23,7 @@ const post = ref()
 
 onMounted(() => {
   if (route.params.id) {
-    postPinia.getOneKioskPostById(route.params.id, (data) => {
+    postPinia.getOnePostById(route.params.id, (data) => {
       post.value = data
     })
   }
