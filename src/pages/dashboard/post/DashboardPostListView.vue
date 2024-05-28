@@ -42,7 +42,7 @@ const pushToCreate = () => {
 }
 
 onMounted(() => {
-  if (selectedChannel.value === 'kioks') {
+  if (selectedChannel.value === 'kiosk') {
     postPinia.getAllKioskPosts(0)
   } else {
     postPinia.getAllTelegramPosts(0)

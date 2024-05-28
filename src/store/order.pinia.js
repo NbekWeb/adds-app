@@ -156,7 +156,7 @@ const useOrder = defineStore('order', {
           core.loadingUrl.delete('create/order/item')
         })
     },
-    putTelegramCancelOrder(orderId, itemIdList) {
+    putTelegramCancelOrder(orderId, itemIdList,callback) {
       const core = useCore()
       core.loadingUrl.add('cancel/order')
       api({

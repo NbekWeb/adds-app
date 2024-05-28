@@ -11,7 +11,7 @@ const { item } = defineProps({
 
 <template>
   <a-radio
-    class="config-item w-full h-order-card"
+    class="config-item w-full"
     :class="{ selected: selected }"
     value="default"
   >
@@ -57,7 +57,6 @@ const { item } = defineProps({
 
 .configuration-content {
   width: 200px;
-  //height: 270px;
 }
 .selected {
   .item-card {
@@ -84,7 +83,6 @@ const { item } = defineProps({
       background: $light !important;
     }
   }
-
   .config-name {
     font-size: 18px;
     font-weight: bold;
