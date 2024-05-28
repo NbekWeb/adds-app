@@ -22,10 +22,10 @@ const handleChangeType = (val) => {
   router.push({ query: { channel: val } })
 
   postPinia.clearPost()
-  if (val === 'telegram') {
-    postPinia.getAllTelegramPosts(0)
-  } else {
+  if (val === 'kiosk') {
     postPinia.getAllKioskPosts(0)
+  } else {
+    postPinia.getAllTelegramPosts(0)
   }
 }
 

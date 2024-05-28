@@ -69,7 +69,7 @@ function newOrderCreate() {
       }
     )
 
-    userPinia.getUserMe() 
+    userPinia.getUserMe()
   }
 }
 onMounted(() => {
@@ -106,12 +106,14 @@ onMounted(() => {
     <div class="flex justify-between mt-3">
       <a-button @click="router.back()">{{ $t('CANCEL') }} </a-button>
       <div class="flex align-center">
-        <div class="mr-4" v-if="totalPrice !== 0">
-          {{ $t('TOTAL') }}:<span class="px-1">{{
-            formatAmount(totalPrice)
-          }}</span>
-          {{ $t('SOUM') }}
-        </div>
+        <template v-if="totalPrice !== 0">
+          <div class="mr-4">
+            {{ $t('TOTAL') }}:<span class="px-1">{{
+              formatAmount(totalPrice)
+            }}</span>
+            {{ $t('SOUM') }}
+          </div>
+        </template>
         <a-button
           @click="newOrderCreate"
           :disabled="!Boolean(form.items.length)"

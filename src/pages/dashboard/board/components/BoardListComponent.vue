@@ -53,7 +53,8 @@ const getBoardList = (page) => {
               :lg="collapsed ? 8 : 12"
               :xl="8"
               :xxl="6"
-              v-for="item in boardList"
+              v-for="(item,i) in boardList"
+              :key="i"
             >
               <board-item-component :item="item" />
             </a-col>

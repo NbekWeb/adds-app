@@ -34,19 +34,19 @@ const handleChangeType = (val) => {
   router.push({ query: { ...route.query, channel: val } })
 
   orderPinia.clearOrders()
-  if (val === 'telegram') {
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
-  } else {
+  if (val === 'kiosk') {
     orderPinia.getAllKioskOrders(0, orderStatus.value)
+  } else {
+    orderPinia.getAllTelegramOrders(0, orderStatus.value)
   }
 }
 
 const handleChangeStatus = (val) => {
   router.push({ query: { ...route.query, select: val } })
-  if (selectedChannel.value === 'telegram') {
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
-  } else {
+  if (selectedChannel.value === 'kiosk') {
     orderPinia.getAllKioskOrders(0, orderStatus.value)
+  } else {
+    orderPinia.getAllTelegramOrders(0, orderStatus.value)
   }
 }
 

@@ -36,22 +36,23 @@ const pushItem = () => {
       <div>
         <status-tag-component :status="item.status" />
       </div>
-      <a-avatar-group
-        v-if="route.query.channel !== 'kiosk'"
-        :max-count="3"
-        :max-style="{
-          color: '#9f9fa3',
-          backgroundColor: '#F1F2F4'
-        }"
-      >
-        <a-avatar
-          size="middle"
-          class="avatar"
-          v-for="(orderItem, i) in item.items"
-          :key="i"
-          :src="`${fileBaseUrl}/file/${orderItem.channelHashId}`"
-        />
-      </a-avatar-group>
+      <template v-if="route.query.channel !== 'kiosk'">
+        <a-avatar-group
+          :max-count="3"
+          :max-style="{
+            color: '#9f9fa3',
+            backgroundColor: '#F1F2F4'
+          }"
+        >
+          <a-avatar
+            size="middle"
+            class="avatar"
+            v-for="(orderItem, i) in item.items"
+            :key="i"
+            :src="`${fileBaseUrl}/file/${orderItem.channelHashId}`"
+          />
+        </a-avatar-group>
+      </template>
     </div>
     <div class="order-amount flex justify-between mt-2">
       <span class="">{{ $t('ORDER_PRICE') }}:</span>

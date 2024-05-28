@@ -33,25 +33,21 @@ const boardPinia = useKioskBoard()
           >
             <order-item-component :item="item" @close="emits('close', i)" />
           </a-col>
-          <a-col
+          <template
             v-if="
               items.length !== boardPinia.kioskBoards.length ||
               items.length == 0
             "
-            :xs="24"
-            :ms="24"
-            :md="24"
-            :lg="12"
-            :xl="8"
-            :xxl="8"
           >
-            <a-card class="order-add" @click="emits('addItem')">
-              <div class="text-center">
-                <icon-plus />
-                <p class="m-0">{{ $t('ADD_NEW_ORDER_ITEM') }}</p>
-              </div>
-            </a-card>
-          </a-col>
+            <a-col :xs="24" :ms="24" :md="24" :lg="12" :xl="8" :xxl="8">
+              <a-card class="order-add" @click="emits('addItem')">
+                <div class="text-center">
+                  <icon-plus />
+                  <p class="m-0">{{ $t('ADD_NEW_ORDER_ITEM') }}</p>
+                </div>
+              </a-card>
+            </a-col>
+          </template>
         </a-row>
       </template>
     </scrollbar-component>

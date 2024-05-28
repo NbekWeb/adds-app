@@ -21,18 +21,18 @@ const { posts, totalPages } = storeToRefs(postPinia)
 const pageValue = ref(0)
 
 function handleGetPostPagination(page) {
-  if (route.query.channel === 'telegram') {
-    postPinia.getAllTelegramPosts(page, 4)
-  } else if (route.query.channel === 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     postPinia.getAllKioskPosts(page, 4)
+  } else {
+    postPinia.getAllTelegramPosts(page, 4)
   }
   pageValue.value = page
 }
 onMounted(() => {
-  if (!route.query.channel || route.query.channel === 'telegram') {
-    postPinia.getAllTelegramPosts(0, 4)
-  } else if (route.query.channel === 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     postPinia.getAllKioskPosts(0, 4)
+  } else {
+    postPinia.getAllTelegramPosts(0, 4)
   }
 })
 </script>

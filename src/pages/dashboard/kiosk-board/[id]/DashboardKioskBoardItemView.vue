@@ -42,7 +42,7 @@ onMounted(() => {
       <template #content>
         <div class="h-full mr-2">
           <template v-if="!itemInfo">
-            <a-empty class="empty" v-if="!itemInfo">
+            <a-empty class="empty" >
               <template #description>
                 {{ $t('NO_DATA') }}
                 <div class="mt-4 pb-3">
