@@ -84,7 +84,7 @@ onMounted(() => {
                   </a-col>
                   <a-col span="24" class="mt-4">
                     <a-button type="primary" @click="router.push(``)">
-                      {{ $t('CREATE_AN_ORDER') }}
+                      {{ $t('CREATE_AN_ORDER') }} 
                     </a-button>
                   </a-col>
                 </a-row>

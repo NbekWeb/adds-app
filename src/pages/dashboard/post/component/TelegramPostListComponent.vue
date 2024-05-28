@@ -1,40 +1,37 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
+
 import useCore from '@/store/core.pinia.js'
 import usePost from '@/store/post.pinia.js'
 
-import { useRoute } from 'vue-router'
-
-import PostItemComponent from '@/pages/dashboard/order/components/PostItemComponent.vue'
+import PostItemComponent from '@/pages/dashboard/post/component/PostItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 
+const route = useRoute()
 const corePinia = useCore()
 const postPinia = usePost()
 
-const route = useRoute()
+const { collapsed, loadingUrl, visibleDrawer } = storeToRefs(corePinia)
+const { posts, page, totalPages } = storeToRefs(postPinia)
 
-const { loadingUrl } = storeToRefs(corePinia)
-const { posts, totalPages } = storeToRefs(postPinia)
+const postId = ref(null)
+const postType = computed(() => route.query.channel)
 
-const pageValue = ref(0)
-
-function handleGetPostPagination(page) {
-  if (route.query.channel === 'kiosk') {
-    postPinia.getAllKioskPosts(page, 4)
-  } else {
-    postPinia.getAllTelegramPosts(page, 4)
-  }
-  pageValue.value = page
+function editPost(id) {
+  postId.value = id
+  corePinia.visibleDrawer.add('post/form/modal')
 }
-onMounted(() => {
-  if (route.query.channel === 'kiosk') {
-    postPinia.getAllKioskPosts(0, 4)
-  } else {
-    postPinia.getAllTelegramPosts(0, 4)
-  }
-})
+function close() {
+  corePinia.visibleDrawer.add('post/form/modal')
+  postId.value = null
+}
+
+function getPaginationAllPosts(page) {
+  postPinia.getAllPosts(page)
+}
 </script>
 
 <template>
@@ -43,11 +40,11 @@ onMounted(() => {
       <icon-loader />
     </template>
     <scrollbar-component
-      height="calc(100vh - 125px)"
-      :loading="loadingUrl.has('get/post/all')"
       :total-pages="totalPages"
-      :page="pageValue"
-      @get-data="handleGetPostPagination"
+      :page="page"
+      :loading="loadingUrl.has('get/order/all')"
+      @get-data="getPaginationAllPosts"
+      height="calc(100vh - 190px)"
     >
       <template #content>
         <template v-if="posts.length">
@@ -56,13 +53,14 @@ onMounted(() => {
               class="card-item"
               :xs="24"
               :sm="24"
-              :md="24"
-              :lg="12"
-              :xl="12"
+              :md="collapsed ? 12 : 24"
+              :lg="collapsed ? 8 : 12"
+              :xl="8"
+              :xxl="6"
               :key="item.id"
               v-for="item in posts"
             >
-              <post-item-component :item="item" />
+              <post-item-component :item="item" @edit="editPost" />
             </a-col>
           </a-row>
         </template>

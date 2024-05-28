@@ -77,14 +77,14 @@ function submitForm() {
       const checkedText = checkTag(form.text) // false = don't exist < or > true = exist
       if (!checkedText) {
         if (route.params.id) {
-          postPinia.updateTelegramPost(route.params.id, form, () => {
+          postPinia.updatePost(route.params.id, form, () => {
             router.push({
               name: 'DashboardPostListView',
               query: { channel: 'telegram' }
             })
           })
         } else {
-          postPinia.createTelegramNewPost(form, () => {
+          postPinia.createNewPost(form, () => {
             router.push({
               name: 'DashboardPostListView',
               query: { channel: 'telegram' }
@@ -106,7 +106,7 @@ function submitForm() {
 
 onMounted(() => {
   if (route.params.id) {
-    postPinia.getOneTelegramPostById(route.params.id, (data) => {
+    postPinia.getOnePostById(route.params.id, (data) => {
       form.fileHashId = data?.fileDto.fileHashId
       form.text = data.text
       form.buttons = data.buttons

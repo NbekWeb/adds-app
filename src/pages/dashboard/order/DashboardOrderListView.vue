@@ -2,16 +2,20 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useOrder from '@/store/order.pinia.js'
+import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
-import OrderListComponent from '@/pages/dashboard/order/components/OrderListComponent.vue'
+import TelegramOrderListComponent from '@/pages/dashboard/order/components/TelegramOrderListComponent.vue'
+import KioskOrderListComponent from '@/pages/dashboard/order/components/KioskOrderListComponent.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
-import PostListDrawerComponent from '@/pages/dashboard/order/components/PostListDrawerComponent.vue'
+import TelegramPostListDrawerComponent from '@/pages/dashboard/order/components/TelegramPostListDrawerComponent.vue'
+import KioskPostListDrawerComponent from '@/pages/dashboard/order/components/KioskPostListDrawerComponent.vue'
 import OrderPageMobileFilterComponent from '@/pages/dashboard/order/components/OrderPageMobileFilterComponent.vue'
 
 const router = useRouter()
 const route = useRoute()
 
 const orderPinia = useOrder()
+const kioskOrderPinia = useKioskOrder()
 
 const statuses = ref([
   'PENDING',
@@ -35,18 +39,18 @@ const handleChangeType = (val) => {
 
   orderPinia.clearOrders()
   if (val === 'kiosk') {
-    orderPinia.getAllKioskOrders(0, orderStatus.value)
+    kioskOrderPinia.getAllOrders(0, orderStatus.value)
   } else {
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
+    orderPinia.getAllOrders(0, orderStatus.value)
   }
 }
 
 const handleChangeStatus = (val) => {
   router.push({ query: { ...route.query, select: val } })
   if (selectedChannel.value === 'kiosk') {
-    orderPinia.getAllKioskOrders(0, orderStatus.value)
+    kioskOrderPinia.getAllOrders(0, orderStatus.value)
   } else {
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
+    orderPinia.getAllOrders(0, orderStatus.value)
   }
 }
 
@@ -64,9 +68,9 @@ const pushToCreate = () => {
 
 onMounted(() => {
   if (selectedChannel.value === 'kiosk') {
-    orderPinia.getAllKioskOrders(0, orderStatus.value)
+    kioskOrderPinia.getAllOrders(0, orderStatus.value)
   } else {
-    orderPinia.getAllTelegramOrders(0, orderStatus.value)
+    orderPinia.getAllOrders(0, orderStatus.value)
   }
 })
 </script>
@@ -135,9 +139,19 @@ onMounted(() => {
         </a-button>
       </div>
     </template>
-    <post-list-drawer-component />
+    <template v-if="selectedChannel === 'kiosk'">
+      <kiosk-post-list-drawer-component />
+    </template>
+    <template v-else>
+      <telegram-post-list-drawer-component />
+    </template>
   </a-drawer>
-  <order-list-component />
+  <template v-if="selectedChannel === 'kiosk'">
+    <kiosk-order-list-component />
+  </template>
+  <template v-else>
+    <telegram-order-list-component />
+  </template>
 </template>
 
 <style lang="scss">

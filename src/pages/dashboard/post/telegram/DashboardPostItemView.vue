@@ -24,7 +24,7 @@ const post = ref()
 
 onMounted(() => {
   if (route.params.id) {
-    postPinia.getOneTelegramPostById(route.params.id, (data) => {
+    postPinia.getOnePostById(route.params.id, (data) => {
       post.value = data
     })
   }

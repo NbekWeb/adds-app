@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import dayjs from 'dayjs'
 import useCore from '@/store/core.pinia.js'
 import useOrder from '@/store/order.pinia.js'
+import useUser from '@/store/user.pinia.js'
 
 import PageHeaderComponent from '@/components/PageHeaderComponent.vue'
 import OrderItemFormComponent from '@/pages/dashboard/order/telegram/components/order-form/OrderItemFormComponent.vue'
@@ -16,6 +17,7 @@ const router = useRouter()
 const route = useRoute()
 
 const corePinia = useCore()
+const userPinia = useUser()
 const orderPinia = useOrder()
 
 const { loadingUrl } = storeToRefs(corePinia)
@@ -44,15 +46,24 @@ function addNewOrderItem(item) {
 
 function newOrderCreate() {
   if (form.items.length) {
-    orderPinia.createOrder({
-      postId: form.postId,
-      items: form.items.map((item) => ({
-        boardId: item.board.id,
-        timeConfigurationId: item.timeConfiguration.id,
-        configurationId: item.configuration.id,
-        orderDate: dayjs(item.orderDate).format('YYYY-MM-DD')
-      }))
-    })
+    orderPinia.createOrder(
+      {
+        postId: form.postId,
+        items: form.items.map((item) => ({
+          boardId: item.board.id,
+          timeConfigurationId: item.timeConfiguration.id,
+          configurationId: item.configuration.id,
+          orderDate: dayjs(item.orderDate).format('YYYY-MM-DD')
+        }))
+      },
+      () => {
+        router.push({
+          name: 'DashboardOrderListView',
+          query: { channel: 'telegram' }
+        })
+        userPinia.getUserMe()
+      }
+    )
   }
 }
 onMounted(() => {
@@ -85,7 +96,7 @@ onMounted(() => {
       <a-button @click="router.back()"> {{ $t('CANCEL') }}</a-button>
 
       <div class="flex align-center h-full">
-        <template  v-if="totalPrice !== 0">
+        <template v-if="totalPrice !== 0">
           <div class="mr-4">
             {{ $t('TOTAL') }}:<span class="px-1">{{
               formatAmount(totalPrice)

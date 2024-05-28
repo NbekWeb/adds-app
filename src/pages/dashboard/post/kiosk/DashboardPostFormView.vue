@@ -4,7 +4,7 @@ import { onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import useCore from '@/store/core.pinia.js'
-import usePost from '@/store/post.pinia.js'
+import useKioskPost from '@/store/kiosk-post.pinia.js'
 import PostEditorComponent from '@/pages/dashboard/post/kiosk/component/PostEditorComponent.vue'
 import PostFileComponent from '@/pages/dashboard/post/kiosk/component/PostFileComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -16,7 +16,7 @@ const route = useRoute()
 const router = useRouter()
 
 const corePinia = useCore()
-const postPinia = usePost()
+const postPinia = useKioskPost()
 
 const { loadingUrl } = storeToRefs(corePinia)
 const formRef = ref()
@@ -75,14 +75,14 @@ function submitForm() {
       const checkedText = checkTag(form.text) // false = don't exist < or > true = exist
       if (!checkedText) {
         if (route.params.id) {
-          postPinia.updateKioskPost(route.params.id, form, () => {
+          postPinia.updatePost(route.params.id, form, () => {
             router.push({
               name: 'DashboardPostListView',
               query: { channel: 'kiosk' }
             })
           })
         } else {
-          postPinia.createKioskNewPost(form, () => {
+          postPinia.createNewPost(form, () => {
             router.push({
               name: 'DashboardPostListView',
               query: { channel: 'kiosk' }
@@ -104,7 +104,7 @@ function submitForm() {
 
 onMounted(() => {
   if (route.params.id) {
-    postPinia.getOneKioskPostById(route.params.id, (data) => {
+    postPinia.getOnePostById(route.params.id, (data) => {
       form.fileHashId = data?.fileDto.fileHashId
       form.text = data.text
       snapshotHashId.value = data.snapshotHashId
