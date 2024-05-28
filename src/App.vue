@@ -24,18 +24,19 @@ watch(toastContent, () => {
     const toastMessage = toastContent.value?.message
     const type = toastContent.value?.type || 'success'
     const localeMessage = toastContent.value?.locale
+    const localeVariable = toastContent.value?.var || null
 
     if (type === 'error') {
-      return message.error(toastMessage ? toastMessage : t(`${localeMessage}`))
+      return message.error(toastMessage ? toastMessage : t(`${localeMessage}`, localeVariable))
     }
     if (type === 'success') {
-      message.success(toastMessage ? toastMessage : t(`${localeMessage}`))
+      message.success(toastMessage ? toastMessage : t(`${localeMessage}`, localeVariable))
     }
     if (type === 'info') {
-      message.info(toastMessage ? toastMessage : t(`${localeMessage}`))
+      message.info(toastMessage ? toastMessage : t(`${localeMessage}`, localeVariable))
     }
     if (type === 'warning') {
-      message.warning(toastMessage ? toastMessage : t(`${localeMessage}`))
+      message.warning(toastMessage ? toastMessage : t(`${localeMessage}`, localeVariable))
     }
   }
 })

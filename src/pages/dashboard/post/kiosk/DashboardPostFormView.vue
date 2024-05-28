@@ -63,23 +63,39 @@ const rules = reactive({
   ]
 })
 
+function checkTag(value) {
+  const regex = /&lt;|\&gt;/;
+  return regex.test(value);
+}
+
 function submitForm() {
   formRef.value
     .validate()
     .then(() => {
-      if (route.params.id) {
-        postPinia.updateKioskPost(route.params.id, form, () => {
-          router.push({
-            name: 'DashboardPostListView',
-            query: { channel: 'kiosk' }
+      const checkedText = checkTag(form.text) // false = don't exist < or > true = exist
+      if (!checkedText) {
+        if (route.params.id) {
+          postPinia.updateKioskPost(route.params.id, form, () => {
+            router.push({
+              name: 'DashboardPostListView',
+              query: { channel: 'kiosk' }
+            })
           })
-        })
+        } else {
+          postPinia.createKioskNewPost(form, () => {
+            router.push({
+              name: 'DashboardPostListView',
+              query: { channel: 'kiosk' }
+            })
+          })
+        }
       } else {
-        postPinia.createKioskNewPost(form, () => {
-          router.push({
-            name: 'DashboardPostListView',
-            query: { channel: 'kiosk' }
-          })
+        corePinia.setToast({
+          type: 'warning',
+          locale: `NOT_ALLOWED_SYMBOL`,
+          var: {
+            symbol: '< , >'
+          }
         })
       }
     })
