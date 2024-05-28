@@ -40,6 +40,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  
   <scrollbar-component
     height="calc(100vh - 260px)" 
     :loading="loadingUrl.has('board/configurations')"

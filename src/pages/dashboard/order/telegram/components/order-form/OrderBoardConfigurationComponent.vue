@@ -19,7 +19,7 @@ const { item } = defineProps({
 <template>
   <a-radio class="config-item" :class="{ selected: selected }" :value="item">
     <a-card
-      class="item-card-ordere w-full h-order-card"
+      class="item-card w-full"
       :body-style="{
         padding: '24px'
       }"
@@ -72,15 +72,16 @@ const { item } = defineProps({
   }
 }
 .selected {
-  .item-card-order {
+  .item-card {
     position: relative;
     width: 100%;
     margin: 0;
-    height: 300px;
+    
   }
 }
 
-.item-card-order {
+.item-card {
+  height: 300px;
   position: relative;
   width: 100%;
   margin: 0;
@@ -89,6 +90,7 @@ const { item } = defineProps({
     position: relative;
     border-radius: 3px;
     transition: background 0.5s;
+    height: 100%;
     &:hover {
       background: $light !important;
     }

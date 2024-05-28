@@ -100,6 +100,7 @@ function handleBackStep() {
         v-model:amount="selectedConfigAmount"
         :board-id="form.board.id"
       />
+      
     </template>
     <template v-if="currentStep === 2">
       <order-time-config-select-component

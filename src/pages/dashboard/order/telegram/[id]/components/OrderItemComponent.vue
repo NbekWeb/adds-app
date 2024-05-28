@@ -9,10 +9,6 @@ import useOrder from '@/store/order.pinia.js'
 
 const orderPinia = useOrder()
 
-const handleCanceledOrder = () => {
-  console.log('Canceled Order')
-}
-
 const props = defineProps({
   order: Object
 })

@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
-import useOrder from '@/store/order.pinia.js'
+import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import OrderItemComponent from '@/pages/dashboard/order/kiosk/[id]/components/OrderItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
@@ -14,14 +14,14 @@ const route = useRoute()
 const router = useRouter()
 
 const corePinia = useCore()
-const orderPinia = useOrder()
+const orderPinia = useKioskOrder()
 
 const { loadingUrl } = storeToRefs(corePinia)
 
 const order = ref()
 function refreshOrder() {
   if (route.params.id) {
-    orderPinia.getKioskOrderById(route.params.id, (data) => {
+    orderPinia.getOrderById(route.params.id, (data) => {
       order.value = data
     })
   }
@@ -29,7 +29,7 @@ function refreshOrder() {
 
 onMounted(() => {
   if (route.params.id) {
-    orderPinia.getKioskOrderById(route.params.id, (data) => {
+    orderPinia.getOrderById(route.params.id, (data) => {
       order.value = data
     })
   }

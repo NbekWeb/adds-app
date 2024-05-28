@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import useKioskPost from '@/store/kiosk-post.pinia.js'
 import usePost from '@/store/post.pinia.js'
 import useCore from '@/store/core.pinia.js'
 import IconLoader from '@/components/icons/IconLoader.vue'
@@ -22,15 +23,16 @@ const { item } = defineProps({
   }
 })
 const corePinia = useCore()
+const kioskPostPinia = useKioskPost()
 const postPinia = usePost()
 
 const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 
 const deletePost = () => {
   if (route.query.channel === 'kiosk') {
-    postPinia.deleteKioskPostById(item.id)
+    kioskPostPinia.deletePostById(item.id)
   } else {
-    postPinia.deleteTelegramPostById(item.id)
+    postPinia.deletePostById(item.id)
   }
 }
 

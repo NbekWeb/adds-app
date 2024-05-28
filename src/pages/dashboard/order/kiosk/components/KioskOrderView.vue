@@ -66,10 +66,9 @@ function newOrderCreate() {
           name: 'DashboardOrderListView',
           query: { channel: 'kiosk' }
         })
+        userPinia.getUserMe()
       }
     )
-
-    userPinia.getUserMe()
   }
 }
 onMounted(() => {
