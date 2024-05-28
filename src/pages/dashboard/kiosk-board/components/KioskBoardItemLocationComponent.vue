@@ -41,18 +41,18 @@ const showDrawer = () => {
     title="Kiosk Board Manzili"
     placement="right"
   >
-    <MapComponent :markers="[locMap]" class="mx-4 mb-4" />
     <a-spin
       wrapper-class-name="kiosk-board-map-spin"
-      class="w-full mx-auto"
+      class="w-full h-full flex align-center justify-center"
       :spinning="loadingUrl.has('kiosk-board/map-info')"
     >
       <template #indicator>
         <icon-loader />
       </template>
     </a-spin>
-    <template v-if="mapName" >
-      <p class="mx-4">{{ mapName }}  </p>
+    <template v-if="!loadingUrl.has('kiosk-board/map-info')">
+      <MapComponent :markers="[locMap]" class="mx-4 mb-4" />
+      <p class="mx-4">{{ mapName }}</p>
     </template>
   </a-drawer>
 </template>

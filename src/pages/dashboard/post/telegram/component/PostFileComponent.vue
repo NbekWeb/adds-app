@@ -6,7 +6,7 @@ import IconInbox from '@/components/icons/IconInbox.vue'
 import ProgressComponent from '@/components/ProgressComponent.vue'
 import { storeToRefs } from 'pinia'
 import { fileBaseUrl } from '@/utils/conf.js'
-import PostImageAndVideoViewComponent from '@/pages/dashboard/post/component/PostImageAndVideoViewComponent.vue'
+import PostImageAndVideoViewComponent from '@/pages/dashboard/post/telegram/component/PostImageAndVideoViewComponent.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconFile from '@/components/icons/IconFile.vue'
@@ -31,20 +31,19 @@ const fileProgress = ref(0)
 const snapshot = ref()
 
 const uploadLogo = (file) => {
-    uploadPinia.uploadFileTelegram(
-      file,
-      (data) => {
-        hashId.value = data.hashId
-        snapshot.value = data.snapshotHashId
-        fileType.value = file.type.split('/')[0]
-        uploadedFilename.value = file.name
-        fileProgress.value = 0
-      },
-      (progress) => {
-        fileProgress.value = progress
-      }
-    )
- 
+  uploadPinia.uploadFileTelegram(
+    file,
+    (data) => {
+      hashId.value = data.hashId
+      snapshot.value = data.snapshotHashId
+      fileType.value = file.type.split('/')[0]
+      uploadedFilename.value = file.name
+      fileProgress.value = 0
+    },
+    (progress) => {
+      fileProgress.value = progress
+    }
+  )
 
   return false
 }
