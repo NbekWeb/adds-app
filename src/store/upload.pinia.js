@@ -4,7 +4,7 @@ import useCore from '@/store/core.pinia.js'
 
 const useUpload = defineStore('upload', {
   actions: {
-    uploadFile(file, callback, progress) {
+    uploadFileTelegram(file, callback, progress) {
       const core = useCore()
       const form_data = new FormData()
       form_data.append('file', file)
