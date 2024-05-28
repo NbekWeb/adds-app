@@ -45,11 +45,6 @@ watch(
   }
 )
 
-function handleOpenPost() {
-  open.value = false
-  emits('openPost')
-}
-
 function handleFilterInMobile() {
   router.push({
     query: {
@@ -57,7 +52,7 @@ function handleFilterInMobile() {
       select: orderStatus.value
     }
   })
-  if (selectedChannel.value == 'kiosk') {
+  if (selectedChannel.value === 'kiosk') {
     orderPinia.getAllKioskOrders(0, orderStatus.value)
   } else {
     orderPinia.getAllTelegramOrders(0, orderStatus.value)

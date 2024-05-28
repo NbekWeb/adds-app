@@ -20,7 +20,7 @@ const { item } = defineProps({
 })
 const corePinia = useCore()
 const orderPush = () => {
-  if (route.query.channel == 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     router.push({
       name: 'KioskOrderView',
       params: {
@@ -38,7 +38,7 @@ const orderPush = () => {
 }
 
 const viewPush = () => {
-  if (route.query.channel == 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     router.push({
       name: 'KioskPostItemView',
       params: {

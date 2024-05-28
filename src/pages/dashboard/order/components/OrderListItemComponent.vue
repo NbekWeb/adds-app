@@ -16,7 +16,7 @@ const props = defineProps({
 })
 
 const pushItem = () => {
-  if (route.query.channel == 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     router.push({
       name: 'KioskOrderItemView',
       params: { id: props.item.id }

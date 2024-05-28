@@ -41,9 +41,7 @@ function addNewOrderItem(item) {
   form.items.push(item)
   newOrderItem.value = false
 }
-function closeTelegramOrderItem(index) {
-  form.items.splice(index, 1)
-}
+
 function newOrderCreate() {
   if (form.items.length) {
     orderPinia.createOrder({
