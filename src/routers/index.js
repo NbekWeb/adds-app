@@ -9,6 +9,7 @@ import ServerError from '@/pages/_500.vue'
 import DashboardSettingsView from '@/pages/dashboard/settings/DashboardSettingsView.vue'
 
 import DashboardBoardItemView from '@/pages/dashboard/board/[id]/DashboardBoardItemView.vue'
+import DashboarKioskBoardItemView from '@/pages/dashboard/kiosk-board/[id]/DashboardKioskBoardItemView.vue'
 import DashboardPostListView from '@/pages/dashboard/post/DashboardPostListView.vue'
 import DashboardPostView from '@/pages/dashboard/post/DashboardPostView.vue'
 import DashboardKioskBoardView from '@/pages/dashboard/kiosk-board/DashboardKioskBoardView.vue'
@@ -76,6 +77,23 @@ export const router = createRouter({
                   component: BoardConfigurationsView
                 }
               ]
+            }
+          ]
+        },
+        {
+          path: 'kiosk-board',
+          name: 'DashboardKioskBoardView',
+          component: DashboardKioskBoardView,
+          children: [
+            {
+              path: '',
+              name: 'DashboardKioskBoardListView',
+              component: DashboardKioskBoardListView
+            },
+            {
+              path: 'item/:id',
+              name: 'DashboarKioskBoardItemView',
+              component: DashboarKioskBoardItemView
             }
           ]
         },

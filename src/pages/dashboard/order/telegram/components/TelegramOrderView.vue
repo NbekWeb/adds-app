@@ -41,9 +41,7 @@ function addNewOrderItem(item) {
   form.items.push(item)
   newOrderItem.value = false
 }
-function closeTelegramOrderItem(index) {
-  form.items.splice(index, 1)
-}
+
 function newOrderCreate() {
   if (form.items.length) {
     orderPinia.createOrder({
@@ -87,12 +85,14 @@ onMounted(() => {
       <a-button @click="router.back()"> {{ $t('CANCEL') }}</a-button>
 
       <div class="flex align-center h-full">
-        <div class="mr-4" v-if="totalPrice !== 0">
-          {{ $t('TOTAL') }}:<span class="px-1">{{
-            formatAmount(totalPrice)
-          }}</span>
-          {{ $t('SOUM') }}
-        </div>
+        <template  v-if="totalPrice !== 0">
+          <div class="mr-4">
+            {{ $t('TOTAL') }}:<span class="px-1">{{
+              formatAmount(totalPrice)
+            }}</span>
+            {{ $t('SOUM') }}
+          </div>
+        </template>
 
         <a-button
           @click="newOrderCreate"

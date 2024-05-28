@@ -33,7 +33,7 @@ const { item } = defineProps({
             <p class="m-0">UZS</p>
             <div class="ml-1 flex align-center">
               <a-popover>
-                <template #content> E'lon chiqadigan vaqt narxi </template>
+                <template #content> {{ $t('THE_TIME_OF_PRICE') }}</template>
                 <IconInfo />
               </a-popover>
             </div>

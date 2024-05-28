@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from 'vue'
+import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 
@@ -30,10 +30,10 @@ function close() {
 }
 
 function getPaginationAllPosts(page) {
-  if (postType.value === 'telegram') {
-    postPinia.getAllTelegramPosts(page)
-  } else if (postType.value === 'kiosk') {
+  if (postType.value === 'kiosk') {
     postPinia.getAllKioskPosts(page)
+  } else {
+    postPinia.getAllTelegramPosts(page)
   }
 }
 </script>

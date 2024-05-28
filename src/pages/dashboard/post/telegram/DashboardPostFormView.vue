@@ -54,7 +54,7 @@ const rules = reactive({
     {
       required: true,
       validator: async (_rules, value) => {
-        if (value.length > 0 || route.query.channel == 'kiosk') {
+        if (value.length > 0 || route.query.channel === 'telegram') {
           return Promise.resolve()
         } else {
           return Promise.reject(t('REQUIRED_FIELD'))

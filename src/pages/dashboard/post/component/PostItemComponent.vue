@@ -27,7 +27,7 @@ const postPinia = usePost()
 const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 
 const deletePost = () => {
-  if (route.query.channel == 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     postPinia.deleteKioskPostById(item.id)
   } else {
     postPinia.deleteTelegramPostById(item.id)
@@ -35,7 +35,7 @@ const deletePost = () => {
 }
 
 const pushToPost = () => {
-  if (route.query.channel == 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     router.push({
       name: 'KioskPostItemView',
       params: { id: item.id }
@@ -49,7 +49,7 @@ const pushToPost = () => {
 }
 
 const pushToEdit = () => {
-  if (route.query.channel == 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     router.push({
       name: 'KioskPostEditView',
       params: { id: item.id }
@@ -63,7 +63,7 @@ const pushToEdit = () => {
 }
 
 const pushToShop = () => {
-  if (route.query.channel == 'kiosk') {
+  if (route.query.channel === 'kiosk') {
     router.push({
       name: 'KioskOrderView',
       params: {

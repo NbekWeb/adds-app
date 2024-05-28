@@ -20,10 +20,10 @@ const orderStatus = computed(() => route.query.select)
 const orderType = computed(() => route.query.channel)
 
 function getPaginationAllOrders(page) {
-  if (orderType.value === 'telegram') {
-    orderPinia.getAllTelegramOrders(page, orderStatus.value)
-  } else if (orderType.value === 'kiosk') {
+  if (orderType.value === 'kiosk') {
     orderPinia.getAllKioskOrders(page, orderStatus.value)
+  } else {
+    orderPinia.getAllTelegramOrders(page, orderStatus.value)
   }
 }
 </script>
@@ -59,7 +59,7 @@ function getPaginationAllOrders(page) {
               :lg="12"
               :xl="8"
               :xxl="6"
-              v-for="(item,i) in orders"
+              v-for="(item, i) in orders"
               :key="i"
             >
               <order-list-item-component :item="item" />
