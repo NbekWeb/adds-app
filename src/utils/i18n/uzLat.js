@@ -227,6 +227,7 @@ const uzLat = {
   POST_DELETED_SUCCESSFULLY: "Post muvafaqiyatli o'chirildi",
   DOU_YOU_WANT_TO_LOG_OUT: 'Tizimdan chiqmoqchimisiz?',
   DOU_YOU_WANT_TO_DELETE_POST: "Postni o'chirmoqchimisiz?",
+  NOT_ALLOWED_SYMBOL: "{ symbol } Bunday belgilarni ishlatish mumkin emas!",
 
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",

@@ -21,7 +21,7 @@ const useNotifications = defineStore('notifications', {
           page: page,
           size: 10,
           isRead: null,
-          type: 'CLIENT'
+          role: 'CLIENT'
         }
       })
         .then(({ data }) => {
@@ -48,7 +48,7 @@ const useNotifications = defineStore('notifications', {
           page: 0,
           size: 1000,
           isRead: false,
-          type: 'CLIENT'
+          role: 'CLIENT'
         }
       })
         .then(({ data }) => {
@@ -72,7 +72,7 @@ const useNotifications = defineStore('notifications', {
       api({
         url: 'notification/count',
         params: {
-          type: 'CLIENT'
+          role: 'CLIENT'
         }
       })
         .then(({ data }) => {
