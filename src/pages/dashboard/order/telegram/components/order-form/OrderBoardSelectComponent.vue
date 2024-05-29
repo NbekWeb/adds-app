@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import useCore from '@/store/core.pinia.js'
 import useBoard from '@/store/boadr.pinia.js'
 
@@ -15,7 +15,11 @@ const corePinia = useCore()
 const boardPinia = useBoard()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { boardList } = storeToRefs(boardPinia)
+const { boardList, page, totalPages } = storeToRefs(boardPinia)
+
+function getPegableBoard(page) {
+  boardPinia.getAllBoard(page)
+}
 
 onMounted(() => {
   boardPinia.getAllBoard(0)
@@ -23,7 +27,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <scrollbar-component height="calc(100vh - 260px)">
+  <scrollbar-component
+    height="calc(100vh - 260px)"
+    :page="page"
+    :total-pages="totalPages"
+    @get-data="getPegableBoard"
+  >
     <template #content>
       <template v-if="!boardList?.length && !loadingUrl.has('board/all')">
         <a-empty class="empty">
@@ -58,5 +67,3 @@ onMounted(() => {
     </template>
   </scrollbar-component>
 </template>
-
-<style scoped lang="scss"></style>

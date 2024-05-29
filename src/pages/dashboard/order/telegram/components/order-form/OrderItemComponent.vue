@@ -20,7 +20,7 @@ const props = defineProps({
     <a-button @click="emits('close')" class="close-btn" type="link">
       <icon-x />
     </a-button>
-    <div class="order-item-info">
+    <div class="order-item-info flex flex-column fg h-full justify-between">
       <div class="flex justify-between align-center">
         <div class="flex align-center">
           <a-avatar
@@ -60,10 +60,9 @@ const props = defineProps({
           </h1>
         </template>
       </div>
-
       <div class="flex justify-between">
         <div class="date">
-          <span>{{ $t('THE_TIME_OF_PUBLICATION') }}</span>
+          <span>{{ $t('THE_TIME_OF_PUBLICATION') }} </span>
           <p class="m-0">
             {{ dayjs(item.orderDate).format('DD.MM.YYYY') }},
             {{ item.timeConfiguration?.startTime.slice(0, 5) }}
@@ -89,8 +88,12 @@ const props = defineProps({
 @import '@/assets/styles/variable';
 .order-item-card {
   position: relative;
+  height: 250px !important;
   &:hover {
     background-color: rgb($light, 0.4);
+  }
+  &:global(.ant-card .ant-card-body) {
+    height: 100%;
   }
   .close-btn {
     position: absolute;
@@ -106,8 +109,6 @@ const props = defineProps({
 .order-item-info {
   span {
     font-size: 12px;
-    //font-weight: bolder;
-    //color: $muted;
   }
 }
 .channel-name {

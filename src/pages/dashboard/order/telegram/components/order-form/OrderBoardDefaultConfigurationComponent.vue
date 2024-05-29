@@ -23,7 +23,7 @@ const { item } = defineProps({
     >
       <div>
         <h1 class="config-name text-center">
-          {{ $t('POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL') }}
+          {{ $t('POSTING_AN_AD_WITHOUT_RATE_ON_THE_CHANNEL') }} 
         </h1>
         <p class="text-muted text-center">
           {{ $t('POST_A_ONE_TIME_ANNOUNCEMENT_TO_A_CHANNEL') }}

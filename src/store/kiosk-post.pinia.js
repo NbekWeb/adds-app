@@ -7,12 +7,14 @@ const useKioskPost = defineStore('kiosk-post', {
   state: () => ({
     posts: [],
     totalElements: 0,
-    totalPages: 0
+    totalPages: 0,
+    page: 0
   }),
   actions: {
     clearPost() {
       this.posts = []
       this.totalElements = 0
+      this.totalPages = 0
       this.totalPages = 0
     },
     clearPostInfo() {
