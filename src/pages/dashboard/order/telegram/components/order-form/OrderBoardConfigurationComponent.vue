@@ -62,7 +62,7 @@ const { item } = defineProps({
 
 .config-item {
   width: 100%;
-  height: 260px;
+  min-height: 231px;
   &:deep(.ant-radio) {
     display: none;
   }
@@ -81,7 +81,7 @@ const { item } = defineProps({
 }
 
 .item-card {
-  height: 260px;
+  min-height: 231px;
   position: relative;
   width: 100%;
   margin: 0;

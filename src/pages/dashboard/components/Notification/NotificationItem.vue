@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import IconBell from '@/components/icons/IconBell.vue'
 import useCore from '@/store/core.pinia.js'
 
+
 const model = defineModel('open')
 const props = defineProps({
   notification: { type: Object, required: true }
@@ -35,11 +36,12 @@ function handleReadNotification() {
     }
   }
 }
+
+
 </script>
 
 <template>
   <a-card @click="handleReadNotification" class="notification-card">
-  
     <div class="flex">
       <div class="text-lg mr-3">
         <a-avatar

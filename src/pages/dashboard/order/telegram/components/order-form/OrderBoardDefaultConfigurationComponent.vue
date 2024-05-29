@@ -43,8 +43,9 @@ const { item } = defineProps({
 @import '@/assets/styles/variable';
 .config-item {
   width: 100%;
-  min-width: 245px;
   height: 100%;
+  min-width: 245px;
+  min-height: 231px;
   &:deep(.ant-radio) {
     display: none;
   }

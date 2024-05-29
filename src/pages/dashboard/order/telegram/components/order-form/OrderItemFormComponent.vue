@@ -100,7 +100,6 @@ function handleBackStep() {
         v-model:amount="selectedConfigAmount"
         :board-id="form.board.id"
       />
-      
     </template>
     <template v-if="currentStep === 2">
       <order-time-config-select-component
@@ -111,30 +110,29 @@ function handleBackStep() {
         :configuration-id="form?.configuration?.id"
       />
     </template>
+    <div class="flex justify-end">
+      <h3>
+        {{ $t('TOTAL') }}:
+        {{ formatAmount(selectedConfigAmount + selectedTimeConfigAmount) }}
+        <span>UZS</span>
+      </h3>
+    </div>
+    <div class="flex justify-between">
+      <a-button @click="router.back()"> {{ $t('CANCEL') }} </a-button>
+      <a-space>
+        <a-button @click="handleBackStep">
+          {{ $t('BACK') }}
+        </a-button>
+        <a-button
+          @click="handleNextStep"
+          :disabled="isAccessNext"
+          type="primary"
+          size="middle"
+        >
+          {{ $t('CONTINUE') }} sa1
+        </a-button>
+      </a-space>
+    </div>
   </a-spin>
-  <div class="flex justify-end">
-    <h3>
-      {{ $t('TOTAL') }}:
-      {{ formatAmount(selectedConfigAmount + selectedTimeConfigAmount) }}
-      <span>UZS</span>
-    </h3>
-  </div>
-  <div class="flex justify-between">
-    <a-button @click="router.back()"> {{ $t('CANCEL') }} </a-button>
-    <a-space>
-      <a-button @click="handleBackStep">
-        {{ $t('BACK') }}
-      </a-button>
-      <a-button
-        @click="handleNextStep"
-        :disabled="isAccessNext"
-        type="primary"
-        size="middle"
-      >
-        {{ $t('CONTINUE') }}
-      </a-button>
-    </a-space>
-  </div>
 </template>
-
-<style scoped lang="scss"></style>
+<style></style>

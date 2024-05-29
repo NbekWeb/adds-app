@@ -32,6 +32,7 @@ onMounted(() => {
     :page="page"
     :total-pages="totalPages"
     @get-data="getPegableBoard"
+   
   >
     <template #content>
       <template v-if="!boardList?.length && !loadingUrl.has('board/all')">
