@@ -40,9 +40,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  
   <scrollbar-component
-    height="calc(100vh - 260px)" 
+    class="flex-grow"
     :loading="loadingUrl.has('board/configurations')"
     :page="page"
     :count="12"
@@ -50,6 +49,7 @@ onBeforeUnmount(() => {
     @get-data="getPaginationAllConfiguration"
   >
     <template #content>
+      
       <a-radio-group
         class="w-full"
         v-model:value="model"

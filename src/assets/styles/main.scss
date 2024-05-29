@@ -42,6 +42,10 @@ body {
 .flex-column {
   flex-direction: column !important;
 }
+
+.flex-grow {
+  flex-grow: 1 !important;
+}
 .align-center {
   align-items: center !important;
 }

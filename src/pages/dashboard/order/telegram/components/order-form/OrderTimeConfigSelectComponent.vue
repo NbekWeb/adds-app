@@ -53,56 +53,53 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <a-spin :spinning="loadingUrl.has('board/time-configurations')">
-    <template #indicator>
-      <icon-loader />
-    </template>
-
-    <scrollbar-component height="calc(100vh - 260px)" >
-      <template #content>
-        <div class="header-order-date flex justify-between my-2">
-          <order-date-component @on-change="handleChangeDate" />
-        </div>
-        <template
-          v-if="
-            !timeConfigurations?.length &&
-            !loadingUrl.has('board/time-configurations')
-          "
-        >
-          <a-empty class="empty">
-            <template #description>
-              {{ $t('NO_DATA') }}
-            </template>
-          </a-empty>
-        </template>
-        <template v-if="timeConfigurations.length">
-          <a-radio-group
-            class="w-full"
-            @change="handleChangeSelect"
-            v-model:value="model"
-          >
-            <a-row :gutter="[10, 10]">
-              <a-col
-                :xs="24"
-                :ms="24"
-                :md="12"
-                :lg="8"
-                :xl="8"
-                :xxl="6"
-                v-for="(item, i) in timeConfigurations"
-                :key="i"
-              >
-                <order-time-config-component
-                  :item="item"
-                  :selected="model?.id === item.id"
-                />
-              </a-col>
-            </a-row>
-          </a-radio-group>
-        </template>
+  <scrollbar-component
+    :loading="loadingUrl.has('board/time-configurations')"
+    class="flex flex-column flex-grow"
+  >
+    <template #content>
+      <div class="header-order-date flex justify-between my-2">
+        <order-date-component @on-change="handleChangeDate" />
+      </div>
+      <template
+        v-if="
+          !timeConfigurations?.length &&
+          !loadingUrl.has('board/time-configurations')
+        "
+      >
+        <a-empty class="empty">
+          <template #description>
+            {{ $t('NO_DATA') }}
+          </template>
+        </a-empty>
       </template>
-    </scrollbar-component>
-  </a-spin>
+      <template v-if="timeConfigurations.length">
+        <a-radio-group
+          class="w-full"
+          @change="handleChangeSelect"
+          v-model:value="model"
+        >
+          <a-row :gutter="[10, 10]">
+            <a-col
+              :xs="24"
+              :ms="24"
+              :md="12"
+              :lg="8"
+              :xl="8"
+              :xxl="6"
+              v-for="(item, i) in timeConfigurations"
+              :key="i"
+            >
+              <order-time-config-component
+                :item="item"
+                :selected="model?.id === item.id"
+              />
+            </a-col>
+          </a-row>
+        </a-radio-group>
+      </template>
+    </template>
+  </scrollbar-component>
 </template>
 
 <style scoped lang="scss">

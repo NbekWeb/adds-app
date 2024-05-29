@@ -114,7 +114,7 @@ onMounted(() => {
           :loading="loadingUrl.has('create/order')"
           type="primary"
         >
-          {{ $t('MAKE_ORDER') }}sa1
+          {{ $t('MAKE_ORDER') }}
         </a-button>
       </div>
     </div>
