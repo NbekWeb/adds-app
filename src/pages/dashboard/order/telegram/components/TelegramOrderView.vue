@@ -43,7 +43,9 @@ function addNewOrderItem(item) {
   form.items.push(item)
   newOrderItem.value = false
 }
-
+const closeOrderItem = (i) => {
+  form.items.splice(i, 1)
+}
 function newOrderCreate() {
   if (form.items.length) {
     orderPinia.createOrder(
@@ -89,6 +91,7 @@ onMounted(() => {
     <order-items-list-component
       :items="form.items"
       @add-item="newOrderItem = true"
+      @close="closeOrderItem"
     />
   </template>
   <template v-if="!newOrderItem">

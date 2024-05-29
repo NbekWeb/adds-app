@@ -88,6 +88,7 @@ onMounted(() => {
   </template>
 
   <template v-if="newOrderItem">
+    
     <order-item-form-component
       :selected-boards="selectedBoards"
       @add-order="addNewOrderItem"

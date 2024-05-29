@@ -11,16 +11,11 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 const corePinia = useCore()
 const postPinia = usePost()
 
-
 const { loadingUrl } = storeToRefs(corePinia)
-const { posts, totalPages } = storeToRefs(postPinia)
-
-const pageValue = ref(0)
+const { posts, totalPages, page } = storeToRefs(postPinia)
 
 function handleGetPostPagination(page) {
   postPinia.getAllPosts(page, 4)
-
-  pageValue.value = page
 }
 onMounted(() => {
   postPinia.getAllPosts(0, 4)
@@ -33,10 +28,10 @@ onMounted(() => {
       <icon-loader />
     </template>
     <scrollbar-component
-      height="calc(100vh - 125px)"
+      height="calc(100vh - 150px)"
       :loading="loadingUrl.has('get/post/all')"
       :total-pages="totalPages"
-      :page="pageValue"
+      :page="page"
       @get-data="handleGetPostPagination"
     >
       <template #content>

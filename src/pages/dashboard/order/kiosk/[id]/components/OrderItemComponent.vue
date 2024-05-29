@@ -18,14 +18,10 @@ const props = defineProps({
 })
 
 function cancelOrder() {
-  orderPinia.putCancelOrder(
-    props.order?.orderId,
-    [props.order?.id],
-    () => {
-      emit('canceledOrder')
-      userPinia.getUserMe()
-    }
-  )
+  orderPinia.putCancelOrder(props.order?.orderId, [props.order?.id], () => {
+    emit('canceledOrder')
+    userPinia.getUserMe()
+  })
 }
 
 const open = ref(false)
@@ -90,8 +86,8 @@ const open = ref(false)
         :sm="24"
         :md="24"
         :lg="8"
-        :xl="8"
-        class="item border"
+        :xl="6"
+        class="item border flex justify-end"
       >
         <div class="pl-2 flex align-center">
           <status-tag-component

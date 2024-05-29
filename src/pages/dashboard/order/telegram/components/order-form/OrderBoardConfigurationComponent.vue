@@ -25,7 +25,7 @@ const { item } = defineProps({
       }"
     >
       <div class="config-name-price">
-        <h1 class="config-name text-center">{{ item.name }}</h1>
+        <h1 class="config-name text-center">{{ item.name }} </h1>
         <h1 class="text-center mt-2">
           <span class="config-amount">
             {{ formatAmount(item.amount) }}
@@ -62,7 +62,7 @@ const { item } = defineProps({
 
 .config-item {
   width: 100%;
-  height: 300px;
+  height: 260px;
   &:deep(.ant-radio) {
     display: none;
   }
@@ -81,7 +81,7 @@ const { item } = defineProps({
 }
 
 .item-card {
-  height: 300px;
+  height: 260px;
   position: relative;
   width: 100%;
   margin: 0;

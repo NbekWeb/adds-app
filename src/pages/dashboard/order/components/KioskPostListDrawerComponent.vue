@@ -12,13 +12,10 @@ const corePinia = useCore()
 const kioskPostPinia = useKioskPost()
 
 const { loadingUrl } = storeToRefs(corePinia)
-const { posts, totalPages } = storeToRefs(kioskPostPinia)
-
-const pageValue = ref(0)
+const { posts, totalPages, page } = storeToRefs(kioskPostPinia)
 
 function handleGetPostPagination(page) {
   kioskPostPinia.getAllPosts(page, 4)
-  pageValue.value = page
 }
 onMounted(() => {
   kioskPostPinia.getAllPosts(0, 4)
@@ -31,10 +28,10 @@ onMounted(() => {
       <icon-loader />
     </template>
     <scrollbar-component
-      height="calc(100vh - 125px)"
+      height="calc(100vh - 150px)"
       :loading="loadingUrl.has('get/post/all')"
       :total-pages="totalPages"
-      :page="pageValue"
+      :page="page"
       @get-data="handleGetPostPagination"
     >
       <template #content>

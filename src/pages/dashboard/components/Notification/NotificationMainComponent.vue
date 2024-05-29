@@ -35,17 +35,15 @@ const openNotification = async () => {
   })
 }
 function checkNotifications() {
-    notificationPinia.checkNotifications()
+  notificationPinia.checkNotifications()
 }
 watch(newNotifications, () => {
   openNotification()
 })
 watch(count, () => {
-  if (localStorage.getItem('access_token')) {
-    if (count.value) {
-      notificationPinia.getNotifications(0)
-      notificationPinia.getUnreadNotifications()
-    }
+  if (count.value) {
+    notificationPinia.getNotifications(0)
+    notificationPinia.getUnreadNotifications()
   }
 })
 function getPegableNotifications(page) {
@@ -54,13 +52,13 @@ function getPegableNotifications(page) {
 }
 
 onMounted(() => {
-    notificationPinia.getUnreadNotifications()
-    notificationPinia.getNotifications(0)
-    checkNotifications()
+  notificationPinia.getUnreadNotifications()
+  notificationPinia.getNotifications(0)
+  checkNotifications()
   notificationInterval.value = setInterval(checkNotifications, 60000)
 })
 
-onBeforeUnmount(()=> {
+onBeforeUnmount(() => {
   clearInterval(notificationInterval.value)
 })
 </script>

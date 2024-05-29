@@ -28,7 +28,7 @@ const boardPinia = useBoard()
           v-for="(item, i) in items"
           :key="i"
         >
-          <order-item-component :item="item" @close="emits('close', i)" />
+          <order-item-component :item="item" @close="emits('close', i)" /> 
         </a-col>
         <template
           v-if="

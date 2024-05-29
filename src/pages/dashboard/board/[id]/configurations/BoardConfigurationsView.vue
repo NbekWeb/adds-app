@@ -83,7 +83,6 @@ onBeforeUnmount(() => {
                 :key="i"
               >
                 <board-configuration-item
-                  class=""
                   :item="item"
                   :key="item.id"
                   :date="orderDate.format('YYYY-MM-DD')"
