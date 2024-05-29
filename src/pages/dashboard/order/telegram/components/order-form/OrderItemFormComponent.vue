@@ -76,8 +76,6 @@ function handleBackStep() {
 </script>
 
 <template>
-  <a-steps :items="steps" :current="currentStep"> </a-steps>
-
   <a-spin
     :spinning="
       loadingUrl.has('board/all') ||
@@ -88,53 +86,57 @@ function handleBackStep() {
     <template #indicator>
       <icon-loader />
     </template>
-    <template v-if="currentStep === 0">
-      <order-board-select-component
-        v-model:value="form.board"
-        :selected-boards="selectedBoards"
-      />
-    </template>
-    <template v-if="currentStep === 1">
-      <order-configuration-select-component
-        v-model:value="form.configuration"
-        v-model:amount="selectedConfigAmount"
-        :board-id="form.board.id"
-      />
-      
-    </template>
-    <template v-if="currentStep === 2">
-      <order-time-config-select-component
-        v-model:value="form.timeConfiguration"
-        v-model:date="form.orderDate"
-        v-model:amount="selectedTimeConfigAmount"
-        :board-id="form.board.id"
-        :configuration-id="form?.configuration?.id"
-      />
-    </template>
-  </a-spin>
-  <div class="flex justify-end">
-    <h3>
-      {{ $t('TOTAL') }}:
-      {{ formatAmount(selectedConfigAmount + selectedTimeConfigAmount) }}
-      <span>UZS</span>
-    </h3>
-  </div>
-  <div class="flex justify-between">
-    <a-button @click="router.back()"> {{ $t('CANCEL') }} </a-button>
-    <a-space>
-      <a-button @click="handleBackStep">
-        {{ $t('BACK') }}
-      </a-button>
-      <a-button
-        @click="handleNextStep"
-        :disabled="isAccessNext"
-        type="primary"
-        size="middle"
-      >
-        {{ $t('CONTINUE') }}
-      </a-button>
-    </a-space>
-  </div>
-</template>
+    <div style="height: calc(100vh - 180px)" class="flex flex-column">
+      <a-steps :items="steps" :current="currentStep"> </a-steps>
 
-<style scoped lang="scss"></style>
+      <template v-if="currentStep === 0">
+        <order-board-select-component
+          v-model:value="form.board"
+          :selected-boards="selectedBoards"
+        />
+      </template>
+      <template v-if="currentStep === 1">
+        <order-configuration-select-component
+          v-model:value="form.configuration"
+          v-model:amount="selectedConfigAmount"
+          :board-id="form.board.id"
+        />
+      </template>
+      <template v-if="currentStep === 2">
+        <order-time-config-select-component
+          v-model:value="form.timeConfiguration"
+          v-model:date="form.orderDate"
+          v-model:amount="selectedTimeConfigAmount"
+          :board-id="form.board.id"
+          :configuration-id="form?.configuration?.id"
+        />
+      </template>
+      <div>
+        <div class="flex justify-end">
+          <h3>
+            {{ $t('TOTAL') }}:
+            {{ formatAmount(selectedConfigAmount + selectedTimeConfigAmount) }}
+            <span>UZS</span>
+          </h3>
+        </div>
+        <div class="flex justify-between">
+          <a-button @click="router.back()"> {{ $t('CANCEL') }} </a-button>
+          <a-space>
+            <a-button @click="handleBackStep">
+              {{ $t('BACK') }}
+            </a-button>
+            <a-button
+              @click="handleNextStep"
+              :disabled="isAccessNext"
+              type="primary"
+              size="middle"
+            >
+              {{ $t('CONTINUE') }}
+            </a-button>
+          </a-space>
+        </div>
+      </div>
+    </div>
+  </a-spin>
+</template>
+<style></style>

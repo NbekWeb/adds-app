@@ -28,10 +28,10 @@ onMounted(() => {
 
 <template>
   <scrollbar-component
-    height="calc(100vh - 260px)"
     :page="page"
     :total-pages="totalPages"
     @get-data="getPegableBoard"
+    class="flex-grow"
   >
     <template #content>
       <template v-if="!boardList?.length && !loadingUrl.has('board/all')">
