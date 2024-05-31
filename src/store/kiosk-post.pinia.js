@@ -111,7 +111,6 @@ const useKioskPost = defineStore('kiosk-post', {
             locale: 'POST_UPDATED_SUCCESSFULLY'
           })
           callback()
-          this.getAllPosts(0)
         })
         .catch((error) => {
           core.switchStatus(error)

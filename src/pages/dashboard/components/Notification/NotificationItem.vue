@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 import IconBell from '@/components/icons/IconBell.vue'
 import useCore from '@/store/core.pinia.js'
 
-
 const model = defineModel('open')
 const props = defineProps({
   notification: { type: Object, required: true }
@@ -18,6 +17,7 @@ const notificationPinia = useNotifications()
 function handleReadNotification() {
   if (!props.notification.read) {
     notificationPinia.readNotification(props.notification.id)
+
     model.value = false
     if (props.notification?.type === 'KIOSK') {
       router.push({
@@ -36,8 +36,6 @@ function handleReadNotification() {
     }
   }
 }
-
-
 </script>
 
 <template>
