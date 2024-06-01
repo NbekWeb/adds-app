@@ -14,7 +14,7 @@ const { t } = useI18n()
 const corePinia = useCore()
 const notificationPinia = useNotifications()
 const { loadingUrl } = storeToRefs(corePinia)
-const { notifications, totalPages, count, newNotifications } =
+const { notifications, totalPages, count, newNotifications, notificationViews } =
   storeToRefs(notificationPinia)
 
 const currentPage = ref(0)
@@ -32,6 +32,10 @@ const openNotification = async () => {
         duration: 10
       })
     }, index * 1000)
+
+    notificationViews.value.push({
+      timeOut: timeOut.value,
+    })
   })
 }
 function checkNotifications() {

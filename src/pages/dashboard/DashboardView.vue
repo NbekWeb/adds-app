@@ -9,7 +9,8 @@ import IconChevronLeft from '@/components/icons/IconChevronLeft.vue'
 import IconChevronRight from '@/components/icons/IconChevronRight.vue'
 import IconLoader from '@/components/icons/IconLoader.vue'
 import { useRouter } from 'vue-router'
-import MobileMenuComponent from '@/pages/dashboard/components/MobileMenuComponent.vue'
+import useNotifications from "@/store/notifications.pinia.js";
+import {notification} from "ant-design-vue";
 
 const router = useRouter()
 
@@ -17,6 +18,15 @@ const userPinia = useUser()
 const corePinia = useCore()
 const { collapsed, loadingUrl } = storeToRefs(corePinia)
 
+const notificationViews = useNotifications()
+
+function clearALlNots() {
+  notificationViews.notificationViews.forEach(item => {
+    clearTimeout(item.timeOut)
+    // notification.close(item.key)
+  })
+  notification.destroy()
+}
 
 // user me check token
 onMounted(() => {
@@ -54,6 +64,7 @@ onMounted(() => {
           <header-component />
         </a-layout-header>
         <a-layout-content class="content">
+          <a-button @click="clearALlNots">Clear</a-button>
           <a-card class="view-card">
             <div class="view">
               <router-view />
