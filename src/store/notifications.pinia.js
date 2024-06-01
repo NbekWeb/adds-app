@@ -9,7 +9,8 @@ const useNotifications = defineStore('notifications', {
     newNotifications: [],
     notifications: [],
     totalPages: 0,
-    oldNotifications: new Set([])
+    oldNotifications: new Set([]),
+    notificationViews: []
   }),
   actions: {
     getNotifications(page) {

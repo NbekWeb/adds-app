@@ -28,6 +28,7 @@ const form = reactive({
 const snapshotHashId = ref()
 const messageType = ref()
 const fileName = ref()
+const pageTitle = ref(route.params.id ? 'KioskPostEditView' : 'DashboardKioskPostFormView')
 
 const rules = reactive({
   text: [
@@ -116,7 +117,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <page-header-component :title="$t('DashboardKioskPostFormView')" />
+  <page-header-component :title="$t(pageTitle)" />
   <loader-component loading-url="get/post/one">
     <scrollbar-component height="calc(100vh - 230px)" class="mb-2">
       <template #content>

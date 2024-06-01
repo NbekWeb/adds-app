@@ -10,6 +10,7 @@ import IconLoader from '@/components/icons/IconLoader.vue'
 import VideoPlayerComponent from '@/components/VideoPlayerComponent.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconFile from '@/components/icons/IconFile.vue'
+import ImageComponent from "@/components/ImageComponent.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -39,9 +40,9 @@ onMounted(() => {
       <template #content>
         <div class="post-item-file  flex justify-center">
           <template v-if="post?.messageType === 'IMAGE'">
-            <img
-              :src="`${fileBaseUrl}/file/${post?.fileDto?.fileHashId}`"
-              alt=""
+            <image-component
+              :hash-id="post?.fileDto?.fileHashId"
+              alt="Post image"
             />
           </template>
           <template v-if="post?.messageType === 'VIDEO'">
@@ -94,10 +95,11 @@ onMounted(() => {
 @import '@/assets/styles/responsive';
 .post-item-file {
   background: $light;
-  height: max-content;
-  img {
-    flex: 1;
-    max-height: 340px;
+  height: 300px;
+  @include responsive-sm {
+    height: 200px;
+  }
+  &:deep(img) {
     object-fit: contain;
   }
 }
