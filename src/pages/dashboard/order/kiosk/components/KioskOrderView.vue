@@ -120,7 +120,7 @@ onMounted(() => {
           :loading="loadingUrl.has('create/kiosk-order')"
           type="primary"
         >
-          {{ $t('MAKE_ORDER') }}
+          {{ $t('MAKE_ORDER') }} 
         </a-button>
       </div>
     </div>

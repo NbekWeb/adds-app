@@ -78,6 +78,8 @@ const useNotifications = defineStore('notifications', {
       })
         .then(({ data }) => {
           this.count = data
+          this.getNotifications(0)
+          this.getUnreadNotifications()
         })
         .catch((error) => {
           core.switchStatus(error)

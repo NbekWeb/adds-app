@@ -65,8 +65,8 @@ const rules = reactive({
 })
 
 function checkTag(value) {
-  const regex = /&lt;|\&gt;/;
-  return regex.test(value);
+  const regex = /&lt;|\&gt;/
+  return regex.test(value)
 }
 
 function submitForm() {
@@ -150,7 +150,8 @@ onMounted(() => {
         <a-button @click="router.back()"> {{ $t('BACK') }} </a-button>
         <a-button
           :loading="
-            loadingUrl.has('update/post') || loadingUrl.has('kiosk-create/post')
+            loadingUrl.has('kiosk-create/post') ||
+            loadingUrl.has('update/kiosk-post')
           "
           @click="submitForm"
           type="primary"

@@ -18,18 +18,6 @@ const boardPinia = useBoard()
   <scrollbar-component height="calc(100vh - 230px)">
     <template #content>
       <a-row :gutter="[10, 10]">
-        <a-col
-          :xs="24"
-          :ms="24"
-          :md="24"
-          :lg="12"
-          :xl="8"
-          :xxl="8"
-          v-for="(item, i) in items"
-          :key="i"
-        >
-          <order-item-component :item="item" @close="emits('close', i)" /> 
-        </a-col>
         <template
           v-if="
             items.length !== boardPinia.boardList.length || items.length == 0
@@ -44,6 +32,18 @@ const boardPinia = useBoard()
             </a-card>
           </a-col>
         </template>
+        <a-col
+          :xs="24"
+          :ms="24"
+          :md="24"
+          :lg="12"
+          :xl="8"
+          :xxl="8"
+          v-for="(item, i) in items"
+          :key="i"
+        >
+          <order-item-component :item="item" @close="emits('close', i)" />
+        </a-col>
       </a-row>
     </template>
   </scrollbar-component>
