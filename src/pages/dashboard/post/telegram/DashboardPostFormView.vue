@@ -42,11 +42,9 @@ const rules = reactive({
     {
       required: true,
       validator: async (_rules, value) => {
-        if (value.replace(/<.*?>/g, '').replace(/&nbsp;/g, ' ').length > 1024) {
-          return Promise.reject(t('POST_DESCRIPTION_LENGTH'))
-        } else {
-          return Promise.resolve()
-        }
+        const text = value?.replace(/<(p|h2)([^>]*)>/gi, ' ')?.replace(/<.*?>/g, '')?.replace(/&nbsp;/g, ' ').length - 1
+        // console.log(value?.replace(/<(p|h2)([^>]*)>/gi, ' ')?.replace(/<.*?>/g, '')?.replace(/&nbsp;/g, ' '))
+        return !text || text > 1024 ? Promise.reject(t('POST_DESCRIPTION_LENGTH')) : Promise.resolve()
       },
       trigger: 'blur'
     }

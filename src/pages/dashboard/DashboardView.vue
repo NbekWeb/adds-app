@@ -23,7 +23,6 @@ const notificationViews = useNotifications()
 function clearALlNots() {
   notificationViews.notificationViews.forEach(item => {
     clearTimeout(item.timeOut)
-    // notification.close(item.key)
   })
   notification.destroy()
 }
@@ -64,7 +63,7 @@ onMounted(() => {
           <header-component />
         </a-layout-header>
         <a-layout-content class="content">
-          <a-button @click="clearALlNots">Clear</a-button>
+<!--          <a-button @click="clearALlNots">Clear</a-button>-->
           <a-card class="view-card">
             <div class="view">
               <router-view />
