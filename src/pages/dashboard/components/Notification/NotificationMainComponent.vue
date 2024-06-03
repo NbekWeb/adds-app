@@ -44,21 +44,15 @@ function checkNotifications() {
 watch(newNotifications, () => {
   openNotification()
 })
-watch(count, () => {
-  if (count.value) {
-    notificationPinia.getNotifications(0)
-    notificationPinia.getUnreadNotifications()
-  }
-})
 function getPegableNotifications(page) {
   notificationPinia.getNotifications(page)
   currentPage.value = page
 }
 
 onMounted(() => {
-  notificationPinia.getUnreadNotifications()
-  notificationPinia.getNotifications(0)
   checkNotifications()
+  notificationPinia.getUnreadNotifications()
+  // notificationPinia.getNotifications(0)
   notificationInterval.value = setInterval(checkNotifications, 60000)
 })
 
