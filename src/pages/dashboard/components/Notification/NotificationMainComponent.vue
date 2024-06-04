@@ -87,7 +87,6 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-    {{clearAllBtn}}
     <template v-if="clearAllBtn">
       <teleport to=".ant-notification">
         <a-button @click="clearAllNotifications" shape="circle" class="clear-all__notifications btn">
