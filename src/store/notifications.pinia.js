@@ -10,7 +10,7 @@ const useNotifications = defineStore('notifications', {
     notifications: [],
     totalPages: 0,
     oldNotifications: new Set([]),
-    notificationViews: []
+    notificationTimeouts: []
   }),
   actions: {
     getNotifications(page) {
@@ -32,6 +32,14 @@ const useNotifications = defineStore('notifications', {
           this.totalPages = data.totalPages
           this.notifications = [...this.notifications, ...data.content]
           this.notifications = uniqueItems(this.notifications, 'id')
+
+          this.newNotifications = []
+          this.notifications.forEach((item) => {
+            if (!this.oldNotifications.has(item.id) && !item.read) {
+              this.newNotifications.push(item)
+              this.oldNotifications.add(item.id)
+            }
+          })
         })
         .catch((error) => {
           core.switchStatus(error)
@@ -77,9 +85,10 @@ const useNotifications = defineStore('notifications', {
         }
       })
         .then(({ data }) => {
-          this.count = data
-          this.getNotifications(0)
-          this.getUnreadNotifications()
+          if (data && this.count !== data) {
+            this.count = data
+            this.getNotifications(0)
+          }
         })
         .catch((error) => {
           core.switchStatus(error)

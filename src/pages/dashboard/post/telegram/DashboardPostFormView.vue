@@ -42,11 +42,12 @@ const rules = reactive({
     {
       required: true,
       validator: async (_rules, value) => {
-        if (value.replace(/<.*?>/g, '').replace(/&nbsp;/g, ' ').length > 1024) {
-          return Promise.reject(t('POST_DESCRIPTION_LENGTH'))
-        } else {
-          return Promise.resolve()
-        }
+        const text = value.replace(/([^\s])<(p|h2)([^>]*)>/gi, (match, p1, p2, p3) => {
+          // If there is a non-space character before the tag, add a space
+          return p1 + ' <' + p2 + p3 + '>';
+        })?.replace(/<.*?>/g, '')?.replace(/&nbsp;/g, ' ').length
+
+        return !text || text > 1024 ? Promise.reject(t('POST_DESCRIPTION_LENGTH')) : Promise.resolve()
       },
       trigger: 'blur'
     }
