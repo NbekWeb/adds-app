@@ -10,7 +10,7 @@ const useNotifications = defineStore('notifications', {
     notifications: [],
     totalPages: 0,
     oldNotifications: new Set([]),
-    notificationViews: []
+    notificationTimeouts: []
   }),
   actions: {
     getNotifications(page) {
@@ -85,8 +85,10 @@ const useNotifications = defineStore('notifications', {
         }
       })
         .then(({ data }) => {
-          this.count = data
-          this.getNotifications(0)
+          if (data && this.count !== data) {
+            this.count = data
+            this.getNotifications(0)
+          }
         })
         .catch((error) => {
           core.switchStatus(error)

@@ -16,25 +16,27 @@ const { collapsed } = defineProps({
 <template>
   <div class="aside" :class="[{ collapsed: collapsed }]">
     <div class="px-3">
-      <a-row class="py-3" align="middle" justify="center">
-        <a-col
-          :xs="24"
-          :sm="24"
-          :md="collapsed ? 24 : 12"
-          :lg="collapsed ? 24 : 8"
-          :xxl="collapsed ? 24 : 6"
-          class="text-center"
-        >
-          <logo class="desktop-logo" />
-        </a-col>
-        <template v-if="!collapsed">
-          <a-col :xs="24" :sm="24" :md="12" :lg="16" :xxl="16">
-            <h2 class="m-0 logo-name">
-              ADS-<span class="text-primary">PRO</span>
-            </h2>
+      <router-link to="/dashboard/main">
+        <a-row class="py-3" align="middle" justify="center">
+          <a-col
+            :xs="24"
+            :sm="24"
+            :md="collapsed ? 24 : 12"
+            :lg="collapsed ? 24 : 8"
+            :xxl="collapsed ? 24 : 6"
+            class="text-center"
+          >
+            <logo class="desktop-logo" />
           </a-col>
-        </template>
-      </a-row>
+          <template v-if="!collapsed">
+            <a-col :xs="24" :sm="24" :md="12" :lg="16" :xxl="16">
+              <h2 class="m-0 logo-name">
+                ADS-<span class="text-primary">PRO</span>
+              </h2>
+            </a-col>
+          </template>
+        </a-row>
+      </router-link>
       <user-component :avatar="true" class="mb-4" />
       <menu-main-component :collapsed="collapsed" />
     </div>
