@@ -26,7 +26,7 @@ const open = ref(false)
         :md="12"
         :lg="4"
         :xl="4"
-        class="flex justify-start"
+        class="flex justify-start pb-2"
       >
         <a-avatar
           :src="`${fileBaseUrl}/file/${order?.board.logoHashId}`"
@@ -47,7 +47,7 @@ const open = ref(false)
         :md="12"
         :lg="3"
         :xl="3"
-        class="item config-name border end-item"
+        class="item config-name border end-item pb-2"
       >
         <div>
           <p class="m-0">
@@ -70,7 +70,7 @@ const open = ref(false)
         :md="12"
         :lg="4"
         :xl="4"
-        class="item border"
+        class="item border pb-2"
       >
         <p class="m-0">
           {{ dayjs(order?.startDate).format('DD.MM.YYYY, HH:mm') }},
@@ -86,7 +86,7 @@ const open = ref(false)
         :md="12"
         :lg="5"
         :xl="5"
-        class="item border end-item"
+        class="item border end-item pb-2"
       >
         <div>
           <p class="m-0">

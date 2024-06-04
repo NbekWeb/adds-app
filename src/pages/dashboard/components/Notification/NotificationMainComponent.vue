@@ -43,7 +43,6 @@ watch(newNotifications, () => {
 watch(count, () => {
   if (count.value) {
     notificationPinia.getNotifications(0)
-    notificationPinia.getUnreadNotifications()
   }
 })
 function getPegableNotifications(page) {
