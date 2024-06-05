@@ -6,6 +6,7 @@ const uzLat = {
   DashboardBoardListView: 'Telegram kanallar',
   DashboardMyBoardListView: 'Mening kanallarim',
   DashboardKioskBoardListView: 'Kiosk',
+  DashboarKioskBoardItemView: "Kiosk ma'lumotlari",
   DashboardKioskBoardItemView: "Kiosk boardni ko'rish",
   DashboardPostListView: "E'lonlar",
   DashboardKioskPostListView: "Kiosk E'lonlar",

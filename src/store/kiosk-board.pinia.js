@@ -36,7 +36,7 @@ const useKioskBoard = defineStore('kiosk-board', {
     clearBoardInfo() {
       this.kioskBoards = []
     },
-    getAllKioskBoard(page, categoryId = null, name = null) {
+    getAllKioskBoard(page = 0, categoryId = null, name = null) {
       const core = useCore()
       core.loadingUrl.add('kiosk-board/all')
       api({
