@@ -50,8 +50,8 @@ const getKioskBoardList = (page) => {
             <a-col
               :xs="24"
               :sm="12"
-              :md="8"
-              :lg="6"
+              :xl="8"
+              :xxl="6"
               v-for="(item, i) of kioskBoards"
               :key="i"
             >

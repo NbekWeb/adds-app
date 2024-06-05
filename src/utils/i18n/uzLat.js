@@ -48,7 +48,7 @@ const uzLat = {
   EditBoardView: 'Kanalni tahrirlash',
   DashboardUserEditView: 'Foydalanuvchini tahrirlash',
   DashboardKioskPostFormView: "Kiosk Post qo'shish",
-  DashboardTelegramPostFormView: "Telegram Post qo'shish",
+  TelegramPostAdd: "Telegram Post qo'shish",
   DashboardNotFond: 'Sahifa topilmadi',
   DashboardBoardItemInfoView: "Kanal ma'lumotlari",
 
@@ -65,6 +65,8 @@ const uzLat = {
   BOARD_CONFIGURATIONS: 'Configurations',
   BOARD_TIME_CONFIGURATIONS: 'Time configurations',
   ADMINISTRATOR: 'Administrator',
+  TELEGRAM: 'Telegram',
+  KIOSK: 'Kiosk',
 
   //   buttons
   YES: 'Ha',

@@ -89,13 +89,13 @@ onMounted(() => {
         <div class="amount flex flex-column">
           <span> {{ $t('COUNT_OUTPUTS') }} </span>
           <div class="flex align-center">
-            <a-button size="small" @click="handleClickOrderCount('-')">
+            <a-button size="small" @click="handleClickOrderCount('-')" class="btn">
               <IconMinus />
             </a-button>
 
             <p class="mx-2">{{ orderCount }} ta</p>
 
-            <a-button size="small" @click="handleClickOrderCount('+')">
+            <a-button size="small" @click="handleClickOrderCount('+')" class="btn">
               <IconPlus />
             </a-button>
           </div>
