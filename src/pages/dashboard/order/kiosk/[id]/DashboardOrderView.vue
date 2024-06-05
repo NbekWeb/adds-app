@@ -39,11 +39,17 @@ onMounted(() => {
 <template>
   <page-header-component :title="$t('DashboardKioskOrderItemView')">
     <template #actions>
-      <a-button class="btn" @click="refreshOrder">
+      <a-button
+        class="btn"
+        @click="refreshOrder"
+        :disabled="loadingUrl.has('get/order/one')"
+      >
         <template #icon>
           <IconRefresh class="mr-1" />
         </template>
-        {{ $t('UPDATE') }}
+        <span class="refresh-text">
+          {{ $t('UPDATE') }}
+        </span>
       </a-button>
     </template>
   </page-header-component>
@@ -69,4 +75,12 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import '@/assets/styles/responsive';
+
+.refresh-text {
+  @include responsive-md {
+    display: none;
+  }
+}
+</style>
