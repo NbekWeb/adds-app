@@ -30,8 +30,8 @@ function handleChangeFilter() {
 
   router.push({
     query: {
-      category: category.value,
-      name: name.value
+      category: category.value
+      
     }
   })
   timeOut.value = setTimeout(() => {
