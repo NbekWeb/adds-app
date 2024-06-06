@@ -35,7 +35,7 @@ onBeforeUnmount(() => {
     <template #indicator>
       <icon-loader />
     </template>
-    <scrollbar-component height="calc(100vh - 155px)">
+    <scrollbar-component height="calc(100vh - 300px)">
       <template #content v-if="boardInfo">
         <div class="flex flex-column justify-between h-full">
           <div>

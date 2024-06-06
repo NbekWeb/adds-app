@@ -99,15 +99,6 @@ useRecaptchaProvider()
       @include responsive-lg {
         display: none;
       }
-      @include responsive-md {
-        display: none;
-      }
-      @include responsive-sm {
-        display: none;
-      }
-      @include responsive-xs {
-        display: none;
-      }
 
       .login-image {
         width: 89%;
@@ -117,6 +108,8 @@ useRecaptchaProvider()
       padding: 20px;
 
       .ant-card {
+        max-width: 560px;
+        width: 100%;
         @include responsive-xl {
           margin: 0 24px;
         }

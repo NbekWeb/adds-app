@@ -126,6 +126,15 @@
     padding-top: $size !important;
     padding-bottom: $size !important;
   }
+  .g-#{$key} {
+    gap: $size !important;
+  }
+  .gx-#{$key} {
+    column-gap: $size !important;
+  }
+  .gy-#{$key} {
+    row-gap: $size !important;
+  }
 }
 @each $display, $value in $displays{
   .#{$display}{

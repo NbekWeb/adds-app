@@ -86,13 +86,13 @@ onMounted(() => {
             @change="handleChangeType"
             class="mr-2"
           >
-            <a-select-option value="telegram">Telegram</a-select-option>
-            <a-select-option value="kiosk">Kiosk</a-select-option>
+            <a-select-option value="telegram">{{ $t('TELEGRAM') }}</a-select-option>
+            <a-select-option value="kiosk">{{ $t('KIOSK') }}</a-select-option>
           </a-select>
 
           <a-select
             class="order-status"
-            style="width: 270px"
+            style="width: 220px"
             allow-clear
             :placeholder="$t('FILTER_BY_STATUS')"
             v-model:value="orderStatus"

@@ -22,16 +22,18 @@ const open = ref(false)
     :header-style="{ 'flex-direction': 'row-reverse' }"
   >
     <template #extra>
-      <a-row align="middle" justify="center">
-        <a-col class="text-center">
-          <logo />
-        </a-col>
-        <a-col>
-          <h2 class="m-0 logo-name">
-            ADS-<span class="text-primary">PRO</span>
-          </h2>
-        </a-col>
-      </a-row>
+      <router-link to="/dashboard/main" @click="open = false">
+        <a-row align="middle" justify="center">
+          <a-col class="text-center">
+            <logo />
+          </a-col>
+          <a-col>
+            <h2 class="m-0 logo-name">
+              ADS-<span class="text-primary">PRO</span>
+            </h2>
+          </a-col>
+        </a-row>
+      </router-link>
     </template>
     <div class="aside">
       <div class="">

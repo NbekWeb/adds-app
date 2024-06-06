@@ -30,6 +30,7 @@ const form = reactive({
 const snapshotHashId = ref()
 const messageType = ref()
 const fileName = ref()
+const pageTitle = ref(route.params.id ? 'TelegramPostEditView' : 'TelegramPostAdd')
 
 const rules = reactive({
   text: [
@@ -41,11 +42,12 @@ const rules = reactive({
     {
       required: true,
       validator: async (_rules, value) => {
-        if (value.replace(/<.*?>/g, '').replace(/&nbsp;/g, ' ').length > 1024) {
-          return Promise.reject(t('POST_DESCRIPTION_LENGTH'))
-        } else {
-          return Promise.resolve()
-        }
+        const text = value.replace(/([^\s])<(p|h2)([^>]*)>/gi, (match, p1, p2, p3) => {
+          // If there is a non-space character before the tag, add a space
+          return p1 + ' <' + p2 + p3 + '>';
+        })?.replace(/<.*?>/g, '')?.replace(/&nbsp;/g, ' ').length
+
+        return !text || text > 1024 ? Promise.reject(t('POST_DESCRIPTION_LENGTH')) : Promise.resolve()
       },
       trigger: 'blur'
     }
@@ -119,11 +121,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <page-header-component
-    :title="$t('TelegramPostEditView')"
-    v-if="route.params.id"
-  />
-  <page-header-component :title="$t('DashboardTelegramPostFormView')" v-else />
+  <page-header-component :title="$t(pageTitle)"/>
   <loader-component loading-url="get/post/one">
     <scrollbar-component height="calc(100vh - 230px)" class="mb-2">
       <template #content>
