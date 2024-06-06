@@ -85,7 +85,7 @@ const useNotifications = defineStore('notifications', {
         }
       })
         .then(({ data }) => {
-          if (data && this.count !== data) {
+          if (this.count !== data) {
             this.count = data
             this.getNotifications(0)
           }
@@ -117,6 +117,14 @@ const useNotifications = defineStore('notifications', {
         .finally(() => {
           // core.loadingUrl.delete('user/me')
         })
+    },
+    clearAllNotifications() {
+      this.notifications = [] 
+      this.newNotifications = [] 
+      this.count = 0 
+      this.totalPages = 0 
+      this.notificationTimeouts = 0 
+      this.oldNotifications.clear() 
     }
   }
 })
