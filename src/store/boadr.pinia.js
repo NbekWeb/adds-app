@@ -25,14 +25,17 @@ const useBoard = defineStore('board', {
       const core = useCore()
       core.loadingUrl.add('board/all')
       this.page = page
+      const params = {
+        size: 9,
+        page: page,
+        categoryId: categoryId
+      }
+      if (name !== null && name !== '') {
+        params.name = name
+      }
       api({
         url: 'board',
-        params: {
-          size: 9,
-          page: page,
-          name: name || null,
-          categoryId: categoryId
-        }
+        params: params
       })
         .then(({ data }) => {
           if (!page) {

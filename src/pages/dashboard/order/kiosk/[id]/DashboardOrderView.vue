@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref,watch } from 'vue'
 import useKioskOrder from '@/store/kiosk-order.pinia.js'
 import OrderItemComponent from '@/pages/dashboard/order/kiosk/[id]/components/OrderItemComponent.vue'
 import ScrollbarComponent from '@/components/ScrollbarComponent.vue'
@@ -26,6 +26,13 @@ function refreshOrder() {
     })
   }
 }
+
+watch(
+  () =>route.params.id,
+  () => {
+    refreshOrder()
+  }
+);
 
 onMounted(() => {
   if (route.params.id) {
