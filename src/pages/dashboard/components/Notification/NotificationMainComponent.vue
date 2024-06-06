@@ -40,6 +40,7 @@ function clearAllNotifications() {
   notificationTimeouts.value?.forEach(time => {
     clearTimeout(time)
   })
+  notificationTimeouts.value = []
 }
 
 const openNotification = async () => {
@@ -83,6 +84,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearInterval(notificationInterval.value)
   notificationPinia.clearAllNotifications()
+  clearAllNotifications()
 })
 </script>
 

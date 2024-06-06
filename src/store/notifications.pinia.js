@@ -13,6 +13,13 @@ const useNotifications = defineStore('notifications', {
     notificationTimeouts: []
   }),
   actions: {
+    clearAllNotifications() {
+      this.notifications = []
+      this.newNotifications = []
+      this.count = 0
+      this.totalPages = 0
+      this.oldNotifications.clear()
+    },
     getNotifications(page) {
       const core = useCore()
       core.loadingUrl.add('get/all/notifications')
@@ -117,14 +124,6 @@ const useNotifications = defineStore('notifications', {
         .finally(() => {
           // core.loadingUrl.delete('user/me')
         })
-    },
-    clearAllNotifications() {
-      this.notifications = [] 
-      this.newNotifications = [] 
-      this.count = 0 
-      this.totalPages = 0 
-      this.notificationTimeouts = 0 
-      this.oldNotifications.clear() 
     }
   }
 })
