@@ -72,8 +72,8 @@ onMounted(() => {
           size="middle"
           @click="pushToCreate"
         >
-          <icon-plus />
-          {{ $t('ADD') }}
+          <icon-plus style="font-size: 16px"/>
+          {{ $t('ADD_POST') }}
         </a-button>
       </div>
     </template>
@@ -91,7 +91,7 @@ onMounted(() => {
 .add-btn {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 .post-form-drawer {
   .ant-drawer-content-wrapper {

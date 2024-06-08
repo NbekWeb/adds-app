@@ -77,6 +77,7 @@ const uzLat = {
   READY: 'Tayyor',
   BACK: 'Orqaga',
   ADD: "Qo'shish",
+  ADD_POST: "E'lon qo'shish",
   CANCEL: 'Bekor qilish',
   CONTINUE: 'Davom etish',
   ADD_BOARD: "Kanal qo'shish",

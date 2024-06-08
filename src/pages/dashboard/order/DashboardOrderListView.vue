@@ -133,9 +133,9 @@ onMounted(() => {
         <h3 class="title m-0">{{ $t('DashboardPostListView') }}</h3>
         <a-button type="primary" class="btn" @click="pushToCreate">
           <template #icon>
-            <IconPlus />
+            <IconPlus style="font-size: 16px"/>
           </template>
-          {{ $t('ADD') }}
+          {{ $t('ADD_POST') }}
         </a-button>
       </div>
     </template>

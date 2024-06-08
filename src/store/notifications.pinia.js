@@ -55,7 +55,7 @@ const useNotifications = defineStore('notifications', {
           core.loadingUrl.delete('get/all/notifications')
         })
     },
-    getUnreadNotifications() {
+    getUnreadNotifications(callback) {
       const core = useCore()
       core.loadingUrl.add('get/all/notifications')
       api({
@@ -74,6 +74,7 @@ const useNotifications = defineStore('notifications', {
               return item
             }
           })
+          callback()
         })
         .catch((error) => {
           core.switchStatus(error)
