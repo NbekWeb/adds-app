@@ -60,6 +60,7 @@ const uzLat = {
   ENTER_THE_COMPLETE_CODE: "Kodni to'liq kiriting",
   VALUE_MUST_BE_GREATER_THEN_ZERO: "Qiymat noldan katta bo'lishi kerak",
   POST_DESCRIPTION_LENGTH: 'Matin uzunligi 1024 ta belgidan oshmasligi kerak',
+  REQUIRE_KIOSK_POST_DURATION: "Vedio davomiyligi { limit } sekund'dan oshmasin!",
   // titles
   ADD_NEW_CONFIGURATION: "Yangi ta'rif qo'shish",
   ADD_NEW_TIME_CONFIGURATION: "Yangi vaqt qo'shish",
@@ -77,6 +78,7 @@ const uzLat = {
   READY: 'Tayyor',
   BACK: 'Orqaga',
   ADD: "Qo'shish",
+  ADD_POST: "E'lon qo'shish",
   CANCEL: 'Bekor qilish',
   CONTINUE: 'Davom etish',
   ADD_BOARD: "Kanal qo'shish",
@@ -235,8 +237,7 @@ const uzLat = {
   INTERNAL_SERVER_ERROR:
     "Server bilan bog'liq hatolik. Tizim administratoriga murojaat qiling!",
   ERROR: 'Xatolik!',
-  FILE_SIZE_LESS_IMG: 'Fayl hajmi 10 Mb dan oshmasin!',
-  FILE_SIZE_LESS_VIDEO: 'Fayl hajmi 50 Mb dan oshmasin!',
+  FILE_SIZE_LESS: 'Fayl hajmi 10 Mb dan oshmasin!',
   ORDER_CREATE: 'Buyurtma yaratildi',
   ORDER_CANCELED: 'Buyurtma bekor qilindi'
 }

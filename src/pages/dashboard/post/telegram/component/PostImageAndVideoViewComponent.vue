@@ -28,9 +28,14 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/styles/responsive';
 .image-wrapper {
-  width: auto;
-  height: 90vh;
+  max-width: 80vw;
+  height: 70dvh;
+
+  @include responsive-md {
+    height: auto;
+  }
   img {
     width: 100%;
     height: 100%;

@@ -11,6 +11,7 @@ import VideoPlayerComponent from '@/components/VideoPlayerComponent.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconFile from '@/components/icons/IconFile.vue'
 import ImageComponent from "@/components/ImageComponent.vue";
+import IconPlay from "@/components/icons/IconPlay.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -18,7 +19,7 @@ const router = useRouter()
 const corePinia = useCore()
 const postPinia = usePost()
 
-const { loadingUrl } = storeToRefs(corePinia)
+const { loadingUrl, visibleDrawer } = storeToRefs(corePinia)
 
 const post = ref()
 
@@ -46,14 +47,35 @@ onMounted(() => {
             />
           </template>
           <template v-if="post?.messageType === 'VIDEO'">
-            <div class="flex justify-center">
+            <a-modal
+              centered
+              destroy-on-close
+              class="modal-view"
+              :footer="null"
+              :closable="false"
+              :open="visibleDrawer.has('post-item/view')"
+              @cancel="visibleDrawer.delete('post-item/view')"
+            >
               <video-player-component
-                class="plyr-video"
                 :file="{
                   snapshotHashId: post?.snapshotHashId,
                   hashId: post?.fileDto?.fileHashId
                 }"
               />
+            </a-modal>
+            <div class="video-poster flex justify-center">
+              <image-component
+                :hash-id="post?.snapshotHashId"
+                alt="Post video"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                class="video-poster__play flex justify-center align-center"
+                @click="visibleDrawer.add('post-item/view')"
+              >
+                <IconPlay />
+              </a-button>
             </div>
           </template>
           <template v-if="post?.messageType === 'DOCUMENT'">
@@ -126,6 +148,19 @@ onMounted(() => {
 <style scoped lang="scss">
 @import '@/assets/styles/variable';
 @import '@/assets/styles/responsive';
+.video-poster {
+  position: relative;
+  &__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
 .post-item-file {
   background: $light;
   height: 300px;
@@ -135,9 +170,6 @@ onMounted(() => {
   &:deep(img) {
     object-fit: contain;
   }
-}
-.plyr-video {
-  width: 100% !important;
 }
 .document {
   display: inline-flex;

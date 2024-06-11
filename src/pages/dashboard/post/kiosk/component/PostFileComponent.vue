@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import useUpload from '@/store/upload.pinia.js'
 import useCore from '@/store/core.pinia.js'
+import {useI18n} from "vue-i18n";
 import IconInbox from '@/components/icons/IconInbox.vue'
 import ProgressComponent from '@/components/ProgressComponent.vue'
 import { storeToRefs } from 'pinia'
@@ -11,6 +12,8 @@ import IconEye from '@/components/icons/IconEye.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconFile from '@/components/icons/IconFile.vue'
 import { useRoute } from 'vue-router'
+import useKioskPost from "@/store/kiosk-post.pinia.js";
+const { t } = useI18n()
 
 const route = useRoute()
 const hashId = defineModel('hashId')
@@ -21,17 +24,44 @@ const props = defineProps({
   fileName: String
 })
 
-const corePinia = useCore()
-const uploadPinia = useUpload()
-const { visibleDrawer } = storeToRefs(corePinia)
+const coreStore = useCore()
+const uploadStore = useUpload()
+const kioskPostStore = useKioskPost()
 
+const { visibleDrawer } = storeToRefs(coreStore)
+
+const videoDurationLimit = ref()
 const fileType = ref()
 const uploadedFilename = ref(null)
 const fileProgress = ref(0)
 const snapshot = ref()
 
-const uploadLogo = (file) => {
-  uploadPinia.uploadFileKiosk(
+
+function checkVideoDuration(file) {
+  return new Promise((resolve,reject)=>{
+    let url = URL.createObjectURL(file);
+    let audioElement = new Audio(url);
+    audioElement.addEventListener("loadedmetadata", (_event)=> {
+      resolve(parseInt(audioElement.duration))
+    });
+  })
+}
+
+
+const uploadFile = async (file) => {
+  if (file.type.includes('video')) {
+    const res = await checkVideoDuration(file)
+    if (res > videoDurationLimit.value) {
+      coreStore.setToast({
+        locale: t('REQUIRE_KIOSK_POST_DURATION', { limit: videoDurationLimit.value }),
+        type: 'warning'
+      })
+      return false
+    }
+  }
+
+
+  uploadStore.uploadFileKiosk(
     file,
     (data) => {
       hashId.value = data.hashId
@@ -49,7 +79,7 @@ const uploadLogo = (file) => {
 }
 
 function openImageVideoModal() {
-  corePinia.visibleDrawer.add('image-vide0/view')
+  coreStore.visibleDrawer.add('image-vide0/view')
 }
 function clearFile() {
   hashId.value = null
@@ -58,6 +88,11 @@ function clearFile() {
   uploadedFilename.value = null
   fileProgress.value = 0
 }
+onMounted(() => {
+  kioskPostStore.getDurationLimit((data) => {
+    videoDurationLimit.value = data?.limitSeconds
+  })
+})
 </script>
 
 <template>
@@ -72,7 +107,7 @@ function clearFile() {
         list-type="picture-card"
         :multiple="false"
         :show-upload-list="false"
-        :before-upload="uploadLogo"
+        :before-upload="uploadFile"
         accept="image/jpeg, image/jpg, image/png, application/*, text/*, video/mp4"
       >
         <span class="upload-drag-icon">
@@ -93,7 +128,7 @@ function clearFile() {
     >
       <div class="post-file">
         <img
-          :src="`${fileBaseUrl}/file/${type?.toLowerCase() || fileType === 'image' ? hashId : snapshotHashId || snapshot}`"
+          :src="`${fileBaseUrl}/file/${(type?.toLowerCase() || fileType) === 'image' ? hashId : snapshot || snapshotHashId}`"
           alt=""
         />
         <div class="post-file-actions">
