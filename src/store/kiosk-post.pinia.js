@@ -117,7 +117,7 @@ const useKioskPost = defineStore('kiosk-post', {
           console.log('form')
         })
         .finally(() => {
-          core.loadingUrl.delete('create/kiosk-post')
+          core.loadingUrl.delete('update/kiosk-post')
         })
     },
     deletePostById(id) {

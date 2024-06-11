@@ -69,7 +69,7 @@ function checkTag(value) {
   return regex.test(value)
 }
 
-function submitForm() {
+function createPost() {
   formRef.value
     .validate()
     .then(() => {
@@ -153,7 +153,7 @@ onMounted(() => {
             loadingUrl.has('kiosk-create/post') ||
             loadingUrl.has('update/kiosk-post')
           "
-          @click="submitForm"
+          @click="createPost"
           type="primary"
         >
           {{ $t('SAVE') }}

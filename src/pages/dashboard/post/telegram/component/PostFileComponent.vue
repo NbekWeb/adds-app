@@ -21,17 +21,23 @@ const props = defineProps({
   fileName: String
 })
 
-const corePinia = useCore()
-const uploadPinia = useUpload()
-const { visibleDrawer } = storeToRefs(corePinia)
+const coreStore = useCore()
+const uploadStore = useUpload()
+const { visibleDrawer } = storeToRefs(coreStore)
 
 const fileType = ref()
 const uploadedFilename = ref(null)
 const fileProgress = ref(0)
 const snapshot = ref()
 
-const uploadLogo = (file) => {
-  uploadPinia.uploadFileTelegram(
+const uploadFile = (file) => {
+  if (file.size / (1024 * 1024) > 10) {
+    return coreStore.setToast({
+      locale: 'FILE_SIZE_LESS',
+      type: 'error'
+    })
+  }
+  uploadStore.uploadFileTelegram(
     file,
     (data) => {
       hashId.value = data.hashId
@@ -49,7 +55,7 @@ const uploadLogo = (file) => {
 }
 
 function openImageVideoModal() {
-  corePinia.visibleDrawer.add('image-vide0/view')
+  coreStore.visibleDrawer.add('image-video/view')
 }
 function clearFile() {
   hashId.value = null
@@ -72,7 +78,7 @@ function clearFile() {
         list-type="picture-card"
         :multiple="false"
         :show-upload-list="false"
-        :before-upload="uploadLogo"
+        :before-upload="uploadFile"
         accept="image/jpeg, image/jpg, image/png, application/*, text/*, video/mp4"
       >
         <span class="upload-drag-icon">
@@ -93,8 +99,8 @@ function clearFile() {
     >
       <div class="post-file">
         <img
-          :src="`${fileBaseUrl}/file/${type?.toLowerCase() || fileType === 'image' ? hashId : snapshotHashId || snapshot}`"
-          alt=""
+          :src="`${fileBaseUrl}/file/${(type?.toLowerCase() || fileType) === 'image' ? hashId : snapshot || snapshotHashId}`"
+          alt="Post image"
         />
         <div class="post-file-actions">
           <a-space>
@@ -156,8 +162,8 @@ function clearFile() {
       class="modal-view"
       :footer="null"
       :closable="false"
-      :open="visibleDrawer.has('image-vide0/view')"
-      @cancel="visibleDrawer.delete('image-vide0/view')"
+      :open="visibleDrawer.has('image-video/view')"
+      @cancel="visibleDrawer.delete('image-video/view')"
     >
       <post-image-and-video-view-component
         :type="type || fileType"

@@ -124,3 +124,19 @@ a {
     display: none !important;
   }
 }
+
+.modal-view {
+  width: max-content !important;
+  height: max-content !important;
+  .ant-modal-content {
+    width: max-content;
+    height: max-content !important;
+    background: transparent;
+    box-shadow: none;
+    padding: 0 !important;
+    .ant-modal-body {
+      width: max-content;
+      height: max-content !important;
+    }
+  }
+}
