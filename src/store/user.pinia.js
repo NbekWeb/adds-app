@@ -63,6 +63,10 @@ const useUser = defineStore('user', {
         .finally(() => {
           core.loadingUrl.delete('user/update')
         })
+    },
+    updateUserBalance(val){
+      this.user.balance-=val
+      
     }
   }
 })

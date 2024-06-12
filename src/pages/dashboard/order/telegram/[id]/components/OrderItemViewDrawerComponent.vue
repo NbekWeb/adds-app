@@ -32,7 +32,7 @@ function cancelOrder() {
     [props.item?.id],
     () => {
       emit('canceledOrder')
-      userPinia.getUserMe()
+      userPinia.updateUserBalance(-props.item.amount)
     }
   )
   model.value = false
@@ -53,7 +53,8 @@ function cancelOrder() {
           :src="`${fileBaseUrl}/file/${item?.board.logoHashId}`"
         />
         <h3 class="m-0 ml-2">
-          {{ item.board.name }}
+          {{ item.board.name }} 
+          {{ item.amount }} 
         </h3>
       </div>
     </template>

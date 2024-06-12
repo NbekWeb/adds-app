@@ -63,7 +63,7 @@ function newOrderCreate() {
           name: 'DashboardOrderListView',
           query: { channel: 'telegram' }
         })
-        userPinia.getUserMe()
+        userPinia.updateUserBalance(totalPrice.value)
       }
     )
   }

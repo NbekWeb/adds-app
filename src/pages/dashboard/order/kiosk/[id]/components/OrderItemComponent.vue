@@ -20,7 +20,7 @@ const props = defineProps({
 function cancelOrder() {
   orderPinia.putCancelOrder(props.order?.orderId, [props.order?.id], () => {
     emit('canceledOrder')
-    userPinia.getUserMe()
+    userPinia.updateUserBalance(-props.order.amount)
   })
 }
 

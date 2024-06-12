@@ -66,7 +66,7 @@ function newOrderCreate() {
           name: 'DashboardOrderListView',
           query: { channel: 'kiosk' }
         })
-        userPinia.getUserMe()
+        userPinia.updateUserBalance(totalPrice.value)
       }
     )
   }
@@ -111,7 +111,7 @@ onMounted(() => {
             {{ $t('TOTAL') }}:<span class="px-1">{{
               formatAmount(totalPrice)
             }}</span>
-            {{ $t('SOUM') }}
+            {{ $t('SOUM') }} 
           </div>
         </template>
         <a-button
