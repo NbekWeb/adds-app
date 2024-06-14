@@ -23,7 +23,6 @@ function cancelOrder() {
     userPinia.updateUserBalance(-props.order.amount)
   })
 }
-
 const open = ref(false)
 </script>
 
